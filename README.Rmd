@@ -12,12 +12,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-# dplyrx <img src="man/figures/logo.png" align="right" width=120/>
+# rama <img src="man/figures/logo.png" align="right" width=120/>
 
-[![Travis-CI Build Status](https://travis-ci.org/choisy/rama.svg?branch=master)](https://travis-ci.org/choisy/rama)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
+<!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama) -->
 
-`rama` is *************************************************
+`rama` is an R interface to the [GAMA](https://gama-platform.github.io)
+agent-based simulation platform.
 
 ## Installation
 
@@ -25,13 +25,6 @@ You can install `rama` from GitHub with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("choisy/rama")
+devtools::install_github("r-and-gama/rama")
 ```
 
-## Example
-
-*** Here explain a simple example **********************************************
-
-```{r}
-# *** Here give the code of the simple example *********************************
-```
