@@ -16,13 +16,13 @@ onload <- function(){
   options(rama.temp_dir=paste0(options("rama.workspace"),"/temp"))
   options(rama.gama_dir=paste0(options("rama.workspace"),"/gama"))
 
-  options(rama.default.gama.win = "/latest_gama_win.zip");
+  options(rama.default.gama.win = "/GAMA1.8_RC2_EmbeddedJDK_Win_64bits.zip");
   options(rama.default.gama.win.appdir = "");
-  options(rama.default.gama.osx = "/Gama1.7-macosx.cocoa.x86_64.zip");
+  options(rama.default.gama.osx = "/GAMA1.8_RC2_EmbeddedJDK_MacOS.zip");
   options(rama.default.gama.osx.appdir = "Gama.app");
-  options(rama.default.gama.linux = "latest_gama_linux.zip");
+  options(rama.default.gama.linux = "GAMA1.8_RC2_EmbeddedJDK_Linux_64bits.zip");
   options(rama.default.gama.linux.appdir = "");
-  options(rama.repo="file:///Users/nicolas/git/gama/gama/ummisco.gama.product/target/products")
+  options(rama.repo="http://http://51.255.46.42/releases");
 }
 
 gama_repo <- function(repo=NULL){
