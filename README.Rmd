@@ -1,0 +1,37 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# dplyrx <img src="man/figures/logo.png" align="right" width=120/>
+
+[![Travis-CI Build Status](https://travis-ci.org/choisy/rama.svg?branch=master)](https://travis-ci.org/choisy/rama)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
+
+`rama` is *************************************************
+
+## Installation
+
+You can install `rama` from GitHub with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("choisy/rama")
+```
+
+## Example
+
+*** Here explain a simple example **********************************************
+
+```{r}
+# *** Here give the code of the simple example *********************************
+```
