@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get parameters of a gama model — getmodelparameter • rama</title>
+<title>Define the GAMA path — onload • rama</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Get parameters of a gama model — getmodelparameter" />
+<meta property="og:title" content="Define the GAMA path — onload" />
 
-<meta property="og:description" content="Load experiment meta-data from a model file and an experimentname" />
+<meta property="og:description" content="Define the path of GAMA Java plugins." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -101,29 +101,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get parameters of a gama model</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/getset.R'><code>R/getset.R</code></a></small>
-    <div class="hidden name"><code>getmodelparameter.Rd</code></div>
+    <h1>Define the GAMA path</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/zzz.R'><code>R/zzz.R</code></a></small>
+    <div class="hidden name"><code>onload.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Load experiment meta-data from a model file and an experimentname</p>
+    <p>Define the path of GAMA Java plugins.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>getmodelparameter</span>(<span class='no'>modelfile</span>, <span class='no'>experimentname</span>)</pre>
+    <pre class="usage"><span class='fu'>onload</span>()</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>modelfile</th>
-      <td><p>relative or absolute path pointing on your model file</p></td>
-    </tr>
-    <tr>
-      <th>experimentname</th>
-      <td><p>name of the loaded experiment</p></td>
+      <th>path</th>
+      <td><p>Absolute path to the GAMA folder.</p></td>
     </tr>
     </table>
     
