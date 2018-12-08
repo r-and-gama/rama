@@ -100,7 +100,7 @@ defpath <- function(path) {
   packageStartupMessage("Welcome to gamar v1.0!")
   packageStartupMessage("WARNING: GAMA 1.7.0 needs to be installed on your machine.")
   packageStartupMessage("Check www.gama-platform.org for installation instructions.")
-  download_gama_ui();
+#download_gama_ui();
   #  defpath("/Users/choisy/Applications/Gama")
 #  defpath("/Applications/Gama.app")
 
