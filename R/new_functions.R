@@ -76,19 +76,19 @@ parameters.default <- function(x) "Unknown class"
 
 #' @export
 parameters.experiment <- function(x) {
-  x[, attributes(x)$parameters]
+  out[, grep("^p_", names(out), value = TRUE)]
 }
 
 
 #' @export
-variables <- function(x) UseMethod("variables")
+observation <- function(x) UseMethod("observation")
 
 #' @export
-variables.default <- function(x) "Unknown class"
+observation.default <- function(x) "Unknown class"
 
 #' @export
-variables.experiment <- function(x) {
-  x[, attributes(x)$variables]
+observation.experiment <- function(x) {
+  out[, grep("^r_", names(out), value = TRUE)]
 }
 
 
