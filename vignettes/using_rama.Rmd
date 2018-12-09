@@ -141,6 +141,38 @@ exp4
 
 We'll see more about that in the next sections.
 
+## 2.3 Building an experiment from a data frame
+
+```{r}
+df <- data.frame(
+  S0 = c(700, 800, 900, 950, 999),
+  R0 = 0,
+  beta = 1.5,
+  gamma = .15,
+  S = 1,
+  I = 1,
+  tmax = 2500,
+  seed = sample(5)
+)
+```
+
+Constant population size of 1000:
+
+```{r}
+df$I0 <- 1000 - df$S0
+```
+
+```{r}
+df
+```
+
+Let's now transform this data frame into an `experiment`:
+
+```{r}
+experiment(df)
+```
+
+
 # 3. Manipulating experiments
 
 As mentioned above, since `experiment` objects are data frames, all the data
@@ -207,7 +239,50 @@ model(exp1)
 
 ## 3.3 Extracting parameters values
 
+```{r}
+parameters(exp5)
+```
+
+
 ## 3.4 Extracting observation rates
+
+```{r}
+observation(exp5)
+```
+
+
+## 3.5 `tmax` and `seed`
+
+As seen above, `seed` can be extracted and changed with regular data frame
+methods:
+
+```{r}
+exp5$seed
+exp5$seed <- sample(10)
+exp5
+```
+
+Same for `tmax`:
+
+```{r}
+exp5$tmax
+exp5$tmax <- 3543
+exp5
+```
+
+If you want to stop observing the variable R and observe the variable I every
+2 steps, you'd do:
+
+```{r}
+exp5$r_R <- NULL
+exp5$r_I <- 2
+```
+
+Which gives:
+
+```{r}
+exp5
+```
 
 
 # 4. Running experiments
