@@ -67,11 +67,25 @@ load_experiment <- function(experiment, model) {
   out
 }
 
-
+#' @export
 model <- function(x) UseMethod("model")
 
+#' @export
 model.default <- function(x) "Unknown class"
 
+#' @export
 model.experiment <- function(x) {
   attributes(x)$model
+}
+
+
+#' @export
+parameters <- function(x) UseMethod("parameters")
+
+#' @export
+parameters.default <- function(x) "Unknown class"
+
+#' @export
+parameters.experiment <- function(x) {
+  x[, attributes(x)$parameters]
 }
