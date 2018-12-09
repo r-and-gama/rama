@@ -43,6 +43,8 @@ createoutputdirectoryname <- function(experimentplan) {
 #'
 #' @inheritParams run
 #' @param experimentplan  experiment plan to store
+#' @param outfile a connection, or a character string naming the file to write
+#'   to. If "", wirte in workgamar folder.
 
 
 
