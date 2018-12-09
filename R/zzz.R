@@ -19,6 +19,7 @@ gama_remote_distrib <- function() {
 
 # Downloads gama ---------------------------------------------------------------
 
+#' @importFrom utils download.file unzip
 download_gama <- function() {
   distrib <- gama_remote_distrib()
   path <- paste0(options("rama.temp_dir"), "/")
