@@ -1,0 +1,288 @@
+---
+title: "Using `rama`"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# 1 Preambule
+
+## 1.1 Installing `rama`
+
+```{r}
+# installed.packages("devtools")
+# devtools::install_github("r-and-gama/rama")
+```
+
+## 1.2 Loading `rama`
+
+```{r}
+library(rama)
+```
+
+## 1.3 Configuring `rama`
+
+```{r}
+# Not sure we still need this...
+```
+
+# 2. Desiging experiments
+
+We can make an `experiment` object either by reading an experiment from a GAML
+file with the `load_experiment()` funtion or by building it from scratch with
+the `experiment()` constructor.
+
+## 2.1 Loading an experiment from a GAML file
+
+Let's use the following `gaml` file:
+
+```{r}
+gaml_file <- "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
+```
+
+Loading the experiment `sir` from this file:
+
+```{r}
+exp1 <- load_experiment("sir", gaml_file)
+```
+
+which gives:
+
+```{r}
+exp1
+```
+
+An `experiment` is a simple data frame:
+
+```{r}
+class(exp1)
+```
+
+This implies that we will be able to use all the data frame methods to
+manipulate experiments. More on that later.
+
+## 2.2 Building an experiment from scratch
+
+Alternatively, an experiment can be built from scratch with the `experiment`
+constructor:
+
+```{r}
+exp2 <- experiment(
+  data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),
+  tmax = 1000,
+  seed = 1,
+  model = gaml_file
+)
+```
+
+Which gives the same thing:
+
+```{r}
+exp2
+```
+
+Note that if you enter values of inequal lengths, it will automatically
+complete:
+
+```{r}
+exp3 <- experiment(
+  data.frame(S0 = c(900, 950, 999), # this is a data frame of 3 lines
+              I0 = c(100, 50, 1),
+              R0 = 0,
+              beta = 1.5,
+              gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),  # this is a data frame of 1 line
+  tmax = 1000,                    
+  seed = 1,                         
+  model = gaml_file
+)
+```
+
+Which gives:
+
+```{r}
+exp3
+```
+
+Note finally, that we can make smart use of the `expand.grid()` function of the
+`base` package to efficiently generate a complete experimental design:
+
+```{r}
+exp4 <- experiment(
+  expand.grid(S0 = c(900, 950, 999),
+               I0 = c(100, 50, 1),
+               R0 = 0,
+               beta = 1.5,
+               gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),
+  tmax = 1000,
+  seed = 1,
+  model = gaml_file
+)
+```
+
+Which gives:
+
+```{r}
+exp4
+```
+
+We'll see more about that in the next sections.
+
+## 2.3 Building an experiment from a data frame
+
+```{r}
+df <- data.frame(
+  S0 = c(700, 800, 900, 950, 999),
+  R0 = 0,
+  beta = 1.5,
+  gamma = .15,
+  S = 1,
+  I = 1,
+  tmax = 2500,
+  seed = sample(5)
+)
+```
+
+Constant population size of 1000:
+
+```{r}
+df$I0 <- 1000 - df$S0
+```
+
+```{r}
+df
+```
+
+Let's now transform this data frame into an `experiment`:
+
+```{r}
+experiment(df)
+```
+
+
+# 3. Manipulating experiments
+
+As mentioned above, since `experiment` objects are data frames, all the data
+frame methods can be used to manipulate them, such as `nrow()` to know the
+number of simulations in an experiment:
+
+```{r}
+nrow(exp4)
+```
+
+
+## 3.1 Replicating experiments
+
+From the following experiment
+
+```{r}
+exp1
+```
+
+We can replicate:
+
+```{r}
+exp5 <- repl(exp1, 10)
+```
+
+Which gives:
+
+```{r}
+exp5
+```
+
+On which we could use different seeds for each simulation:
+
+```{r}
+exp5$seed <- sample(10)
+```
+
+Which gives:
+
+```{r}
+exp5
+```
+
+## 3.2 Seeing and changing the model path
+
+An experiment is linked to a model on a GAMA file. To get the path of this file:
+
+```{r}
+model(exp1)
+```
+
+To change the path of this file:
+
+```{r}
+model(exp1) <- "new_path"
+```
+
+Let's check:
+
+```{r}
+model(exp1)
+```
+
+
+## 3.3 Extracting parameters values
+
+```{r}
+parameters(exp5)
+```
+
+
+## 3.4 Extracting observation rates
+
+```{r}
+observation(exp5)
+```
+
+
+## 3.5 `tmax` and `seed`
+
+As seen above, `seed` can be extracted and changed with regular data frame
+methods:
+
+```{r}
+exp5$seed
+exp5$seed <- sample(10)
+exp5
+```
+
+Same for `tmax`:
+
+```{r}
+exp5$tmax
+exp5$tmax <- 3543
+exp5
+```
+
+If you want to stop observing the variable R and observe the variable I every
+2 steps, you'd do:
+
+```{r}
+exp5$r_R <- NULL
+exp5$r_I <- 2
+```
+
+Which gives:
+
+```{r}
+exp5
+```
+
+
+# 4. Running experiments
