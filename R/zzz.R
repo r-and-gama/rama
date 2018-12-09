@@ -83,7 +83,7 @@ defpath <- function(path) {
   os <- paste0(Sys.info()["sysname"])
   # if we use OSX, the plugin is located in the Contents/eclipse sub directory of
   # gama otherwise it is at its root:
-  subpath <- ifelse(os=="Darwin","/Contents/eclipse","")
+  subpath <- ifelse(os=="Darwin","/Contents/Eclipse","")
   gamapath <- paste0(path,subpath,"/plugins")
   plugins <- grep("org.eclipse.equinox.launcher_.*",dir(gamapath),value=T)
   options(gamar.plugins = paste(paste0(gamapath,"/",plugins),collapse=":"))
