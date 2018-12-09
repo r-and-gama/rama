@@ -1,24 +1,32 @@
 # get_parameters ---------------------------------------------------------------
 
-template_get <- function(x, slot, value) {
-  x2 <- do.call(rbind, x[[slot]])
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, value])))
-  setNames(x3, x2[, "name"])
+
+get_parameters <- function(x) {
+  x2 <- do.call(rbind, x[["Parameters"]])
+  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
+  x3 <- setNames(x3, x2[, "name"])
+  sel <- grep("INT", x2[, "type"])
+  x3[, sel] <- lapply(x3[, sel], as.integer)
+  x3
 }
 
-get_parameters <- function(...) template_get(..., "Parameters", "value")
 
-get_variables <- function(...) {
-  out <- template_get(..., "Outputs", "framerate")
-  out[] <- lapply(out, as.integer)
-  out
+
+get_variables <- function(x) {
+  x2 <- do.call(rbind, x[["Outputs"]])
+  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
+  x3 <- setNames(x3, x2[, "name"])
+  x3[] <- lapply(x3, as.integer)
+  x3
 }
+
+
 
 #' @importFrom stats setNames
 get_attributes <- function(x) {
   out <- setNames(do.call(function(...) data.frame(..., stringsAsFactors = FALSE),
-                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
-                  c("tmax", "seed", "gaml"))
+                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath", "experiment")])),
+                  c("tmax", "seed", "gaml", "experiment"))
   out$tmax <- as.integer(out$tmax)
   out$seed <- as.numeric(out$seed)
   out
@@ -56,7 +64,9 @@ load_experiment <- function(experiment, model) {
   out <- do.call(cbind, out)
   class(out) <- c("experiment", class(out))
   attr(out, "model") <- as.character(unname(out$gaml))
+  attr(out, "experiment") <- as.character(unname(out$experiment))
   out$gaml <- NULL
+  out$experiment <- NULL
   out
 }
 
@@ -155,6 +165,19 @@ model.experiment <- function(x) {
 
 
 #' @export
+expname <- function(x) UseMethod("expname")
+
+#' @export
+expname.default <- function(x) "Unknown class"
+
+#' @export
+expname.experiment <- function(x) {
+  attributes(x)$experiment
+}
+
+
+
+#' @export
 parameters <- function(x) UseMethod("parameters")
 
 #' @export
@@ -176,20 +199,6 @@ observation.default <- function(x) "Unknown class"
 observation.experiment <- function(x) {
   x[, grep("^r_", names(x), value = TRUE)]
 }
-
-
-#' @export
-`model<-` <- function(x, values) UseMethod("model<-")
-
-#' @export
-`model<-.default` <- function(x, values) "Unknown class"
-
-#' @export
-`model<-.experiment` <- function(x, values) {
-  attr(x, "model") <- values
-  x
-}
-
 
 
 #' @export
@@ -221,12 +230,13 @@ repl.experiment <- function(x, n) {
 #' )
 #' # If we want to change the seeds:
 #' my_experiment$seed <- 1:9
-experiment <- function(parameters, obsrates, tmax, seed, model) {
+experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
   names(parameters) <- paste0("p_", names(parameters))
   names(obsrates) <- paste0("r_", names(obsrates))
   structure(data.frame(parameters, obsrates,
                        tmax = tmax,
                        seed = seed),
             model = model,
+            experiment = experiment,
             class = c("experiment", "data.frame"))
 }

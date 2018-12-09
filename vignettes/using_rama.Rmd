@@ -83,7 +83,8 @@ exp2 <- experiment(
   data.frame(S = 1, I = 1, R = 1),
   tmax = 1000,
   seed = 1,
-  model = gaml_file
+  model = gaml_file,
+  experiment = "sir"
 )
 ```
 
@@ -106,7 +107,8 @@ exp3 <- experiment(
   data.frame(S = 1, I = 1, R = 1),  # this is a data frame of 1 line
   tmax = 1000,                    
   seed = 1,                         
-  model = gaml_file
+  model = gaml_file,
+  experiment = "sir"
 )
 ```
 
@@ -129,7 +131,8 @@ exp4 <- experiment(
   data.frame(S = 1, I = 1, R = 1),
   tmax = 1000,
   seed = 1,
-  model = gaml_file
+  model = gaml_file,
+  experiment = "sir"
 )
 ```
 
@@ -216,7 +219,7 @@ Which gives:
 exp5
 ```
 
-## 3.2 Seeing and changing the model path
+## 3.2 Seeing the model path and experiment name
 
 An experiment is linked to a model on a GAMA file. To get the path of this file:
 
@@ -224,16 +227,10 @@ An experiment is linked to a model on a GAMA file. To get the path of this file:
 model(exp1)
 ```
 
-To change the path of this file:
+And the name of the experiment:
 
 ```{r}
-model(exp1) <- "new_path"
-```
-
-Let's check:
-
-```{r}
-model(exp1)
+expname(exp1)
 ```
 
 
