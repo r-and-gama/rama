@@ -12,9 +12,12 @@ get_variables <- function(...) template_get(..., "Outputs", "framerate")
 
 #' @importFrom stats setNames
 get_attributes <- function(x) {
-  setNames(do.call(data.frame,
-                   as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
-           c("tmax", "seed", "gaml"))
+  out <- setNames(do.call(function(...) data.frame(..., stringsAsFactors = FALSE),
+                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
+                  c("tmax", "seed", "gaml"))
+  out$tmax <- as.integer(out$tmax)
+  out$seed <- as.numeric(out$seed)
+  out
 }
 
 # load_experiment --------------------------------------------------------------
@@ -73,19 +76,19 @@ parameters.default <- function(x) "Unknown class"
 
 #' @export
 parameters.experiment <- function(x) {
-  x[, attributes(x)$parameters]
+  x[, grep("^p_", names(x), value = TRUE)]
 }
 
 
 #' @export
-variables <- function(x) UseMethod("variables")
+observation <- function(x) UseMethod("observation")
 
 #' @export
-variables.default <- function(x) "Unknown class"
+observation.default <- function(x) "Unknown class"
 
 #' @export
-variables.experiment <- function(x) {
-  x[, attributes(x)$variables]
+observation.experiment <- function(x) {
+  x[, grep("^r_", names(x), value = TRUE)]
 }
 
 
@@ -103,6 +106,16 @@ variables.experiment <- function(x) {
 
 
 
+#' @export
+repl <- function(x, n) UseMethod("repl")
+
+#' @export
+repl.default <- function(x, n) "Unknown class"
+
+#' @export
+repl.experiment <- function(x, n) {
+  do.call(rbind, lapply(1:n, function(y) x))
+}
 
 # ------------------------------------------------------------------------------
 
@@ -125,7 +138,9 @@ variables.experiment <- function(x) {
 experiment <- function(parameters, obsrates, tmax, seed, model) {
   names(parameters) <- paste0("p_", names(parameters))
   names(obsrates) <- paste0("r_", names(obsrates))
-  structure(data.frame(parameters, obsrates, tmax = tmax, seed = seed),
+  structure(data.frame(parameters, obsrates,
+                       tmax = tmax,
+                       seed = seed),
             model = model,
             class = c("experiment", "data.frame"))
 }
