@@ -78,3 +78,40 @@ parameters.default <- function(x) "Unknown class"
 parameters.experiment <- function(x) {
   x[, attributes(x)$parameters]
 }
+
+
+#' @export
+variables <- function(x) UseMethod("variables")
+
+#' @export
+variables.default <- function(x) "Unknown class"
+
+#' @export
+variables.experiment <- function(x) {
+  x[, attributes(x)$variables]
+}
+
+#' @export
+#'
+#' @examples
+#' my_experiment <- experiment(
+#'   expand.grid(S0 = c(900, 950, 999),
+#'               I0 = c(100, 50, 1),
+#'               R0 = 0,
+#'               beta = 1.5,
+#'               gamma = .15),
+#'   data.frame(S = 1, I = 1, R = 1),
+#'   tmax = 1000,
+#'   seed = 1,
+#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
+#' )
+experiment <- function(parameters, outputs, tmax, seed, model) {
+  out <- cbind(param_val, output_val, tmax, seed)
+  attr(out, "model") <- model
+  attr(out, "parameters") <- names(parameters)
+  attr(out, "variables") <- names(outputs)
+  attr(out, "tmax") <- "tmax"
+  attr(out, "seed") <- "seed"
+  class(out) <- c("experiment", "data.frame")
+  out
+}
