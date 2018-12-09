@@ -57,6 +57,7 @@ load_experiment <- function(experiment, model) {
   out <- do.call(cbind,
                  lapply(c(get_parameters, get_variables, get_attributes),
                         function(f) f(out)))
+  class(out) <- c("experiment", class(out))
   out
 }
 
