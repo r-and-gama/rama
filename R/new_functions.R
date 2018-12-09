@@ -94,7 +94,7 @@ save_to_gama.experiment <- function(plan,file="out.xml")
                 seed = plan[row_id,]$seed,
                 finalStep = plan[row_id,]$tmax,
                 sourcePath = model(plan),
-                experiment="sir" )
+                experiment=expname(plan))
     xmlFile$addTag("Simulation", attrs=attrib,  close=FALSE)
     xmlFile$addTag("Parameters",  close=FALSE)
     y <- parameters(plan[row_id,])
@@ -105,16 +105,13 @@ save_to_gama.experiment <- function(plan,file="out.xml")
       val <- param[1,1]
       m_type <- "STRING"
       if(is.numeric(val))
-        if(is.integer(as.numeric(val)))
+        if(is.integer(val))
         {
           m_type <- "INT"
-          print(val)
-          print("INT")
         }
       else
       {
         m_type <- "FLOAT"
-        print(val)
       }
       attribut <- c(name = title,
                     type = m_type,
@@ -124,12 +121,10 @@ save_to_gama.experiment <- function(plan,file="out.xml")
     xmlFile$closeTag()
     xmlFile$addTag("Outputs",  close=FALSE)
     y <- observation(plan[row_id,])
-
     id_out <- 0
     for(col_id in 1:ncol(y))
     {
       param <- y[,col_id, drop = F]
-      print(names(param) )
       title <- substr(names(param),3,nchar(names(param)))
       val <- param[1,1]
       attribut <- c(id = id_out,
