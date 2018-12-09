@@ -1,27 +1,22 @@
 # Defines environmental variables ----------------------------------------------
 
-onload <- function() {
-  rama_workspace <- paste0(getwd(), "/workspace")
-  options(rama.workspace                 = rama_workspace,
-          rama.temp_dir                  = paste0(rama_workspace, "/temp"),
-          rama.gama_dir                  = paste0(rama_workspace, "/gama"),
-          rama.default.gama.win          = "/GAMA1.8_RC2_EmbeddedJDK_Win_64bits.zip",
-          rama.default.gama.win.appdir   = "",
-          rama.default.gama.osx          = "/GAMA1.8_RC2_EmbeddedJDK_MacOS.zip",
-          rama.default.gama.osx.appdir   = "Gama.app",
-          rama.default.gama.linux        = "/GAMA1.8_RC2_EmbeddedJDK_Linux_64bits.zip",
-          rama.default.gama.linux.appdir = "",
-          rama.repo                      = "http://51.255.46.42/releases")
-}
+# onload <- function() {
+#   rama_workspace <- paste0(getwd(), "/workspace")
+#   options(rama.workspace                 = rama_workspace,
+#           rama.temp_dir                  = paste0(rama_workspace, "/temp"),
+#           rama.gama_dir                  = paste0(rama_workspace, "/gama"),
+#           rama.default.gama.win          = "/GAMA1.8_RC2_EmbeddedJDK_Win_64bits.zip",
+#           rama.default.gama.win.appdir   = "",
+#           rama.default.gama.osx          = "/GAMA1.8_RC2_EmbeddedJDK_MacOS.zip",
+#           rama.default.gama.osx.appdir   = "Gama.app",
+#           rama.default.gama.linux        = "/GAMA1.8_RC2_EmbeddedJDK_Linux_64bits.zip",
+#           rama.default.gama.linux.appdir = "",
+#           rama.repo                      = "http://51.255.46.42/releases")
+# }
 
 
 
 
-# Defines the GAMA repository --------------------------------------------------
-
-gama_repo <- function(repo = NULL) {
-  if (! is.null(repo)) options(rama.repo = repo)
-}
 
 
 
