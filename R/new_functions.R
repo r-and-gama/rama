@@ -93,14 +93,14 @@ observation.experiment <- function(x) {
 
 
 #' @export
-`model<-` <- function(x, value) UseMethod("model")
+`model<-` <- function(x, values) UseMethod("model<-")
 
 #' @export
-`model.default<-` <- function(x, value) "Unknown class"
+`model<-.default` <- function(x, values) "Unknown class"
 
 #' @export
-`model.experiment<-` <- function(x, value) {
-  attr(x, "model") <- value
+`model<-.experiment` <- function(x, values) {
+  attr(x, "model") <- values
   x
 }
 
