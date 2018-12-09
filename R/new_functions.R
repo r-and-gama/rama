@@ -54,13 +54,10 @@ load_experiment <- function(experiment, model) {
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE) # removes the above-created workspace directory
   out <- xmlToList(xmlParse(tmp))$Simulation
-  return(out)
-  do.call(plan, lapply(list(get_parameters,
-                            get_seed,
-                            get_duration,
-                            get_observation,
-                            get_process),
-                       function(f) f(out)))
+  out <- do.call(cbind,
+                 lapply(c(get_parameters, get_variables, get_attributes),
+                        function(f) f(out)))
+  out
 }
 
 
