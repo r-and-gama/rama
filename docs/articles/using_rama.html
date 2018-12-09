@@ -97,7 +97,7 @@
 <h2 class="hasAnchor">
 <a href="#installing-rama" class="anchor"></a>1.1 Installing <code>rama</code>
 </h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># installed.packages("devtools")</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 <span class="co"># devtools::install_github("r-and-gama/rama")</span></code></pre></div>
 </div>
 <div id="loading-rama" class="section level2">
@@ -121,7 +121,7 @@
 <h2 class="hasAnchor">
 <a href="#loading-an-experiment-from-a-gaml-file" class="anchor"></a>2.1 Loading an experiment from a GAML file</h2>
 <p>Let’s use the following <code>gaml</code> file:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gaml_file &lt;-<span class="st"> "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gaml_file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"examples"</span>, <span class="st">"sir.gaml"</span>, <span class="dt">package =</span> <span class="st">"rama"</span>)</code></pre></div>
 <p>Loading the experiment <code>sir</code> from this file:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"sir"</span>, gaml_file)
 <span class="co">#&gt; Loading experiment 'sir' from file 'sir.gaml'...</span></code></pre></div>

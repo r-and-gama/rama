@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ## 1.1 Installing `rama`
 
 ```{r}
-# installed.packages("devtools")
+# install.packages("devtools")
 # devtools::install_github("r-and-gama/rama")
 ```
 
@@ -48,7 +48,7 @@ the `experiment()` constructor.
 Let's use the following `gaml` file:
 
 ```{r}
-gaml_file <- "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
+gaml_file <- system.file("examples", "sir.gaml", package = "rama")
 ```
 
 Loading the experiment `sir` from this file:
