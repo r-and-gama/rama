@@ -168,7 +168,7 @@ df
 
 Let's now transform this data frame into an `experiment`:
 
-```{r}
+```{r eval = F, include = F}
 experiment(df)
 ```
 
