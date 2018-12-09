@@ -8,7 +8,11 @@ template_get <- function(x, slot, value) {
 
 get_parameters <- function(...) template_get(..., "Parameters", "value")
 
-get_variables <- function(...) template_get(..., "Outputs", "framerate")
+get_variables <- function(...) {
+  out <- template_get(..., "Outputs", "framerate")
+  out[] <- lapply(out, as.integer)
+  out
+}
 
 #' @importFrom stats setNames
 get_attributes <- function(x) {
