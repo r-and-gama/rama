@@ -58,7 +58,7 @@ load_experiment <- function(experiment, model) {
   the_names <- lapply(out, names)
   out <- do.call(cbind, out)
   class(out) <- c("experiment", class(out))
-  attr(out, "model") <- unname(out["gaml"])
+  attr(out, "model") <- as.character(unname(out$gaml))
   attr(out, "parameters") <- the_names[[1]]
   attr(out, "variables") <- the_names[[2]]
   attr(out, "tmax") <- the_names[[3]][1]
@@ -68,3 +68,10 @@ load_experiment <- function(experiment, model) {
 }
 
 
+model <- function(x) UseMethod("model")
+
+model.default <- function(x) "Unknown class"
+
+model.experiment <- function(x) {
+  attributes(x)$model
+}
