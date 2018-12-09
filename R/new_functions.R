@@ -25,8 +25,8 @@ get_variables <- function(x) {
 #' @importFrom stats setNames
 get_attributes <- function(x) {
   out <- setNames(do.call(function(...) data.frame(..., stringsAsFactors = FALSE),
-                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
-                  c("tmax", "seed", "gaml"))
+                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath", "experiment")])),
+                  c("tmax", "seed", "gaml", "experiment"))
   out$tmax <- as.integer(out$tmax)
   out$seed <- as.numeric(out$seed)
   out
@@ -64,7 +64,9 @@ load_experiment <- function(experiment, model) {
   out <- do.call(cbind, out)
   class(out) <- c("experiment", class(out))
   attr(out, "model") <- as.character(unname(out$gaml))
+  attr(out, "experiment") <- as.character(unname(out$experiment))
   out$gaml <- NULL
+  out$experiment <- NULL
   out
 }
 
@@ -78,6 +80,19 @@ model.default <- function(x) "Unknown class"
 model.experiment <- function(x) {
   attributes(x)$model
 }
+
+
+#' @export
+expname <- function(x) UseMethod("expname")
+
+#' @export
+expname.default <- function(x) "Unknown class"
+
+#' @export
+expname.experiment <- function(x) {
+  attributes(x)$experiment
+}
+
 
 
 #' @export
