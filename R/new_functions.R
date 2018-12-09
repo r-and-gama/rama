@@ -58,6 +58,8 @@ load_experiment <- function(experiment, model) {
                  lapply(c(get_parameters, get_variables, get_attributes),
                         function(f) f(out)))
   class(out) <- c("experiment", class(out))
+  attr(out, "model") <- unname(out["gaml"])
+  out$gaml <- NULL
   out
 }
 
