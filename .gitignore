@@ -5,3 +5,4 @@
 .DS_Store
 ignored/*
 inst/doc
+vignettes/*_cache/*
