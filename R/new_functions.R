@@ -1,18 +1,26 @@
 # get_parameters ---------------------------------------------------------------
 
-template_get <- function(x, slot, value) {
-  x2 <- do.call(rbind, x[[slot]])
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, value])))
-  setNames(x3, x2[, "name"])
+
+get_parameters <- function(x) {
+  x2 <- do.call(rbind, x[["Parameters"]])
+  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
+  x3 <- setNames(x3, x2[, "name"])
+  sel <- grep("INT", x2[, "type"])
+  x3[, sel] <- lapply(x3[, sel], as.integer)
+  x3
 }
 
-get_parameters <- function(...) template_get(..., "Parameters", "value")
 
-get_variables <- function(...) {
-  out <- template_get(..., "Outputs", "framerate")
-  out[] <- lapply(out, as.integer)
-  out
+
+get_variables <- function(x) {
+  x2 <- do.call(rbind, x[["Outputs"]])
+  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
+  x3 <- setNames(x3, x2[, "name"])
+  x3[] <- lapply(x3, as.integer)
+  x3
 }
+
+
 
 #' @importFrom stats setNames
 get_attributes <- function(x) {
