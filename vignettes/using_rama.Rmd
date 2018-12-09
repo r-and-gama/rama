@@ -205,4 +205,9 @@ model(exp1)
 ```
 
 
+## 3.3 Extracting parameters values
+
+## 3.4 Extracting observation rates
+
+
 # 4. Running experiments
