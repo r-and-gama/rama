@@ -8,6 +8,9 @@ writemodelparameterfile(experimentplan, outfile = "")
 }
 \arguments{
 \item{experimentplan}{experiment plan to store}
+
+\item{outfile}{a connection, or a character string naming the file to write
+to. If "", wirte in workgamar folder.}
 }
 \description{
 Save an experiment plan to an xml file. it returns the path of the xml file

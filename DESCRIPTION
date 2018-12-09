@@ -31,10 +31,13 @@ Authors@R: c(person("Marc", "Choisy",
                     role = "aut",
                     comment = c(ORCID = "https://orcid.org/0000-0002-5597-7922")))
 Maintainer: Marc Choisy <marc.choisy@ird.fr>
-Description: An R Interface to the GAMA Simulation Platform
+Description: An R Interface to the GAMA Simulation Platform.
 License: MIT + file LICENSE
 URL: https://github.com/r-and-gama/rama
 BugReports: https://github.com/r-and-gama/rama/issues
 Encoding: UTF-8
+Imports: 
+    animation, 
+    XML
 LazyData: true
 RoxygenNote: 6.1.1

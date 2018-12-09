@@ -6,27 +6,16 @@ template_get <- function(x, slot, value) {
   setNames(x3, x2[, "name"])
 }
 
-
-
-
 get_parameters <- function(...) template_get(..., "Parameters", "value")
-
-
-
 
 get_variables <- function(...) template_get(..., "Outputs", "framerate")
 
-
-
-
+#' @importFrom stats setNames
 get_attributes <- function(x) {
   setNames(do.call(data.frame,
                    as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
            c("tmax", "seed", "gaml"))
 }
-
-
-
 
 # load_experiment --------------------------------------------------------------
 
