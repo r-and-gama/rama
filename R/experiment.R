@@ -1,3 +1,66 @@
+saveToGama <- function(x) UseMethod("saveToGama")
+
+saveToGama.experiment <- function(x,file="out.xml")
+{
+  xmlFile <- xmlOutputDOM( tag="Experiment_plan")
+  id_simulation <- 0
+  for (row_id in 1:nrow(x)) {
+    attrib <- c(id = row_id,
+              seed = x[row_id,]$seed,
+              finalStep = x[row_id,]$tmax,
+              sourcePath = model(x),
+              experiment="sir" )
+    xmlFile$addTag("Simulation", attrs=attrib,  close=FALSE)
+    xmlFile$addTag("Parameters",  close=FALSE)
+    y <- parameters(x[row_id,])
+    for(col_id in 1:ncol(y))
+    {
+      param <- y[,col_id, drop = F]
+      title <- substr(names(param),3,nchar(names(param)))
+      val <- param[1,1]
+      m_type <- "STRING"
+      if(is.numeric(val))
+        if(is.integer(as.numeric(val)))
+        {
+          m_type <- "INT"
+          print(val)
+          print("INT")
+        }
+        else
+        {
+          m_type <- "FLOAT"
+          print(val)
+        }
+      attribut <- c(name = title,
+                    type = m_type,
+                    value = val)
+      xmlFile$addTag("Parameter", attrs=attribut)
+    }
+    xmlFile$closeTag()
+    xmlFile$addTag("Outputs",  close=FALSE)
+    y <- observation(x[row_id,])
+
+    id_out <- 0
+    for(col_id in 1:ncol(y))
+    {
+      param <- y[,col_id, drop = F]
+      print(names(param) )
+      title <- substr(names(param),3,nchar(names(param)))
+      val <- param[1,1]
+      attribut <- c(id = id_out,
+                    name = title,
+                    framerate = val)
+      id_out <- id_out + 1
+      xmlFile$addTag("Output", attrs=attribut)
+    }
+    xmlFile$closeTag()
+    xmlFile$closeTag()
+}
+  xmlFile$closeTag()
+  saveXML(xmlFile$value(), file)
+  file
+}
+
 experiment <- function(x) UseMethod("experiment")
 
 experiment.default <- function() {
@@ -29,7 +92,6 @@ get_parameters.experiment <- function(x)
 {
   attr(x, "parameters")
 }
-
 
 get_outputs.experiment <- function(x)
 {
