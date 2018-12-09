@@ -1,0 +1,116 @@
+---
+title: "Using `rama`"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installing `rama`
+
+```{r}
+# installed.packages("devtools")
+# devtools::install_github("r-and-gama/rama")
+```
+
+## Loading `rama`
+
+```{r}
+library(rama)
+```
+
+## Configuring `rama`
+
+```{r}
+# Not sure we still need this...
+```
+
+## Loading an experiment from a GAML file
+
+Let's use the following `gaml` file:
+
+```{r}
+gaml_file <- "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
+```
+
+Loading the experiment `sir` from this file:
+
+```{r}
+exp1 <- load_experiment("sir", gaml_file)
+```
+
+which gives:
+
+```{r}
+exp1
+```
+
+
+
+## Building an experiment from scratch
+
+Alternatively, an experiment can be built from scratch with the `experiment`
+constructor:
+
+```{r}
+exp2 <- experiment(
+  expand.grid(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),
+  tmax = 1000,
+  seed = 1,
+  model = gaml_file
+)
+```
+
+Which gives the same thing:
+
+```{r}
+exp2
+```
+
+Note that if you enter values of inequal lengths, it will automatically
+complete:
+
+```{r}
+exp3 <- experiment(
+  expand.grid(S0 = c(900, 950, 999),
+              I0 = c(100, 50, 1),
+              R0 = 0,
+              beta = 1.5,
+              gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),
+  tmax = 1000,
+  seed = 1,
+  model = gaml_file
+)
+```
+
+Which gives:
+
+```{r}
+exp3
+```
+
+
+```{r}
+exp4 <- experiment(
+  expand.grid(S0 = c(900, 950, 999),
+              I0 = c(100, 50, 1),
+              R0 = 0,
+              beta = 1.5,
+              gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),
+  tmax = 1000,
+  seed = 1,
+  model = gaml_file
+)
+```

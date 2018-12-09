@@ -36,8 +36,11 @@ License: MIT + file LICENSE
 URL: https://github.com/r-and-gama/rama
 BugReports: https://github.com/r-and-gama/rama/issues
 Encoding: UTF-8
-Imports: 
+Imports:
     animation, 
     XML
 LazyData: true
 RoxygenNote: 6.1.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
