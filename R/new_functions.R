@@ -148,12 +148,13 @@ repl.experiment <- function(x, n) {
 #' )
 #' # If we want to change the seeds:
 #' my_experiment$seed <- 1:9
-experiment <- function(parameters, obsrates, tmax, seed, model) {
+experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
   names(parameters) <- paste0("p_", names(parameters))
   names(obsrates) <- paste0("r_", names(obsrates))
   structure(data.frame(parameters, obsrates,
                        tmax = tmax,
                        seed = seed),
             model = model,
+            experiment = experiment,
             class = c("experiment", "data.frame"))
 }
