@@ -10,7 +10,7 @@ get_parameters <- function(...) template_get(..., "Parameters", "value")
 
 get_variables <- function(...) template_get(..., "Outputs", "framerate")
 
-#' @importFrom utils setNames
+#' @importFrom stats setNames
 get_attributes <- function(x) {
   setNames(do.call(data.frame,
                    as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
