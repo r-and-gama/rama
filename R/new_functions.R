@@ -76,7 +76,7 @@ parameters.default <- function(x) "Unknown class"
 
 #' @export
 parameters.experiment <- function(x) {
-  x[, grep("^p_", names(out), value = TRUE)]
+  x[, grep("^p_", names(x), value = TRUE)]
 }
 
 
@@ -88,7 +88,7 @@ observation.default <- function(x) "Unknown class"
 
 #' @export
 observation.experiment <- function(x) {
-  x[, grep("^r_", names(out), value = TRUE)]
+  x[, grep("^r_", names(x), value = TRUE)]
 }
 
 
