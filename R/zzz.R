@@ -95,7 +95,7 @@ download_gama_ui <- function() {
 #  packageStartupMessage("Check www.gama-platform.org for installation instructions.")
 #download_gama_ui();
 #  defpath("/Users/choisy/Applications/Gama")
-#  defpath("/Applications/Gama.app")
+  defpath("/Applications/Gama.app")
 
 
 }
