@@ -89,3 +89,15 @@ parameters.default <- function(x) "Unknown class"
 parameters.experiment <- function(x) {
   x[, attributes(x)$parameters]
 }
+
+
+#' @export
+variables <- function(x) UseMethod("variables")
+
+#' @export
+variables.default <- function(x) "Unknown class"
+
+#' @export
+variables.experiment <- function(x) {
+  x[, attributes(x)$variables]
+}
