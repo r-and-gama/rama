@@ -12,9 +12,12 @@ get_variables <- function(...) template_get(..., "Outputs", "framerate")
 
 #' @importFrom stats setNames
 get_attributes <- function(x) {
-  setNames(do.call(data.frame,
-                   as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
-           c("tmax", "seed", "gaml"))
+  out <- setNames(do.call(function(...) data.frame(..., stringsAsFactors = FALSE),
+                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
+                  c("tmax", "seed", "gaml"))
+  out$tmax <- as.integer(out$tmax)
+  out$seed <- as.numeric(out$seed)
+  out
 }
 
 # load_experiment --------------------------------------------------------------
@@ -125,7 +128,9 @@ variables.experiment <- function(x) {
 experiment <- function(parameters, obsrates, tmax, seed, model) {
   names(parameters) <- paste0("p_", names(parameters))
   names(obsrates) <- paste0("r_", names(obsrates))
-  structure(data.frame(parameters, obsrates, tmax = tmax, seed = seed),
+  structure(data.frame(parameters, obsrates,
+                       tmax = tmax,
+                       seed = seed),
             model = model,
             class = c("experiment", "data.frame"))
 }
