@@ -105,20 +105,6 @@ observation.experiment <- function(x) {
 
 
 #' @export
-`model<-` <- function(x, values) UseMethod("model<-")
-
-#' @export
-`model<-.default` <- function(x, values) "Unknown class"
-
-#' @export
-`model<-.experiment` <- function(x, values) {
-  attr(x, "model") <- values
-  x
-}
-
-
-
-#' @export
 repl <- function(x, n) UseMethod("repl")
 
 #' @export

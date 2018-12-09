@@ -216,21 +216,9 @@ Which gives:
 exp5
 ```
 
-## 3.2 Seeing and changing the model path
+## 3.2 Seeing the model path
 
 An experiment is linked to a model on a GAMA file. To get the path of this file:
-
-```{r}
-model(exp1)
-```
-
-To change the path of this file:
-
-```{r}
-model(exp1) <- "new_path"
-```
-
-Let's check:
 
 ```{r}
 model(exp1)
