@@ -55,14 +55,11 @@ load_experiment <- function(experiment, model) {
   unlink("workspace", TRUE, TRUE) # removes the above-created workspace directory
   out <- xmlToList(xmlParse(tmp))$Simulation
   out <- lapply(c(get_parameters, get_variables, get_attributes), function(f) f(out))
-  the_names <- lapply(out, names)
+  names(out[[1]]) <- paste0("p_", names(out[[1]]))
+  names(out[[2]]) <- paste0("r_", names(out[[2]]))
   out <- do.call(cbind, out)
   class(out) <- c("experiment", class(out))
   attr(out, "model") <- as.character(unname(out$gaml))
-  attr(out, "parameters") <- the_names[[1]]
-  attr(out, "variables") <- the_names[[2]]
-  attr(out, "tmax") <- the_names[[3]][1]
-  attr(out, "seed") <- the_names[[3]][2]
   out$gaml <- NULL
   out
 }
@@ -102,6 +99,24 @@ variables.experiment <- function(x) {
   x[, attributes(x)$variables]
 }
 
+
+#' @export
+`model<-` <- function(x, value) UseMethod("model")
+
+#' @export
+`model.default<-` <- function(x, value) "Unknown class"
+
+#' @export
+`model.experiment<-` <- function(x, value) {
+  attr(x, "model") <- value
+  x
+}
+
+
+
+
+# ------------------------------------------------------------------------------
+
 #' @export
 #'
 #' @examples
@@ -116,13 +131,12 @@ variables.experiment <- function(x) {
 #'   seed = 1,
 #'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
 #' )
-experiment <- function(parameters, outputs, tmax, seed, model) {
-  out <- cbind(param_val, output_val, tmax, seed)
-  attr(out, "model") <- model
-  attr(out, "parameters") <- names(parameters)
-  attr(out, "variables") <- names(outputs)
-  attr(out, "tmax") <- "tmax"
-  attr(out, "seed") <- "seed"
-  class(out) <- c("experiment", "data.frame")
-  out
+#' # If we want to change the seeds:
+#' my_experiment$seed <- 1:9
+experiment <- function(parameters, obsrates, tmax, seed, model) {
+  names(parameters) <- paste0("p_", names(parameters))
+  names(obsrates) <- paste0("r_", names(obsrates))
+  structure(data.frame(parameters, obsrates, tmax = tmax, seed = seed),
+            model = model,
+            class = c("experiment", "data.frame"))
 }
