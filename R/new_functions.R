@@ -106,6 +106,16 @@ observation.experiment <- function(x) {
 
 
 
+#' @export
+repl <- function(x, n) UseMethod("repl")
+
+#' @export
+repl.default <- function(x, n) "Unknown class"
+
+#' @export
+repl.experiment <- function(x, n) {
+  do.call(rbind, lapply(1:n, function(y) x))
+}
 
 # ------------------------------------------------------------------------------
 
