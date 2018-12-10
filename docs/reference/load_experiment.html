@@ -33,7 +33,7 @@
 <meta property="og:title" content="Load An Experiment — load_experiment" />
 
 <meta property="og:description" content="Loads an experiment from a model specified in a gaml file and returns
-an object of class plan." />
+an object of class experiment." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -134,7 +134,7 @@ an object of class plan." />
     <div class="ref-description">
     
     <p>Loads an experiment from a model specified in a <code>gaml</code> file and returns
-an object of class <code>plan</code>.</p>
+an object of class <code>experiment</code>.</p>
     
     </div>
 
@@ -154,12 +154,24 @@ an object of class <code>plan</code>.</p>
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Looking at the \code{sir.gaml} file in the \code{examples} directory of the</span>
+<span class='co'># \code{rama} library:</span>
+<span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
+
+<span class='co'># Loading the experiment \code{sir} from this gaml file:</span>
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; <span class='message'>Loading experiment 'sir' from file 'sir.gaml'...</span></div><div class='input'>
+<span class='co'># Checking the class:</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "experiment" "data.frame"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

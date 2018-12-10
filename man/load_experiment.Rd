@@ -13,5 +13,17 @@ load_experiment(experiment, model)
 }
 \description{
 Loads an experiment from a model specified in a \code{gaml} file and returns
-an object of class \code{plan}.
+an object of class \code{experiment}.
+}
+\examples{
+# Looking at the \\code{sir.gaml} file in the \\code{examples} directory of the
+# \\code{rama} library:
+gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+
+# Loading the experiment \\code{sir} from this gaml file:
+exp1 <- load_experiment("sir", gaml_file)
+
+# Checking the class:
+class(exp1)
+
 }
