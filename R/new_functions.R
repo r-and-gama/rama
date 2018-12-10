@@ -447,15 +447,3 @@ list_experiment <- function(x) {
   sel <- unname(sapply(gaml, function(x) which(x == "experiment")) + 1)
   unname(unlist(Map(`[`, gaml, sel)))
 }
-
-<<<<<<< HEAD
-=======
-###### work
-
-if (FALSE) {
-  a <- names(parameters(exp5))
-  width <- function(x) {sum(nchar(x)) + length(x) - 1}
-  w_p <- 20
-}
-
->>>>>>> f8c91e8fba6302933831014fbd478af5cbda6c18
