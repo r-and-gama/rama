@@ -75,8 +75,8 @@ load_experiment <- function(experiment, model, dir = "") {
   if(dir == ""){
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
-    message(cat("The directory \"", dir, "\" is created in the current directory ",
-                getwd(), ".", sep = ""))
+    message(cat("The directory \"", dir, "\" is created in the current directory \"",
+                getwd(), "\".", sep = ""))
   }
 
   wk_dir <- paste0(getwd(), "/", dir)
@@ -84,7 +84,7 @@ load_experiment <- function(experiment, model, dir = "") {
     # Check if a file name dir exist already
     dir.create(wk_dir)
   else
-    message(cat("Simulations results will be saved in ", wk_dir, ".", sep = ""))
+    message(cat("Simulations results will be saved in \"", wk_dir, "\".", sep = ""))
 
   # Loading experiment
   message(cat("Loading experiment \"", experiment,
@@ -101,8 +101,8 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- xmlToList(xmlParse(tmp))
   if (is.null(out)) {
     stop(
-      paste0("There is no experiment named \"", experiment, "\" in ",
-             basename(model), "."))
+      paste0("There is no experiment named \"", experiment, "\" in \"",
+             basename(model), "\"."))
   } else {
     out <- out$Simulation
   }
@@ -432,8 +432,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
     names(out)[1] <- ""
     print(out, row.names = FALSE)
   } else print(y)
-  cat("Linked to experiment \"", attributes(x)$experiment, "\" of model ", attributes(x)$model, ".\n", sep = "")
-  cat("Outputs are saved in ", attributes(x)$wkdir, ".\n", sep = "")
+  cat("Linked to experiment \"", attributes(x)$experiment, "\" of model \"", attributes(x)$model, "\".\n", sep = "")
+  cat("Outputs are saved in \"", attributes(x)$wkdir, "\".\n", sep = "")
   cat("Parameters are ", paste(names(param), collapse = ", "), ".\n", sep = "")
   cat("Observed variables are ", paste(names(obser), collapse = ", "), ".", sep = "")
   invisible(x)
