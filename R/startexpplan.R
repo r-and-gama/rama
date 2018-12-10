@@ -25,7 +25,7 @@ createmodelparameterfilename <- function(experimentname) {
 # output directory name:
 createoutputdirectoryname <- function(experimentplan) {
   outdirectory <- createworkingdirectory()
-  defaultname <- getdefaultexperimentplanname(experimentplan)
+  defaultname <- deparse(substitute(experimentplan)) # get experiment
   i <- 0
   repeat {
     i <- i + 1
@@ -65,10 +65,10 @@ writemodelparameterfile <- function(experimentplan,outfile ="") {
 
 
 ################################################################################
-
+#' @export
 startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
   cat(paste0("Running experiment plan ..."))
-  parameterxmlfile <- writemodelparameterfile(experimentplan)
+  # parameterxmlfile <- writemodelparameterfile(experimentplan)
   if(outputdirectory=="")
     outputdirectory <- createoutputdirectoryname(experimentplan)
 
@@ -78,8 +78,8 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
     outputDisplay <-">/dev/null"
   }
 
-  trycommand <- system(paste0("java -jar \"",getOption("gamar.startjar"),"\" -Xms",
-                              getOption("gamar.Xms")," -Xmx",getOption("gamar.Xmx"),
+  trycommand <- system(paste0("java -jar \"",getOption("rama.startjar"),"\" -Xms",
+                              getOption("rama.Xms")," -Xmx",getOption("rama.Xmx"),
                               " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
                               "-application msi.gama.headless.id4 -hpc ",hpc," \"",
                               parameterxmlfile,"\" \"",outputdirectory,"\"", outputDisplay),
@@ -90,12 +90,14 @@ startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
 }
 
 ################################################################################
-
+#' @export
 runexpplan <- function(plan,hpc = 1) {
   # run all the experiments of the plan:
   outfiles <- startexperimentplan(plan,hpc)
   # retrieve the variables names of each experiment:
-  vars <- lapply(plan,function(x)getoutputnames(list(Simulation=x)))
+  # vars <- lapply(plan,function(x)getoutputnames(list(Simulation=x)))
+  vars <- names(plan)[grep("r_", names(plan))]
+  vars <- substring(vars, 3)
   # fct1 retrieves variable "var" of experiment "exp"
   fct1 <- function(exp,var)
     {
@@ -116,7 +118,8 @@ runexpplan <- function(plan,hpc = 1) {
     tmp
   }
   # retrieving all the variables of all the experiments:
-  out <- mapply(fct2,outfiles,vars,SIMPLIFY=F)
+  # out <- mapply(fct2, outfiles, vars, SIMPLIFY=FALSE)
+  out <- lapply(outfiles, fct2, vars)
   # deleting the "workspace" folder:
   unlink("workspace",T,T)
   # return output:
