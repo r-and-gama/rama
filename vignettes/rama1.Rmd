@@ -297,6 +297,6 @@ exp5
 
 Then, we run the experiment by one command `run_experiment`, in which we specify the experiment and optionally number of cores, output folder for the results of this experiment, parameters file in xml format. 
 
-```{r}
+```{r eval = FALSE}
 output <- run_experiment(exp1)
 ```
