@@ -53,10 +53,10 @@ Let's use the following `gaml` file:
 gaml_file <- system.file("examples", "sir.gaml", package = "rama")
 ```
 
-Loading the experiment `sir` from this file:
+Loading the experiment `sir` from this file. We indicate the output folder for each model, if not the name of the `gaml` file is used:
 
 ```{r}
-exp1 <- load_experiment("sir", gaml_file)
+exp1 <- load_experiment("sir", gaml_file, "sir")
 ```
 
 which gives:
@@ -72,7 +72,7 @@ class(exp1)
 ```
 
 This implies that we will be able to use all the data frame methods to
-manipulate experiments. More on that later.
+manipulate experiments. 
 
 ## 2.2 Building an experiment from scratch
 
@@ -188,6 +188,15 @@ number of simulations in an experiment:
 nrow(exp4)
 ```
 
+For example, we add the simulations by:
+
+```{r}
+simulation_num <- 5
+my_experiment1 <- do.call(rbind, lapply(1:simulation_num, function(x) exp1))
+my_experiment1$p_beta <- runif(simulation_num, min = 0, max = 1)
+
+```
+
 
 ## 3.1 Replicating experiments
 
@@ -285,3 +294,9 @@ exp5
 
 
 # 4. Running experiments
+
+Then, we run the experiment by one command `run_experiment`, in which we specify the experiment and optionally number of cores, output folder for the results of this experiment, parameters file in xml format. 
+
+```{r}
+output <- run_experiment(exp1)
+```
