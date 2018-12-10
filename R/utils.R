@@ -33,9 +33,10 @@ gama_remote_distrib <- function() {
 #' @importFrom utils download.file unzip
 download_gama <- function() {
   distrib <- gama_remote_distrib()
+  expDir  <- gama_local_distrib_path();
   path <- paste0(options("rama.temp_dir"), "/")
   distrib_file <- paste0(path, "downloaded_gama.zip")
-  export_dir <-  paste0(options("rama.gama_dir"), "/")
+  export_dir <-  paste0(expDir, "/")
   if (! dir.exists(path)) dir.create(path, recursive = TRUE)
   download.file(distrib, distrib_file, quiet = FALSE, mode = "wb", cacheOK = TRUE)
   unzip(distrib_file, exdir = export_dir )
@@ -47,9 +48,6 @@ download_gama <- function() {
   );
   paste0(export_dir,gama_app);
 }
-
-
-
 
 # ------------------------------------------------------------------------------
 
