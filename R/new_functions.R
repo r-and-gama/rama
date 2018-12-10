@@ -298,12 +298,92 @@ init_experiment <- function(df, model) {
 
 
 
+# indexes_first_and_last -------------------------------------------------------
+
+#' @param x A vector of characters.
+#' @param n The number of elements to extract from the vector x. Should be > 1.
+#'
+#' @return A subvector of n elements of x
+#'
+#' @details If n = 2, it returns the first and the last elements, if n = 3, it
+#'          returns the first 2 and the last elements, if n = 4, it returns the
+#'          first 2 and the last 2 elements, if n = 5, it returns the first 3
+#'          and the last 2 elements, and so on...
+#'
+#' @noRd
+indexes_first_and_last <- function(x, n) {
+  l <- length(x)
+  x[c(1:rep(1:l, each = 2)[n], rep(l:1, each = 2)[n - 1]:l)]
+}
+
+
+
+
+# get_width --------------------------------------------------------------------
+
+#' @param x A vector of characters.
+#' @param n The targeted width, in number of characters, we would like.
+#'
+#' @return The actual width, in number of characters, we get.
+#'
+#' @noRd
+get_width <- function(x, n) {
+  x <- nchar(indexes_first_and_last(x, n))
+  sum(x) + length(x) - 1
+}
+
+
+
+
+# names_of_left_and_right ------------------------------------------------------
+
+#' @param x A vector of characters.
+#' @param th The targeted width, in number of characters, we would like.
+#'
+#' @return A list of two vectors of characters. The first element corresponds to
+#'         the left part and the second element corresponds to the right part.
+#'
+#' @noRd
+names_of_left_and_right <- function(x, th) {
+  tmp <- sapply(2:length(x), get_width, x = x) > th
+  if (all(tmp)) tmp <- x[c(1, length(x))]
+  else tmp <- ind(x, which(tmp)[1])
+  sel <- 1:round(length(tmp) / 2)
+  list(tmp[sel], tmp[-sel])
+}
+
+
+
+
+# insert_middle ----------------------------------------------------------------
+
+#' @param x A data frame.
+#' @param n The width, in number of characters we wish the data frame.
+#'
+#' @return A data frame with reduced number of columns.
+#'
+#' @examples
+#' insert_middle(as.data.frame(exp5), 20)
+#'
+#' @noRd
+insert_middle <- function(x, n, digits = 4) {
+  x <- round(x, digits)
+  a <- names_of_left_and_right(names(x), n)
+  left <- x[, a[[1]]]
+  right <- x[, a[[2]]]
+  middle <- setNames(data.frame(matrix(rep(".", 30), 10), stringsAsFactors = FALSE), rep(".", 3))
+  cbind(left, middle, right)
+}
+
+
+
+
 # print.experiment method ------------------------------------------------------
 
 #' @export
-print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
+print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 20) {
   x <- as.data.frame(x)
-  x[] <- lapply(x, round, digits)
+  x <- insert_middle(x, nchar, digits)
   if (nrow(x) > 2 * n + interspace) {
     h <- head(x, n)
     t <- tail(x, n)
@@ -320,14 +400,4 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
   invisible(x)
 }
 
-
-###### work
-
-if (FALSE) {
-
-a <- names(parameters(exp5))
-width <- function(x) sum(nchar(x)) + length(x) - 1
-w_p <- 20
-
-}
 
