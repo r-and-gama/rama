@@ -25,16 +25,10 @@ export(model)
 export(observation)
 export(parameters)
 export(repl)
-<<<<<<< HEAD
-export(runexpplan)
-export(save_to_gama)
-export(startexperimentplan)
-=======
 export(run_experiment)
 export(save_to_gama)
 importFrom(XML,saveXML)
 importFrom(XML,xmlOutputDOM)
->>>>>>> NAMESPACE changed
 importFrom(XML,xmlParse)
 importFrom(XML,xmlToList)
 importFrom(stats,setNames)
