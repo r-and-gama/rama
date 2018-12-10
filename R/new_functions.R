@@ -313,5 +313,6 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
     names(out)[1] <- ""
     print(out, row.names = FALSE)
   } else print(x)
+  cat(paste0("Linked to experiment \"", attributes(exp5)$experiment, "\" of model ", attributes(exp5)$model, "."))
   invisible(x)
 }
