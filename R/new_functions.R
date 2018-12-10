@@ -195,7 +195,6 @@ observation.experiment <- function(x) {
   x[, grep("^r_", names(x), value = TRUE)]
 }
 
-
 #' @export
 repl <- function(x, n) UseMethod("repl")
 
