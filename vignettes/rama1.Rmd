@@ -1,5 +1,5 @@
 ---
-title: "Using `rama`"
+title: "1. Getting started"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

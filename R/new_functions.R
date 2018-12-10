@@ -1,6 +1,5 @@
 # get_parameters ---------------------------------------------------------------
 
-
 get_parameters <- function(x) {
   x2 <- do.call(rbind, x[["Parameters"]])
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
@@ -12,6 +11,9 @@ get_parameters <- function(x) {
 
 
 
+
+# get_variables ----------------------------------------------------------------
+
 get_variables <- function(x) {
   x2 <- do.call(rbind, x[["Outputs"]])
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
@@ -22,6 +24,9 @@ get_variables <- function(x) {
 
 
 
+
+# get_attributes ---------------------------------------------------------------
+
 #' @importFrom stats setNames
 get_attributes <- function(x) {
   out <- setNames(do.call(function(...) data.frame(..., stringsAsFactors = FALSE),
@@ -31,6 +36,9 @@ get_attributes <- function(x) {
   out$seed <- as.numeric(out$seed)
   out
 }
+
+
+
 
 # load_experiment --------------------------------------------------------------
 
@@ -70,8 +78,11 @@ load_experiment <- function(experiment, model) {
   out
 }
 
+
+
+# save
 #' @export
-save_to_gama <- function(plan,file) UseMethod("save_to_gama")
+save_to_gama <- function(plan, file) UseMethod("save_to_gama")
 
 # save_to_gama --------------------------------------------------------------
 
