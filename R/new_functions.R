@@ -9,9 +9,6 @@ get_parameters <- function(x) {
   x3
 }
 
-
-
-
 # get_variables ----------------------------------------------------------------
 
 get_variables <- function(x) {
@@ -349,7 +346,6 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
   cat(paste0("Linked to experiment \"", attributes(exp5)$experiment, "\" of model ", attributes(exp5)$model, "."))
   invisible(x)
 }
-
 
 # list_experiments --------------------------------------------------------------
 
