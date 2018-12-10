@@ -65,6 +65,9 @@ get_attributes <- function(x) {
 #'
 #' @export
 load_experiment <- function(experiment, model) {
+  if (!file.exists(model)) {
+    stop(paste0("There is no file '", model, "'. "))
+  }
   message(cat("Loading experiment '", experiment,
           "' from file '", basename(model), "'..."))
   tmp <- tempfile(fileext = ".xml")
