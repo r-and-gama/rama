@@ -1,28 +1,44 @@
 # get_parameters ---------------------------------------------------------------
 
-template_get <- function(x, slot, value) {
-  x2 <- do.call(rbind, x[[slot]])
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, value])))
-  setNames(x3, x2[, "name"])
+get_parameters <- function(x) {
+  x2 <- do.call(rbind, x[["Parameters"]])
+  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
+  x3 <- setNames(x3, x2[, "name"])
+  sel <- grep("INT", x2[, "type"])
+  x3[, sel] <- lapply(x3[, sel], as.integer)
+  x3
 }
 
-get_parameters <- function(...) template_get(..., "Parameters", "value")
 
-get_variables <- function(...) {
-  out <- template_get(..., "Outputs", "framerate")
-  out[] <- lapply(out, as.integer)
-  out
+
+
+# get_variables ----------------------------------------------------------------
+
+get_variables <- function(x) {
+  x2 <- do.call(rbind, x[["Outputs"]])
+  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
+  x3 <- setNames(x3, x2[, "name"])
+  x3[] <- lapply(x3, as.integer)
+  x3
 }
+
+
+
+
+# get_attributes ---------------------------------------------------------------
 
 #' @importFrom stats setNames
 get_attributes <- function(x) {
   out <- setNames(do.call(function(...) data.frame(..., stringsAsFactors = FALSE),
-                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath")])),
-                  c("tmax", "seed", "gaml"))
+                          as.list(x$.attrs[c("finalStep", "seed", "sourcePath", "experiment")])),
+                  c("tmax", "seed", "gaml", "experiment"))
   out$tmax <- as.integer(out$tmax)
   out$seed <- as.numeric(out$seed)
   out
 }
+
+
+
 
 # load_experiment --------------------------------------------------------------
 
@@ -56,9 +72,91 @@ load_experiment <- function(experiment, model) {
   out <- do.call(cbind, out)
   class(out) <- c("experiment", class(out))
   attr(out, "model") <- as.character(unname(out$gaml))
+  attr(out, "experiment") <- as.character(unname(out$experiment))
   out$gaml <- NULL
+  out$experiment <- NULL
   out
 }
+
+
+
+# save
+#' @export
+save_to_gama <- function(plan, file) UseMethod("save_to_gama")
+
+# save_to_gama --------------------------------------------------------------
+
+#' Save an experiment plan to gama xml file
+#'
+#' Save an xml \code{file} containing the experiment plan defined in the object of class \code{experiment}.
+#'
+#' @param plan Object of class experiment containing all experiment to do
+#' @param file The path where you want to save the file.
+#'
+#' @importFrom XML xmlToList xmlParse
+#'
+#' @export
+save_to_gama.experiment <- function(plan,file="out.xml")
+{
+  xmlFile <- xmlOutputDOM( tag="Experiment_plan")
+  id_simulation <- 0
+  for (row_id in 1:nrow(plan)) {
+    attrib <- c(id = row_id,
+                seed = plan[row_id,]$seed,
+                finalStep = plan[row_id,]$tmax,
+                sourcePath = model(plan),
+                experiment=expname(plan))
+    xmlFile$addTag("Simulation", attrs=attrib,  close=FALSE)
+    xmlFile$addTag("Parameters",  close=FALSE)
+    y <- parameters(plan[row_id,])
+    for(col_id in 1:ncol(y))
+    {
+      param <- y[,col_id, drop = F]
+      title <- substr(names(param),3,nchar(names(param)))
+      val <- param[1,1]
+      m_type <- "STRING"
+      if(is.numeric(val))
+        if(is.integer(val))
+        {
+          m_type <- "INT"
+        }
+      else
+      {
+        m_type <- "FLOAT"
+      }
+      attribut <- c(name = title,
+                    type = m_type,
+                    value = val)
+      xmlFile$addTag("Parameter", attrs=attribut)
+    }
+    xmlFile$closeTag()
+    xmlFile$addTag("Outputs",  close=FALSE)
+    y <- observation(plan[row_id,])
+    id_out <- 0
+    for(col_id in 1:ncol(y))
+    {
+      param <- y[,col_id, drop = F]
+      title <- substr(names(param),3,nchar(names(param)))
+      val <- param[1,1]
+      attribut <- c(id = id_out,
+                    name = title,
+                    framerate = val)
+      id_out <- id_out + 1
+      xmlFile$addTag("Output", attrs=attribut)
+    }
+    xmlFile$closeTag()
+    xmlFile$closeTag()
+  }
+  xmlFile$closeTag()
+  saveXML(xmlFile$value(), file)
+  normalizePath(file)
+}
+
+
+
+
+
+
 
 #' @export
 model <- function(x) UseMethod("model")
@@ -70,6 +168,19 @@ model.default <- function(x) "Unknown class"
 model.experiment <- function(x) {
   attributes(x)$model
 }
+
+
+#' @export
+expname <- function(x) UseMethod("expname")
+
+#' @export
+expname.default <- function(x) "Unknown class"
+
+#' @export
+expname.experiment <- function(x) {
+  attributes(x)$experiment
+}
+
 
 
 #' @export
@@ -94,21 +205,6 @@ observation.default <- function(x) "Unknown class"
 observation.experiment <- function(x) {
   x[, grep("^r_", names(x), value = TRUE)]
 }
-
-
-#' @export
-`model<-` <- function(x, values) UseMethod("model<-")
-
-#' @export
-`model<-.default` <- function(x, values) "Unknown class"
-
-#' @export
-`model<-.experiment` <- function(x, values) {
-  attr(x, "model") <- values
-  x
-}
-
-
 
 #' @export
 repl <- function(x, n) UseMethod("repl")
@@ -139,12 +235,32 @@ repl.experiment <- function(x, n) {
 #' )
 #' # If we want to change the seeds:
 #' my_experiment$seed <- 1:9
-experiment <- function(parameters, obsrates, tmax, seed, model) {
+experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
   names(parameters) <- paste0("p_", names(parameters))
   names(obsrates) <- paste0("r_", names(obsrates))
   structure(data.frame(parameters, obsrates,
                        tmax = tmax,
                        seed = seed),
             model = model,
+            experiment = experiment,
             class = c("experiment", "data.frame"))
 }
+
+#' @export
+init_experiment <- function(df, model) {
+  structure(df,
+            model = model,
+            class = c("experiment", "data.frame"))
+}
+
+#' @export
+repl <- function(x, n) UseMethod("repl")
+
+#' @export
+repl.default <- function(x, n) "Unknown class"
+
+#' @export
+repl.experiment <- function(x, n) {
+  do.call(rbind, lapply(1:n, function(y) x))
+}
+

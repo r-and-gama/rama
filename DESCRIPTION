@@ -26,7 +26,7 @@ Authors@R: c(person("Marc", "Choisy",
                     email = "nicolas.marilleau@ird.fr", 
                     role = "aut",
                     comment = c(ORCID = "https://orcid.org/0000-0002-1004-4352")),
-             person("Jean-Daniel Zucker", "Zucker", 
+             person("Jean-Daniel", "Zucker", 
                     email = "jean-daniel.zucker@ird.fr", 
                     role = "aut",
                     comment = c(ORCID = "https://orcid.org/0000-0002-5597-7922")))
