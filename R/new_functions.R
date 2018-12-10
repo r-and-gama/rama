@@ -351,6 +351,27 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
 }
 
 
+# list_experiments --------------------------------------------------------------
+
+#' List a model's experiments
+#'
+#' List the experiments of a given model.
+#'
+#' @param x path to a gaml model file.
+#'
+#' @importFrom readtext readtext
+#'
+#' @export
+#'
+list_experiment <- function(x) {
+  gaml <- readtext(x, verbosity = FALSE)
+  gaml <- strsplit(gaml$text, "\n")[[1]]  # because strsplit returns a list
+  gaml <- gaml[grepl("^ *experiment", gaml)]
+  gaml <- sapply(gaml, function(x) strsplit(gsub("  *", " ", x), " "))
+  sel <- unname(sapply(gaml, function(x) which(x == "experiment")) + 1)
+  unname(unlist(Map(`[`, gaml, sel)))
+}
+
 ###### work
 
 if (FALSE) {
