@@ -458,6 +458,9 @@ list_experiment <- function(x) {
   gaml <- readtext(x, verbosity = FALSE)
   gaml <- strsplit(gaml$text, "\n")[[1]]  # because strsplit returns a list
   gaml <- gaml[grepl("^ *experiment", gaml)]
+  if (length(gaml) == 0) {
+    stop("There is no experiment in this model.")
+  }
   gaml <- sapply(gaml, function(x) strsplit(gsub("  *", " ", x), " "))
   sel <- unname(sapply(gaml, function(x) which(x == "experiment")) + 1)
   unname(unlist(Map(`[`, gaml, sel)))

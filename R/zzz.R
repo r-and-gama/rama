@@ -7,8 +7,8 @@ set_environment_variables <- function()
           rama.temp_dir                      = paste0(rama_workspace, "/temp"),
           rama.gama_dir                      = paste0(rama_workspace, "/gama"),
           rama.default.gama.win              = "/GAMA1.8_RC2_EmbeddedJDK_Win_64bits.zip",
-          rama.default.gama.win.appdir       = "C:/Program Files/Gama",
-          rama.default.gama.win.zip.appdir   = "",
+          rama.default.gama.win.appdir       = "c:/programmes/Gama",
+          rama.default.gama.win.zip.appdir   = ".",
           rama.default.gama.osx              = "/GAMA1.8_RC2_EmbeddedJDK_MacOS.zip",
           rama.default.gama.osx.appdir       = "/Applications/Gama.app",
           rama.default.gama.osx.zip.appdir   = "Gama.app",
@@ -27,7 +27,7 @@ get_os <- function() paste0(Sys.info()["sysname"])
 
 
 # Gives distrib as a function of the OS ----------------------------------------
-
+#' @export
 gama_remote_distrib <- function() {
   switch(get_os(),
          "Darwin"  = paste0(options("rama.repo"), options("rama.default.gama.osx")),
@@ -36,7 +36,7 @@ gama_remote_distrib <- function() {
 }
 
 # ------------------------------------------------------------------------------
-
+#' @export
 gama_local_distrib_path <- function() {
   path <- switch(get_os(),
          "Darwin"  = options("rama.default.gama.osx.appdir"),
@@ -44,30 +44,6 @@ gama_local_distrib_path <- function() {
          "linux"  = options("rama.default.gama.linux.appdir")) # to complete
   unlist(path)
 }
-
-
-
-# Downloads gama ---------------------------------------------------------------
-
-
-#' @importFrom utils download.file unzip
-download_gama <- function() {
-  distrib <- gama_remote_distrib()
-  path <- paste0(options("rama.temp_dir"), "/")
-  distrib_file <- paste0(path, "downloaded_gama.zip")
-  export_dir <-  paste0(options("rama.gama_dir"), "/")
-  if (! dir.exists(path)) dir.create(path, recursive = TRUE)
-  download.file(distrib, distrib_file, quiet = FALSE, mode = "wb", cacheOK = TRUE)
-  unzip(distrib_file, exdir = export_dir )
-  file.remove(distrib_file)
-  gama_app <- switch(get_os(),
-         "Darwin" = options("rama.default.gama.osx.zip.appdir"),
-         "Window" = options("rama.default.gama.win.zip.appdir"),
-         "linux" = options("rama.default.gama.linux.zip.appdir")
-         );
-  paste0(export_dir,gama_app);
-}
-
 
 # -------------------------------------------
 
