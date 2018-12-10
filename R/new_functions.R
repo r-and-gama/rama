@@ -49,6 +49,8 @@ get_attributes <- function(x) {
 #'
 #' @param experiment The name of the experiment to load.
 #' @param model The name of the file from which to load the experiment.
+#' @param dir The name of the directory to save the output of the runs for each
+#' model. If not specified, name of the gaml file will be used
 #'
 #' @examples
 #' # Looking at the \code{sir.gaml} file in the \code{examples} directory of the
@@ -64,12 +66,32 @@ get_attributes <- function(x) {
 #' @importFrom XML xmlToList xmlParse
 #'
 #' @export
-load_experiment <- function(experiment, model) {
+load_experiment <- function(experiment, model, dir = "") {
+
   if (!file.exists(model)) {
     stop(paste0("There is no file '", model, "'. "))
   }
+  # Making working directory
+
+  message("Creating working directory '", dir, "' in '", getwd(), "'...." )
+
+  if(dir == ""){
+    # get model name from gaml file
+    dir <- gsub(".gaml", "", basename(model))
+    message(cat("The directory '", dir, "' is created in '", getwd(),
+            "' as current working directory."))
+  }
+
+  wk_dir <- paste0(getwd(), "/", dir)
+  if(!file.exists(wk_dir))
+    # Check if a file name dir exist already
+    dir.create(wk_dir)
+  else
+    message(cat("You are working in '", wk_dir, "'."))
+
+  # Loading experiment
   message(cat("Loading experiment '", experiment,
-          "' from file '", basename(model), "'..."))
+              "' from file '", basename(model), "'..."))
   tmp <- tempfile(fileext = ".xml")
   system(paste0("java -jar ", getOption("rama.startjar"),
                 " -Xms", getOption("rama.Xms"),
@@ -94,6 +116,7 @@ load_experiment <- function(experiment, model) {
   class(out) <- c("experiment", class(out))
   attr(out, "model") <- as.character(unname(out$gaml))
   attr(out, "experiment") <- as.character(unname(out$experiment))
+  attr(out, "wkdir") <- wk_dir
   out$gaml <- NULL
   out$experiment <- NULL
   out
@@ -117,11 +140,10 @@ save_to_gama <- function(plan, file) UseMethod("save_to_gama")
 #' @param plan Object of class experiment containing all experiment to do
 #' @param file The path where you want to save the file.
 #'
-#' @importFrom XML xmlToList xmlParse
+#' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #'
 #' @export
-save_to_gama.experiment <- function(plan, file = "out.xml")
-{
+save_to_gama.experiment <- function(plan, file = "out.xml") {
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
   id_simulation <- 0
   for(row_id in 1:nrow(plan)) {
@@ -171,10 +193,18 @@ save_to_gama.experiment <- function(plan, file = "out.xml")
   normalizePath(file)
 }
 
+#' @export
+get_wkdir <- function(x) UseMethod("get_wkdir")
 
+#' @export
+get_wkdir.default <- function(x) "Unknown class"
 
 
 # model ------------------------------------------------------------------------
+#' @export
+get_wkdir.experiment <- function(x) {
+  attributes(x)$wkdir
+}
 
 #' @export
 model <- function(x) UseMethod("model")
@@ -324,10 +354,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
 ###### work
 
 if (FALSE) {
-
-a <- names(parameters(exp5))
-width <- function(x) sum(nchar(x)) + length(x) - 1
-w_p <- 20
-
+  a <- names(parameters(exp5))
+  width <- function(x) {sum(nchar(x)) + length(x) - 1}
+  w_p <- 20
 }
 
