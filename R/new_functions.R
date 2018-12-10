@@ -411,6 +411,9 @@ insert_middle <- function(x, n, digits = 4) {
 print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 20) {
   x <- as.data.frame(x)
   x <- insert_middle(x, nchar, digits)
+  x <- cbind(insert_middle(parameters(x), nchar, digits),
+             insert_middle(observation(x), nchar, digits),
+             x[, c("tmax", "seed")])
   if (nrow(x) > 2 * n + interspace) {
     h <- head(x, n)
     t <- tail(x, n)
