@@ -4,5 +4,5 @@
 #' as described in an XML file.
 #'
 #' @docType package
-#' @name gamar-package
+#' @name rama-package
 NULL

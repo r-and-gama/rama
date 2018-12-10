@@ -1,6 +1,5 @@
 # get_parameters ---------------------------------------------------------------
 
-
 get_parameters <- function(x) {
   x2 <- do.call(rbind, x[["Parameters"]])
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
@@ -12,6 +11,9 @@ get_parameters <- function(x) {
 
 
 
+
+# get_variables ----------------------------------------------------------------
+
 get_variables <- function(x) {
   x2 <- do.call(rbind, x[["Outputs"]])
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
@@ -21,6 +23,9 @@ get_variables <- function(x) {
 }
 
 
+
+
+# get_attributes ---------------------------------------------------------------
 
 #' @importFrom stats setNames
 get_attributes <- function(x) {
@@ -32,22 +37,61 @@ get_attributes <- function(x) {
   out
 }
 
+
+
+
 # load_experiment --------------------------------------------------------------
 
 #' Load An Experiment
 #'
 #' Loads an experiment from a model specified in a \code{gaml} file and returns
-#' an object of class \code{plan}.
+#' an object of class \code{experiment}.
 #'
 #' @param experiment The name of the experiment to load.
 #' @param model The name of the file from which to load the experiment.
+#' @param dir The name of the directory to save the output of the runs for each
+#' model. If not specified, name of the gaml file will be used
+#'
+#' @examples
+#' # Looking at the \code{sir.gaml} file in the \code{examples} directory of the
+#' # \code{rama} library:
+#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+#'
+#' # Loading the experiment \code{sir} from this gaml file:
+#' exp1 <- load_experiment("sir", gaml_file)
+#'
+#' # Checking the class:
+#' class(exp1)
 #'
 #' @importFrom XML xmlToList xmlParse
 #'
 #' @export
-load_experiment <- function(experiment, model) {
-  message("Loading experiment '", experiment,
-          "' from file '", basename(model), "'...")
+load_experiment <- function(experiment, model, dir = "") {
+
+  if (!file.exists(model)) {
+    stop(paste0("There is no file '", model, "'. "))
+  }
+  # Making working directory
+
+  message("Creating working directory '", dir, "' in '", getwd(), "'...." )
+
+  if(dir == ""){
+    # get model name from gaml file
+    dir <- gsub(".gaml", "", basename(model))
+    message(cat("The directory '", dir, "' is created in '", getwd(),
+            "' as current working directory."))
+  }
+
+  wk_dir <- paste0(getwd(), "/", dir)
+  if(!file.exists(wk_dir))
+    # Check if a file name dir exist already
+    dir.create(wk_dir)
+  else
+    message(cat("You are working in '", wk_dir, "'."))
+
+  # Loading experiment
+  message(cat("Loading experiment '", experiment,
+              "' from file '", basename(model), "'..."))
   tmp <- tempfile(fileext = ".xml")
   system(paste0("java -jar ", getOption("rama.startjar"),
                 " -Xms", getOption("rama.Xms"),
@@ -57,7 +101,14 @@ load_experiment <- function(experiment, model) {
                 experiment, " ", model, " ", tmp, " > /dev/null"),
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE) # removes the above-created workspace directory
-  out <- xmlToList(xmlParse(tmp))$Simulation
+  out <- xmlToList(xmlParse(tmp))
+  if (is.null(out)) {
+    stop(
+      paste0("There is no experiment named '", experiment, "' in ",
+             basename(model), "."))
+  } else {
+    out <- out$Simulation
+  }
   out <- lapply(c(get_parameters, get_variables, get_attributes), function(f) f(out))
   names(out[[1]]) <- paste0("p_", names(out[[1]]))
   names(out[[2]]) <- paste0("r_", names(out[[2]]))
@@ -65,15 +116,22 @@ load_experiment <- function(experiment, model) {
   class(out) <- c("experiment", class(out))
   attr(out, "model") <- as.character(unname(out$gaml))
   attr(out, "experiment") <- as.character(unname(out$experiment))
+  attr(out, "wkdir") <- wk_dir
   out$gaml <- NULL
   out$experiment <- NULL
   out
 }
 
-#' @export
-save_to_gama <- function(plan,file) UseMethod("save_to_gama")
 
-# save_to_gama --------------------------------------------------------------
+
+
+# save_to_gama -----------------------------------------------------------------
+
+#' @export
+save_to_gama <- function(plan, file) UseMethod("save_to_gama")
+
+
+
 
 #' Save an experiment plan to gama xml file
 #'
@@ -82,56 +140,50 @@ save_to_gama <- function(plan,file) UseMethod("save_to_gama")
 #' @param plan Object of class experiment containing all experiment to do
 #' @param file The path where you want to save the file.
 #'
-#' @importFrom XML xmlToList xmlParse
+#' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #'
 #' @export
-save_to_gama.experiment <- function(plan,file="out.xml")
-{
-  xmlFile <- xmlOutputDOM( tag="Experiment_plan")
+save_to_gama.experiment <- function(plan, file = "out.xml") {
+  xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
   id_simulation <- 0
-  for (row_id in 1:nrow(plan)) {
-    attrib <- c(id = row_id,
-                seed = plan[row_id,]$seed,
-                finalStep = plan[row_id,]$tmax,
+  for(row_id in 1:nrow(plan)) {
+    attrib <- c(id         = row_id,
+                seed       = plan[row_id,]$seed,
+                finalStep  = plan[row_id,]$tmax,
                 sourcePath = model(plan),
-                experiment=expname(plan))
-    xmlFile$addTag("Simulation", attrs=attrib,  close=FALSE)
-    xmlFile$addTag("Parameters",  close=FALSE)
-    y <- parameters(plan[row_id,])
-    for(col_id in 1:ncol(y))
-    {
-      param <- y[,col_id, drop = F]
-      title <- substr(names(param),3,nchar(names(param)))
-      val <- param[1,1]
+                experiment = expname(plan))
+    xmlFile$addTag("Simulation", attrs = attrib, close = FALSE)
+    xmlFile$addTag("Parameters", close = FALSE)
+    y <- parameters(plan[row_id, ])
+    for(col_id in 1:ncol(y)) {
+      param <- y[, col_id, drop = FALSE]
+      title <- substr(names(param), 3, nchar(names(param)))
+      val <- param[1, 1]
       m_type <- "STRING"
-      if(is.numeric(val))
-        if(is.integer(val))
-        {
+      if (is.numeric(val)) {
+        if (is.integer(val)) {
           m_type <- "INT"
-        }
-      else
-      {
-        m_type <- "FLOAT"
+        } else m_type <- "FLOAT"
       }
-      attribut <- c(name = title,
-                    type = m_type,
+      attribut <- c(name  = title,
+                    type  = m_type,
                     value = val)
-      xmlFile$addTag("Parameter", attrs=attribut)
+      xmlFile$addTag("Parameter", attrs = attribut)
     }
     xmlFile$closeTag()
-    xmlFile$addTag("Outputs",  close=FALSE)
-    y <- observation(plan[row_id,])
+    xmlFile$addTag("Outputs", close = FALSE)
+    y <- observation(plan[row_id, ])
     id_out <- 0
     for(col_id in 1:ncol(y))
     {
-      param <- y[,col_id, drop = F]
-      title <- substr(names(param),3,nchar(names(param)))
-      val <- param[1,1]
-      attribut <- c(id = id_out,
-                    name = title,
+      param <- y[, col_id, drop = FALSE]
+      title <- substr(names(param), 3, nchar(names(param)))
+      val <- param[1, 1]
+      attribut <- c(id        = id_out,
+                    name      = title,
                     framerate = val)
       id_out <- id_out + 1
-      xmlFile$addTag("Output", attrs=attribut)
+      xmlFile$addTag("Output", attrs = attribut)
     }
     xmlFile$closeTag()
     xmlFile$closeTag()
@@ -141,11 +193,18 @@ save_to_gama.experiment <- function(plan,file="out.xml")
   normalizePath(file)
 }
 
+#' @export
+get_wkdir <- function(x) UseMethod("get_wkdir")
+
+#' @export
+get_wkdir.default <- function(x) "Unknown class"
 
 
-
-
-
+# model ------------------------------------------------------------------------
+#' @export
+get_wkdir.experiment <- function(x) {
+  attributes(x)$wkdir
+}
 
 #' @export
 model <- function(x) UseMethod("model")
@@ -158,6 +217,10 @@ model.experiment <- function(x) {
   attributes(x)$model
 }
 
+
+
+
+# expname ----------------------------------------------------------------------
 
 #' @export
 expname <- function(x) UseMethod("expname")
@@ -172,6 +235,9 @@ expname.experiment <- function(x) {
 
 
 
+
+# parameters -------------------------------------------------------------------
+
 #' @export
 parameters <- function(x) UseMethod("parameters")
 
@@ -180,9 +246,13 @@ parameters.default <- function(x) "Unknown class"
 
 #' @export
 parameters.experiment <- function(x) {
-  x[, grep("^p_", names(x), value = TRUE)]
+  as.data.frame(x[, grep("^p_", names(x), value = TRUE)])
 }
 
+
+
+
+# observation ------------------------------------------------------------------
 
 #' @export
 observation <- function(x) UseMethod("observation")
@@ -192,9 +262,13 @@ observation.default <- function(x) "Unknown class"
 
 #' @export
 observation.experiment <- function(x) {
-  x[, grep("^r_", names(x), value = TRUE)]
+  as.data.frame(x[, grep("^r_", names(x), value = TRUE)])
 }
 
+
+
+
+# repl -------------------------------------------------------------------------
 
 #' @export
 repl <- function(x, n) UseMethod("repl")
@@ -207,7 +281,10 @@ repl.experiment <- function(x, n) {
   do.call(rbind, lapply(1:n, function(y) x))
 }
 
-# ------------------------------------------------------------------------------
+
+
+
+# experiment -------------------------------------------------------------------
 
 #' @export
 #'
@@ -235,3 +312,50 @@ experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
             experiment = experiment,
             class = c("experiment", "data.frame"))
 }
+
+
+
+
+# init_experiment --------------------------------------------------------------
+
+#' @export
+init_experiment <- function(df, model) {
+  structure(df,
+            model = model,
+            class = c("experiment", "data.frame"))
+}
+
+
+
+
+# print.experiment method ------------------------------------------------------
+
+#' @export
+print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
+  x <- as.data.frame(x)
+  x[] <- lapply(x, round, digits)
+  if (nrow(x) > 2 * n + interspace) {
+    h <- head(x, n)
+    t <- tail(x, n)
+    hn <- rownames(h)
+    tn <- rownames(t)
+    m <- setNames(as.data.frame(matrix(".", interspace, ncol(x)),
+                                stringsAsFactors = FALSE), names(x))
+    out <- rbind(h, m, t)
+    out <- cbind(c(hn, rep(".", interspace), tn), out)
+    names(out)[1] <- ""
+    print(out, row.names = FALSE)
+  } else print(x)
+  cat(paste0("Linked to experiment \"", attributes(exp5)$experiment, "\" of model ", attributes(exp5)$model, "."))
+  invisible(x)
+}
+
+
+###### work
+
+if (FALSE) {
+  a <- names(parameters(exp5))
+  width <- function(x) {sum(nchar(x)) + length(x) - 1}
+  w_p <- 20
+}
+

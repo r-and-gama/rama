@@ -1,127 +1,118 @@
 # mercredi 12 avril 2017
-# working directory:
-createworkingdirectory <- function() {
-  outdirectory <- paste0(getwd(),"/workgamar")
-  if(!file.exists(outdirectory)) dir.create(outdirectory)
-  outdirectory
-}
-
-################################################################################
 
 # returns the name of an available subfolder:
-createmodelparameterfilename <- function(experimentname) {
-  outdirectory <- createworkingdirectory()
-  i <- 0
-  repeat {
-    i <- i + 1
-    outfile <- paste0(outdirectory,"/",experimentname,"_",i,".xml")
-    if(!file.exists(outfile)) break
-  }
-  outfile
-}
+# createmodelparameterfilename <- function(experimentname) {
+#   outdirectory <- createworkingdirectory()
+#   i <- 0
+#   repeat {
+#     i <- i + 1
+#     outfile <- paste0(outdirectory,"/",experimentname,"_",i,".xml")
+#     if(!file.exists(outfile)) break
+#   }
+#   outfile
+# }
 
 ################################################################################
 
 # output directory name:
-createoutputdirectoryname <- function(experimentplan) {
-  outdirectory <- createworkingdirectory()
-  defaultname <- getdefaultexperimentplanname(experimentplan)
+#' @export
+create_output_dir <- function(experiment_plan, dir = "") {
+  wkdir <- get_wkdir(experiment_plan)
+  if(dir == "")
+    dir <- expname(experiment_plan) # name of experiment
   i <- 0
   repeat {
     i <- i + 1
-    outfile <- paste0(outdirectory,"/out_",defaultname,"_",i)
-    if(!file.exists(outfile)) break
+    out_dir <- paste0(wkdir, "/", dir, "_", i)
+    if(!file.exists(out_dir)) break
   }
-  outfile
+  dir.create(out_dir)
+  out_dir
 }
 
 ################################################################################
+#' @export
 
-#' store experimentplan
-#'
-#' Save an experiment plan to an xml file. it returns the path of the xml file
-#'
-#' @inheritParams run
-#' @param experimentplan  experiment plan to store
-#' @param outfile a connection, or a character string naming the file to write
-#'   to. If "", wirte in workgamar folder.
-
-
-
-#  writemodelparameterfile <- function(experimentplan) {
-#    outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
-#    xml <- buildxmlfromexperimentplan(experimentplan)
-#    write(xml,outfile,sep="")
-#    outfile
-#  }
-
-writemodelparameterfile <- function(experimentplan,outfile ="") {
-  if(outfile == "")
-    outfile <- createmodelparameterfilename(getdefaultexperimentplanname(experimentplan))
-   xml <- buildxmlfromexperimentplan(experimentplan)
-  write(xml,outfile,sep="")
-  outfile
-}
-
-
-################################################################################
-
-startexperimentplan <- function(experimentplan,hpc=1,outputdirectory="") {
+call_gama <- function(experiment_plan, hpc, output_dir, parameter_xml_file) {
   cat(paste0("Running experiment plan ..."))
-  parameterxmlfile <- writemodelparameterfile(experimentplan)
-  if(outputdirectory=="")
-    outputdirectory <- createoutputdirectoryname(experimentplan)
 
-  outputDisplay <- ""
-  if(iswindows()==FALSE)
+  output_display <- ""
+  if(isWindows()==FALSE)
   {
-    outputDisplay <-">/dev/null"
+    output_display <-">/dev/null"
   }
 
-  trycommand <- system(paste0("java -jar \"",getOption("gamar.startjar"),"\" -Xms",
-                              getOption("gamar.Xms")," -Xmx",getOption("gamar.Xmx"),
+  gama_command <- system(paste0("java -jar \"",getOption("rama.startjar"),"\" -Xms",
+                              getOption("rama.Xms")," -Xmx",getOption("rama.Xmx"),
                               " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
                               "-application msi.gama.headless.id4 -hpc ",hpc," \"",
-                              parameterxmlfile,"\" \"",outputdirectory,"\"", outputDisplay),
+                              parameter_xml_file,"\" \"",output_dir,"\"", output_display),
                        ignore.stdout=F,ignore.stderr=T)
 
-  if(trycommand>0) return(-1)
-  return(dir(path = outputdirectory, pattern = "*.xml",  full.names = TRUE))
+  if(gama_command>0) return(-1)
+  return(dir(path = output_dir, pattern = "[simulation-outputs[:digit:]+]\\.xml",  full.names = TRUE))
 }
 
 ################################################################################
+#' @export
+run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_xml_file = "") {
 
-runexpplan <- function(plan,hpc = 1) {
-  # run all the experiments of the plan:
-  outfiles <- startexperimentplan(plan,hpc)
-  # retrieve the variables names of each experiment:
-  vars <- lapply(plan,function(x)getoutputnames(list(Simulation=x)))
-  # fct1 retrieves variable "var" of experiment "exp"
-  fct1 <- function(exp,var)
-    {
-    res1 <-getoutputfile(exp)
-    res <- getoutputs(res1,var)
-    res
-    }
-  # fct2 calls fct1 to retrieve variables "vars" of experiment "exp". If the time
-  # frames of all the variables are the same, it further aggregates them in a
-  # data frame.
-  fct2 <- function(exp,vars) {
-    tmp <- lapply(vars,function(x)fct1(exp,x))
-    if(length(unique(sapply(tmp,length)))<2) {
-      suppressWarnings(tmp <- Reduce(function(...)merge(...,by="steps"),tmp))
-      names(tmp) <- c("step",vars)
-    }
-    attr(tmp,"path") <- exp
-    tmp
-  }
-  # retrieving all the variables of all the experiments:
-  out <- mapply(fct2,outfiles,vars,SIMPLIFY=F)
+  # make output directory
+  if(output_dir=="")
+    output_dir <- create_output_dir(experiment_plan, output_dir)
+
+  # generate xml file from experiment_plan
+  if(parameter_xml_file == "")
+    parameter_xml_file <-  paste0(expname(experiment_plan), ".xml")
+  parameter_xml_file <- save_to_gama(experiment_plan, paste0(output_dir, "/", parameter_xml_file))
+
+  # run all the experiments
+  outfiles <- call_gama(experiment_plan, hpc, output_dir, parameter_xml_file)
+
+  # get variables names
+  vars <- names(experiment_plan)[grep("r_", names(experiment_plan))]
+  vars <- substring(vars, 3)
+
+  # retrieve all the variables of all the experiments:
+  out <- lapply(outfiles, retrieve_results, vars)
+
   # deleting the "workspace" folder:
-  unlink("workspace",T,T)
+  unlink("workspace", T, T)
   # return output:
   out
 }
+
+# get results from output files for all variables (r_)
+retrieve_results <- function(outfile, vars) {
+
+  out_list <- XML::xmlToList(XML::xmlParse(outfile))
+
+  tmp <- lapply(vars, function(x) getoutputs(out_list, x))
+
+  if(length(unique(sapply(tmp,length))) < 2) {
+    suppressWarnings(tmp <- Reduce(function(...)merge(...,by="steps"), tmp))
+    names(tmp) <- c("step", vars)
+  }
+  attr(tmp,"path") <- outfile
+  tmp
+}
+
+## To be revised
+getoutputs <- function(out, outputs)
+{
+  out2 <- lapply(out, function(x) {x[which(names(x)=="Variable")]})
+  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
+  # sel <- which(thenames[1,] %in% outputs)
+  sel <- which(thenames %in% outputs)
+  out3 <- lapply(out2,function(x)x[sel])
+  out3 <- out3[-length(out3)]
+  trc <- c(t(sapply(out3,function(y)sapply(y,function(x)x$text)))) #as.data.frame(t(sapply(out3,function(y)sapply(y,function(x)x$text))),stringsAsFactors=F)
+  steps <-c(as.numeric(t(sapply(out[-length(out)],function(x)x$.attrs["id"]))))
+  output<- data.frame(steps,trc)
+  return(output)
+}
+
+
 ##
 ################################################################################
 

@@ -90,10 +90,6 @@ init_gama_jar <- function(path) {
 }
 
 
-
-
-
-
 # ------------------------------------------------------------------------------
 
 defpath <- function(path) {
@@ -122,8 +118,6 @@ setup_gama_ui <- function() {
 is_gama_installed <- function(path = unlist(options("rama.gama.path"))) {
   dir.exists(path) & (!is.na(init_gama_jar(path)))
 }
-
-
 
 # On attach --------------------------------------------------------------------
 
