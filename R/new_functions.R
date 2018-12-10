@@ -54,8 +54,8 @@ get_attributes <- function(x) {
 #'
 #' @export
 load_experiment <- function(experiment, model) {
-  message("Loading experiment '", experiment,
-          "' from file '", basename(model), "'...")
+  message(cat("Loading experiment '", experiment,
+          "' from file '", basename(model), "'..."))
   tmp <- tempfile(fileext = ".xml")
   system(paste0("java -jar ", getOption("rama.startjar"),
                 " -Xms", getOption("rama.Xms"),
@@ -65,7 +65,14 @@ load_experiment <- function(experiment, model) {
                 experiment, " ", model, " ", tmp, " > /dev/null"),
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE) # removes the above-created workspace directory
-  out <- xmlToList(xmlParse(tmp))$Simulation
+  out <- xmlToList(xmlParse(tmp))
+  if (is.null(out)) {
+    stop(
+      paste0("There is no experiment named '", experiment, "' in ",
+             basename(model), "."))
+  } else {
+    out <- out$Simulation
+  }
   out <- lapply(c(get_parameters, get_variables, get_attributes), function(f) f(out))
   names(out[[1]]) <- paste0("p_", names(out[[1]]))
   names(out[[2]]) <- paste0("r_", names(out[[2]]))
