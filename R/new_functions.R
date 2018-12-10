@@ -235,3 +235,22 @@ experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
             experiment = experiment,
             class = c("experiment", "data.frame"))
 }
+
+#' @export
+init_experiment <- function(df, model) {
+  structure(df,
+            model = model,
+            class = c("experiment", "data.frame"))
+}
+
+#' @export
+repl <- function(x, n) UseMethod("repl")
+
+#' @export
+repl.default <- function(x, n) "Unknown class"
+
+#' @export
+repl.experiment <- function(x, n) {
+  do.call(rbind, lapply(1:n, function(y) x))
+}
+
