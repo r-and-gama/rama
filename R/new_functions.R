@@ -70,7 +70,7 @@ load_experiment <- function(experiment, model, dir = "") {
   }
   # Making working directory
 
-  message(paste0("Creating working directory \"", dir, "\" in \"", getwd(), "\"...."))
+  message(cat("Creating working directory \"", dir, "\" in \"", getwd(), "\".", sep = ""))
 
   if(dir == ""){
     # get model name from gaml file
