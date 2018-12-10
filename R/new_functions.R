@@ -216,7 +216,7 @@ parameters.default <- function(x) "Unknown class"
 
 #' @export
 parameters.experiment <- function(x) {
-  x[, grep("^p_", names(x), value = TRUE)]
+  as.data.frame(x[, grep("^p_", names(x), value = TRUE)])
 }
 
 
@@ -232,7 +232,7 @@ observation.default <- function(x) "Unknown class"
 
 #' @export
 observation.experiment <- function(x) {
-  x[, grep("^r_", names(x), value = TRUE)]
+  as.data.frame(x[, grep("^r_", names(x), value = TRUE)])
 }
 
 
@@ -319,3 +319,15 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
   cat(paste0("Linked to experiment \"", attributes(exp5)$experiment, "\" of model ", attributes(exp5)$model, "."))
   invisible(x)
 }
+
+
+###### work
+
+if (FALSE) {
+
+a <- names(parameters(exp5))
+width <- function(x) sum(nchar(x)) + length(x) - 1
+w_p <- 20
+
+}
+
