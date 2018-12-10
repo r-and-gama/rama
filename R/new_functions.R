@@ -374,7 +374,10 @@ get_width <- function(x, n) {
 names_of_left_and_right <- function(x, th) {
   tmp <- sapply(2:length(x), get_width, x = x) > th
   if (all(tmp)) tmp <- x[c(1, length(x))]
-  else tmp <- ind(x, which(tmp)[1])
+  else {
+    if (all(! tmp)) tmp <- x
+    else tmp <- indexes_first_and_last(x, which(tmp)[1])
+  }
   sel <- 1:round(length(tmp) / 2)
   list(tmp[sel], tmp[-sel])
 }
@@ -396,10 +399,13 @@ names_of_left_and_right <- function(x, th) {
 insert_middle <- function(x, n, digits = 4) {
   x <- round(x, digits)
   a <- names_of_left_and_right(names(x), n)
-  left <- x[, a[[1]]]
-  right <- x[, a[[2]]]
-  middle <- setNames(data.frame(matrix(rep(".", 30), 10), stringsAsFactors = FALSE), rep(".", 3))
-  cbind(left, middle, right)
+  if (sum(sapply(a, length)) < length(x)) {
+    left <- x[, a[[1]], drop = FALSE]
+    right <- x[, a[[2]], drop = FALSE]
+    middle <- setNames(data.frame(".", ".", ".", stringsAsFactors = FALSE), rep(".", 3))
+    return(cbind(left, middle, right))
+  }
+  x
 }
 
 
@@ -408,29 +414,31 @@ insert_middle <- function(x, n, digits = 4) {
 # print.experiment method ------------------------------------------------------
 
 #' @export
-print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 20) {
-  x <- as.data.frame(x)
-  x <- insert_middle(x, nchar, digits)
-  x <- cbind(insert_middle(parameters(x), nchar, digits),
+print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
+  y <- cbind(insert_middle(parameters(x), nchar, digits),
              insert_middle(observation(x), nchar, digits),
              x[, c("tmax", "seed")])
-  if (nrow(x) > 2 * n + interspace) {
-    h <- head(x, n)
-    t <- tail(x, n)
+  if (nrow(y) > 2 * n + interspace) {
+    h <- head(y, n)
+    t <- tail(y, n)
     hn <- rownames(h)
     tn <- rownames(t)
-    m <- setNames(as.data.frame(matrix(".", interspace, ncol(x)),
-                                stringsAsFactors = FALSE), names(x))
+    m <- setNames(as.data.frame(matrix(".", interspace, ncol(y)),
+                                stringsAsFactors = FALSE), names(y))
     out <- rbind(h, m, t)
     out <- cbind(c(hn, rep(".", interspace), tn), out)
     names(out)[1] <- ""
     print(out, row.names = FALSE)
-  } else print(x)
-  cat(paste0("Linked to experiment \"", attributes(exp5)$experiment, "\" of model ", attributes(exp5)$model, "."))
+  } else print(y)
+  cat(paste0("Linked to experiment \"", attributes(x)$experiment, "\" of model ", attributes(x)$model, ".\n"))
+  cat(paste0("Outputs are saved in ", attributes(x)$wkdir, "."))
   invisible(x)
 }
 
-# list_experiments --------------------------------------------------------------
+
+
+
+# list_experiment --------------------------------------------------------------
 
 #' List a model's experiments
 #'
