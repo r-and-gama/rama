@@ -222,21 +222,21 @@ exp5
 ```
 
 
-## 3.3 Extracting parameters values
+## 3.2 Extracting parameters values
 
 ```{r}
 parameters(exp5)
 ```
 
 
-## 3.4 Extracting observation rates
+## 3.3 Extracting observation rates
 
 ```{r}
 observation(exp5)
 ```
 
 
-## 3.5 `tmax` and `seed`
+## 3.4 `tmax` and `seed`
 
 As seen above, `seed` can be extracted and changed with regular data frame
 methods:
