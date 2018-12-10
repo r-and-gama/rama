@@ -415,8 +415,10 @@ insert_middle <- function(x, n, digits = 4) {
 
 #' @export
 print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
-  y <- cbind(insert_middle(parameters(x), nchar, digits),
-             insert_middle(observation(x), nchar, digits),
+  param <- parameters(x)
+  obser <- observation(x)
+  y <- cbind(insert_middle(param, nchar, digits),
+             insert_middle(obser, nchar, digits),
              x[, c("tmax", "seed")])
   if (nrow(y) > 2 * n + interspace) {
     h <- head(y, n)
@@ -430,8 +432,10 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
     names(out)[1] <- ""
     print(out, row.names = FALSE)
   } else print(y)
-  cat(paste0("Linked to experiment \"", attributes(x)$experiment, "\" of model ", attributes(x)$model, ".\n"))
-  cat(paste0("Outputs are saved in ", attributes(x)$wkdir, "."))
+  cat("Linked to experiment \"", attributes(x)$experiment, "\" of model ", attributes(x)$model, ".\n", sep = "")
+  cat("Outputs are saved in ", attributes(x)$wkdir, ".\n", sep = "")
+  cat("Parameters are ", paste(names(param), collapse = ", "), ".\n", sep = "")
+  cat("Observed variables are ", paste(names(obser), collapse = ", "), ".", sep = "")
   invisible(x)
 }
 
