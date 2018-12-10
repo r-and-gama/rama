@@ -66,17 +66,17 @@ get_attributes <- function(x) {
 load_experiment <- function(experiment, model, dir = "") {
 
   if (!file.exists(model)) {
-    stop(paste0("There is no file '", model, "'. "))
+    stop(paste0("There is no file \"", model, "\"."))
   }
   # Making working directory
 
-  message("Creating working directory '", dir, "' in '", getwd(), "'...." )
+  message(paste0("Creating working directory \"", dir, "\" in \"", getwd(), "\"...."))
 
   if(dir == ""){
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
-    message(cat("The directory '", dir, "' is created in '", getwd(),
-            "' as current working directory."))
+    message(cat("The directory \"", dir, "\" is created in the current directory ",
+                getwd(), ".", sep = ""))
   }
 
   wk_dir <- paste0(getwd(), "/", dir)
@@ -84,11 +84,11 @@ load_experiment <- function(experiment, model, dir = "") {
     # Check if a file name dir exist already
     dir.create(wk_dir)
   else
-    message(cat("You are working in '", wk_dir, "'."))
+    message(cat("Simulations results will be saved in ", wk_dir, ".", sep = ""))
 
   # Loading experiment
-  message(cat("Loading experiment '", experiment,
-              "' from file '", basename(model), "'..."))
+  message(cat("Loading experiment \"", experiment,
+              "\" from file \"", basename(model), "\"...", sep = ""))
   tmp <- tempfile(fileext = ".xml")
   system(paste0("java -jar ", getOption("rama.startjar"),
                 " -Xms", getOption("rama.Xms"),
@@ -101,7 +101,7 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- xmlToList(xmlParse(tmp))
   if (is.null(out)) {
     stop(
-      paste0("There is no experiment named '", experiment, "' in ",
+      paste0("There is no experiment named \"", experiment, "\" in ",
              basename(model), "."))
   } else {
     out <- out$Simulation
