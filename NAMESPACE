@@ -22,7 +22,6 @@ export(repl)
 export(save_to_gama)
 export(runexpplan)
 export(startexperimentplan)
-
 importFrom(XML,xmlParse)
 importFrom(XML,xmlToList)
 importFrom(stats,setNames)
