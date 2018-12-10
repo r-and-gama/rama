@@ -286,3 +286,25 @@ init_experiment <- function(df, model) {
 }
 
 
+
+
+# print.experiment method ------------------------------------------------------
+
+#' @export
+print.experiment <- function(x, interspace = 3, n = 6, digits = 4) {
+  x <- as.data.frame(x)
+  x[] <- lapply(x, round, digits)
+  if (nrow(x) > 2 * n + interspace) {
+    h <- head(x, n)
+    t <- tail(x, n)
+    hn <- rownames(h)
+    tn <- rownames(t)
+    m <- setNames(as.data.frame(matrix(".", interspace, ncol(x)),
+                                stringsAsFactors = FALSE), names(x))
+    out <- rbind(h, m, t)
+    out <- cbind(c(hn, rep(".", interspace), tn), out)
+    names(out)[1] <- ""
+    print(out, row.names = FALSE)
+  } else print(x)
+  invisible(x)
+}
