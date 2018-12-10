@@ -221,20 +221,6 @@ Which gives:
 exp5
 ```
 
-## 3.2 Seeing the model path and experiment name
-
-An experiment is linked to a model on a GAMA file. To get the path of this file:
-
-```{r}
-model(exp1)
-```
-
-And the name of the experiment:
-
-```{r}
-expname(exp1)
-```
-
 
 ## 3.3 Extracting parameters values
 

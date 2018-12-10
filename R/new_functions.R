@@ -203,13 +203,13 @@ get_wkdir.experiment <- function(x) {
   attributes(x)$wkdir
 }
 
-#' @export
+
 model <- function(x) UseMethod("model")
 
-#' @export
+
 model.default <- function(x) "Unknown class"
 
-#' @export
+
 model.experiment <- function(x) {
   attributes(x)$model
 }
@@ -217,15 +217,13 @@ model.experiment <- function(x) {
 
 
 
-# expname ----------------------------------------------------------------------
+# xepname ----------------------------------------------------------------------
 
-#' @export
+
 expname <- function(x) UseMethod("expname")
 
-#' @export
 expname.default <- function(x) "Unknown class"
 
-#' @export
 expname.experiment <- function(x) {
   attributes(x)$experiment
 }
