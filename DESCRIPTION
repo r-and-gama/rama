@@ -42,7 +42,8 @@ Imports:
     XML,
     plot3D,
     stringr,
-    downloader
+    downloader,
+    stringr
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: knitr,

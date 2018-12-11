@@ -18,8 +18,10 @@
 #' @export
 create_output_dir <- function(experiment_plan, dir = "") {
   wkdir <- get_wkdir(experiment_plan)
-  if(dir == "")
-    dir <- expname(experiment_plan) # name of experiment
+  if(dir == ""){
+    dir <- gsub("\"","", expname(experiment_plan)) # name of experiment
+  }
+
   i <- 0
   repeat {
     i <- i + 1
