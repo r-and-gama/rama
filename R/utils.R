@@ -101,7 +101,6 @@ setup_gama <- function() {
 
     if (answer[1] == "A") {
        gama_path <- setup_gama_ui()
-       print(gama_path)
        defpath(gama_path)
   }
 }
