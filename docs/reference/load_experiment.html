@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Load an experiment from a model — load_experiment" />
 
-<meta property="og:description" content="Loads an experiment from a model specified in a gaml file and returns
+<meta property="og:description" content="Loads an experiment from a model specified in a .gaml file and returns
 an object of class experiment." />
 
 <meta property="og:image" content="/logo.png" />
@@ -133,7 +133,7 @@ an object of class experiment." />
 
     <div class="ref-description">
     
-    <p>Loads an experiment from a model specified in a <code>gaml</code> file and returns
+    <p>Loads an experiment from a model specified in a <code>.gaml</code> file and returns
 an object of class <code>experiment</code>.</p>
     
     </div>
@@ -158,14 +158,18 @@ model. If not specified, name of the gaml file will be used</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>rama</code> package contains a library of model in the <code>examples</code>
+directory of the <code>rama</code> package file hierarchy. These models can be
+accessed with the system.file() function as explained in the example.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Looking at the \code{sir.gaml} file in the \code{examples} directory of the</span>
 <span class='co'># \code{rama} library:</span>
-<span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
-
-<span class='co'># Loading the experiment \code{sir} from this gaml file:</span>
-<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Creating working directory "" in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; The directory "sir" is created in the current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'>
+<span class='co'># Loading an experiment:</span>
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Creating working directory "" in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; The directory "sir" is created in the current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'>
 <span class='co'># Checking the class:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "experiment" "data.frame"</div><div class='input'>
 </div></pre>
@@ -174,7 +178,9 @@ model. If not specified, name of the gaml file will be used</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

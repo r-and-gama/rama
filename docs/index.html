@@ -96,16 +96,51 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="rama" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rama" class="anchor"></a>rama <img src="reference/figures/logo.png" align="right" width="120/">
+<a href="#rama" class="anchor"></a><code>rama</code> <img src="reference/figures/logo.png" align="right" width="120/">
 </h1></div>
 <!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama) -->
-<p><code>rama</code> is an R interface to the <a href="https://gama-platform.github.io">GAMA</a> agent-based simulation platform.</p>
-<div id="installation" class="section level2">
+<p><code>rama</code> is an R interface to the <a href="https://gama-platform.github.io">GAMA</a> agent-based simulation platform. It allows to</p>
+<ul>
+<li>
+<strong>read</strong> an experiment of a model defined in a <code>.gaml</code> file,</li>
+<li>
+<strong>manipulate</strong> this experiment, including generate experiment plans and</li>
+<li>
+<strong>run</strong> the simulations defined in an experiment plan.</li>
+</ul>
+<p>An <strong>experiment</strong> is a group of simulations. A <strong>simulation</strong> is an execution of a given <strong>model</strong> with</p>
+<ul>
+<li>a given set of <strong>parameters values</strong>,</li>
+<li>a given set of <strong>observed variables</strong>,</li>
+<li>a <strong>duration</strong> of simulation and</li>
+<li>a <strong>seed</strong> value.</li>
+</ul>
+<p>All the simulations of an experiment relate to the same model. In R, an experiment belongs to the class <code>experiment</code> that is an extension of the class <code>data.frame</code>. The creation and manipulation of experiments can thus efficiently be performed with all the <code>data.frame</code> methods. The class <code>experiment</code> is also <a href="https://www.tidyverse.org">tidyverse</a>-compliant, which allows its insertion in <strong>pipelines</strong> (or workflows). Outputs of <code>experiment</code> runs is an object of class <code>experiment</code> too, with fields corresponding to the simulation outputs, typically data frames of time series of observed variables and / or links to snapshots that can subsequently assembled into movies. The R environment allows to</p>
+<ul>
+<li>create <strong>experimental designs</strong> (for example with the <a href="https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/expand.grid">expand.grid()</a> function),</li>
+<li>
+<strong>statistically explore</strong> results of simulation (typically looking at how the parameters values influenced the dynamics of the state variables),</li>
+<li>perform <strong>sensitivity analysis</strong> of model’s parameters (how much each parameter quantitatively influences the outputs),</li>
+<li>
+<strong>estimate parameters values</strong> (model calibration) if real data are available for the model’ state variables.</li>
+</ul>
+<p>An object of class <code>experiment</code> contains, in addition to above-mentionned data frame, a hard link to a <code>.gaml</code> file containing the GAML model (<strong>input</strong>) and a hard link to a folder containing the <strong>outputs</strong> of simulations. These links are not supposed to be modified by the user. The <code>.gaml</code> file is not supposed either to be modified by the user in R. Instead, the GAML model should be developed in the <a href="https://gama-platform.github.io">GAMA</a> software. The use of <code>rama</code> should be restricted to the design and exploitation of experiments’ simulations as outlined above.</p>
+<div id="experiment-class" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<a href="#experiment-class" class="anchor"></a><code>experiment</code> class</h2>
+<p>The unique class of <code>rama</code> is <code>experiment</code>. It is basically a data frame structured this way:</p>
+</div>
+<div id="installation-and-configuration" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation-and-configuration" class="anchor"></a>Installation and configuration</h2>
 <p>You can install <code>rama</code> from GitHub with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"r-and-gama/rama"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">installed_packages &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/installed.packages">installed.packages</a></span>())
+<span class="cf">if</span> (<span class="op">!</span><span class="st"> "devtools"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)
+<span class="cf">if</span> (<span class="op">!</span><span class="st"> "rama"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"r-and-gama/rama"</span>)</code></pre></div>
+<p>After loading, <code>rama</code> needs to be configured, a step that basically consists in linking <code>rama</code> to a GAMA engine on the system:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setup</span>()</code></pre></div>
+<p>If GAMA is not installed on the system, it can be installed directly from R as</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install_gama</span>()</code></pre></div>
 </div>
 </div>
   </div>
