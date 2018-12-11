@@ -149,8 +149,6 @@ load_experiment <- function(experiment, model, dir = "") {
   attr(output, "wkdir") <- wk_dir
   attr(output, "dic_v") <- dic
   attr(output, "dic_t") <- t(as.data.frame(dic))
-  output$gaml <- NULL
-  output$experiment <- NULL
   return(output)
 }
 
