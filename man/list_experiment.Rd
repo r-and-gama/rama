@@ -9,6 +9,23 @@ list_experiment(x)
 \arguments{
 \item{x}{path to a gaml model file.}
 }
+\value{
+Returns a vector of the names of the experiments of the inputed
+\code{.gaml} file.
+}
 \description{
 List the experiments of a given model.
+}
+\details{
+A \code{.gaml} file contains the description of a model as well as
+potentially several experiments related to the model. These experiments can
+be thought of as user interfaces of the model. The function
+\code{load_experiment()} allows to load one of these experiments, by
+providing its name. The function \code{list_experiment()} allows to list the
+names of the all the experiments available in one \code{.gaml} file.
+}
+\examples{
+
+list_experiment(system.file("examples", "sir.gaml", package = "rama"))
+
 }

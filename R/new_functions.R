@@ -44,8 +44,12 @@ get_attributes <- function(x) {
 
 #' Load an experiment from a model
 #'
-#' Loads an experiment from a model specified in a \code{gaml} file and returns
+#' Loads an experiment from a model specified in a \code{.gaml} file and returns
 #' an object of class \code{experiment}.
+#'
+#' The \code{rama} package contains a library of model in the \code{examples}
+#' directory of the \code{rama} package file hierarchy. These models can be
+#' accessed with the \codd{system.file()} function as explained in the example.
 #'
 #' @param experiment The name of the experiment to load.
 #' @param model The name of the file from which to load the experiment.
@@ -55,10 +59,8 @@ get_attributes <- function(x) {
 #' @examples
 #' # Looking at the \code{sir.gaml} file in the \code{examples} directory of the
 #' # \code{rama} library:
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#'
-#' # Loading the experiment \code{sir} from this gaml file:
-#' exp1 <- load_experiment("sir", gaml_file)
+#' # Loading an experiment:
+#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
 #'
 #' # Checking the class:
 #' class(exp1)
@@ -455,7 +457,21 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 #'
 #' List the experiments of a given model.
 #'
+#' A \code{.gaml} file contains the description of a model as well as
+#' potentially several experiments related to the model. These experiments can
+#' be thought of as user interfaces of the model. The function
+#' \code{load_experiment()} allows to load one of these experiments, by
+#' providing its name. The function \code{list_experiment()} allows to list the
+#' names of the all the experiments available in one \code{.gaml} file.
+#'
 #' @param x path to a gaml model file.
+#'
+#' @return Returns a vector of the names of the experiments of the inputed
+#' \code{.gaml} file.
+#'
+#' @examples
+#'
+#' list_experiment(system.file("examples", "sir.gaml", package = "rama"))
 #'
 #' @importFrom readtext readtext
 #'
