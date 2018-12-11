@@ -151,7 +151,7 @@ load_experiment <- function(experiment, model, dir = "") {
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
   attr(output, "wkdir") <- wk_dir
   attr(output, "dic_v") <- dic
-  attr(output, "dic_t") <- t(as.data.frame(dic))
+  attr(output, "dic_res") <- setNames(names(dic), dic)
   return(output)
 }
 
@@ -191,6 +191,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     for(col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
+      title <- attr(plan, "dic_v")[title]
       val <- param[1, 1]
       m_type <- "STRING"
       if (is.numeric(val)) {
@@ -211,6 +212,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
+      title <- attr(plan, "dic_v")[title]
       val <- param[1, 1]
       attribut <- c(id        = id_out,
                     name      = title,
