@@ -73,7 +73,7 @@ setup_gama_ui <- function() {
   repeat{
     message("Give the path of Gama platform or [Q]uit:")
     answer <- readline()
-    if(answer = "Q" | answer = "q" ) break
+    if(answer == "Q" | answer == "q" ) break
     defaultjar <- is_gama_installed(answer)
     if(defaultjar ) break
     else
