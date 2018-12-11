@@ -92,7 +92,7 @@
     <div class="page-header toc-ignore">
       <h1>1 Getting started</h1>
             
-            <h4 class="date">2018-12-11</h4>
+            <h4 class="date">2018-12-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-and-gama/rama/blob/master/vignettes/rama1.Rmd"><code>vignettes/rama1.Rmd</code></a></small>
       <div class="hidden name"><code>rama1.Rmd</code></div>
@@ -106,7 +106,7 @@
 <div id="desiging-experiments" class="section level2">
 <h2 class="hasAnchor">
 <a href="#desiging-experiments" class="anchor"></a>1.1 Desiging experiments</h2>
-<p>We can make an <code>experiment</code> object either by reading an experiment from a GAML file with the <code><a href="../reference/load_experiment.html">load_experiment()</a></code> funtion or by building it from scratch with the <code>experiment()</code> constructor.</p>
+<p>We can make an <code>experiment</code> object either by reading an experiment from a GAML file with the <code><a href="../reference/load_experiment.html">load_experiment()</a></code> funtion or by building it from scratch with the <code><a href="../reference/experiment.html">experiment()</a></code> constructor.</p>
 <div id="loading-an-experiment-from-a-gaml-file" class="section level3">
 <h3 class="hasAnchor">
 <a href="#loading-an-experiment-from-a-gaml-file" class="anchor"></a>1.1.1 Loading an experiment from a GAML file</h3>
@@ -140,7 +140,7 @@
 <h3 class="hasAnchor">
 <a href="#building-an-experiment-from-scratch" class="anchor"></a>1.1.2 Building an experiment from scratch</h3>
 <p>Alternatively, an experiment can be built from scratch with the <code>experiment</code> constructor:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp2 &lt;-<span class="st"> </span><span class="kw">experiment</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/experiment.html">experiment</a></span>(
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">S0 =</span> <span class="dv">999</span>, <span class="dt">I0 =</span> <span class="dv">1</span>, <span class="dt">R0 =</span> <span class="dv">0</span>, <span class="dt">beta =</span> <span class="fl">1.5</span>, <span class="dt">gamma =</span> .<span class="dv">15</span>),
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">S =</span> <span class="dv">1</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">1</span>),
   <span class="dt">tmax =</span> <span class="dv">1000</span>,
@@ -160,7 +160,7 @@
 <span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
 <span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>Note that if you enter values of inequal lengths, it will automatically complete:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp3 &lt;-<span class="st"> </span><span class="kw">experiment</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/experiment.html">experiment</a></span>(
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">S0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">900</span>, <span class="dv">950</span>, <span class="dv">999</span>), <span class="co"># this is a data frame of 3 lines</span>
               <span class="dt">I0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">1</span>),
               <span class="dt">R0 =</span> <span class="dv">0</span>,
@@ -186,7 +186,7 @@
 <span class="co">#&gt; 2  950   50    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>Note finally, that we can make smart use of the <code><a href="https://www.rdocumentation.org/packages/base/topics/expand.grid">expand.grid()</a></code> function of the <code>base</code> package to efficiently generate a complete experimental design:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp4 &lt;-<span class="st"> </span><span class="kw">experiment</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/experiment.html">experiment</a></span>(
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expand.grid">expand.grid</a></span>(<span class="dt">S0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">900</span>, <span class="dv">950</span>, <span class="dv">999</span>),
                <span class="dt">I0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">1</span>),
                <span class="dt">R0 =</span> <span class="dv">0</span>,
@@ -265,7 +265,7 @@
 <span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
 <span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>We can replicate:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5 &lt;-<span class="st"> </span><span class="kw">repl</span>(exp1, <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/repl.html">repl</a></span>(exp1, <span class="dv">10</span>)</code></pre></div>
 <p>Which gives:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5
 <span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span>
@@ -312,7 +312,7 @@
 <div id="extracting-parameters-values" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extracting-parameters-values" class="anchor"></a>1.2.2 Extracting parameters values</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">parameters</span>(exp5)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(exp5)
 <span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma</span>
 <span class="co">#&gt; 1   999    1    0    1.5    0.15</span>
 <span class="co">#&gt; 2   999    1    0    1.5    0.15</span>
@@ -328,7 +328,7 @@
 <div id="extracting-observation-rates" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extracting-observation-rates" class="anchor"></a>1.2.3 Extracting observation rates</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">observation</span>(exp5)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/observation.html">observation</a></span>(exp5)
 <span class="co">#&gt;    r_S r_I r_R</span>
 <span class="co">#&gt; 1    1   1   1</span>
 <span class="co">#&gt; 2    1   1   1</span>

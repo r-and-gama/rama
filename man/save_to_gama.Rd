@@ -7,7 +7,7 @@
 save_to_gama(plan, file)
 }
 \arguments{
-\item{plan}{Object of class \code{experiment}.}
+\item{plan}{An object of class \code{experiment}.}
 
 \item{file}{The path to the output XML file.}
 }
