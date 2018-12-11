@@ -122,7 +122,12 @@
 <h2 class="hasAnchor">
 <a href="#loading-rama" class="anchor"></a>1.2 Loading <code>rama</code>
 </h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)
+<span class="co">#&gt; Welcome to rama v0.0.1!</span>
+<span class="co">#&gt; GAMA platform needs to be installed on your machine.</span>
+<span class="co">#&gt; See http://www.gama-platform.org for more instructions about GAMA.</span>
+<span class="co">#&gt; -- note that GAMA platform was found at /Applications/Gama.app</span>
+<span class="co">#&gt; Gama configuration succeed!</span></code></pre></div>
 </div>
 <div id="configuring-rama" class="section level2">
 <h2 class="hasAnchor">
@@ -150,12 +155,15 @@
 <span class="co">#&gt; </span></code></pre></div>
 <p>which gives:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp1
+<span class="co">#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
-<span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>An <code>experiment</code> is a simple data frame:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(exp1)
 <span class="co">#&gt; [1] "experiment" "data.frame"</span></code></pre></div>
@@ -175,12 +183,15 @@
 )</code></pre></div>
 <p>Which gives the same thing:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp2
+<span class="co">#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
-<span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>Note that if you enter values of inequal lengths, it will automatically complete:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp3 &lt;-<span class="st"> </span><span class="kw">experiment</span>(
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">S0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">900</span>, <span class="dv">950</span>, <span class="dv">999</span>), <span class="co"># this is a data frame of 3 lines</span>
@@ -196,14 +207,17 @@
 )</code></pre></div>
 <p>Which gives:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp3
+<span class="co">#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
 <span class="co">#&gt; 1  900  100    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 2  950   50    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>Note finally, that we can make smart use of the <code><a href="https://www.rdocumentation.org/packages/base/topics/expand.grid">expand.grid()</a></code> function of the <code>base</code> package to efficiently generate a complete experimental design:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp4 &lt;-<span class="st"> </span><span class="kw">experiment</span>(
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expand.grid">expand.grid</a></span>(<span class="dt">S0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">900</span>, <span class="dv">950</span>, <span class="dv">999</span>),
@@ -219,6 +233,13 @@
 )</code></pre></div>
 <p>Which gives:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp4
+<span class="co">#&gt; Experiment with 9 simulations of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
 <span class="co">#&gt; 1  900  100    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 2  950  100    0    1.5    0.15   1   1   1 1000    1</span>
@@ -228,11 +249,7 @@
 <span class="co">#&gt; 6  999   50    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 7  900    1    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 8  950    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; 9  999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 9  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>We’ll see more about that in the next sections.</p>
 </div>
 <div id="building-an-experiment-from-a-data-frame" class="section level2">
@@ -252,11 +269,11 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df<span class="op">$</span>I0 &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="op">-</span><span class="st"> </span>df<span class="op">$</span>S0</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df
 <span class="co">#&gt;    S0 R0 beta gamma S I tmax seed  I0</span>
-<span class="co">#&gt; 1 700  0  1.5  0.15 1 1 2500    5 300</span>
-<span class="co">#&gt; 2 800  0  1.5  0.15 1 1 2500    4 200</span>
-<span class="co">#&gt; 3 900  0  1.5  0.15 1 1 2500    2 100</span>
+<span class="co">#&gt; 1 700  0  1.5  0.15 1 1 2500    1 300</span>
+<span class="co">#&gt; 2 800  0  1.5  0.15 1 1 2500    2 200</span>
+<span class="co">#&gt; 3 900  0  1.5  0.15 1 1 2500    5 100</span>
 <span class="co">#&gt; 4 950  0  1.5  0.15 1 1 2500    3  50</span>
-<span class="co">#&gt; 5 999  0  1.5  0.15 1 1 2500    1   1</span></code></pre></div>
+<span class="co">#&gt; 5 999  0  1.5  0.15 1 1 2500    4   1</span></code></pre></div>
 <p>Let’s now transform this data frame into an <code>experiment</code>:</p>
 </div>
 </div>
@@ -271,16 +288,26 @@
 <a href="#replicating-experiments" class="anchor"></a>3.1 Replicating experiments</h2>
 <p>From the following experiment</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp1
+<span class="co">#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
-<span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>We can replicate:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5 &lt;-<span class="st"> </span><span class="kw">repl</span>(exp1, <span class="dv">10</span>)</code></pre></div>
 <p>Which gives:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5
+<span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
 <span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    1</span>
@@ -291,30 +318,29 @@
 <span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    1</span>
 <span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    1</span></code></pre></div>
 <p>On which we could use different seeds for each simulation:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">10</span>)</code></pre></div>
 <p>Which gives:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5
+<span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
-<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    2</span>
-<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    9</span>
+<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    5</span>
+<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    8</span>
 <span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    7</span>
-<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000   10</span>
-<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    3</span>
-<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    5</span>
-<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    6</span>
-<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    1</span>
+<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    9</span>
+<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    6</span>
+<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    1</span>
+<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    2</span>
+<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000   10</span>
 <span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    4</span>
-<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    8</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    3</span></code></pre></div>
 </div>
 <div id="extracting-parameters-values" class="section level2">
 <h2 class="hasAnchor">
@@ -354,64 +380,73 @@
 </h2>
 <p>As seen above, <code>seed</code> can be extracted and changed with regular data frame methods:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5<span class="op">$</span>seed
-<span class="co">#&gt;  [1]  2  9  7 10  3  5  6  1  4  8</span>
+<span class="co">#&gt;  [1]  5  8  7  9  6  1  2 10  4  3</span>
 exp5<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">10</span>)
 exp5
+<span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
-<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    7</span>
-<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    9</span>
-<span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000   10</span>
-<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    6</span>
-<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    3</span>
-<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    4</span>
-<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    2</span>
-<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    8</span>
-<span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    1</span>
-<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    5</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    4</span>
+<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    5</span>
+<span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    7</span>
+<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000   10</span>
+<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    9</span>
+<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    3</span>
+<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    1</span>
+<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    2</span>
+<span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    8</span>
+<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    6</span></code></pre></div>
 <p>Same for <code>tmax</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5<span class="op">$</span>tmax
 <span class="co">#&gt;  [1] 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000</span>
 exp5<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">3543</span>
 exp5
+<span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I, r_R </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span>
-<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 3543    7</span>
-<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 3543    9</span>
-<span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 3543   10</span>
-<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 3543    6</span>
-<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 3543    3</span>
-<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 3543    4</span>
-<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 3543    2</span>
-<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 3543    8</span>
-<span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 3543    1</span>
-<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 3543    5</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I, r_R.</span></code></pre></div>
+<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 3543    4</span>
+<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 3543    5</span>
+<span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 3543    7</span>
+<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 3543   10</span>
+<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 3543    9</span>
+<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 3543    3</span>
+<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 3543    1</span>
+<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 3543    2</span>
+<span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 3543    8</span>
+<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 3543    6</span></code></pre></div>
 <p>If you want to stop observing the variable R and observe the variable I every 2 steps, you’d do:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5<span class="op">$</span>r_R &lt;-<span class="st"> </span><span class="ot">NULL</span>
 exp5<span class="op">$</span>r_I &lt;-<span class="st"> </span><span class="dv">2</span></code></pre></div>
 <p>Which gives:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp5
+<span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 2 observed variables</span>
+<span class="co">#&gt; experiment name:     sir </span>
+<span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml </span>
+<span class="co">#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir </span>
+<span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span>
+<span class="co">#&gt; observed variables:  r_S, r_I </span>
+<span class="co">#&gt; Experiment overview:</span>
 <span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I tmax seed</span>
-<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   2 3543    7</span>
-<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   2 3543    9</span>
-<span class="co">#&gt; 3   999    1    0    1.5    0.15   1   2 3543   10</span>
-<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   2 3543    6</span>
-<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   2 3543    3</span>
-<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   2 3543    4</span>
-<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   2 3543    2</span>
-<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   2 3543    8</span>
-<span class="co">#&gt; 9   999    1    0    1.5    0.15   1   2 3543    1</span>
-<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   2 3543    5</span>
-<span class="co">#&gt; Linked to experiment "sir" of model "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml".</span>
-<span class="co">#&gt; Outputs are saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/vignettes/sir".</span>
-<span class="co">#&gt; Parameters are p_S0, p_I0, p_R0, p_beta, p_gamma.</span>
-<span class="co">#&gt; Observed variables are r_S, r_I.</span></code></pre></div>
+<span class="co">#&gt; 1   999    1    0    1.5    0.15   1   2 3543    4</span>
+<span class="co">#&gt; 2   999    1    0    1.5    0.15   1   2 3543    5</span>
+<span class="co">#&gt; 3   999    1    0    1.5    0.15   1   2 3543    7</span>
+<span class="co">#&gt; 4   999    1    0    1.5    0.15   1   2 3543   10</span>
+<span class="co">#&gt; 5   999    1    0    1.5    0.15   1   2 3543    9</span>
+<span class="co">#&gt; 6   999    1    0    1.5    0.15   1   2 3543    3</span>
+<span class="co">#&gt; 7   999    1    0    1.5    0.15   1   2 3543    1</span>
+<span class="co">#&gt; 8   999    1    0    1.5    0.15   1   2 3543    2</span>
+<span class="co">#&gt; 9   999    1    0    1.5    0.15   1   2 3543    8</span>
+<span class="co">#&gt; 10  999    1    0    1.5    0.15   1   2 3543    6</span></code></pre></div>
 </div>
 </div>
 <div id="running-experiments" class="section level1">

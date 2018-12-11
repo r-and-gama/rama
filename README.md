@@ -3,8 +3,7 @@
 `rama` <img src="man/figures/logo.png" align="right" width=120/>
 ================================================================
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
-
+<!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama) -->
 `rama` is an R interface to the [GAMA](https://gama-platform.github.io) agent-based simulation platform. It allows to
 
 -   **read** an experiment of a model defined in a `.gaml` file,
