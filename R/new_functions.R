@@ -35,6 +35,15 @@ get_attributes <- function(x) {
 }
 
 
+# make_dictionary --------------------------------------------------------------
+
+#' @importFrom stats setNames
+make_dictionary <- function(x) {
+  dic <- names(x)
+  dic <- gsub("[[:space:]]|[[:punct:]]", "_", dic)
+  dic <- gsub("_+", "_", dic)
+  dic <- setNames(dic, names(x))
+}
 
 
 # load_experiment --------------------------------------------------------------
@@ -70,21 +79,24 @@ load_experiment <- function(experiment, model, dir = "") {
   }
   # Making working directory
 
-  message(cat("Creating working directory \"", dir, "\" in \"", getwd(), "\".", sep = ""))
+  message(cat("Creating working directory \"", dir, "\" in \"", getwd(),
+              "\".", sep = ""))
 
-  if(dir == ""){
+  if(dir == "") {
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
-    message(cat("The directory \"", dir, "\" is created in the current directory \"",
-                getwd(), "\".", sep = ""))
+    message(cat("The directory \"", dir,
+                "\" is created in the current directory \"", getwd(), "\".",
+                sep = ""))
   }
 
   wk_dir <- paste0(getwd(), "/", dir)
-  if(!file.exists(wk_dir))
+  if (!file.exists(wk_dir))
     # Check if a file name dir exist already
     dir.create(wk_dir)
   else
-    message(cat("Simulations results will be saved in \"", wk_dir, "\".", sep = ""))
+    message(cat("Simulations results will be saved in \"", wk_dir,
+                "\".", sep = ""))
 
   # Loading experiment
   message(cat("Loading experiment \"", experiment,
@@ -106,33 +118,35 @@ load_experiment <- function(experiment, model, dir = "") {
   } else {
     out <- out$Simulation
   }
-  if (!is.null(out$Parameters) & !is.null(out$Outputs)) {
-    out <- lapply(c(get_parameters, get_variables),
-                  function(f) f(out))
-    dictionary <- names(c(out[[1]], out[[2]])) %>%
-      gsub("[[:space:]]|[[:punct:]]", "_", .) %>% tolower %>%
-      gsub("_+", "_", .) %>% setNames(names(c(out[[1]], out[[2]])))
-    names(out[[1]]) <- paste0("p_", dictionary[names(out[[1]])])
-    names(out[[2]]) <- paste0("r_", dictionary[names(out[[2]])])
-    out <- do.call(cbind, out)
-    attr(out, "dic_v") <- dictionary
-    attr(out, "dic_t") <- as.data.frame(dictionary) %>% t(.)
-  } else if (is.null(out$Parameters) & !is.null(out$Outputs)) {
-    "wait"
-  } else if (is.null(out$Outputs) & !is.null(out$Parameters)) {
-    "wait"
+
+  if (!is.null(out$Outputs)) {
+    out_var <- get_variables(out)
+    dic_var <- make_dictionary(out_var)
+    names(out_var) <- paste0("r_", dic_var[names(out_var)])
   } else {
-    output <- data.frame(NULL)
+    out_var <- data.frame(NULL)
+    dic_var <- NULL
   }
+  if (!is.null(out$Parameters)) {
+    out_par <- get_parameters(out)
+    dic_par <- make_dictionary(out_par)
+    names(out_par) <- paste0("p_", dic_par[names(out_par)])
+  } else {
+    out_par <- data.frame(NULL)
+    dic_par <- NULL
+  }
+  output <- as.data.frame(c(out_par, out_var))
+  dic <- c(dic_par, dic_var)
   out_attr <- get_attributes(out)
-  class(output) <- c("experiment", class(out))
+  class(output) <- c("experiment", class(output))
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
   attr(output, "wkdir") <- wk_dir
+  attr(output, "dic_v") <- dic
+  attr(output, "dic_t") <- t(as.data.frame(dic))
   output$gaml <- NULL
   output$experiment <- NULL
-  output
-  unclass(output)
+  return(output)
 }
 
 
