@@ -56,7 +56,7 @@ if (! "rama" %in% installed_packages) devtools::install_github("r-and-gama/rama"
 After loading, `rama` needs to be configured, a step that basically consists in linking `rama` to a GAMA engine on the system:
 
 ``` r
-setup()
+setup_gama()
 ```
 
 If GAMA is not installed on the system, it can be installed directly from R as
