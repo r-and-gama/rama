@@ -15,8 +15,8 @@ set_environment_variables <- function()
           rama.default.gama.linux            = "/GAMA1.8_RC2_EmbeddedJDK_Linux_64bits.zip",
           rama.default.gama.linux.appdir     = "/usr/local/Gama",
           rama.default.gama.linux.zip.appdir = "Gama",
-#          rama.repo                          = "file:///tmp/",   #//Users/nicolas/repo",
-          rama.repo                          = "http://51.255.46.42/releases",
+          rama.repo                          = "file:///tmp/",   #//Users/nicolas/repo",
+#          rama.repo                          = "http://51.255.46.42/releases",
           rama.gama.path                     = "UNKNOWN",
           rama.startjar                      = "UNKNOWN",
           rama.plugins                       = "UNKNOWN")
@@ -87,7 +87,7 @@ defpath <- function(path) {
 # Interface to download GAMA if necessary --------------------------------------
 #' @export
 is_gama_installed <- function(path = unlist(options("rama.gama.path"))) {
-  dir.exists(path) & (!is.na(init_gama_jar(path)))
+  options("rama.startjar") != "UNKNOWN" | (dir.exists(path) & (!is.na(init_gama_jar(path))))
 }
 
 # On attach --------------------------------------------------------------------
