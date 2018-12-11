@@ -82,6 +82,18 @@ load_experiment <- function(experiment, model, dir = "") {
   if (!file.exists(model)) {
     stop(paste0("There is no file \"", model, "\"."))
   }
+
+  # Check experiment
+  exp_info <- show_experiment(model)
+  # check if experiment requested is declared in gaml
+  if(!experiment %in% exp_info$experiment)
+    stop(paste0("There is no experiment named ", experiment, " in ",
+           basename(model)))
+  # check if experiment requested has valid type
+  type <- exp_info$type[which(exp_info$experiment == experiment)]
+  if( type != "gui")
+    stop(paste0("Experiment ", experiment, " of type ", type, "is not supported."))
+
   # Making working directory
 
   message(cat("Creating working directory \"", dir, "\" in \"", getwd(),
@@ -112,7 +124,7 @@ load_experiment <- function(experiment, model, dir = "") {
                 " -Xmx", getOption("rama.Xmx"),
                 " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
                 " -application msi.gama.headless.id4 -xml ",
-                experiment, " ", model, " ", tmp, " > /dev/null"),
+                experiment, " '", model, "' ", tmp, " > /dev/null"),
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE) # removes the above-created workspace directory
   out <- XML::xmlToList(XML::xmlParse(tmp))
@@ -120,10 +132,14 @@ load_experiment <- function(experiment, model, dir = "") {
     stop(
       paste0("There is no experiment named \"", experiment, "\" in \"",
              basename(model), "\"."))
+
+  if(file.exists(tmp)) {
+    out <- XML::xmlToList(XML::xmlParse(tmp))
   } else {
-    out <- out$Simulation
+    stop(paste0("Gama fails to read your experiment"))
   }
 
+  out <- out$Simulation
   if (!is.null(out$Outputs)) {
     out_var <- get_variables(out)
     dic_var <- make_dictionary(out_var)
@@ -547,4 +563,35 @@ list_experiment <- function(x) {
   gaml <- sapply(gaml, function(x) strsplit(gsub("  *", " ", x), " "))
   sel <- unname(sapply(gaml, function(x) which(x == "experiment")) + 1)
   unname(unlist(Map(`[`, gaml, sel)))
+}
+
+# show_experiment --------------------------------------------------------------
+
+#' List a model's experiments and their types
+#'
+#' List the experiments of a given model.
+#'
+#' @param file path to a gaml model file.
+#'
+#' @importFrom stringr str_match_all str_match
+#' @importFrom  purrr map
+#'
+#' @export
+#'
+show_experiment <- function(file){
+  gaml <- readtext(file, verbosity = FALSE)
+  exps <- str_match_all(gaml$text, regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][,2]
+  exps <- trimws(gsub("\\n+$","",exps))
+  exp_info <- purrr::map(exps, function(x){
+    if(str_detect(x, "type"))
+      tmp <- cbind(str_match(x, ".*?(?=\\s+type?)"),
+                   trimws(str_match(x, "type\\:(.*)"))[,2])
+    else
+      tmp <- cbind(x, "gui")
+  })
+  exp_info <- as.data.frame(do.call(rbind, lapply(exp_info, function(x) x)))
+  names(exp_info) <- c("experiment", "type")
+  exp_info$experiment <- as.character(exp_info$experiment)
+  exp_info$type <- as.character(exp_info$type)
+  return(exp_info)
 }
