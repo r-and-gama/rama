@@ -71,10 +71,11 @@ download_gama <- function() {
 setup_gama_ui <- function() {
   defaultjar <- ""
   repeat{
-    message("Give the path of Gama platform :")
+    message("Give the path of Gama platform or [Q]uit:")
     answer <- readline()
+    if(answer = "Q" | answer = "q" ) break
     defaultjar <- is_gama_installed(answer)
-    if(defaultjar) break
+    if(defaultjar ) break
     else
     {
       warning("Gama is not found at the specified location")
@@ -88,8 +89,17 @@ setup_gama_ui <- function() {
 # download GAMA when necessary -------------------------------------------------
 #' @export
 setup_gama <- function() {
+  defaultjar <- is_gama_installed(answer)
+  if(defaultjar)
+  {
+    message("Gama is already installed, do you want to setup a new one ? ")
+    answer <- toupper(readline("[Y]es/[N]o"))
+    if(answer == "N")
+      return()
+  }
+
   repeat {
-    print("Do you want to download the last version of Gama?")
+    message("Do you want to download the last version of Gama?")
     answer <- toupper(readline(" [Y]es/[N]o/[A]lready done."))
     if (answer[1] == "Y" | answer[1] == "N" | answer[1] == "A") break
     else print("Sorry, I din't understand... try again")
