@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load an experiment from a model — load_experiment • rama</title>
+<title>List a model's experiments and their types — show_experiment • rama</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Load an experiment from a model — load_experiment" />
+<meta property="og:title" content="List a model's experiments and their types — show_experiment" />
 
-<meta property="og:description" content="Loads an experiment from a model specified in a .gaml file and returns
-an object of class experiment." />
+<meta property="og:description" content="List the experiments of a given model." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -126,63 +125,35 @@ an object of class experiment." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load an experiment from a model</h1>
+    <h1>List a model's experiments and their types</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/new_functions.R'><code>R/new_functions.R</code></a></small>
-    <div class="hidden name"><code>load_experiment.Rd</code></div>
+    <div class="hidden name"><code>show_experiment.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Loads an experiment from a model specified in a <code>.gaml</code> file and returns
-an object of class <code>experiment</code>.</p>
+    <p>List the experiments of a given model.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>load_experiment</span>(<span class='no'>experiment</span>, <span class='no'>model</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>show_experiment</span>(<span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>experiment</th>
-      <td><p>The name of the experiment to load.</p></td>
-    </tr>
-    <tr>
-      <th>model</th>
-      <td><p>The name of the file from which to load the experiment.</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p>The name of the directory to save the output of the runs for each
-model. If not specified, name of the gaml file will be used</p></td>
+      <th>file</th>
+      <td><p>path to a gaml model file.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>rama</code> package contains a library of model in the <code>examples</code>
-directory of the <code>rama</code> package file hierarchy. These models can be
-accessed with the <code><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file()</a></code> function as explained in the example.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Looking at the \code{sir.gaml} file in the \code{examples} directory of the</span>
-<span class='co'># \code{rama} library:</span>
-<span class='co'># Loading an experiment:</span>
-<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in regex("\\nexperiment (.*?)\\{", dotall = T): impossible de trouver la fonction "regex"</span></div><div class='input'>
-<span class='co'># Checking the class:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objet 'exp1' introuvable</span></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

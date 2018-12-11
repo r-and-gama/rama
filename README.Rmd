@@ -28,10 +28,13 @@ knitr::opts_chunk$set(
 An **experiment** is a group of simulations. A **simulation** is an execution of
 a given **model** with
 
+[<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama1.html)
+
 * a given set of **parameters values**,
 * a given set of **observed variables**,
 * a **duration** of simulation and
 * a **seed** value.
+
 
 All the simulations of an experiment relate to the same model. In R, an 
 experiment belongs to the class `experiment` that is an extension of the class
