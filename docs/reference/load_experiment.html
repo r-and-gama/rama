@@ -169,9 +169,9 @@ accessed with the <code><a href='https://www.rdocumentation.org/packages/base/to
     <pre class="examples"><div class='input'><span class='co'># Looking at the \code{sir.gaml} file in the \code{examples} directory of the</span>
 <span class='co'># \code{rama} library:</span>
 <span class='co'># Loading an experiment:</span>
-<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Creating working directory "" in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; The directory "sir" is created in the current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'>
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in regex("\\nexperiment (.*?)\\{", dotall = T): impossible de trouver la fonction "regex"</span></div><div class='input'>
 <span class='co'># Checking the class:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "experiment" "data.frame"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objet 'exp1' introuvable</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -189,7 +189,7 @@ accessed with the <code><a href='https://www.rdocumentation.org/packages/base/to
 
       <footer>
       <div class="copyright">
-  <p>Developed by Marc Choisy, Lucie Contamin, Benoît Gaudou, Bich Bich Hai, Viet Thanh Le, Nicolas Marilleau, Jean-Daniel Zucker.</p>
+  <p>Developed by Marc Choisy, Lucie Contamin, Benoît Gaudou, Bich Hai Ho, Viet Thanh Le, Nicolas Marilleau, Jean-Daniel Zucker.</p>
 </div>
 
 <div class="pkgdown">

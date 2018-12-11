@@ -4,7 +4,7 @@ Title: An R Interface to the GAMA Simulation Platform
 Version: 0.1.0
 Authors@R: c(person("Marc", "Choisy", 
                     email = "marc.choisy@ird.fr", 
-                    role = c("aut", "cre", "cph"),
+                    role = c("aut", "cre"),
                     comment = c(ORCID = "https://orcid.org/0000-0002-5187-6390")),
              person("Lucie", "Contamin", 
                     email = "contamin.lucie@gmail.com", 
@@ -14,7 +14,7 @@ Authors@R: c(person("Marc", "Choisy",
                     email = "benoit.gaudou@ut-capitole.fr", 
                     role = "aut",
                     comment = c(ORCID = "https://orcid.org/0000-0002-9005-3004")),
-             person("Bich", "Bich Hai", 
+             person("Bich Hai", "Ho", 
                     email = "hobichhai@gmail.com", 
                     role = "aut",
                     comment = c(ORCID = "https://orcid.org/0000-0002-6344-0180")),
@@ -29,7 +29,8 @@ Authors@R: c(person("Marc", "Choisy",
              person("Jean-Daniel", "Zucker", 
                     email = "jean-daniel.zucker@ird.fr", 
                     role = "aut",
-                    comment = c(ORCID = "https://orcid.org/0000-0002-5597-7922")))
+                    comment = c(ORCID = "https://orcid.org/0000-0002-5597-7922")),
+             person("IRD", role = "cph"))
 Maintainer: Marc Choisy <marc.choisy@ird.fr>
 Description: An R Interface to the GAMA Simulation Platform.
 License: MIT + file LICENSE
