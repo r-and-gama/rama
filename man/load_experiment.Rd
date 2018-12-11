@@ -15,16 +15,19 @@ load_experiment(experiment, model, dir = "")
 model. If not specified, name of the gaml file will be used}
 }
 \description{
-Loads an experiment from a model specified in a \code{gaml} file and returns
+Loads an experiment from a model specified in a \code{.gaml} file and returns
 an object of class \code{experiment}.
+}
+\details{
+The \code{rama} package contains a library of model in the \code{examples}
+directory of the \code{rama} package file hierarchy. These models can be
+accessed with the \code{system.file()} function as explained in the example.
 }
 \examples{
 # Looking at the \\code{sir.gaml} file in the \\code{examples} directory of the
 # \\code{rama} library:
-gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-
-# Loading the experiment \\code{sir} from this gaml file:
-exp1 <- load_experiment("sir", gaml_file)
+# Loading an experiment:
+exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
 
 # Checking the class:
 class(exp1)
