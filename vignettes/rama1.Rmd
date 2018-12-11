@@ -1,5 +1,5 @@
 ---
-title: "1. Getting started"
+title: "1 Getting started"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -18,34 +18,20 @@ knitr::opts_chunk$set(
 )
 ```
 
-# 1 Preambule
-
-## 1.1 Installing `rama`
-
-```{r}
-# install.packages("devtools")
-# devtools::install_github("r-and-gama/rama")
-```
-
-## 1.2 Loading `rama`
+For installation and configuration, see 
+[here](https://r-and-gama.github.io/rama/#installation-and-configuration).
 
 ```{r}
 library(rama)
 ```
 
-## 1.3 Configuring `rama`
-
-```{r}
-# Not sure we still need this...
-```
-
-# 2. Desiging experiments
+## 1.1 Desiging experiments
 
 We can make an `experiment` object either by reading an experiment from a GAML
 file with the `load_experiment()` funtion or by building it from scratch with
 the `experiment()` constructor.
 
-## 2.1 Loading an experiment from a GAML file
+### 1.1.1 Loading an experiment from a GAML file
 
 Let's use the following `gaml` file:
 
@@ -53,7 +39,9 @@ Let's use the following `gaml` file:
 gaml_file <- system.file("examples", "sir.gaml", package = "rama")
 ```
 
-Loading the experiment `sir` from this file. We indicate the output folder for each model, if not the name of the `gaml` file is used:
+Loading the experiment `sir` from this file. Note that we also indicate the
+names of the folder where we wish to save the simulations outputs. If not
+specified, the name of the `.gaml` is used by default:
 
 ```{r}
 exp1 <- load_experiment("sir", gaml_file, "sir")
@@ -74,7 +62,7 @@ class(exp1)
 This implies that we will be able to use all the data frame methods to
 manipulate experiments. 
 
-## 2.2 Building an experiment from scratch
+### 1.1.2 Building an experiment from scratch
 
 Alternatively, an experiment can be built from scratch with the `experiment`
 constructor:
@@ -146,7 +134,7 @@ exp4
 
 We'll see more about that in the next sections.
 
-## 2.3 Building an experiment from a data frame
+### 1.1.3 Building an experiment from a data frame
 
 ```{r}
 df <- data.frame(
@@ -178,7 +166,7 @@ experiment(df)
 ```
 
 
-# 3. Manipulating experiments
+## 1.2 Manipulating experiments
 
 As mentioned above, since `experiment` objects are data frames, all the data
 frame methods can be used to manipulate them, such as `nrow()` to know the
@@ -189,7 +177,7 @@ nrow(exp4)
 ```
 
 
-## 3.1 Replicating experiments
+### 1.2.1 Replicating experiments
 
 From the following experiment
 
@@ -222,21 +210,21 @@ exp5
 ```
 
 
-## 3.2 Extracting parameters values
+### 1.2.2 Extracting parameters values
 
 ```{r}
 parameters(exp5)
 ```
 
 
-## 3.3 Extracting observation rates
+### 1.2.3 Extracting observation rates
 
 ```{r}
 observation(exp5)
 ```
 
 
-## 3.4 `tmax` and `seed`
+### 1.2.4 `tmax` and `seed`
 
 As seen above, `seed` can be extracted and changed with regular data frame
 methods:
@@ -270,9 +258,11 @@ exp5
 ```
 
 
-# 4. Running experiments
+## 1.3 Running experiments
 
-Then, we run the experiment by one command `run_experiment`, in which we specify the experiment and optionally number of cores, output folder for the results of this experiment, parameters file in xml format. 
+Then, we run the experiment by one command `run_experiment`, in which we specify
+the experiment and optionally number of cores, output folder for the results of
+this experiment, parameters file in xml format. 
 
 ```{r eval = FALSE}
 output <- run_experiment(exp1)

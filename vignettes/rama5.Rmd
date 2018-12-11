@@ -1,5 +1,5 @@
 ---
-title: "5. Comparing ODE, IBM and ABM"
+title: "5 Comparing ODE, IBM and ABM"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

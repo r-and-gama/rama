@@ -1,5 +1,5 @@
 ---
-title: "2. Testing hypotheses"
+title: "2 Testing hypotheses"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

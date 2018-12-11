@@ -1,5 +1,5 @@
 ---
-title: "3. Sensivity analysis"
+title: "3 Sensivity analysis"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
