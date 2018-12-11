@@ -140,9 +140,12 @@ load_experiment <- function(experiment, model, dir = "") {
     out_par <- data.frame(NULL)
     dic_par <- NULL
   }
-  output <- as.data.frame(c(out_par, out_var))
-  dic <- c(dic_par, dic_var)
+
   out_attr <- get_attributes(out)
+  output <- as.data.frame(c(out_par, out_var, out_attr))
+  output$gaml <- NULL
+  output$experiment <- NULL
+  dic <- c(dic_par, dic_var)
   class(output) <- c("experiment", class(output))
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
