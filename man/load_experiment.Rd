@@ -21,7 +21,7 @@ an object of class \code{experiment}.
 \details{
 The \code{rama} package contains a library of model in the \code{examples}
 directory of the \code{rama} package file hierarchy. These models can be
-accessed with the \codd{system.file()} function as explained in the example.
+accessed with the \code{system.file()} function as explained in the example.
 }
 \examples{
 # Looking at the \\code{sir.gaml} file in the \\code{examples} directory of the

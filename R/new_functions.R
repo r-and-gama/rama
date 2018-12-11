@@ -49,7 +49,7 @@ get_attributes <- function(x) {
 #'
 #' The \code{rama} package contains a library of model in the \code{examples}
 #' directory of the \code{rama} package file hierarchy. These models can be
-#' accessed with the \codd{system.file()} function as explained in the example.
+#' accessed with the \code{system.file()} function as explained in the example.
 #'
 #' @param experiment The name of the experiment to load.
 #' @param model The name of the file from which to load the experiment.
