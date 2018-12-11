@@ -1,0 +1,44 @@
+development:
+  mode: unreleased
+
+authors:
+  Marc Choisy:
+    href: http://marcchoisy.free.fr
+  Jean-Daniel Zucker:
+    href: http://www-poleia.lip6.fr/~zucker
+  Viet Thanh Le:
+    href: https://quadram.ac.uk/people/thanh-le-viet
+  Benoît Gaudou:
+    href: https://sites.google.com/site/benoitgaudou
+  IRD:
+    href: http://www.ird.fr
+  Nicolas Marilleau:
+    href: https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en
+  Bich Hai Ho:
+    href: https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952
+  Lucie Contamin:
+    href: https://www.researchgate.net/profile/Lucie_Contamin
+
+reference:
+  - title: Configuration
+    contents:
+    - setup_gama
+  - title: GAML files
+    contents:
+    - list_experiment
+    - load_experiment
+    - save_to_gama
+    - show_experiment
+  - title: Experiment objects
+    contents:
+    - experiment
+    - expname
+    - get_wkdir
+    - model
+    - observation
+    - parameters
+    - plot_parms
+    - repl
+
+
+
