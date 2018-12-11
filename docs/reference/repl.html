@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List the experiments of a model and their types — show_experiment • rama</title>
+<title>Replicate an experiment — repl • rama</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="List the experiments of a model and their types — show_experiment" />
+<meta property="og:title" content="Replicate an experiment — repl" />
 
-<meta property="og:description" content="List the experiments of a given model." />
+<meta property="og:description" content="Produces an experiment object from the replication of an
+experiment object." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -125,27 +126,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List the experiments of a model and their types</h1>
+    <h1>Replicate an experiment</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/new_functions.R'><code>R/new_functions.R</code></a></small>
-    <div class="hidden name"><code>show_experiment.Rd</code></div>
+    <div class="hidden name"><code>repl.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>List the experiments of a given model.</p>
+    <p>Produces an <code>experiment</code> object from the replication of an
+<code>experiment</code> object.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>show_experiment</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='fu'>repl</span>(<span class='no'>x</span>, <span class='no'>n</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>path to a gaml model file.</p></td>
+      <th>x</th>
+      <td><p>An object of class <code>experiment</code>.</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>The number of times to repeat the experiment <code>x</code>.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An object of class <code>experiment</code> that is the replication of the
+inputed <code>x</code> argument.</p>
     
 
   </div>
@@ -153,7 +164,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

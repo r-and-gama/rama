@@ -2,7 +2,7 @@
 % Please edit documentation in R/new_functions.R
 \name{show_experiment}
 \alias{show_experiment}
-\title{List a model's experiments and their types}
+\title{List the experiments of a model and their types}
 \usage{
 show_experiment(file)
 }

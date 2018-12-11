@@ -38,6 +38,8 @@ get_attributes <- function(x) {
 }
 
 
+
+
 # make_dictionary --------------------------------------------------------------
 
 #' @importFrom stats setNames
@@ -47,6 +49,8 @@ make_dictionary <- function(x) {
   dic <- gsub("_+", "_", dic)
   dic <- setNames(dic, names(x))
 }
+
+
 
 
 # load_experiment --------------------------------------------------------------
@@ -181,13 +185,14 @@ load_experiment <- function(experiment, model, dir = "") {
 #'
 #' Save an object of class \code{experiment} to an XML file GAMA-compliant.
 #'
-#' @param plan Object of class \code{experiment}.
+#' @param plan An object of class \code{experiment}.
 #' @param file The path to the output XML file.
 #'
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #'
 #' @export
 save_to_gama <- function(plan, file) UseMethod("save_to_gama")
+
 
 
 
@@ -215,7 +220,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
           m_type <- "INT"
         } else m_type <- "FLOAT"
       }
-      attribut <- c(var  = title,
+      attribut <- c(var   = title,
                     type  = m_type,
                     value = val)
       xmlFile$addTag("Parameter", attrs = attribut)
@@ -248,51 +253,143 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
 
 # get_wkdir --------------------------------------------------------------------
 
+#' Get and set the output directory
+#'
+#' These functions allow to get and set the path to the directory where the
+#' simulations outputs will be saved.
+#'
+#' @param x An object of class \code{experiment}.
+#'
+#' @return The path of the directory where the simulations outputs will be saved.
+#'
+#' @examples
+#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
+#' get_wkdir(exp1)
+#'
+#' @export
+#'
 get_wkdir <- function(x) UseMethod("get_wkdir")
 
+
+
+
+#' @describeIn get_wkdir
+#' @export
 get_wkdir.default <- function(x) "Unknown class"
 
-get_wkdir.experiment <- function(x) {
-  attributes(x)$wkdir
-}
+
+
+
+#' @describeIn get_wkdir
+#' @export
+get_wkdir.experiment <- function(x) attributes(x)$wkdir
 
 
 
 
 # model ------------------------------------------------------------------------
 
+#' Get and set the model of an experiment
+#'
+#' These functions allow to get and set the path to the \code{.gaml} file that
+#' contains the model of an \code{experiment} object.
+#'
+#' @param x An object of class \code{experiment}.
+#'
+#' @return The path to the \code{.gaml} file that contains the model definition.
+#'
+#' @examples
+#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
+#' model(exp1)
+#'
+#' @export
+#'
 model <- function(x) UseMethod("model")
 
+
+
+
+#' @describeIn model
+#' @export
 model.default <- function(x) "Unknown class"
 
-model.experiment <- function(x) {
-  attributes(x)$model
-}
+
+
+
+#' @describeIn model
+#' @export
+model.experiment <- function(x) attributes(x)$model
 
 
 
 
-# xepname ----------------------------------------------------------------------
+# expname ----------------------------------------------------------------------
 
+#' Get the name of an experiment
+#'
+#' Retrieves the name of the experiment that an \code{experiment} object is
+#' linked to.
+#'
+#' @param x An object of class \code{experiment}.
+#'
+#' @return The name of the experiment that the inputed \code{experiment} object
+#' is linked to.
+#'
+#' @examples
+#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
+#' expname(exp1)
+#'
+#' @export
+#'
 expname <- function(x) UseMethod("expname")
 
+
+
+
+#' @describeIn expname
+#' @export
 expname.default <- function(x) "Unknown class"
 
-expname.experiment <- function(x) {
-  attributes(x)$experiment
-}
+
+
+
+#' @describeIn expname
+#' @export
+expname.experiment <- function(x) attributes(x)$experiment
 
 
 
 
 # parameters -------------------------------------------------------------------
 
+#' Extract parameters values
+#'
+#' Subsets the columns of an \code{experiment} object that correspond to the
+#' values of the parameters.
+#'
+#' @param x An object of class \code{experiment}.
+#'
+#' @return A data frame that is a subset of the inputed \code{experiment} object.
+#'
+#' @examples
+#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
+#' exp2 <- repl(exp1, 10)
+#' parameters(exp2)
+#'
 #' @export
 parameters <- function(x) UseMethod("parameters")
 
+
+
+
+#' @describeIn parameters
 #' @export
 parameters.default <- function(x) "Unknown class"
 
+
+
+
+#' @describeIn parameters
 #' @export
 parameters.experiment <- function(x) {
   as.data.frame(x[, grep("^p_", names(x), value = TRUE), drop = FALSE])
@@ -303,12 +400,34 @@ parameters.experiment <- function(x) {
 
 # observation ------------------------------------------------------------------
 
+#' Extract monitoring rates
+#'
+#' Subsets the columns of an \code{experiment} object that correspond to the
+#' observation rates of the monitored variables.
+#'
+#' @param x An object of class \code{experiment}.
+#'
+#' @return A data frame that is a subset of the inputed \code{experiment} object.
+#'
+#' @examples
+#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
+#' exp2 <- repl(exp1, 10)
+#' observation(exp2)
+#'
 #' @export
 observation <- function(x) UseMethod("observation")
 
+
+
+
+#' @describeIn observation
 #' @export
 observation.default <- function(x) "Unknown class"
 
+
+
+
+#' @describeIn observation
 #' @export
 observation.experiment <- function(x) {
   as.data.frame(x[, grep("^r_", names(x), value = TRUE), drop = FALSE])
@@ -319,12 +438,31 @@ observation.experiment <- function(x) {
 
 # repl -------------------------------------------------------------------------
 
+#' Replicate an experiment
+#'
+#' Produces an \code{experiment} object from the replication of an
+#' \code{experiment} object.
+#'
+#' @param x An object of class \code{experiment}.
+#' @param n The number of times to repeat the experiment \code{x}.
+#'
+#' @return An object of class \code{experiment} that is the replication of the
+#' inputed \code{x} argument.
+#'
 #' @export
 repl <- function(x, n) UseMethod("repl")
 
+
+
+
+#' @describeIn repl
 #' @export
 repl.default <- function(x, n) "Unknown class"
 
+
+
+
+#' @describeIn repl
 #' @export
 repl.experiment <- function(x, n) {
   do.call(rbind, lapply(1:n, function(y) x))
@@ -335,6 +473,28 @@ repl.experiment <- function(x, n) {
 
 # experiment -------------------------------------------------------------------
 
+#' Create an experiment
+#'
+#' Creates an object of class \code{experiment}.
+#'
+#' This function is polymorph and can takes input of different kind to achieve
+#' this. TO BE DESCRIBED IN MORE DETAIL.
+#'
+#' @param ... One or two data frames.
+#' @param parameters Either a data frame containing the paramters values, or a
+#'                   character vector containing the names of the columns of the
+#'                   first-position data frame argument that correspond to the
+#'                   parameters.
+#' @param obsrates Either a data frame containing the monitoring rates of the
+#'                 observed variables, or a character vector containing the
+#'                 names of the columns of the first-position data frame
+#'                 argument that correspond to the monitored variables.
+#' @param obsrates xxx
+#' @param tmax xxx
+#' @param seed xxx
+#' @param model xxx
+#' @param experiment xxx
+#'
 #' @export
 #'
 #' @examples
@@ -528,6 +688,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 
 
 
+
 # list_experiment --------------------------------------------------------------
 
 #' List the experiments of a model
@@ -566,9 +727,12 @@ list_experiment <- function(x) {
   unname(unlist(Map(`[`, gaml, sel)))
 }
 
+
+
+
 # show_experiment --------------------------------------------------------------
 
-#' List a model's experiments and their types
+#' List the experiments of a model and their types
 #'
 #' List the experiments of a given model.
 #'
