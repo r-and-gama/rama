@@ -477,7 +477,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
         " of "            , npar, " parameter"        , s(npar),
         " and "           , nvar, " observed variable", s(nvar), "\n", sep = "")
     print_info()
-    cat("model parameters:   ", paste(names(param), collapse = ", "),
+    cat("model parameters:   "  , paste(names(param), collapse = ", "),
         "\nobserved variables: ", paste(names(obser), collapse = ", "),
         "\nExperiment overview:\n")
 
