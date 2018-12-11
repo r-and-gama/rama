@@ -39,7 +39,9 @@ BugReports: https://github.com/r-and-gama/rama/issues
 Encoding: UTF-8
 Imports:
     readtext,
-    XML
+    XML,
+    plot3D,
+    stringr
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: knitr,
