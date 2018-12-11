@@ -97,7 +97,7 @@ setup_gama_ui <- function() {
 #'
 #' @export
 setup_gama <- function() {
-  defaultjar <- is_gama_installed(answer)
+  defaultjar <- is_gama_installed()
   if(defaultjar)
   {
     message("Gama is already installed, do you want to setup a new one ? ")
