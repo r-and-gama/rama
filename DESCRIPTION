@@ -41,7 +41,8 @@ Imports:
     readtext,
     XML,
     plot3D,
-    stringr
+    stringr,
+    downloader
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: knitr,
