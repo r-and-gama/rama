@@ -168,7 +168,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
           m_type <- "INT"
         } else m_type <- "FLOAT"
       }
-      attribut <- c(name  = title,
+      attribut <- c(var  = title,
                     type  = m_type,
                     value = val)
       xmlFile$addTag("Parameter", attrs = attribut)
