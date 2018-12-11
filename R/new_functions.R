@@ -419,35 +419,6 @@ insert_middle <- function(x, n, digits = 4) {
 # print.experiment method ------------------------------------------------------
 
 #' @export
-# print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
-#   param <- parameters(x)
-#   obser <- observation(x)
-#   if (ncol(param) > 2) param2 <- insert_middle(param, nchar, digits)
-#   else param2 <- param
-#   if (ncol(obser) > 2) obser2 <- insert_middle(obser, nchar, digits)
-#   else obser2 <- obser
-#   y <- cbind(param2,
-#              obser2,
-#              x[, c("tmax", "seed")])
-#   if (nrow(y) > 2 * n + interspace) {
-#     h <- head(y, n)
-#     t <- tail(y, n)
-#     hn <- rownames(h)
-#     tn <- rownames(t)
-#     m <- setNames(as.data.frame(matrix(".", interspace, ncol(y)),
-#                                 stringsAsFactors = FALSE), names(y))
-#     out <- rbind(h, m, t)
-#     out <- cbind(c(hn, rep(".", interspace), tn), out)
-#     names(out)[1] <- ""
-#     print(out, row.names = FALSE)
-#   } else print(y)
-#   cat("Linked to experiment \"", attributes(x)$experiment, "\" of model \"", attributes(x)$model, "\".\n", sep = "")
-#   cat("Outputs are saved in \"", attributes(x)$wkdir, "\".\n", sep = "")
-#   cat("Parameters are ", paste(names(param), collapse = ", "), ".\n", sep = "")
-#   cat("Observed variables are ", paste(names(obser), collapse = ", "), ".", sep = "")
-#   invisible(x)
-# }
-
 print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 
   attrs <- attributes(x)
@@ -490,6 +461,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
                x[, c("tmax", "seed")])
 
     if (nrow(y) > 2 * n + interspace) {
+
       h <- head(y, n)
       t <- tail(y, n)
       hn <- rownames(h)
@@ -500,15 +472,10 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
       out <- cbind(c(hn, rep(".", interspace), tn), out)
       names(out)[1] <- ""
       print(out, row.names = FALSE)
+
     } else print(y)
 
   }
-  # cat(  "experiment name:    ", attrs$experiment,
-  #     "\ninput gaml file:    ", attrs$model,
-  #     "\noutput directory:   ", attrs$wkdir,
-  #     "\nmodel parameters:   ", paste(names(param), collapse = ", "),
-  #     "\nobserved variables: ", paste(names(obser), collapse = ", "),
-  #     "\nExperiment overview:\n")
   invisible(x)
 }
 
