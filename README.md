@@ -4,7 +4,7 @@
 ================================================================
 
 <!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama) -->
-`rama` is an R interface to the [GAMA](https://gama-platform.github.io) agent-based simulation platform. It allows to
+`rama` is an R interface to the [GAMA](https://gama-platform.github.io) **agent-based** simulation platform. It allows to
 
 -   **read** an experiment of a model defined in a `.gaml` file,
 -   **manipulate** this experiment, including generate experiment plans and
@@ -17,19 +17,30 @@ An **experiment** is a group of simulations. A **simulation** is an execution of
 -   a **duration** of simulation and
 -   a **seed** value.
 
-All the simulations of an experiment relate to the same model. In R, an experiment belongs to the class `experiment` that is an extension of the class `data.frame`. The creation and manipulation of experiments can thus efficiently be performed with all the `data.frame` methods. The class `experiment` is also [tidyverse](https://www.tidyverse.org)-compliant, which allows its insertion in **pipelines** (or workflows). Outputs of `experiment` runs is an object of class `experiment` too, with fields corresponding to the simulation outputs, typically data frames of time series of observed variables and / or links to snapshots that can subsequently assembled into movies. The R environment allows to
+All the simulations of an experiment relate to the same model. In R, an experiment belongs to the class `experiment` that is an extension of the class `data.frame`. The creation and manipulation of experiments can thus efficiently be performed with the `data.frame` methods. The class `experiment` is also [tidyverse](https://www.tidyverse.org)-compliant, which allows its insertion into **pipelines** (or workflows). Outputs of `experiment` runs are in an object of class `experiment` too, with fields corresponding to the simulation outputs, typically data frames of time series of observed variables and / or links to snapshots that can subsequently be assembled into movies. The R environment allows to
 
 -   create **experimental designs** (for example with the [expand.grid()](https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/expand.grid) function),
--   **statistically explore** results of simulation (typically looking at how the parameters values influenced the dynamics of the state variables),
+-   **statistically explore** results of simulation (how the parameters values influence the dynamics of the variables),
 -   perform **sensitivity analysis** of model's parameters (how much each parameter quantitatively influences the outputs),
--   **estimate parameters values** (model calibration) if real data are available for the model' state variables.
+-   **estimate parameters values** (model calibration) if real data are available for the model's state variables.
 
-An object of class `experiment` contains, in addition to above-mentionned data frame, a hard link to a `.gaml` file containing the GAML model (**input**) and a hard link to a folder containing the **outputs** of simulations. These links are not supposed to be modified by the user. The `.gaml` file is not supposed either to be modified by the user in R. Instead, the GAML model should be developed in the [GAMA](https://gama-platform.github.io) software. The use of `rama` should be restricted to the design and exploitation of experiments' simulations as outlined above.
+In addition to above-mentionned data frame, an object of class `experiment` contains a link to a `.gaml` file containing the GAML model (**input**) and a link to a folder containing the **outputs** of simulations. It is possible to change these links but potentially dangerous and not advised. The `.gaml` file can be visualized in R but is not supposed to be modified by the user in R. Instead, a safe practice is to develop the model in the [GAMA](https://gama-platform.github.io) software and to reserve the use of `rama` to the design and exploitation of experiments' simulations as outlined above.
 
-`experiment` class
-------------------
+Structure of experiments in `rama`
+----------------------------------
 
-The unique class of `rama` is `experiment`. It is basically a data frame structured this way:
+The package `rama` contains one unique class, `experiment` that contains all the information of an experiment in a GAML model. This class is a subclass of `data.frame` as outlined below:
+
+<img src="man/figures/rama1_1.png" align="right" width=500/>
+
+Each row of an `experiment` object corresponds to a simulation of the experiment. The columns corresponds to four type of data:
+
+-   one column per **parameter** (whose names start with `p_`),
+-   one column per **monitored variable** (whose names start with `r_`),
+-   one column for the **duration** of the simulation (in number of time step),
+-   one column for the **seed** value of the simulation.
+
+The name of the experiment, the links to **input** `.gaml` file and **output** directory, as well as the names of paramters and monitored variables that are common to all the simulations of the experiment are stored in the attributes of the `experiment` object and can be handled with accessor functions.
 
 Installation and configuration
 ------------------------------

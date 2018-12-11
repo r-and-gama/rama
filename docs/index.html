@@ -96,10 +96,10 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="rama" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rama" class="anchor"></a><code>rama</code> <img src="reference/figures/logo.png" align="right" width="120/">
+<a href="#rama" class="anchor"></a><code>rama</code> <img src="reference/figures/logo.png" align="right" width="200/">
 </h1></div>
 <!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama) -->
-<p><code>rama</code> is an R interface to the <a href="https://gama-platform.github.io">GAMA</a> agent-based simulation platform. It allows to</p>
+<p><code>rama</code> is an R interface to the <a href="https://gama-platform.github.io">GAMA</a> <strong>agent-based</strong> simulation platform. It allows to</p>
 <ul>
 <li>
 <strong>read</strong> an experiment of a model defined in a <code>.gaml</code> file,</li>
@@ -115,20 +115,30 @@
 <li>a <strong>duration</strong> of simulation and</li>
 <li>a <strong>seed</strong> value.</li>
 </ul>
-<p>All the simulations of an experiment relate to the same model. In R, an experiment belongs to the class <code>experiment</code> that is an extension of the class <code>data.frame</code>. The creation and manipulation of experiments can thus efficiently be performed with all the <code>data.frame</code> methods. The class <code>experiment</code> is also <a href="https://www.tidyverse.org">tidyverse</a>-compliant, which allows its insertion in <strong>pipelines</strong> (or workflows). Outputs of <code>experiment</code> runs is an object of class <code>experiment</code> too, with fields corresponding to the simulation outputs, typically data frames of time series of observed variables and / or links to snapshots that can subsequently assembled into movies. The R environment allows to</p>
+<p>All the simulations of an experiment relate to the same model. In R, an experiment belongs to the class <code>experiment</code> that is an extension of the class <code>data.frame</code>. The creation and manipulation of experiments can thus efficiently be performed with the <code>data.frame</code> methods. The class <code>experiment</code> is also <a href="https://www.tidyverse.org">tidyverse</a>-compliant, which allows its insertion into <strong>pipelines</strong> (or workflows). Outputs of <code>experiment</code> runs are in an object of class <code>experiment</code> too, with fields corresponding to the simulation outputs, typically data frames of time series of observed variables and / or links to snapshots that can subsequently be assembled into movies. The R environment allows to</p>
 <ul>
 <li>create <strong>experimental designs</strong> (for example with the <a href="https://www.rdocumentation.org/packages/base/versions/3.5.1/topics/expand.grid">expand.grid()</a> function),</li>
 <li>
-<strong>statistically explore</strong> results of simulation (typically looking at how the parameters values influenced the dynamics of the state variables),</li>
+<strong>statistically explore</strong> results of simulation (how the parameters values influence the dynamics of the variables),</li>
 <li>perform <strong>sensitivity analysis</strong> of model’s parameters (how much each parameter quantitatively influences the outputs),</li>
 <li>
-<strong>estimate parameters values</strong> (model calibration) if real data are available for the model’ state variables.</li>
+<strong>estimate parameters values</strong> (model calibration) if real data are available for the model’s state variables.</li>
 </ul>
-<p>An object of class <code>experiment</code> contains, in addition to above-mentionned data frame, a hard link to a <code>.gaml</code> file containing the GAML model (<strong>input</strong>) and a hard link to a folder containing the <strong>outputs</strong> of simulations. These links are not supposed to be modified by the user. The <code>.gaml</code> file is not supposed either to be modified by the user in R. Instead, the GAML model should be developed in the <a href="https://gama-platform.github.io">GAMA</a> software. The use of <code>rama</code> should be restricted to the design and exploitation of experiments’ simulations as outlined above.</p>
-<div id="experiment-class" class="section level2">
+<p>In addition to above-mentionned data frame, an object of class <code>experiment</code> contains a link to a <code>.gaml</code> file containing the GAML model (<strong>input</strong>) and a link to a folder containing the <strong>outputs</strong> of simulations. It is possible to change these links but potentially dangerous and not advised. The <code>.gaml</code> file can be visualized in R but is not supposed to be modified by the user in R. Instead, a safe practice is to develop the model in the <a href="https://gama-platform.github.io">GAMA</a> software and to reserve the use of <code>rama</code> to the design and exploitation of experiments’ simulations as outlined above.</p>
+<div id="structure-of-experiments-in-rama" class="section level2">
 <h2 class="hasAnchor">
-<a href="#experiment-class" class="anchor"></a><code>experiment</code> class</h2>
-<p>The unique class of <code>rama</code> is <code>experiment</code>. It is basically a data frame structured this way:</p>
+<a href="#structure-of-experiments-in-rama" class="anchor"></a>Structure of experiments in <code>rama</code>
+</h2>
+<p>The package <code>rama</code> contains one unique class, <code>experiment</code> that contains all the information of an experiment in a GAML model. This class is a subclass of <code>data.frame</code> as outlined below:</p>
+<p><img src="reference/figures/rama1_1.png" align="right" width="900/"></p>
+<p>Each row of an <code>experiment</code> object corresponds to a simulation of the experiment. The columns corresponds to four type of data:</p>
+<ul>
+<li>one column per <strong>parameter</strong> (whose names start with <code>p_</code>),</li>
+<li>one column per <strong>monitored variable</strong> (whose names start with <code>r_</code>),</li>
+<li>one column for the <strong>duration</strong> of the simulation (in number of time step),</li>
+<li>one column for the <strong>seed</strong> value of the simulation.</li>
+</ul>
+<p>The name of the experiment, the links to <strong>input</strong> <code>.gaml</code> file and <strong>output</strong> directory, as well as the names of paramters and monitored variables that are common to all the simulations of the experiment are stored in the attributes of the <code>experiment</code> object and can be handled with accessor functions.</p>
 </div>
 <div id="installation-and-configuration" class="section level2">
 <h2 class="hasAnchor">
@@ -168,13 +178,14 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Marc Choisy <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/https://orcid.org/0000-0002-5187-6390" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Marc Choisy <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/https://orcid.org/0000-0002-5187-6390" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Lucie Contamin <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0001-5797-1279" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Benoît Gaudou <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-9005-3004" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>Bich Bich Hai <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-6344-0180" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Bich Hai Ho <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-6344-0180" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Viet Thanh Le <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-2106-8130" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Nicolas Marilleau <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-1004-4352" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Jean-Daniel Zucker <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-5597-7922" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
@@ -184,7 +195,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Marc Choisy, Lucie Contamin, Benoît Gaudou, Bich Bich Hai, Viet Thanh Le, Nicolas Marilleau, Jean-Daniel Zucker.</p>
+  <p>Developed by Marc Choisy, Lucie Contamin, Benoît Gaudou, Bich Hai Ho, Viet Thanh Le, Nicolas Marilleau, Jean-Daniel Zucker.</p>
 </div>
 
 <div class="pkgdown">
