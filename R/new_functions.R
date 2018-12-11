@@ -132,6 +132,7 @@ load_experiment <- function(experiment, model, dir = "") {
     stop(
       paste0("There is no experiment named \"", experiment, "\" in \"",
              basename(model), "\"."))
+  }
 
   if(file.exists(tmp)) {
     out <- XML::xmlToList(XML::xmlParse(tmp))
