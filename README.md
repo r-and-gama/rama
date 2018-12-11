@@ -12,12 +12,12 @@
 
 An **experiment** is a group of simulations. A **simulation** is an execution of a given **model** with
 
+[<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama1.html)
+
 -   a given set of **parameters values**,
 -   a given set of **observed variables**,
 -   a **duration** of simulation and
 -   a **seed** value.
-
-<img src="man/figures/get_started_green.png" align="right" width=100/>
 
 All the simulations of an experiment relate to the same model. In R, an experiment belongs to the class `experiment` that is an extension of the class `data.frame`. The creation and manipulation of experiments can thus efficiently be performed with the `data.frame` methods. The class `experiment` is also [tidyverse](https://www.tidyverse.org)-compliant, which allows its insertion into **pipelines** (or workflows). Outputs of `experiment` runs are in an object of class `experiment` too, with fields corresponding to the simulation outputs, typically data frames of time series of observed variables and / or links to snapshots that can subsequently be assembled into movies. The R environment allows to
 
@@ -55,14 +55,8 @@ if (! "devtools" %in% installed_packages) install.packages("devtools")
 if (! "rama" %in% installed_packages) devtools::install_github("r-and-gama/rama")
 ```
 
-After loading, `rama` needs to be configured, a step that basically consists in linking `rama` to a GAMA engine on the system:
+After loading, `rama` needs to be configured, a step that basically consists in linking `rama` to a GAMA engine on the system. If GAMA is not installed on the system it will install it for you:
 
 ``` r
-setup()
-```
-
-If GAMA is not installed on the system, it can be installed directly from R as
-
-``` r
-install_gama()
+setup_gama()
 ```

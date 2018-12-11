@@ -148,10 +148,8 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">installed_packages &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/installed.packages">installed.packages</a></span>())
 <span class="cf">if</span> (<span class="op">!</span><span class="st"> "devtools"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)
 <span class="cf">if</span> (<span class="op">!</span><span class="st"> "rama"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"r-and-gama/rama"</span>)</code></pre></div>
-<p>After loading, <code>rama</code> needs to be configured, a step that basically consists in linking <code>rama</code> to a GAMA engine on the system:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setup</span>()</code></pre></div>
-<p>If GAMA is not installed on the system, it can be installed directly from R as</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install_gama</span>()</code></pre></div>
+<p>After loading, <code>rama</code> needs to be configured, a step that basically consists in linking <code>rama</code> to a GAMA engine on the system. If GAMA is not installed on the system it will install it for you:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/setup_gama.html">setup_gama</a></span>()</code></pre></div>
 </div>
 </div>
   </div>

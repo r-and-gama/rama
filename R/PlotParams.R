@@ -1,12 +1,13 @@
 # plot_parms --------------------------------------------------------------
 
+#' Visualize values of parameters
+#'
 #' Plot the parameters that have the greatest variance in the experiments of a model.
 #'
-#' From the list of all parameters of the experiments
-#' that do vary (i.e. not null) the one (up to 3) with the biggest variance
-#' are ploted in 3D, 2D and 1D.
-#' ©JDZ
-#' @param x an experiment.
+#' From the list of all parameters of the experiments that do vary (i.e. not
+#' null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
+#'
+#' @param x An object of class \code{experiment}.
 #'
 #' @return Returns a vector of the variables with highest variances.
 #'
