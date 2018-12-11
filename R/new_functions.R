@@ -106,23 +106,33 @@ load_experiment <- function(experiment, model, dir = "") {
   } else {
     out <- out$Simulation
   }
-  out <- lapply(c(get_parameters, get_variables, get_attributes), function(f) f(out))
-  dictionary <- names(c(out[[1]], out[[2]])) %>%
-    gsub("[[:space:]]|[[:punct:]]", "_", .) %>% tolower %>%
-    gsub("_+", "_", .) %>% setNames(names(c(out[[1]], out[[2]])))
-  names(out[[1]]) <- paste0("p_", dictionary[names(out[[1]])])
-  names(out[[2]]) <- paste0("r_", dictionary[names(out[[2]])])
-  #names(out[[1]]) <- paste0("p_", names(out[[1]]))
-  #names(out[[2]]) <- paste0("r_", names(out[[2]]))
-  out <- do.call(cbind, out)
-  class(out) <- c("experiment", class(out))
-  attr(out, "model") <- as.character(unname(out$gaml))
-  attr(out, "experiment") <- as.character(unname(out$experiment))
-  attr(out, "wkdir") <- wk_dir
-  attr(out, "dic") <- dictionary
-  out$gaml <- NULL
-  out$experiment <- NULL
-  out
+  if (!is.null(out$Parameters) & !is.null(out$Outputs)) {
+    out <- lapply(c(get_parameters, get_variables),
+                  function(f) f(out))
+    dictionary <- names(c(out[[1]], out[[2]])) %>%
+      gsub("[[:space:]]|[[:punct:]]", "_", .) %>% tolower %>%
+      gsub("_+", "_", .) %>% setNames(names(c(out[[1]], out[[2]])))
+    names(out[[1]]) <- paste0("p_", dictionary[names(out[[1]])])
+    names(out[[2]]) <- paste0("r_", dictionary[names(out[[2]])])
+    out <- do.call(cbind, out)
+    attr(out, "dic_v") <- dictionary
+    attr(out, "dic_t") <- as.data.frame(dictionary) %>% t(.)
+  } else if (is.null(out$Parameters) & !is.null(out$Outputs)) {
+    "wait"
+  } else if (is.null(out$Outputs) & !is.null(out$Parameters)) {
+    "wait"
+  } else {
+    output <- data.frame(NULL)
+  }
+  out_attr <- get_attributes(out)
+  class(output) <- c("experiment", class(out))
+  attr(output, "model") <- as.character(unname(out_attr$gaml))
+  attr(output, "experiment") <- as.character(unname(out_attr$experiment))
+  attr(output, "wkdir") <- wk_dir
+  output$gaml <- NULL
+  output$experiment <- NULL
+  output
+  unclass(output)
 }
 
 
