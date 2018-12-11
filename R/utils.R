@@ -72,19 +72,16 @@ setup_gama_ui <- function() {
   defaultjar <- ""
   repeat{
     message("Give the path of Gama platform :")
-    answer <- toupper(readline())
-    defaultjar <- init_gama_path(answer)
-    if(!is.na(defaultjar)) {
-      break
-    }
+    answer <- readline()
+    defaultjar <- is_gama_installed(answer)
+    if(defaultjar) break
     else
     {
       warning("Gama is not found at the specified location")
       warning("Please give the correct location")
-
     }
   }
-  defaultjar
+  answer
 }
 
 
@@ -104,6 +101,7 @@ setup_gama <- function() {
 
     if (answer[1] == "A") {
        gama_path <- setup_gama_ui()
+       print(gama_path)
        defpath(gama_path)
   }
 }
