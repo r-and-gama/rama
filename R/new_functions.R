@@ -5,7 +5,7 @@ get_parameters <- function(x) {
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
   x3 <- setNames(x3, x2[, "name"])
   sel <- grep("INT", x2[, "type"])
-  x3[, sel] <- lapply(x3[, sel], as.integer)
+  if (length(sel) > 0) x3[, sel] <- lapply(x3[, sel], as.integer)
   x3
 }
 
@@ -98,7 +98,7 @@ load_experiment <- function(experiment, model, dir = "") {
                 experiment, " ", model, " ", tmp, " > /dev/null"),
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE) # removes the above-created workspace directory
-  out <- xmlToList(xmlParse(tmp))
+  out <- XML::xmlToList(XML::xmlParse(tmp))
   if (is.null(out)) {
     stop(
       paste0("There is no experiment named \"", experiment, "\" in \"",
@@ -107,13 +107,19 @@ load_experiment <- function(experiment, model, dir = "") {
     out <- out$Simulation
   }
   out <- lapply(c(get_parameters, get_variables, get_attributes), function(f) f(out))
-  names(out[[1]]) <- paste0("p_", names(out[[1]]))
-  names(out[[2]]) <- paste0("r_", names(out[[2]]))
+  dictionary <- names(c(out[[1]], out[[2]])) %>%
+    gsub("[[:space:]]|[[:punct:]]", "_", .) %>% tolower %>%
+    gsub("_+", "_", .) %>% setNames(names(c(out[[1]], out[[2]])))
+  names(out[[1]]) <- paste0("p_", dictionary[names(out[[1]])])
+  names(out[[2]]) <- paste0("r_", dictionary[names(out[[2]])])
+  #names(out[[1]]) <- paste0("p_", names(out[[1]]))
+  #names(out[[2]]) <- paste0("r_", names(out[[2]]))
   out <- do.call(cbind, out)
   class(out) <- c("experiment", class(out))
   attr(out, "model") <- as.character(unname(out$gaml))
   attr(out, "experiment") <- as.character(unname(out$experiment))
   attr(out, "wkdir") <- wk_dir
+  attr(out, "dic") <- dictionary
   out$gaml <- NULL
   out$experiment <- NULL
   out
