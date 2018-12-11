@@ -86,7 +86,15 @@ setup_gama_ui <- function() {
 }
 
 
+
+
 # download GAMA when necessary -------------------------------------------------
+
+#' Download GAMA and configure
+#'
+#' Prompt the user to download GAMA if he wish to and then configures
+#' \code{rama}, linking it to a GAMA engine installed on the system.
+#'
 #' @export
 setup_gama <- function() {
   defaultjar <- is_gama_installed(answer)
