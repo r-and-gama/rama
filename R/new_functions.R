@@ -9,6 +9,9 @@ get_parameters <- function(x) {
   x3
 }
 
+
+
+
 # get_variables ----------------------------------------------------------------
 
 get_variables <- function(x) {
@@ -191,25 +194,27 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
   normalizePath(file)
 }
 
-#' @export
+
+
+
+# get_wkdir --------------------------------------------------------------------
+
 get_wkdir <- function(x) UseMethod("get_wkdir")
 
-#' @export
 get_wkdir.default <- function(x) "Unknown class"
 
-
-# model ------------------------------------------------------------------------
-#' @export
 get_wkdir.experiment <- function(x) {
   attributes(x)$wkdir
 }
 
 
+
+
+# model ------------------------------------------------------------------------
+
 model <- function(x) UseMethod("model")
 
-
 model.default <- function(x) "Unknown class"
-
 
 model.experiment <- function(x) {
   attributes(x)$model
@@ -219,7 +224,6 @@ model.experiment <- function(x) {
 
 
 # xepname ----------------------------------------------------------------------
-
 
 expname <- function(x) UseMethod("expname")
 
