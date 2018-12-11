@@ -2,7 +2,7 @@
 % Please edit documentation in R/new_functions.R
 \name{list_experiment}
 \alias{list_experiment}
-\title{List a model's experiments}
+\title{List the experiments of a model}
 \usage{
 list_experiment(x)
 }

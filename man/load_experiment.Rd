@@ -2,7 +2,7 @@
 % Please edit documentation in R/new_functions.R
 \name{load_experiment}
 \alias{load_experiment}
-\title{Load An Experiment}
+\title{Load an experiment from a model}
 \usage{
 load_experiment(experiment, model, dir = "")
 }

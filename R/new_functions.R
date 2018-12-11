@@ -168,8 +168,8 @@ save_to_gama <- function(plan, file) UseMethod("save_to_gama")
 
 
 
-
 #' @describeIn save_to_gama
+#' @export
 save_to_gama.experiment <- function(plan, file = "out.xml") {
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
   id_simulation <- 0
