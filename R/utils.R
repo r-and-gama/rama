@@ -35,35 +35,58 @@ download_gama <- function() {
   distrib <- gama_remote_distrib()
   expDir  <- gama_local_distrib_path();
   path <- paste0(options("rama.temp_dir"), "/")
-  distrib_file <- paste0(path, "downloaded_gama.zip")
+  path_out <- paste0(path, "out")
+  path_dist <- paste0(path, "out/",basename(expDir))
+  path_test <- dirname(expDir)
+  distrib_file <- paste0(path, "downloaded_gama.tgz")
   if (! dir.exists(path)) dir.create(path, recursive = TRUE)
 
- # download.file(distrib, distrib_file, quiet = FALSE, mode = "wb", cacheOK = TRUE)
-  unzip(distrib_file, exdir = expDir )
-  # file.remove(distrib_file)
+  if(nchar(options("rama.default.gama.osx.zip.appdir"))>0){
+    path_out <- paste0(path, options("rama.default.gama.osx.zip.appdir"))
+    path_test <- paste0(path_test,"/", options("rama.default.gama.osx.zip.appdir"))
+  }
+
+#  download.file(distrib, distrib_file,  quiet = TRUE, mode = "wb", cacheOK = TRUE)
+  download(distrib, distrib_file,  mode = "wb")
+ # download(distrib, "/tmp/truc.tgz",  mode = "wb")
+
+
+  untar(distrib_file, exdir = path_test )
+#  unz?(distrib_file, exdir = path_test,  overwrite = TRUE, unzip = "unzip" )
+
+  # dir.create(expDir)
+  #file.rename(path_dist,dirname(expDir)) #, recursive = TRUE,copy.mode = "copy")
+  #file.rename(path_dist,dirname(expDir)) #, recursive = TRUE,copy.mode = "copy")
+  # remove(distrib_file)
+  #unlink(path_out, recursive = TRUE)
   gama_app <- switch(get_os(),
                      "Darwin" = options("rama.default.gama.osx.appdir"),
                      "Window" = options("rama.default.gama.win.appdir"),
                      "linux" = options("rama.default.gama.linux.appdir")
   );
-  paste0(expDir,gama_app);
+  expDir
 }
 
-# ------------------------------------------------------------------------------
 
-defpath <- function(path) {
-  os <- paste0(Sys.info()["sysname"])
-  # if we use OSX, the plugin is located in the Contents/eclipse sub directory of
-  # gama otherwise it is at its root:
-  subpath <- ifelse(os=="Darwin","/Contents/Eclipse","")
-  gamapath <- paste0(path,subpath,"/plugins")
-  plugins <- grep("org.eclipse.equinox.launcher_.*",dir(gamapath),value=T)
-  options(rama.plugins = paste(paste0(gamapath,"/",plugins),collapse=":"))
-  defaultjar <- paste0(gamapath,"/",plugins)
-  options(rama.startjar=defaultjar)
-  options(rama.Xmx="2048m")
-  options(rama.Xms="512m")
+setup_gama_ui <- function() {
+  defaultjar <- ""
+  repeat{
+    message("Give the path of Gama platform :")
+    answer <- toupper(readline())
+    defaultjar <- init_gama_path(answer)
+    if(!is.na(defaultjar)) {
+      break
+    }
+    else
+    {
+      warning("Gama is not found at the specified location")
+      warning("Please give the correct location")
+
+    }
+  }
+  defaultjar
 }
+
 
 # download GAMA when necessary -------------------------------------------------
 #' @export
@@ -80,7 +103,7 @@ setup_gama <- function() {
   }
 
     if (answer[1] == "A") {
-    #   gama_path <- download_gama()
-    #    defpath(gama_path)
+       gama_path <- setup_gama_ui()
+       defpath(gama_path)
   }
 }
