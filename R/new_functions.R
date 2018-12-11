@@ -39,7 +39,7 @@ get_attributes <- function(x) {
 
 # load_experiment --------------------------------------------------------------
 
-#' Load An Experiment
+#' Load an experiment from a model
 #'
 #' Loads an experiment from a model specified in a \code{gaml} file and returns
 #' an object of class \code{experiment}.
@@ -140,22 +140,22 @@ load_experiment <- function(experiment, model, dir = "") {
 
 # save_to_gama -----------------------------------------------------------------
 
+#' Save an experiment plan to a GAMA XML file
+#'
+#' Save an object of class \code{experiment} to an XML file GAMA-compliant.
+#'
+#' @param plan Object of class \code{experiment}.
+#' @param file The path to the output XML file.
+#'
+#' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
+#'
 #' @export
 save_to_gama <- function(plan, file) UseMethod("save_to_gama")
 
 
 
 
-#' Save an experiment plan to gama xml file
-#'
-#' Save an xml \code{file} containing the experiment plan defined in the object of class \code{experiment}.
-#'
-#' @param plan Object of class experiment containing all experiment to do
-#' @param file The path where you want to save the file.
-#'
-#' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
-#'
-#' @export
+#' @describeIn save_to_gama
 save_to_gama.experiment <- function(plan, file = "out.xml") {
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
   id_simulation <- 0
@@ -257,7 +257,7 @@ parameters.default <- function(x) "Unknown class"
 
 #' @export
 parameters.experiment <- function(x) {
-  as.data.frame(x[, grep("^p_", names(x), value = TRUE)])
+  as.data.frame(x[, grep("^p_", names(x), value = TRUE), drop = FALSE])
 }
 
 
@@ -273,7 +273,7 @@ observation.default <- function(x) "Unknown class"
 
 #' @export
 observation.experiment <- function(x) {
-  as.data.frame(x[, grep("^r_", names(x), value = TRUE)])
+  as.data.frame(x[, grep("^r_", names(x), value = TRUE), drop = FALSE])
 }
 
 
@@ -431,8 +431,12 @@ insert_middle <- function(x, n, digits = 4) {
 print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
   param <- parameters(x)
   obser <- observation(x)
-  y <- cbind(insert_middle(param, nchar, digits),
-             insert_middle(obser, nchar, digits),
+  if (ncol(param) > 2) param2 <- insert_middle(param, nchar, digits)
+  else param2 <- param
+  if (ncol(obser) > 2) obser2 <- insert_middle(obser, nchar, digits)
+  else obser2 <- obser
+  y <- cbind(param2,
+             obser2,
              x[, c("tmax", "seed")])
   if (nrow(y) > 2 * n + interspace) {
     h <- head(y, n)
@@ -458,7 +462,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 
 # list_experiment --------------------------------------------------------------
 
-#' List a model's experiments
+#' List the experiments of a model
 #'
 #' List the experiments of a given model.
 #'
