@@ -73,7 +73,7 @@ setup_gama_ui <- function() {
   repeat{
     message("Give the path of Gama platform or [Q]uit:")
     answer <- readline()
-    if(answer == "Q" | answer == "q" ) break
+    if(answer[1] == "Q" | answer[1] == "q" ) return(NA)
     defaultjar <- is_gama_installed(answer)
     if(defaultjar ) break
     else
@@ -102,8 +102,7 @@ setup_gama <- function() {
   {
     message("Gama is already installed, do you want to setup a new one ? ")
     answer <- toupper(readline("[Y]es/[N]o"))
-    if(answer == "N")
-      return()
+    if(answer[1] == "N") return(NA)
   }
 
   repeat {
@@ -119,6 +118,7 @@ setup_gama <- function() {
 
     if (answer[1] == "A") {
        gama_path <- setup_gama_ui()
+       if(is.na(gama_path)) return(NA)
        defpath(gama_path)
   }
 }
