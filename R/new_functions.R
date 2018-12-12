@@ -806,7 +806,6 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 #'
 #' @importFrom stringr str_match_all str_match regex str_detect
 #' @importFrom  purrr map
-#' @importFrom  readtext readtext
 #'
 #' @export
 #'
@@ -816,8 +815,8 @@ show_experiment <- function(file){
     stop(paste0("There is no file \"", file, "\"."))
   }
 
-  gaml <- readtext(file, verbosity = FALSE)
-  exps <- str_match_all(gaml$text, regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][,2]
+  gaml <- paste(readLines(file, warn = FALSE), collapse = "\n")
+  exps <- str_match_all(gaml, regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][,2]
 
   if(length(exps) == 0)
     stop(paste0("Model \"", file, "\" does not contain any experiment."))
