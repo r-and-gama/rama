@@ -51,7 +51,14 @@ make_dictionary <- function(x) {
 }
 
 
-
+# test special character -------------------------------------------------------
+test_schar <- function(x) {
+  if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
+    stop(paste0("Rama package does not support these specials characters : `<`",
+                ", `>`, `&` and `'` in parameters, outputs and experiment name",
+                ". Please rewrite them without these specials characters"))
+  }
+}
 
 # load_experiment --------------------------------------------------------------
 
@@ -94,12 +101,6 @@ load_experiment <- function(experiment, model, dir = "") {
   if(!grepl("gui", type))
     stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
 
-  # Making working directory
-  if (any(grepl("[\\&|\\<|\\>|\\']", experiment))) {
-    stop(paste0("Rama package does not support this special character : `<` ",
-                "`>` `&` and `'` in parameters, outputs and experiment name.",
-                " Please rewrite them without these specials characters"))
-  }
   # Making working directory
   message(cat("Creating working directory \"", dir, "\" in \"", getwd(),
               "\".", sep = ""))
@@ -158,11 +159,7 @@ load_experiment <- function(experiment, model, dir = "") {
   }
 
   dic <- c(dic_par, dic_var)
-  if (any(grepl("[\\&|\\<|\\>|\\']", names(dic)))) {
-    stop(paste0("Rama package does not support this special character : `<` ",
-                "`>` `&` and `'` in parameters, outputs and experiment name.",
-                " Please rewrite them without these specials characters"))
-  }
+  test_schar(names(dic))
 
   out_attr <- get_attributes(out)
   output <- as.data.frame(c(out_par, out_var, out_attr))
@@ -727,6 +724,8 @@ show_experiment <- function(file){
   exp_info <- as.data.frame(do.call(rbind, lapply(exp_info, function(x) x)))
   names(exp_info) <- c("experiment", "type")
   exp_info$experiment <- as.character(exp_info$experiment)
+  # test if there is special character in experiment name
+  test_schar(exp_info$experiment)
   exp_info$type <- as.character(exp_info$type)
   return(exp_info)
 }
