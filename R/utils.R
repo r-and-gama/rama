@@ -47,7 +47,7 @@ download_gama <- function() {
   }
 
 #  download.file(distrib, distrib_file,  quiet = TRUE, mode = "wb", cacheOK = TRUE)
-  download(distrib, distrib_file, method="curl") # mode = "wb")
+  download(distrib, distrib_file,  mode = "wb")
  # download(distrib, "/tmp/truc.tgz",  mode = "wb")
   #untar(distrib_file, exdir = path_test )
 
