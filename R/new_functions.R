@@ -82,8 +82,13 @@ load_experiment <- function(experiment, model, dir = "") {
   if (!file.exists(model)) {
     stop(paste0("There is no file \"", model, "\"."))
   }
-  # Making working directory
 
+  if (any(grepl("[\\&|\\<|\\>|\\']", experiment))) {
+    stop(paste0("Rama package does not support this special character : `<` ",
+                "`>` `&` and `'` in parameters, outputs and experiment name.",
+                " Please rewrite them without these specials characters"))
+  }
+  # Making working directory
   message(cat("Creating working directory \"", dir, "\" in \"", getwd(),
               "\".", sep = ""))
 
@@ -141,11 +146,17 @@ load_experiment <- function(experiment, model, dir = "") {
     dic_par <- NULL
   }
 
+  dic <- c(dic_par, dic_var)
+  if (any(grepl("[\\&|\\<|\\>|\\']", names(dic)))) {
+    stop(paste0("Rama package does not support this special character : `<` ",
+                "`>` `&` and `'` in parameters, outputs and experiment name.",
+                " Please rewrite them without these specials characters"))
+  }
+
   out_attr <- get_attributes(out)
   output <- as.data.frame(c(out_par, out_var, out_attr))
   output$gaml <- NULL
   output$experiment <- NULL
-  dic <- c(dic_par, dic_var)
   class(output) <- c("experiment", class(output))
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
