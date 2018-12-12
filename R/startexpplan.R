@@ -61,6 +61,10 @@ call_gama <- function(experiment_plan, hpc, output_dir, parameter_xml_file) {
 #' @export
 run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_xml_file = "") {
 
+  if(!is.experiment(experiment_plan)) {
+    stop("The argument `experiment_plan` is not an `experiment` object.")
+  }
+
   # make output directory
   if(output_dir=="")
     output_dir <- create_output_dir(experiment_plan, output_dir)
