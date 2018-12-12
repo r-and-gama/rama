@@ -143,11 +143,11 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- out$Simulation
   if (!is.null(out$Outputs)) {
     out_var <- get_variables(out)
-    dic_var <- make_dictionary(out_var)
-    names(out_var) <- paste0("r_", dic_var[names(out_var)])
+    dicar <- make_dictionary(out_var)
+    names(out_var) <- paste0("r_", dicar[names(out_var)])
   } else {
     out_var <- data.frame(NULL)
-    dic_var <- NULL
+    dicar <- NULL
   }
   if (!is.null(out$Parameters)) {
     out_par <- get_parameters(out)
@@ -158,7 +158,7 @@ load_experiment <- function(experiment, model, dir = "") {
     dic_par <- NULL
   }
 
-  dic <- c(dic_par, dic_var)
+  dic <- c(dic_par, dicar)
   test_schar(names(dic))
 
   out_attr <- get_attributes(out)
@@ -169,8 +169,8 @@ load_experiment <- function(experiment, model, dir = "") {
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
   attr(output, "wkdir") <- wk_dir
-  attr(output, "dic_v") <- dic
-  attr(output, "dic_res") <- setNames(names(dic), dic)
+  attr(output, "dic") <- dic
+  attr(output, "dic_rev") <- setNames(names(dic), dic)
   return(output)
 }
 
@@ -211,7 +211,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     for(col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_res")[title])
+      title <- as.vector(attr(plan, "dic_rev")[title])
       val <- param[1, 1]
       m_type <- "STRING"
       if (is.numeric(val)) {
@@ -232,7 +232,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_res")[title])
+      title <- as.vector(attr(plan, "dic_rev")[title])
       val <- param[1, 1]
       attribut <- c(id        = id_out,
                     name = title,
@@ -728,4 +728,27 @@ show_experiment <- function(file){
   test_schar(exp_info$experiment)
   exp_info$type <- as.character(exp_info$type)
   return(exp_info)
+}
+
+# is.experiment ----------------------------------------------------------------
+
+#' Test if experiment
+#'
+#' Tests for objects of type \code{"experiment"}.
+#'
+#' @param x object to be tested
+#'
+#' @return The function returns `TRUE` or `FALSE` depending on whether its
+#' argument is of chatacter type or not
+#'
+#' @examples
+#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+#' exp1 <- load_experiment("sir", gaml_file, "sir")
+#'
+#' is.experiment(exp1)
+#' @export
+is.experiment <- function(x) {
+  attr <- setdiff(c("names", "row.names", "class", "model", "experiment",
+                           "wkdir", "dic", "dic_rev"), names(attributes(x)))
+  class <- setdiff(class(exp1), c("data.frame", "experiment"))
 }
