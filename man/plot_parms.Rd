@@ -20,7 +20,20 @@ From the list of all parameters of the experiments that do vary (i.e. not
 null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
 }
 \examples{
+gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+exp4 <- experiment(
+  expand.grid(S0 = c(900, 950, 999),
+            I0 = c(100, 50, 1),
+            R0 = 0,
+            beta = 1.5,
+            gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),
+  tmax = 1000,
+  seed = 1,
+  model = gaml_file,
+  experiment = "sir"
+)
 
-plot_parms(exp)
+plot_parms(exp4)
 
 }

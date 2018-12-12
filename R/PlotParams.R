@@ -12,8 +12,21 @@
 #' @return Returns a vector of the variables with highest variances.
 #'
 #' @examples
+#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+#' exp4 <- experiment(
+#'   expand.grid(S0 = c(900, 950, 999),
+#'             I0 = c(100, 50, 1),
+#'             R0 = 0,
+#'             beta = 1.5,
+#'             gamma = .15),
+#'   data.frame(S = 1, I = 1, R = 1),
+#'   tmax = 1000,
+#'   seed = 1,
+#'   model = gaml_file,
+#'   experiment = "sir"
+#' )
 #'
-#' plot_parms(exp)
+#' plot_parms(exp4)
 #'
 #' @importFrom plot3D scatter3D scatter2D
 #'
