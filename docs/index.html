@@ -96,7 +96,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="rama" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rama" class="anchor"></a><code>rama</code> <img src="reference/figures/logo.png" align="right" width="200/">
+<a href="#rama" class="anchor"></a><code>rama</code> <img src="../../../../../../../../Mobile%20Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/man/figures/logo.png" align="right" width="200/">
 </h1></div>
 <!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama) -->
 <p><code>rama</code> is an R interface to the <a href="https://gama-platform.github.io">GAMA</a> <strong>agent-based</strong> simulation platform. It allows to</p>
@@ -109,7 +109,7 @@
 <strong>run</strong> the simulations defined in an experiment plan.</li>
 </ul>
 <p>An <strong>experiment</strong> is a group of simulations. A <strong>simulation</strong> is an execution of a given <strong>model</strong> with</p>
-<p><a href="articles/rama1.html"><img src="reference/figures/get_started.png" align="right" width="173/"></a></p>
+<p><a href="articles/rama1.html"><img src="../../../../../../../../Mobile%20Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/man/figures/get_started.png" align="right" width="173/"></a></p>
 <ul>
 <li>a given set of <strong>parameters values</strong>,</li>
 <li>a given set of <strong>observed variables</strong>,</li>
@@ -131,7 +131,7 @@
 <a href="#structure-of-experiments-in-rama" class="anchor"></a>Structure of experiments in <code>rama</code>
 </h2>
 <p>The package <code>rama</code> contains one unique class, <code>experiment</code> that contains all the information of an experiment in a GAML model. This class is a subclass of <code>data.frame</code> as outlined below:</p>
-<p><img src="reference/figures/rama1_1.png" align="right" width="900/"></p>
+<p><img src="../../../../../../../../Mobile%20Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/man/figures/rama1_1.png" align="right" width="900/"></p>
 <p>Each row of an <code>experiment</code> object corresponds to a simulation of the experiment. The columns corresponds to four type of data:</p>
 <ul>
 <li>one column per <strong>parameter</strong> (whose names start with <code>p_</code>),</li>
@@ -145,11 +145,11 @@
 <h2 class="hasAnchor">
 <a href="#installation-and-configuration" class="anchor"></a>Installation and configuration</h2>
 <p>You can install <code>rama</code> from GitHub with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">installed_packages &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/installed.packages">installed.packages</a></span>())
-<span class="cf">if</span> (<span class="op">!</span><span class="st"> "devtools"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="cf">if</span> (<span class="op">!</span><span class="st"> "rama"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"r-and-gama/rama"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">installed_packages &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/installed.packages">installed.packages</a></span>())</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="st"> "devtools"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="cf">if</span> (<span class="op">!</span><span class="st"> "rama"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"r-and-gama/rama"</span>)</a></code></pre></div>
 <p>After loading, <code>rama</code> needs to be configured, a step that basically consists in linking <code>rama</code> to a GAMA engine on the system. If GAMA is not installed on the system it will install it for you:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/setup_gama.html">setup_gama</a></span>()</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="reference/setup_gama.html">setup_gama</a></span>()</a></code></pre></div>
 </div>
 </div>
   </div>
