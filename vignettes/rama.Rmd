@@ -267,3 +267,10 @@ this experiment, parameters file in xml format.
 ```{r eval = FALSE}
 output <- run_experiment(exp1)
 ```
+
+
+
+```{r cleaning, include = FALSE}
+unlink("sir", TRUE)
+```
+
