@@ -103,11 +103,15 @@ setup_gama_ui <- function() {
 #'
 #' @export
 setup_gama <- function(path = NA) {
-  defaultjar <- ifelse(is.na(path), is_gama_installed(),path)
-  if(defaultjar)
+  if(!is.na(path))
+  {
+    defpath(path)
+    return(NA)
+  }
+  if(is_gama_installed())
   {
     message("Gama is already installed, do you want to setup a new one ? ")
-    answer <- toupper(readline("[Y]es/[N]o"))
+    answer <- toupper(readline("[Y]es/[N]"))
     if(answer[1] == "N") return(NA)
   }
 
@@ -122,7 +126,7 @@ setup_gama <- function(path = NA) {
     defpath(gama_path)
   }
 
-    if (answer[1] == "A") {
+    if (answer[1] == "K") {
        gama_path <- setup_gama_ui()
        if(is.na(gama_path)) return(NA)
        defpath(gama_path)
