@@ -104,7 +104,6 @@ retrieve_results <- function(outfile, experiment_plan) {
 
   new_name <- as.vector(attr(experiment_plan, "dic_v")[lst_name])
   names(tmp) <- new_name
-  print(names(tmp))
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
   attr(tmp, "path") <- outfile
