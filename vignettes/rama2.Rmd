@@ -16,3 +16,40 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+```{r}
+   exp0 <- experiment(
+   data.frame(S0 = c(900, 100), # this is a data frame of 2 lines
+              I0 = c(100, 900),
+              R0 = 0,
+              beta = 2,
+              gamma = .15),
+    data.frame(S = 1, I = 2, R = 3),
+  tmax = 1000,
+  seed = 1,
+  model = gaml_file,
+  experiment = "sir"
+ ) 
+
+ curexp <- exp0
+ output <- run_experiment(curexp)
+ # In the current experiment object, cursimul gives the line of the simulation
+ cursimulnum  <- 1
+ curoutput    <- output[cursimulnum]
+ # build the vector of observed variables
+ curobs <- attributes(curoutput[[1]])$names[-1]
+ # build the index of the variables whose rate is computed
+ curobsidx <- sapply(X=curobs, function(x) which(colnames(curoutput[[1]]) == x))
+ # build the vector of text corresponding of the attributes of rates
+ observed <- paste("r_",curobs,sep="")
+ # build the index of the variables whose rate is computed
+ ratesidx <- sapply(X=observed, function(x) which(colnames(curexp) == x))
+ # retrieve the value of the rates
+ ratesval <- (as.data.frame(exp12)[cursimulnum,ratesidx])
+ 
+ for (i in 1:length(curobsidx))
+ {
+   
+ }
+```
+
