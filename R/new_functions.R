@@ -44,10 +44,9 @@ get_attributes <- function(x) {
 
 #' @importFrom stats setNames
 make_dictionary <- function(x) {
-  dic <- names(x)
-  dic <- gsub("[[:space:]]|[[:punct:]]", "_", dic)
+  dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
   dic <- gsub("_+", "_", dic)
-  dic <- setNames(dic, names(x))
+  dic <- setNames(dic, x)
 }
 
 
@@ -143,7 +142,7 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- out$Simulation
   if (!is.null(out$Outputs)) {
     out_var <- get_variables(out)
-    dic_var <- make_dictionary(out_var)
+    dic_var <- make_dictionary(names(out_var))
     names(out_var) <- paste0("r_", dic_var[names(out_var)])
   } else {
     out_var <- data.frame(NULL)
@@ -151,7 +150,7 @@ load_experiment <- function(experiment, model, dir = "") {
   }
   if (!is.null(out$Parameters)) {
     out_par <- get_parameters(out)
-    dic_par <- make_dictionary(out_par)
+    dic_par <- make_dictionary(names(out_par))
     names(out_par) <- paste0("p_", dic_par[names(out_par)])
   } else {
     out_par <- data.frame(NULL)
@@ -511,20 +510,116 @@ repl.experiment <- function(x, n) {
 #' )
 #' # If we want to change the seeds:
 #' my_experiment$seed <- 1:9
-experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
-  names(parameters) <- paste0("p_", names(parameters))
-  names(obsrates) <- paste0("r_", names(obsrates))
-  structure(data.frame(parameters, obsrates,
-                       tmax = tmax,
-                       seed = seed),
-            model = model,
-            experiment = experiment,
-            class = c("experiment", "data.frame"))
+# experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
+#   names(parameters) <- paste0("p_", names(parameters))
+#   names(obsrates) <- paste0("r_", names(obsrates))
+#   structure(data.frame(parameters, obsrates,
+#                        tmax = tmax,
+#                        seed = seed),
+#             model = model,
+#             experiment = experiment,
+#             class = c("experiment", "data.frame"))
+# }
+
+
+
+
+# experiment constructor from a dataframe --------------------
+#' Create an object of class \code{experiment} from a dataframe.
+#'
+#' @param df
+#' @param parameters Vector of column names or indexes in the \code{df} that will be
+#' used as parameters in the experiment.
+#' @param obsrates Vector of column names or indexes in the \code{df} that will be
+#' used as observation rats in the experiment.
+#' @param tmax Name or index of the column in the \code{df} that will be
+#' used as final step in the experiment.
+#' @param seed Name or index of the column in the \code{df} that will be
+#' used as seed in the experiment.
+#'
+#' @importFrom dplyr case_when
+#'
+#' @examples
+#' df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
+#'                 "beta" = rep(1.5, 5), "gama" = runif(5, 0, 1),
+#'                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
+#'                 "a" = rep(1000, 5), "b" = rep(1, 5))
+#' exp <- experiment(df,
+#                    parameters = c("S0", "I0", "R0", "beta", "gama"),
+#'                   obsrates = c("S", "I", "R"),
+#'                   tmax = "a",
+#'                   seed = "b")
+#' exp <- experiment(df,
+#'                   parameter = c(1:5),
+#'                   obsrates(6:8)),
+#'                   tmax = 9,
+#'                   seed = 10)
+#'
+
+experiment.data.frame <- function(df,
+                                  parameters = NULL,
+                                  obsrates = NULL,
+                                  tmax = NULL,
+                                  seed = NULL,
+                                  experiment = NULL,
+                                  model = NULL,
+                                  dir = ""
+                                  )
+{
+  if(is.null(parameters) || is.null(obsrates) ||
+     is.null(tmax) || is.null(seed) ||
+     is.null(experiment) || is.null(model))
+    stop(paste0("All parameters need to be set."))
+
+  if(length(tmax) > 1 || length(seed) > 1)
+    stop(paste0("tmax and seed take only one column"))
+
+  if(!file.exists(model))
+    stop(paste0("Model \"", model, "\" does not exist"))
+
+  if(sum(length(parameters) + length(obsrates) +
+         length(tmax) + length(seed)) > ncol(df))
+    stop(paste0("Column(s) selected is out of bound"))
+
+  # check experiment and type
+  exp_info <- show_experiment(model)
+
+  # check if given name in df
+
+  # generate dir
+
+  parameters_n <- dplyr::case_when(
+    is.character(parameters) ~ paste0("p_", parameters),
+    is.numeric(parameters) ~ paste0("p_", names(df)[parameters])
+  )
+  obsrates_n <- dplyr::case_when(
+    is.character(obsrates) ~ paste0("r_", obsrates),
+    is.numeric(obsrates) ~ paste0("r_", names(df)[obsrates])
+  )
+
+ tmax_n <- dplyr::case_when(
+   is.character(tmax) ~ tmax,
+   is.numeric(tmax) ~ names(df)[tmax]
+ )
+
+ seed_n <- dplyr::case_when(
+   is.character(tmax) ~ seed,
+   is.numeric(tmax) ~ names(df)[seed]
+ )
+  dic_n <- make_dictionary(c(parameters_n, obsrates_n))
+  df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
+            "parameters" = parameters,
+            "obsrates" = obsrates,
+            "tmax" = tmax,
+            "seed" = seed,
+            "model" = model,
+            "experiment" = experiment,
+            "class" = c("experiment", "data.frame"),
+            "dic" = dic_n,
+            "dic_rev" = setNames(names(dic_n), dic_n))
+  names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
+  return(df)
 }
-
-
-
-
 # init_experiment --------------------------------------------------------------
 
 #' @export
