@@ -83,20 +83,16 @@ make_dictionary <- function(x) {
 #' @export
 load_experiment <- function(experiment, model, dir = "") {
 
-  if (!file.exists(model)) {
-    stop(paste0("There is no file \"", model, "\"."))
-  }
-
   # Check experiment
   exp_info <- show_experiment(model)
   # check if experiment requested is declared in gaml
   if(!experiment %in% exp_info$experiment)
-    stop(paste0("There is no experiment named ", experiment, " in ",
+    stop(paste0("There is no experiment named \"", experiment, "\" in ",
            basename(model)))
   # check if experiment requested has valid type
   type <- exp_info$type[which(exp_info$experiment == experiment)]
-  if( type != "gui")
-    stop(paste0("Experiment ", experiment, " of type ", type, "is not supported."))
+  if(!grepl("gui", type))
+    stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
 
   # Making working directory
 
@@ -131,12 +127,6 @@ load_experiment <- function(experiment, model, dir = "") {
                 experiment, " '", model, "' ", tmp, " > /dev/null"),
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE) # removes the above-created workspace directory
-  out <- XML::xmlToList(XML::xmlParse(tmp))
-  if (is.null(out)) {
-    stop(
-      paste0("There is no experiment named \"", experiment, "\" in \"",
-             basename(model), "\"."))
-  }
 
   if(file.exists(tmp)) {
     out <- XML::xmlToList(XML::xmlParse(tmp))
@@ -688,48 +678,6 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 
 
 
-
-# list_experiment --------------------------------------------------------------
-
-#' List the experiments of a model
-#'
-#' List the experiments of a given model.
-#'
-#' A \code{.gaml} file contains the description of a model as well as
-#' potentially several experiments related to the model. These experiments can
-#' be thought of as user interfaces of the model. The function
-#' \code{load_experiment()} allows to load one of these experiments, by
-#' providing its name. The function \code{list_experiment()} allows to list the
-#' names of the all the experiments available in one \code{.gaml} file.
-#'
-#' @param x path to a gaml model file.
-#'
-#' @return Returns a vector of the names of the experiments of the inputed
-#' \code{.gaml} file.
-#'
-#' @examples
-#'
-#' list_experiment(system.file("examples", "sir.gaml", package = "rama"))
-#'
-#' @importFrom readtext readtext
-#'
-#' @export
-#'
-list_experiment <- function(x) {
-  gaml <- readtext(x, verbosity = FALSE)
-  gaml <- strsplit(gaml$text, "\n")[[1]]  # because strsplit returns a list
-  gaml <- gaml[grepl("^ *experiment", gaml)]
-  if (length(gaml) == 0) {
-    stop("There is no experiment in this model.")
-  }
-  gaml <- sapply(gaml, function(x) strsplit(gsub("  *", " ", x), " "))
-  sel <- unname(sapply(gaml, function(x) which(x == "experiment")) + 1)
-  unname(unlist(Map(`[`, gaml, sel)))
-}
-
-
-
-
 # show_experiment --------------------------------------------------------------
 
 #' List the experiments of a model and their types
@@ -738,14 +686,23 @@ list_experiment <- function(x) {
 #'
 #' @param file path to a gaml model file.
 #'
-#' @importFrom stringr str_match_all str_match
+#' @importFrom stringr str_match_all str_match regex str_detect
 #' @importFrom  purrr map
+#' @importFrom  readtext readtext
 #'
 #' @export
 #'
+#'
 show_experiment <- function(file){
+  if (!file.exists(file)) {
+    stop(paste0("There is no file \"", file, "\"."))
+  }
+
   gaml <- readtext(file, verbosity = FALSE)
   exps <- str_match_all(gaml$text, regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][,2]
+
+  if(length(exps) == 0)
+    stop(paste0("Model \"", file, "\" does not contain any experiment."))
   exps <- trimws(gsub("\\n+$","",exps))
   exp_info <- purrr::map(exps, function(x){
     if(str_detect(x, "type"))
