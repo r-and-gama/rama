@@ -191,7 +191,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     for(col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- attr(plan, "dic_v")[title]
+      title <- as.vector(attr(plan, "dic_res")[title])
       val <- param[1, 1]
       m_type <- "STRING"
       if (is.numeric(val)) {
@@ -199,8 +199,8 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
           m_type <- "INT"
         } else m_type <- "FLOAT"
       }
-      attribut <- c(var  = title,
-                    type  = m_type,
+      attribut <- c(name = title,
+                    type = m_type,
                     value = val)
       xmlFile$addTag("Parameter", attrs = attribut)
     }
@@ -212,10 +212,10 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- attr(plan, "dic_v")[title]
+      title <- as.vector(attr(plan, "dic_res")[title])
       val <- param[1, 1]
       attribut <- c(id        = id_out,
-                    name      = title,
+                    name = title,
                     framerate = val)
       id_out <- id_out + 1
       xmlFile$addTag("Output", attrs = attribut)
