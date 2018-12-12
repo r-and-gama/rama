@@ -20,22 +20,16 @@ authors:
     href: https://www.researchgate.net/profile/Lucie_Contamin
 
 reference:
-  - title: Configuration
-    desc: >
-      Function for configuring the rama package
+  - title: Configuring the rama package
     contents:
     - setup_gama
-  - title: GAML files
-    desc: >
-      Functions for reading GAML files
+  - title: Reading GAML files
     contents:
     - list_experiment
     - load_experiment
     - save_to_gama
     - show_experiment
-  - title: Experiment objects
-    desc: >
-      Functions for manipulating experiment objects
+  - title: Manipulating experiment objects
     contents:
     - experiment
     - expname
