@@ -77,7 +77,7 @@ run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_
   vars <- as.vector(attr(experiment_plan, "dic_v")[vars])
 
   # retrieve all the variables of all the experiments:
-  out <- lapply(outfiles, retrieve_results)
+  out <- lapply(outfiles, retrieve_results, experiment_plan)
 
   # deleting the "workspace" folder:
   unlink("workspace", T, T)
@@ -87,7 +87,7 @@ run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_
 
 # get results from output files for all variables (r_)
 #' @importFrom XML xmlToDataFrame
-retrieve_results <- function(outfile) {
+retrieve_results <- function(outfile, experiment_plan) {
   # Extract a data frame
   tmp <- XML::xmlToDataFrame(XML::xmlParse(outfile), stringsAsFactors = F)
   # Extract names of the variable
@@ -100,11 +100,13 @@ retrieve_results <- function(outfile) {
     suppressWarnings(if (is.numeric(as.numeric(tmp[, x]))) {
       tmp[, x] <- as.numeric(tmp[, x]) } else { tmp[, x] })
   })
-
   tmp <- as.data.frame(setNames(tmp2, lst_name))
-  names(tmp) <- lst_name
+
+  new_name <- as.vector(attr(experiment_plan, "dic_v")[lst_name])
+  names(tmp) <- new_name
+  print(names(tmp))
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
-  tmp <- tmp[, c("Step", lst_name)]
+  tmp <- tmp[, c("Step", new_name)]
   attr(tmp, "path") <- outfile
   tmp
 }
