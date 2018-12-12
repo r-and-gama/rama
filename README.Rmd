@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # `rama` <img src="man/figures/logo.png" align="right" width=200/>
 
-<!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama) -->
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
   
 `rama` is an R interface to the [GAMA](https://gama-platform.github.io)
 **agent-based** simulation platform. It allows to
@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 An **experiment** is a group of simulations. A **simulation** is an execution of
 a given **model** with
 
-[<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama1.html)
+<!-- [<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama.html) -->
 
 * a given set of **parameters values**,
 * a given set of **observed variables**,

@@ -1,5 +1,5 @@
 ---
-title: "4 Parameters estimation"
+title: "4 Comparing ODE, IBM and ABM"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
