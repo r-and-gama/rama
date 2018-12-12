@@ -31,6 +31,14 @@ knitr::opts_chunk$set(
   model = gaml_file,
   experiment = "sir"
  ) 
+ exp1 <- load_experiment("sir", gaml_file, "sir")
+ exp0 <- repl(exp1,3)
+ exp0[2,"p_S0"] <- 800
+ exp0[3,"p_S0"] <- 200
+ exp0[2,"p_I0"] <- 200
+ exp0[3,"p_I0"] <- 800
+ exp0[2,"r_S"] <- 2
+ exp0[3,"r_S"] <- 3
 
  curexp <- exp0
  output <- run_experiment(curexp)
