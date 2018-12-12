@@ -133,12 +133,17 @@
 <strong>estimate parameters values</strong> (model calibration) if real data are available for the model’s state variables.</li>
 </ul>
 <p>In addition to above-mentionned data frame, an object of class <code>experiment</code> contains a link to a <code>.gaml</code> file containing the GAML model (<strong>input</strong>) and a link to a folder containing the <strong>outputs</strong> of simulations. It is possible to change these links but potentially dangerous and not advised. The <code>.gaml</code> file can be visualized in R but is not supposed to be modified by the user in R. Instead, a safe practice is to develop the model in the <a href="https://gama-platform.github.io">GAMA</a> software and to reserve the use of <code>rama</code> to the design and exploitation of experiments’ simulations as outlined above.</p>
+<div style="text-align:center">
+<p><img src="reference/figures/readme_workflow.png" align="middle" width="400/"></p>
+</div>
 <div id="structure-of-experiments-in-rama" class="section level2">
 <h2 class="hasAnchor">
 <a href="#structure-of-experiments-in-rama" class="anchor"></a>Structure of experiments in <code>rama</code>
 </h2>
 <p>The package <code>rama</code> contains one unique class, <code>experiment</code> that contains all the information of an experiment in a GAML model. This class is a subclass of <code>data.frame</code> as outlined below:</p>
-<p><img src="reference/figures/rama1_1.png" align="right" width="900/"></p>
+<div style="text-align:center">
+<p><img src="reference/figures/readme_experiment_object.png" align="middle" width="900/"></p>
+</div>
 <p>Each row of an <code>experiment</code> object corresponds to a simulation of the experiment. The columns corresponds to four type of data:</p>
 <ul>
 <li>one column per <strong>parameter</strong> (whose names start with <code>p_</code>),</li>
@@ -205,6 +210,7 @@
       <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a></li>
 <li><a href="https://cran.r-project.org/package=rama"><img src="http://www.r-pkg.org/badges/version/rama" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>
