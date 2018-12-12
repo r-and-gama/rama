@@ -896,8 +896,8 @@ make_wkdir <- function(dir, model) {
 is.experiment <- function(x) {
 
   if(any(is.na(x))) stop("An object `experiment` can not contain NA value.")
-  attr <- setdiff(c("names", "row.names", "class", "model", "experiment",
-                           "wkdir", "dic", "dic_rev"), names(attributes(x)))
+  attr <- setdiif(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
+                  names(attributes(x)))
   class <- setdiff(class(x), c("data.frame", "experiment"))
   length(c(attr, class)) == 0
 }
