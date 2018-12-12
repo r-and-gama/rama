@@ -47,12 +47,17 @@ download_gama <- function() {
   }
 
 #  download.file(distrib, distrib_file,  quiet = TRUE, mode = "wb", cacheOK = TRUE)
-  download(distrib, distrib_file,  mode = "wb")
+  download(distrib, distrib_file, method="curl") # mode = "wb")
  # download(distrib, "/tmp/truc.tgz",  mode = "wb")
+  #untar(distrib_file, exdir = path_test )
 
+  untar(distrib_file, exdir = path )
 
-  untar(distrib_file, exdir = path_test )
-#  unz?(distrib_file, exdir = path_test,  overwrite = TRUE, unzip = "unzip" )
+  zipP <- paste0(path,"GAMA.zip")
+  print(zipP)
+
+  unzip(zipP,exdir = path_test,  overwrite = TRUE)
+  #  unz?(distrib_file, exdir = path_test,  overwrite = TRUE, unzip = "unzip" )
 
   # dir.create(expDir)
   #file.rename(path_dist,dirname(expDir)) #, recursive = TRUE,copy.mode = "copy")

@@ -9,14 +9,14 @@ set_environment_variables <- function()
           rama.default.gama.win              = "/GAMA1.8_RC2_EmbeddedJDK_Win_64bits.zip",
           rama.default.gama.win.appdir       = "C:/programmes/Gama",
           rama.default.gama.win.zip.appdir   = "Gama",
-          rama.default.gama.osx              = "/GAMA1.8_RC2_EmbeddedJDK_MacOS.tgz",
+          rama.default.gama.osx              = "/GAMA1.8_RC2_EmbeddedJDK_MacOS_zp.tgz",
           rama.default.gama.osx.appdir       = "/Applications/Gama.app",
           rama.default.gama.osx.zip.appdir   = "",
           rama.default.gama.linux            = "/GAMA1.8_RC2_EmbeddedJDK_Linux_64bits.zip",
           rama.default.gama.linux.appdir     = "/usr/local/Gama",
           rama.default.gama.linux.zip.appdir = "Gama",
-          rama.repo                          = "file:///tmp/",   #//Users/nicolas/repo",
-#          rama.repo                          = "http://51.255.46.42/releases",
+#          rama.repo                          = "file:///tmp/",   #//Users/nicolas/repo",
+          rama.repo                          = "http://51.255.46.42/releases",
           rama.gama.path                     = "UNKNOWN",
           rama.startjar                      = "UNKNOWN",
           rama.plugins                       = "UNKNOWN")
@@ -76,7 +76,7 @@ defpath <- function(path) {
   }
   else {
     options(rama.startjar=defaultjar,
-            rama.Xmx="2048m",
+            rama.Xmx="4096m",
             rama.Xms="512m",
             rama.gama.path = path)
     message("Gama configuration succeed!")
