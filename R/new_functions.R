@@ -51,7 +51,14 @@ make_dictionary <- function(x) {
 }
 
 
-
+# test special character -------------------------------------------------------
+test_schar <- function(x) {
+  if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
+    stop(paste0("Rama package does not support these specials characters : `<`",
+                ", `>`, `&` and `'` in parameters, outputs and experiment name",
+                ". Please rewrite them without these specials characters"))
+  }
+}
 
 # load_experiment --------------------------------------------------------------
 
@@ -95,7 +102,6 @@ load_experiment <- function(experiment, model, dir = "") {
     stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
 
   # Making working directory
-
   message(cat("Creating working directory \"", dir, "\" in \"", getwd(),
               "\".", sep = ""))
 
@@ -152,17 +158,19 @@ load_experiment <- function(experiment, model, dir = "") {
     dic_par <- NULL
   }
 
+  dic <- c(dic_par, dic_var)
+  test_schar(names(dic))
+
   out_attr <- get_attributes(out)
   output <- as.data.frame(c(out_par, out_var, out_attr))
   output$gaml <- NULL
   output$experiment <- NULL
-  dic <- c(dic_par, dic_var)
   class(output) <- c("experiment", class(output))
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
   attr(output, "wkdir") <- wk_dir
   attr(output, "dic_v") <- dic
-  attr(output, "dic_t") <- t(as.data.frame(dic))
+  attr(output, "dic_res") <- setNames(names(dic), dic)
   return(output)
 }
 
@@ -203,6 +211,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     for(col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
+      title <- as.vector(attr(plan, "dic_res")[title])
       val <- param[1, 1]
       m_type <- "STRING"
       if (is.numeric(val)) {
@@ -210,8 +219,8 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
           m_type <- "INT"
         } else m_type <- "FLOAT"
       }
-      attribut <- c(var   = title,
-                    type  = m_type,
+      attribut <- c(name = title,
+                    type = m_type,
                     value = val)
       xmlFile$addTag("Parameter", attrs = attribut)
     }
@@ -223,9 +232,10 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
+      title <- as.vector(attr(plan, "dic_res")[title])
       val <- param[1, 1]
       attribut <- c(id        = id_out,
-                    name      = title,
+                    name = title,
                     framerate = val)
       id_out <- id_out + 1
       xmlFile$addTag("Output", attrs = attribut)
@@ -714,6 +724,8 @@ show_experiment <- function(file){
   exp_info <- as.data.frame(do.call(rbind, lapply(exp_info, function(x) x)))
   names(exp_info) <- c("experiment", "type")
   exp_info$experiment <- as.character(exp_info$experiment)
+  # test if there is special character in experiment name
+  test_schar(exp_info$experiment)
   exp_info$type <- as.character(exp_info$type)
   return(exp_info)
 }
