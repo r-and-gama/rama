@@ -9,7 +9,7 @@ authors:
   Viet Thanh Le:
     href: https://quadram.ac.uk/people/thanh-le-viet
   Benoît Gaudou:
-    href: https://sites.google.com/site/benoitgaudou
+    href: https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en
   IRD:
     href: http://www.ird.fr
   Nicolas Marilleau:
@@ -20,22 +20,16 @@ authors:
     href: https://www.researchgate.net/profile/Lucie_Contamin
 
 reference:
-  - title: Configuration
-    desc: >
-      Function for configuring the rama package
+  - title: Configuring the rama package
     contents:
     - setup_gama
-  - title: GAML files
-    desc: >
-      Functions for reading GAML files
+  - title: Reading GAML files
     contents:
     - list_experiment
     - load_experiment
     - save_to_gama
     - show_experiment
-  - title: Experiment objects
-    desc: >
-      Functions for manipulating experiment objects
+  - title: Manipulating experiment objects
     contents:
     - experiment
     - expname
