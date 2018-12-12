@@ -4,7 +4,7 @@
 \alias{setup_gama}
 \title{Download GAMA and configure}
 \usage{
-setup_gama()
+setup_gama(path = NA)
 }
 \description{
 Prompt the user to download GAMA if he wish to and then configures

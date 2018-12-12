@@ -31,6 +31,7 @@ gama_remote_distrib <- function() {
 # Downloads gama ---------------------------------------------------------------
 
 #' @importFrom utils download.file unzip
+#' @importFrom downloader download
 download_gama <- function() {
   distrib <- gama_remote_distrib()
   expDir  <- gama_local_distrib_path();
@@ -101,8 +102,8 @@ setup_gama_ui <- function() {
 #' \code{rama}, linking it to a GAMA engine installed on the system.
 #'
 #' @export
-setup_gama <- function() {
-  defaultjar <- is_gama_installed()
+setup_gama <- function(path = NA) {
+  defaultjar <- ifelse(is.na(path), is_gama_installed(),path)
   if(defaultjar)
   {
     message("Gama is already installed, do you want to setup a new one ? ")
@@ -112,8 +113,8 @@ setup_gama <- function() {
 
   repeat {
     message("Do you want to download the last version of Gama?")
-    answer <- toupper(readline(" [Y]es/[N]o/[A]lready done."))
-    if (answer[1] == "Y" | answer[1] == "N" | answer[1] == "A") break
+    answer <- toupper(readline(" [Y]es/[N] or [K]eep my current version."))
+    if (answer[1] == "Y" | answer[1] == "N" | answer[1] == "K") break
     else print("Sorry, I din't understand... try again")
   }
   if (answer[1] == "Y") {
