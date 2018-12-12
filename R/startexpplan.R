@@ -74,9 +74,10 @@ run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_
   # get variables names
   vars <- names(experiment_plan)[grep("r_", names(experiment_plan))]
   vars <- substring(vars, 3)
+  vars <- as.vector(attr(experiment_plan, "dic_v")[vars])
 
   # retrieve all the variables of all the experiments:
-  out <- lapply(outfiles, retrieve_results, vars)
+  out <- lapply(outfiles, retrieve_results)
 
   # deleting the "workspace" folder:
   unlink("workspace", T, T)
@@ -85,35 +86,42 @@ run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_
 }
 
 # get results from output files for all variables (r_)
-retrieve_results <- function(outfile, vars) {
+#' @importFrom XML xmlToDataFrame
+retrieve_results <- function(outfile) {
+  # Extract a data frame
+  tmp <- XML::xmlToDataFrame(XML::xmlParse(outfile), stringsAsFactors = F)
+  # Extract names of the variable
+  lst_name <- unlist(XML::xmlToList(XML::xmlParse(outfile)))
+  lst_name <- lst_name[which(grepl("name", names(lst_name)))]
+  lst_name <- unique(lst_name)
 
-  out_list <- XML::xmlToList(XML::xmlParse(outfile))
+  # Tidy the output
+  tmp2 <- lapply(seq_len(dim(tmp)[2]), function(x) {
+    suppressWarnings(if (is.numeric(as.numeric(tmp[, x]))) {
+      tmp[, x] <- as.numeric(tmp[, x]) } else { tmp[, x] })
+  })
 
-  tmp <- lapply(vars, function(x) getoutputs(out_list, x))
-
-  if(length(unique(sapply(tmp,length))) < 2) {
-    suppressWarnings(tmp <- Reduce(function(...)merge(...,by="steps"), tmp))
-    names(tmp) <- c("step", vars)
-  }
-  attr(tmp,"path") <- outfile
+  tmp <- as.data.frame(setNames(tmp2, lst_name))
+  names(tmp) <- lst_name
+  tmp$Step <- c(0:(dim(tmp)[1] - 1))
+  tmp <- tmp[, c("Step", lst_name)]
+  attr(tmp, "path") <- outfile
   tmp
 }
 
 ## To be revised
-getoutputs <- function(out, outputs)
-{
-  out2 <- lapply(out, function(x) {x[which(names(x)=="Variable")]})
-  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
-  # sel <- which(thenames[1,] %in% outputs)
-  sel <- which(thenames %in% outputs)
-  out3 <- lapply(out2,function(x)x[sel])
-  out3 <- out3[-length(out3)]
-  trc <- c(t(sapply(out3,function(y)sapply(y,function(x)x$text)))) #as.data.frame(t(sapply(out3,function(y)sapply(y,function(x)x$text))),stringsAsFactors=F)
-  steps <-c(as.numeric(t(sapply(out[-length(out)],function(x)x$.attrs["id"]))))
-  output<- data.frame(steps,trc)
-  return(output)
-}
-
+## NOT CALLED
+#getoutputs <- function(out, outputs)
+#{
+#  thenames <- unname(sapply(out2[[1]],function(x)x$.attrs))
+#  sel <- which(thenames %in% outputs)
+#  out3 <- lapply(out2,function(x) x[sel])
+#  out3 <- out3[-length(out3)]
+#  trc <- c(t(sapply(out3,function(y)sapply(y,function(x)x$text)))) #as.data.frame(t(sapply(out3,function(y)sapply(y,function(x)x$text))),stringsAsFactors=F)
+#  steps <-c(as.numeric(t(sapply(out[-length(out)],function(x)x$.attrs["id"]))))
+#  output<- as.data.frame(steps,trc)
+#  output
+#}
 
 ##
 ################################################################################
