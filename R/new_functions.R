@@ -897,4 +897,5 @@ is.experiment <- function(x) {
   attr <- setdiff(c("names", "row.names", "class", "model", "experiment",
                            "wkdir", "dic", "dic_rev"), names(attributes(x)))
   class <- setdiff(class(exp1), c("data.frame", "experiment"))
+  length(c(attr, class)) == 0
 }
