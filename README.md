@@ -64,7 +64,7 @@ setup_gama()
 ```
 and follow instructions
 
-Overwhise, you can use your own version GAMA engine
+Otherwise, you can use your own version GAMA engine
 
 ``` r
 setup_gama("path/to/gama")
