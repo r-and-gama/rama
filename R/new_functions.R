@@ -83,10 +83,6 @@ make_dictionary <- function(x) {
 #' @export
 load_experiment <- function(experiment, model, dir = "") {
 
-  if (!file.exists(model)) {
-    stop(paste0("There is no file \"", model, "\"."))
-  }
-
   # Check experiment
   exp_info <- show_experiment(model)
   # check if experiment requested is declared in gaml
@@ -692,15 +688,21 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 #'
 #' @importFrom stringr str_match_all str_match regex str_detect
 #' @importFrom  purrr map
+#' @importFrom  readtext readtext
 #'
 #' @export
 #'
+#'
 show_experiment <- function(file){
+  if (!file.exists(file)) {
+    stop(paste0("There is no file \"", file, "\"."))
+  }
+
   gaml <- readtext(file, verbosity = FALSE)
   exps <- str_match_all(gaml$text, regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][,2]
+
   if(length(exps) == 0)
-    # stop(paste0("Model \"", file, "\" does not contain any experiment."))
-    return(-1)
+    stop(paste0("Model \"", file, "\" does not contain any experiment."))
   exps <- trimws(gsub("\\n+$","",exps))
   exp_info <- purrr::map(exps, function(x){
     if(str_detect(x, "type"))
