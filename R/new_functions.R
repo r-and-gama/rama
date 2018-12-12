@@ -83,10 +83,6 @@ make_dictionary <- function(x) {
 #' @export
 load_experiment <- function(experiment, model, dir = "") {
 
-  if (!file.exists(model)) {
-    stop(paste0("There is no file \"", model, "\"."))
-  }
-
   # Check experiment
   exp_info <- show_experiment(model)
   # check if experiment requested is declared in gaml
