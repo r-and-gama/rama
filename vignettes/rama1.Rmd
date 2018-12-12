@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ```
 
 For installation and configuration, see 
-[here](https://r-and-gama.github.io/rama/#installation-and-configuration).
+[here](https://r-and-gama.github.io/rama/index.html#installation-and-configuration).
 
 ```{r}
 library(rama)
