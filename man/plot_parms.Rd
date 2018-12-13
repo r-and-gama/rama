@@ -7,7 +7,7 @@
 plot_parms(exp)
 }
 \arguments{
-\item{x}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 }
 \value{
 Returns a vector of the variables with highest variances.
@@ -21,18 +21,21 @@ null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
 }
 \examples{
 gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-exp4 <- experiment(
-  expand.grid(S0 = c(900, 950, 999),
-            I0 = c(100, 50, 1),
-            R0 = 0,
-            beta = 1.5,
-            gamma = .15),
-  data.frame(S = 1, I = 1, R = 1),
-  tmax = 1000,
-  seed = 1,
-  model = gaml_file,
-  experiment = "sir"
-)
+
+df <- expand.grid(S0 = c(900, 950, 999),
+                  I0 = c(100, 50, 1),
+                  R0 = 0,
+                  beta = 1.5,
+                  gamma = .15,
+                  S = 1,
+                  I = 1,
+                  R = 1,
+                  tmax = 1000,
+                  seed = 1)
+
+exp4 <- experiment(df, parameters = c(1:5),
+                   obsrates = c(6:8), tmax = "tmax", seed = "seed",
+                   experiment = "sir", model = gaml_file)
 
 plot_parms(exp4)
 

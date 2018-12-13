@@ -458,6 +458,8 @@ repl.experiment <- function(x, n) {
 #' used as final step in the experiment.
 #' @param seed Name or index of the column in the \code{df} that will be
 #' used as seed in the experiment.
+#' @param experiment name to the model linked to the experiment
+#' @param model path to the model linked to the experiment
 #' @param dir Name of the output directory to be created in the current directory.
 #' If not specified, name of the model will be used
 #'
@@ -588,17 +590,6 @@ experiment.data.frame <- function(df,
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
 }
-# init_experiment --------------------------------------------------------------
-
-#' @export
-init_experiment <- function(df, model) {
-  structure(df,
-            model = model,
-            class = c("experiment", "data.frame"))
-}
-
-
-
 
 # indexes_first_and_last -------------------------------------------------------
 
