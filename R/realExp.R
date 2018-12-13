@@ -40,7 +40,6 @@
 #' str(opt)
 #' newoutput <- realexp(otp,exp0)
 #' str(newoutput)
-#' @importFrom
 #'
 #' @export
 #'
