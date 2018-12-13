@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract parameters values — parameters • rama</title>
+<title>Create output folder — create_output_dir • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,10 +37,11 @@
 
 
 
-<meta property="og:title" content="Extract parameters values — parameters" />
+<meta property="og:title" content="Create output folder — create_output_dir" />
 
-<meta property="og:description" content="Subsets the columns of an experiment object that correspond to the
-values of the parameters." />
+<meta property="og:description" content="Creates output folder named by the `experiment` name. If multiple
+`experiment` are called with the same name, a numeric is append to the same
+to avoid confusion." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -133,62 +134,48 @@ values of the parameters." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract parameters values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/new_functions.R'><code>R/new_functions.R</code></a></small>
-    <div class="hidden name"><code>parameters.Rd</code></div>
+    <h1>Create output folder</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/startexpplan.R'><code>R/startexpplan.R</code></a></small>
+    <div class="hidden name"><code>create_output_dir.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Subsets the columns of an <code>experiment</code> object that correspond to the
-values of the parameters.</p>
+    <p>Creates output folder named by the `experiment` name. If multiple
+`experiment` are called with the same name, a numeric is append to the same
+to avoid confusion.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>parameters</span>(<span class='no'>x</span>)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>parameters</span>(<span class='no'>x</span>)
-
-<span class='co'># S3 method for experiment</span>
-<span class='fu'>parameters</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>create_output_dir</span>(<span class='no'>experiment_plan</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An object of class <code>experiment</code>.</p></td>
+      <th>experiment_plan</th>
+      <td><p>an XML file containing the experiment</p></td>
+    </tr>
+    <tr>
+      <th>dir</th>
+      <td><p>path to saved the output of gama</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A data frame that is a subset of the inputed <code>experiment</code> object.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>), <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_11".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>exp2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>exp1</span>, <span class='fl'>10</span>)
-<span class='fu'>parameters</span>(<span class='no'>exp2</span>)</div><div class='output co'>#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma
-#&gt; 1   999    1    0    1.5    0.15
-#&gt; 2   999    1    0    1.5    0.15
-#&gt; 3   999    1    0    1.5    0.15
-#&gt; 4   999    1    0    1.5    0.15
-#&gt; 5   999    1    0    1.5    0.15
-#&gt; 6   999    1    0    1.5    0.15
-#&gt; 7   999    1    0    1.5    0.15
-#&gt; 8   999    1    0    1.5    0.15
-#&gt; 9   999    1    0    1.5    0.15
-#&gt; 10  999    1    0    1.5    0.15</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>#load experiment</span>
+<span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>, <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_3".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'>
+<span class='co'>#create path to folder in working direction</span>
+<span class='no'>output_dir</span> <span class='kw'>&lt;-</span> <span class='fu'>create_output_dir</span>(<span class='no'>exp1</span>, <span class='st'>""</span>)
+<span class='no'>parameter_xml_file</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='expname.html'>expname</a></span>(<span class='no'>exp1</span>), <span class='st'>".xml"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

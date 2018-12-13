@@ -107,47 +107,7 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">   exp0 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/experiment.html">experiment</a></span>(</a>
-<a class="sourceLine" id="cb1-2" title="2">   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">S0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">900</span>, <span class="dv">100</span>), <span class="co"># this is a data frame of 2 lines</span></a>
-<a class="sourceLine" id="cb1-3" title="3">              <span class="dt">I0 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">100</span>, <span class="dv">900</span>),</a>
-<a class="sourceLine" id="cb1-4" title="4">              <span class="dt">R0 =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb1-5" title="5">              <span class="dt">beta =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb1-6" title="6">              <span class="dt">gamma =</span> <span class="fl">.15</span>),</a>
-<a class="sourceLine" id="cb1-7" title="7">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">S =</span> <span class="dv">1</span>, <span class="dt">I =</span> <span class="dv">2</span>, <span class="dt">R =</span> <span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb1-8" title="8">  <span class="dt">tmax =</span> <span class="dv">1000</span>,</a>
-<a class="sourceLine" id="cb1-9" title="9">  <span class="dt">seed =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb1-10" title="10">  <span class="dt">model =</span> gaml_file,</a>
-<a class="sourceLine" id="cb1-11" title="11">  <span class="dt">experiment =</span> <span class="st">"sir"</span></a>
-<a class="sourceLine" id="cb1-12" title="12"> ) </a>
-<a class="sourceLine" id="cb1-13" title="13"> exp1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"sir"</span>, gaml_file, <span class="st">"sir"</span>)</a>
-<a class="sourceLine" id="cb1-14" title="14"> exp0 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/repl.html">repl</a></span>(exp1,<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb1-15" title="15"> exp0[<span class="dv">2</span>,<span class="st">"p_S0"</span>] &lt;-<span class="st"> </span><span class="dv">800</span></a>
-<a class="sourceLine" id="cb1-16" title="16"> exp0[<span class="dv">3</span>,<span class="st">"p_S0"</span>] &lt;-<span class="st"> </span><span class="dv">200</span></a>
-<a class="sourceLine" id="cb1-17" title="17"> exp0[<span class="dv">2</span>,<span class="st">"p_I0"</span>] &lt;-<span class="st"> </span><span class="dv">200</span></a>
-<a class="sourceLine" id="cb1-18" title="18"> exp0[<span class="dv">3</span>,<span class="st">"p_I0"</span>] &lt;-<span class="st"> </span><span class="dv">800</span></a>
-<a class="sourceLine" id="cb1-19" title="19"> exp0[<span class="dv">2</span>,<span class="st">"r_S"</span>] &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb1-20" title="20"> exp0[<span class="dv">3</span>,<span class="st">"r_S"</span>] &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb1-21" title="21"></a>
-<a class="sourceLine" id="cb1-22" title="22"> curexp &lt;-<span class="st"> </span>exp0</a>
-<a class="sourceLine" id="cb1-23" title="23"> output &lt;-<span class="st"> </span><span class="kw">run_experiment</span>(curexp)</a>
-<a class="sourceLine" id="cb1-24" title="24"> <span class="co"># In the current experiment object, cursimul gives the line of the simulation</span></a>
-<a class="sourceLine" id="cb1-25" title="25"> cursimulnum  &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-26" title="26"> curoutput    &lt;-<span class="st"> </span>output[cursimulnum]</a>
-<a class="sourceLine" id="cb1-27" title="27"> <span class="co"># build the vector of observed variables</span></a>
-<a class="sourceLine" id="cb1-28" title="28"> curobs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attributes">attributes</a></span>(curoutput[[<span class="dv">1</span>]])<span class="op">$</span>names[<span class="op">-</span><span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1-29" title="29"> <span class="co"># build the index of the variables whose rate is computed</span></a>
-<a class="sourceLine" id="cb1-30" title="30"> curobsidx &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(<span class="dt">X=</span>curobs, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(curoutput[[<span class="dv">1</span>]]) <span class="op">==</span><span class="st"> </span>x))</a>
-<a class="sourceLine" id="cb1-31" title="31"> <span class="co"># build the vector of text corresponding of the attributes of rates</span></a>
-<a class="sourceLine" id="cb1-32" title="32"> observed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"r_"</span>,curobs,<span class="dt">sep=</span><span class="st">""</span>)</a>
-<a class="sourceLine" id="cb1-33" title="33"> <span class="co"># build the index of the variables whose rate is computed</span></a>
-<a class="sourceLine" id="cb1-34" title="34"> ratesidx &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(<span class="dt">X=</span>observed, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(curexp) <span class="op">==</span><span class="st"> </span>x))</a>
-<a class="sourceLine" id="cb1-35" title="35"> <span class="co"># retrieve the value of the rates</span></a>
-<a class="sourceLine" id="cb1-36" title="36"> ratesval &lt;-<span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(exp12)[cursimulnum,ratesidx])</a>
-<a class="sourceLine" id="cb1-37" title="37"> </a>
-<a class="sourceLine" id="cb1-38" title="38"> <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(curobsidx))</a>
-<a class="sourceLine" id="cb1-39" title="39"> {</a>
-<a class="sourceLine" id="cb1-40" title="40">   </a>
-<a class="sourceLine" id="cb1-41" title="41"> }</a></code></pre></div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

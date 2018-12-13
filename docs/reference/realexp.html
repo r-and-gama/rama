@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize values of parameters — plot_parms • rama</title>
+<title>Restore the correct values of an output — realexp • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="Visualize values of parameters — plot_parms" />
+<meta property="og:title" content="Restore the correct values of an output — realexp" />
 
-<meta property="og:description" content="Plot the parameters that have the greatest variance in the experiments of a model." />
+<meta property="og:description" content="It puts a NA whenever an observation was in fact not made in GAMA." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,36 +132,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualize values of parameters</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/PlotParams.R'><code>R/PlotParams.R</code></a></small>
-    <div class="hidden name"><code>plot_parms.Rd</code></div>
+    <h1>Restore the correct values of an output</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/realExp.R'><code>R/realExp.R</code></a></small>
+    <div class="hidden name"><code>realexp.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plot the parameters that have the greatest variance in the experiments of a model.</p>
+    <p>It puts a NA whenever an observation was in fact not made in GAMA.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_parms</span>(<span class='no'>exp</span>)</pre>
+    <pre class="usage"><span class='fu'>realexp</span>(<span class='no'>output</span>, <span class='no'>exp0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>exp</th>
+      <th>output</th>
+      <td><p>An object of class <code>list</code>.</p></td>
+    </tr>
+    <tr>
+      <th>exp0</th>
       <td><p>An object of class <code>experiment</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a vector of the variables with highest variances.</p>
+    <p>Returns a list of dataframes, one for each experiment.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>From the list of all parameters of the experiments that do vary (i.e. not
-null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.</p>
+    <p>From the list of frequencies of each simulation of the experiment
+the values incorrectly associated to the last value observed are reset to NA.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -185,9 +189,56 @@ null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.</
  <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
  <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"testsir"</span>
-)</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/testsir_1".</div><div class='output co'>#&gt; </div><div class='input'>
-<span class='fu'>plot_parms</span>(<span class='no'>exp0</span>)</div><div class='img'><img src='plot_parms-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; p_S0 p_I0 
-#&gt;    1    2 </div><div class='input'>
+)</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/testsir_2".</div><div class='output co'>#&gt; </div><div class='input'>
+
+<span class='no'>exp0</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:     sir 
+#&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/testsir_2 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax      seed
+#&gt; 1  900  100    0    1.5    0.15   1   2  10 1000 123456789
+#&gt; 2  800  200    0    1.5    0.15   2   4  20 1000 123456789
+#&gt; 3  500  500    0    1.5    0.15   3   6  30 1000 123456789</div><div class='input'><span class='no'>otp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='run_experiment.html'>run_experiment</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Running experiment plan ...</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>otp</span>)</div><div class='output co'>#&gt; List of 3
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ S   : num [1:1000] 805 640 469 306 183 100 58 33 28 23 ...
+#&gt;   ..$ I   : num [1:1000] 171 171 382 382 485 485 450 450 347 347 ...
+#&gt;   ..$ R   : num [1:1000] 24 24 24 24 24 24 24 24 24 24 ...
+#&gt;   ..- attr(*, "path")= chr "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/"| __truncated__
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ S   : num [1:1000] 601 601 230 230 89 89 31 31 14 14 ...
+#&gt;   ..$ I   : num [1:1000] 338 338 338 338 465 465 465 465 286 286 ...
+#&gt;   ..$ R   : num [1:1000] 61 61 61 61 61 61 61 61 61 61 ...
+#&gt;   ..- attr(*, "path")= chr "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/"| __truncated__
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ S   : num [1:1000] 281 281 281 36 36 36 14 14 14 8 ...
+#&gt;   ..$ I   : num [1:1000] 598 598 598 598 598 598 333 333 333 333 ...
+#&gt;   ..$ R   : num [1:1000] 121 121 121 121 121 121 121 121 121 121 ...
+#&gt;   ..- attr(*, "path")= chr "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/"| __truncated__</div><div class='input'><span class='no'>newoutput</span> <span class='kw'>&lt;-</span> <span class='fu'>realexp</span>(<span class='no'>otp</span>,<span class='no'>exp0</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>newoutput</span>)</div><div class='output co'>#&gt; List of 3
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ S   : num [1:1000] 805 640 469 306 183 100 58 33 28 23 ...
+#&gt;   ..$ I   : num [1:1000] 171 NA 382 NA 485 NA 450 NA 347 NA ...
+#&gt;   ..$ R   : num [1:1000] 24 NA NA NA NA NA NA NA NA NA ...
+#&gt;   ..- attr(*, "path")= chr "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/"| __truncated__
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ S   : num [1:1000] 601 NA 230 NA 89 NA 31 NA 14 NA ...
+#&gt;   ..$ I   : num [1:1000] 338 NA NA NA 465 NA NA NA 286 NA ...
+#&gt;   ..$ R   : num [1:1000] 61 NA NA NA NA NA NA NA NA NA ...
+#&gt;   ..- attr(*, "path")= chr "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/"| __truncated__
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ S   : num [1:1000] 281 NA NA 36 NA NA 14 NA NA 8 ...
+#&gt;   ..$ I   : num [1:1000] 598 NA NA NA NA NA 333 NA NA NA ...
+#&gt;   ..$ R   : num [1:1000] 121 NA NA NA NA NA NA NA NA NA ...
+#&gt;   ..- attr(*, "path")= chr "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/"| __truncated__</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
