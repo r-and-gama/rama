@@ -143,11 +143,11 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- out$Simulation
   if (!is.null(out$Outputs)) {
     out_var <- get_variables(out)
-    dicar <- make_dictionary(out_var)
-    names(out_var) <- paste0("r_", dicar[names(out_var)])
+    dic_var <- make_dictionary(out_var)
+    names(out_var) <- paste0("r_", dic_var[names(out_var)])
   } else {
     out_var <- data.frame(NULL)
-    dicar <- NULL
+    dic_var <- NULL
   }
   if (!is.null(out$Parameters)) {
     out_par <- get_parameters(out)
@@ -158,7 +158,7 @@ load_experiment <- function(experiment, model, dir = "") {
     dic_par <- NULL
   }
 
-  dic <- c(dic_par, dicar)
+  dic <- c(dic_par, dic_var)
   test_schar(names(dic))
 
   out_attr <- get_attributes(out)
@@ -169,8 +169,8 @@ load_experiment <- function(experiment, model, dir = "") {
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
   attr(output, "wkdir") <- wk_dir
-  attr(output, "dic") <- dic
-  attr(output, "dic_rev") <- setNames(names(dic), dic)
+  attr(output, "dic_v") <- dic
+  attr(output, "dic_res") <- setNames(names(dic), dic)
   return(output)
 }
 
@@ -211,7 +211,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     for(col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_rev")[title])
+      title <- as.vector(attr(plan, "dic_res")[title])
       val <- param[1, 1]
       m_type <- "STRING"
       if (is.numeric(val)) {
@@ -232,7 +232,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_rev")[title])
+      title <- as.vector(attr(plan, "dic_res")[title])
       val <- param[1, 1]
       attribut <- c(id        = id_out,
                     name = title,
@@ -730,28 +730,47 @@ show_experiment <- function(file){
   return(exp_info)
 }
 
-# is.experiment ----------------------------------------------------------------
 
-#' Test if experiment
+
+
+# $<-.experiment ---------------------------------------------------------------
+
+#' Replace a column of an experiment
 #'
-#' Tests for objects of type \code{"experiment"}.
+#' Replaces a column of an experiment with new value(s).
 #'
-#' @param x object to be tested
+#' If the length of the vector used to replace the column is not the same as the
+#' original number of rows of the experiment, there is duplication of the
+#' shortest element.
 #'
-#' @return The function returns `TRUE` or `FALSE` depending on whether its
-#' argument is of chatacter type or not
+#' @param x An object of class \code{experiment}.
+#' @param i A column index.
+#' @param value A vector used to replace the values of the indexed column.
+#'
+#' @return An object of class \code{experiment}.
 #'
 #' @examples
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' exp1 <- load_experiment("sir", gaml_file, "sir")
+#' # Here is an experiment with 1 simulation:
+#' sir1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
+#' sir1
+#' # Let's replace the value of the "p_S0" column by a vector of 3 values:
+#' sir2 <- sir1
+#' sir2$p_S0 <- 1:3
+#' # We can check that it automatically expands the number of simulations:
+#' sir2
+#' # If, on the contrary, we now replace the values of "p_S0" of "sir2" by a
+#' # single value:
+#' sir3 <- sir2
+#' sir3$p_S0 <- 2
+#' # We can check that it automatically reduces the number of simulations (if
+#' # the replacement leads to an experiment with exactly identical simulations):
+#' sir3
 #'
-#' is.experiment(exp1)
 #' @export
-is.experiment <- function(x) {
-
-  if(any(is.na(x))) stop("An object `experiment` can not contain NA value.")
-  attr <- setdiif(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
-                  names(attributes(x)))
-  class <- setdiff(class(x), c("data.frame", "experiment"))
-  length(c(attr, class)) == 0
+`$<-.experiment` <- function(x, i, value) {
+  x_list <- as.list(x)
+  x_list[[i]] <- value
+  new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
+  unique(rbind(x[1, ], new_x)[-1, ])
 }
+
