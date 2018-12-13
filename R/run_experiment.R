@@ -45,8 +45,8 @@ create_output_dir <- function(experiment_plan, dir = "") {
 #' @param experiment_plan object of class `experiment` used to create the
 #' outfile
 #'
-#' @noRd
 #' @importFrom XML xmlToDataFrame
+#' @noRd
 retrieve_results <- function(outfile, experiment_plan) {
   # Extract a data frame
   tmp <- XML::xmlToDataFrame(XML::xmlParse(outfile), stringsAsFactors = F)
@@ -65,7 +65,7 @@ retrieve_results <- function(outfile, experiment_plan) {
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
-  new_name <- as.vector(attr(experiment_plan, "dic_v")[lst_name])
+  new_name <- as.vector(attr(experiment_plan, "dic_rev")[lst_name])
   names(tmp) <- new_name
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
@@ -129,3 +129,4 @@ run_experiment <- function(experiment_plan, hpc = 1, output_dir = "",
   # return output:
   out
 }
+
