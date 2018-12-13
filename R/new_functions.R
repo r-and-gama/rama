@@ -573,7 +573,11 @@ experiment.data.frame <- function(df,
  #   is.character(seed) ~ seed,
  #   is.numeric(seed) ~ names(df)[seed]
  # )
-  dic_n <- make_dictionary(c(parameters_n, obsrates_n))
+  if(is.numeric(parameters) & is.numeric(obsrates))
+    dic_n <- make_dictionary(c(names(df)[parameters], names(df)[obsrates]))
+  else
+    dic_n <- make_dictionary(c(parameters, obsrates))
+
   df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
             "model" = model,
             "experiment" = experiment,
@@ -827,7 +831,7 @@ check_experiment <- function(experiment, model){
 }
 
 # Make working directory ----------
-make_wkdir <- function(dir, model) {
+  wk_dir <- make_wkdir <- function(dir, model) {
 
   message(cat("Using current directory \"", getwd(), "\"...", sep = ""))
 
@@ -837,16 +841,16 @@ make_wkdir <- function(dir, model) {
     message(cat("Using default directory name \"", dir, "\"...", sep = ""))
   }
 
-  wk_dir <- paste0(getwd(), "/", dir)
+  i <- 0
+  repeat {
+    i <- i + 1
+    wk_dir <- paste0(getwd(), "/", dir, "_", i)
+    if(!file.exists(wk_dir)) break
+  }
 
-  if (file.exists(wk_dir)) {
-    stop(paste0("Directory \"", dir, "\" already exists in \"", getwd(), "\""))
-  } else {
-    # Check if a file name dir exist already
     dir.create(wk_dir)
     message(cat("Simulations results will be saved in \"", wk_dir,
                 "\".", sep = ""))
-  }
   return(wk_dir)
 }
 
