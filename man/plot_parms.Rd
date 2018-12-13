@@ -7,7 +7,7 @@
 plot_parms(exp)
 }
 \arguments{
-\item{x}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 }
 \value{
 Returns a vector of the variables with highest variances.

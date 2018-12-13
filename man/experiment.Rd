@@ -26,8 +26,6 @@ argument that correspond to the monitored variables.}
 \item{experiment}{xxx}
 
 \item{...}{One or two data frames.}
-
-\item{obsrates}{xxx}
 }
 \description{
 Creates an object of class \code{experiment}.

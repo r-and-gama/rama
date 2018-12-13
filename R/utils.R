@@ -101,6 +101,8 @@ setup_gama_ui <- function() {
 #' Prompt the user to download GAMA if he wish to and then configures
 #' \code{rama}, linking it to a GAMA engine installed on the system.
 #'
+#' @param path path to the applicatation Gama Platform
+#'
 #' @export
 setup_gama <- function(path = NA) {
   if(!is.na(path))

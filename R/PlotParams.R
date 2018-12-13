@@ -7,7 +7,7 @@
 #' From the list of all parameters of the experiments that do vary (i.e. not
 #' null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
 #'
-#' @param x An object of class \code{experiment}.
+#' @param exp An object of class \code{experiment}.
 #'
 #' @return Returns a vector of the variables with highest variances.
 #'

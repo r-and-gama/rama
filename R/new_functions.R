@@ -489,7 +489,6 @@ repl.experiment <- function(x, n) {
 #'                 observed variables, or a character vector containing the
 #'                 names of the columns of the first-position data frame
 #'                 argument that correspond to the monitored variables.
-#' @param obsrates xxx
 #' @param tmax xxx
 #' @param seed xxx
 #' @param model xxx
@@ -522,20 +521,6 @@ experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
             experiment = experiment,
             class = c("experiment", "data.frame"))
 }
-
-
-
-
-# init_experiment --------------------------------------------------------------
-
-#' @export
-init_experiment <- function(df, model) {
-  structure(df,
-            model = model,
-            class = c("experiment", "data.frame"))
-}
-
-
 
 
 # indexes_first_and_last -------------------------------------------------------

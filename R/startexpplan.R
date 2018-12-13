@@ -33,8 +33,10 @@ create_output_dir <- function(experiment_plan, dir = "") {
 }
 
 ################################################################################
+#'
+#'
+#'
 #' @export
-
 call_gama <- function(experiment_plan, hpc, output_dir, parameter_xml_file) {
   cat(paste0("Running experiment plan ..."))
 
