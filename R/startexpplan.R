@@ -123,7 +123,7 @@ call_gama <- function(experiment_plan, hpc, output_dir, parameter_xml_file) {
 #' Run an experiment
 #'
 #' From a `experiment` object, run an experiment by creating an XML file of the
-#' experiment (\code{\link[rama]{savegama}}) and by calling gama
+#' experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 #' (\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
 #' simulation and also the simulation output of Gama in XML file stored in
 #' `output_dir` (created by \code{\link[rama]{create_output_dir}})
