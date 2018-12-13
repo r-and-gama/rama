@@ -89,36 +89,11 @@ test_schar <- function(x) {
 #' @export
 load_experiment <- function(experiment, model, dir = "") {
 
-  # Check experiment
-  exp_info <- show_experiment(model)
-  # check if experiment requested is declared in gaml
-  if(!experiment %in% exp_info$experiment)
-    stop(paste0("There is no experiment named \"", experiment, "\" in ",
-           basename(model)))
-  # check if experiment requested has valid type
-  type <- exp_info$type[which(exp_info$experiment == experiment)]
-  if(!grepl("gui", type))
-    stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
+  # Check if experiment and type requested are valid
+  check_experiment(experiment, model)
+  # Make working directory
 
-  # Making working directory
-  message(cat("Creating working directory \"", dir, "\" in \"", getwd(),
-              "\".", sep = ""))
-
-  if(dir == "") {
-    # get model name from gaml file
-    dir <- gsub(".gaml", "", basename(model))
-    message(cat("The directory \"", dir,
-                "\" is created in the current directory \"", getwd(), "\".",
-                sep = ""))
-  }
-
-  wk_dir <- paste0(getwd(), "/", dir)
-  if (!file.exists(wk_dir))
-    # Check if a file name dir exist already
-    dir.create(wk_dir)
-  else
-    message(cat("Simulations results will be saved in \"", wk_dir,
-                "\".", sep = ""))
+  make_wkdir(dir, model)
 
   # Loading experiment
   message(cat("Loading experiment \"", experiment,
@@ -536,6 +511,8 @@ repl.experiment <- function(x, n) {
 #' used as final step in the experiment.
 #' @param seed Name or index of the column in the \code{df} that will be
 #' used as seed in the experiment.
+#' @param dir Name of the output directory to be created in the current directory.
+#' If not specified, name of the model will be used
 #'
 #' @importFrom dplyr case_when
 #'
@@ -581,12 +558,20 @@ experiment.data.frame <- function(df,
          length(tmax) + length(seed)) > ncol(df))
     stop(paste0("Column(s) selected is out of bound"))
 
+  # check if requested name is in df
+  if (is.character(parameters) && sum(parameters %in% names(df)) == 0)
+    stop(paste0("Requested column(s) for parameters not found."))
+  if (is.character(obsrates) && sum(obsrates %in% names(df)) == 0)
+    stop(paste0("Requested column(s) for obsrates not found."))
+  if(is.character(tmax) && !tmax %in% names(df))
+    stop(paste0("Requested column for tmax not found."))
+  if(is.character(seed) && !seed %in% names(df))
+    stop(paste0("Requested column(s) for seed not found."))
   # check experiment and type
-  exp_info <- show_experiment(model)
+  check_experiment(experiment, model)
 
-  # check if given name in df
-
-  # generate dir
+  # generate output dir
+  wk_dir <- make_wkdir(dir, model)
 
   parameters_n <- dplyr::case_when(
     is.character(parameters) ~ paste0("p_", parameters),
@@ -608,15 +593,12 @@ experiment.data.frame <- function(df,
  )
   dic_n <- make_dictionary(c(parameters_n, obsrates_n))
   df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
-            "parameters" = parameters,
-            "obsrates" = obsrates,
-            "tmax" = tmax,
-            "seed" = seed,
             "model" = model,
             "experiment" = experiment,
-            "class" = c("experiment", "data.frame"),
+            "wkdir" = wk_dir,
             "dic" = dic_n,
-            "dic_rev" = setNames(names(dic_n), dic_n))
+            "dic_rev" = setNames(names(dic_n), dic_n),
+            "class" = c("experiment", "data.frame"))
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
 }
@@ -823,4 +805,43 @@ show_experiment <- function(file){
   test_schar(exp_info$experiment)
   exp_info$type <- as.character(exp_info$type)
   return(exp_info)
+}
+
+# Check if a requested experiment is valid: name exists and type = gui----------
+
+check_experiment <- function(experiment, model){
+  exp_info <- show_experiment(model)
+  # check if experiment requested is declared in gaml
+  if(!experiment %in% exp_info$experiment)
+    stop(paste0("There is no experiment named \"", experiment, "\" in ",
+                basename(model)))
+  # check if experiment requested has valid type
+  type <- exp_info$type[exp_info$experiment == experiment]
+  if(type != "gui")
+    stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
+  invisible(0)
+}
+
+# Make working directory ----------
+make_wkdir <- function(dir, model) {
+
+  message(cat("Using current directory \"", getwd(), "\"...", sep = ""))
+
+  if(dir == "") {
+    # get model name from gaml file
+    dir <- gsub(".gaml", "", basename(model))
+    message(cat("Using default directory name \"", dir, "\"...", sep = ""))
+  }
+
+  wk_dir <- paste0(getwd(), "/", dir)
+
+  if (file.exists(wk_dir)) {
+    stop(paste0("Directory \"", dir, "\" already exists in \"", getwd(), "\""))
+  } else {
+    # Check if a file name dir exist already
+    dir.create(wk_dir)
+    message(cat("Simulations results will be saved in \"", wk_dir,
+                "\".", sep = ""))
+  }
+  return(wk_dir)
 }
