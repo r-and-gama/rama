@@ -627,7 +627,7 @@ insert_middle <- function(x, n, digits = 4) {
 # print.experiment method ------------------------------------------------------
 
 #' @export
-print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
+print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50, ...) {
 
   attrs <- attributes(x)
 
