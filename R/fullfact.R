@@ -20,16 +20,23 @@
 #' @examples
 #' sir1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
 #' sir2 <- sir1
-#' sir2["p_S0"] <- 1:3
+#' sir2$p_S0 <- 1:3
+#' sir2
+#' sir2[1, 2] <- 2
+#' sir2
+#' fullfact(sir2)
 #'
 fullfact <- function(xprmt, ...) {
   args <- as.list(match.call(expand.dots = FALSE))
   values <- args$`...`
   to_expand <- as.data.frame(xprmt)
-  the_names <- names(to_expand)
-  new_xprmt <- do.call(expand.grid, c(to_expand[setdiff(the_names, names(values))], values)[the_names])
+  if (! is.null(values)) {
+    the_names <- names(to_expand)
+    to_expand <- c(to_expand[setdiff(the_names, names(values))], values)[the_names]
+  }
+  new_xprmt <- do.call(expand.grid, lapply(to_expand, unique))
   rbind(xprmt, new_xprmt)[-1, ]
 }
 
-populate(sir1, p_S0 = 1:3, p_I0 = 5:6)
+#populate(sir1, p_S0 = 1:3, p_I0 = 5:6)
 
