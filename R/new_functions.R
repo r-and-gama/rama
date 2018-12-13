@@ -507,7 +507,8 @@ repl.experiment <- function(x, n) {
 #'   data.frame(S = 1, I = 1, R = 1),
 #'   tmax = 1000,
 #'   seed = 1,
-#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
+#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml",
+#'   experiment = "sir"
 #' )
 #' # If we want to change the seeds:
 #' my_experiment$seed <- 1:9
