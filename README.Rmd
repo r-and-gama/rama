@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
-  
+[![Travis build status](https://travis-ci.org/r-and-gama/rama.svg?branch=master)](https://travis-ci.org/r-and-gama/rama)
+
 `rama` is an R interface to the [GAMA](https://gama-platform.github.io)
 **agent-based** simulation platform. It allows to
 
