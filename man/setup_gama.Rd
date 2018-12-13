@@ -13,3 +13,13 @@ setup_gama(path = NA)
 Prompt the user to download GAMA if he wish to and then configures
 \code{rama}, linking it to a GAMA engine installed on the system.
 }
+\examples{
+\dontrun{
+# For interactive usage:
+setup_gama()
+
+# If input a path, the function will not be interactive:
+setup_gama(getwd())
+}
+
+}

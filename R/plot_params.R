@@ -1,4 +1,4 @@
-# plot_parms --------------------------------------------------------------
+# plot_params --------------------------------------------------------------
 
 #' Visualize values of parameters
 #'
@@ -8,6 +8,9 @@
 #' null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
 #'
 #' @param exp An object of class \code{experiment}.
+#'
+#' @importFrom stats var
+#' @importFrom graphics stripchart
 #'
 #' @return Returns a vector of the variables with highest variances.
 #'
@@ -34,26 +37,27 @@
 #'  dir = "testsir"
 #')
 #'
-#' plot_parms(exp0)
+#' plot_params(exp0)
 #'
 #' @importFrom plot3D scatter3D scatter2D
 #'
 #' @export
 #'
-plot_parms <- function(exp) {
-
-
+plot_params <- function(exp) {
   if (nrow(exp) == 0) {
-    stop("There is no set of parameters for this experiment in this experiment.")
+    stop(
+      "There is no set of parameters for this experiment in this experiment.")
   }
 
-  #allvar <- sapply(exp[,1:length(parameters(exp))], FUN = var)
   allvar <- sapply(parameters(exp), var)
-  allvar <- sort(allvar[ allvar!=0], decreasing = TRUE)
-  worthidx <- sapply(X=names(allvar), function(x) which(colnames(exp) == x))
-  topidx <- if (length(worthidx) !=0) {worthidx[1:min(3,length(worthidx))]} else {0}
+  allvar <- sort(allvar[ allvar != 0], decreasing = TRUE)
+  worthidx <- sapply(X = names(allvar), function(x) which(colnames(exp) == x))
+  topidx <- if (length(worthidx) != 0) {
+    worthidx[1:min(3, length(worthidx))]
+    } else {
+    0}
   n <- length(topidx)
-  if (n == 3) scatter3D(exp[,topidx[1]], exp[,topidx[2]],exp[,topidx[3]],
+  if (n == 3) scatter3D(exp[, topidx[1]], exp[, topidx[2]], exp[, topidx[3]],
                       xlab = colnames(exp)[topidx[1]],
                       ylab = colnames(exp)[topidx[2]],
                       zlab = colnames(exp)[topidx[3]],
@@ -61,10 +65,10 @@ plot_parms <- function(exp) {
                       theta = 20, phi = 20
                       )
 
-  if (n == 2) scatter2D(exp[,topidx[1]], exp[,topidx[2]],
+  if (n == 2) scatter2D(exp[, topidx[1]], exp[, topidx[2]],
                       xlab = colnames(exp)[topidx[1]],
                       ylab = colnames(exp)[topidx[2]])
 
-  if (n==1) stripchart(exp[,topidx[1]], xlab = colnames(exp)[topidx[1]])
+  if (n == 1) stripchart(exp[, topidx[1]], xlab = colnames(exp)[topidx[1]])
   return(topidx)
 }

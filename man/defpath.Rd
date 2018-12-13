@@ -19,6 +19,7 @@ This function allows to config Gama path and Java heap size to run Gama as
 global options.
 }
 \examples{
+\dontrun{
 defpath(path = "/Applications/Gama.app/", Xmx = "4096m", Xms = "512m")
-
+}
 }

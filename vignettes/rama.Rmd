@@ -221,7 +221,7 @@ parameters(exp5)
 ### 1.2.3 Extracting observation rates
 
 ```{r}
-observation(exp5)
+obs_rates(exp5)
 ```
 
 
