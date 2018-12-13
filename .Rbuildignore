@@ -9,3 +9,4 @@
 tidyverse.R
 pkgdown
 ^data-raw$
+ignored

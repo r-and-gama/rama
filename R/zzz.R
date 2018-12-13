@@ -15,7 +15,6 @@ set_environment_variables <- function()
           rama.default.gama.linux            = "/GAMA1.8_RC2_EmbeddedJDK_Linux_64bits.zip",
           rama.default.gama.linux.appdir     = "/usr/local/Gama",
           rama.default.gama.linux.zip.appdir = "Gama",
-#          rama.repo                          = "file:///tmp/",   #//Users/nicolas/repo",
           rama.repo                          = "http://51.255.46.42/releases",
           rama.gama.path                     = "UNKNOWN",
           rama.startjar                      = "UNKNOWN",
@@ -33,7 +32,7 @@ gama_remote_distrib <- function() {
   switch(get_os(),
          "Darwin"  = paste0(options("rama.repo"), options("rama.default.gama.osx")),
          "Windows" = paste0(options("rama.repo"), options("rama.default.gama.win")),   # to complete C:\Program Files\
-         "linux"  = "bidule") # to complete
+         "linux"   =  paste0(options("rama.repo"), options("rama.default.gama.linux"))) # to complete
 }
 
 # ------------------------------------------------------------------------------
@@ -85,6 +84,18 @@ defpath <- function(path) {
 
 
 # Interface to download GAMA if necessary --------------------------------------
+#' Test if GAMA is intalled
+#'
+#' Test if GAMA is intalled and is correctly linked to the application Gama
+#' platform
+#'
+#' @param path path to the application Gama platform
+#'
+#' @examples
+#' \dontrun{
+#' # For examples, for MacOs, it can be:
+#' is_gama_installed(path = "/Applications/Gama.app")
+#' }
 #' @export
 is_gama_installed <- function(path = unlist(options("rama.gama.path"))) {
   options("rama.startjar") != "UNKNOWN" | (dir.exists(path) & (!is.na(init_gama_jar(path))))

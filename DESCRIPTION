@@ -37,6 +37,8 @@ License: MIT + file LICENSE
 URL: https://github.com/r-and-gama/rama
 BugReports: https://github.com/r-and-gama/rama/issues
 Encoding: UTF-8
+Depends:
+    R (>= 2.10)
 Imports:
     XML,
     plot3D,
