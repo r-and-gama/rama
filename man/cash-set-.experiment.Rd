@@ -40,5 +40,8 @@ sir3$p_S0 <- 2
 # We can check that it automatically reduces the number of simulations (if
 # the replacement leads to an experiment with exactly identical simulations):
 sir3
+# If you wish to delete one column:
+sir3$r_R <- NULL
+sir3
 
 }

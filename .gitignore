@@ -7,3 +7,4 @@ ignored/*
 inst/doc
 vignettes/*_cache/*
 workspace
+sir
