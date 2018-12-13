@@ -1,3 +1,4 @@
+^\.travis\.yml$
 ^docs$
 ^_pkgdown\.yml$
 ^.*\.Rproj$
@@ -5,4 +6,7 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^ignored/.*$
+tidyverse.R
+pkgdown
 ^data-raw$
+ignored

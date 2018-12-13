@@ -7,7 +7,7 @@
 #' From the list of all parameters of the experiments that do vary (i.e. not
 #' null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
 #'
-#' @param x An object of class \code{experiment}.
+#' @param exp An object of class \code{experiment}.
 #'
 #' @return Returns a vector of the variables with highest variances.
 #'
@@ -40,7 +40,6 @@
 #'
 #' @export
 #'
-
 plot_parms <- function(exp) {
 
 
@@ -48,7 +47,8 @@ plot_parms <- function(exp) {
     stop("There is no set of parameters for this experiment in this experiment.")
   }
 
-  allvar <- sapply(exp[,-ncol(exp)], FUN = var)
+  #allvar <- sapply(exp[,1:length(parameters(exp))], FUN = var)
+  allvar <- sapply(parameters(exp), var)
   allvar <- sort(allvar[ allvar!=0], decreasing = TRUE)
   worthidx <- sapply(X=names(allvar), function(x) which(colnames(exp) == x))
   topidx <- if (length(worthidx) !=0) {worthidx[1:min(3,length(worthidx))]} else {0}
