@@ -532,7 +532,33 @@ repl.experiment <- function(x, n) {
 #'                   tmax = 9,
 #'                   seed = 10)
 #'
+#' @export
+experiment <- function(df,
+                       parameters = NULL,
+                       obsrates = NULL,
+                       tmax = NULL,
+                       seed = NULL,
+                       experiment = NULL,
+                       model = NULL,
+                       dir = "") UseMethod("experiment")
 
+
+
+
+#' @rdname experiment
+#' @export
+experiment.default <- function(df,
+                               parameters = NULL,
+                               obsrates = NULL,
+                               tmax = NULL,
+                               seed = NULL,
+                               experiment = NULL,
+                               model = NULL,
+                               dir = ""
+) "Unknown class"
+
+#' @rdname experiment
+#' @export
 experiment.data.frame <- function(df,
                                   parameters = NULL,
                                   obsrates = NULL,
