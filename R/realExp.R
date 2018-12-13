@@ -7,8 +7,9 @@
 #' From the list of frequencies of each simulation of the experiment
 #' the values incorrectly associated to the last value observed are reset to NA.
 #'
-#' @param exp An object of class \code{experiment}.
 #' @param output An object of class \code{list}.
+#' @param exp0 An object of class \code{experiment}.
+#'
 #' @return Returns a list of dataframes, one for each experiment.
 #'
 #' @examples

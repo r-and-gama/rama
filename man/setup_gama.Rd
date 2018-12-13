@@ -6,6 +6,9 @@
 \usage{
 setup_gama(path = NA)
 }
+\arguments{
+\item{path}{path to the applicatation Gama Platform}
+}
 \description{
 Prompt the user to download GAMA if he wish to and then configures
 \code{rama}, linking it to a GAMA engine installed on the system.

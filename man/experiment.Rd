@@ -32,6 +32,10 @@ used as final step in the experiment.}
 \item{seed}{Name or index of the column in the \code{df} that will be
 used as seed in the experiment.}
 
+\item{experiment}{name to the model linked to the experiment}
+
+\item{model}{path to the model linked to the experiment}
+
 \item{dir}{Name of the output directory to be created in the current directory.
 If not specified, name of the model will be used}
 }
