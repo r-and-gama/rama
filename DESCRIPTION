@@ -42,7 +42,6 @@ Imports:
     plot3D,
     stringr,
     downloader,
-    stringr,
     purrr
 LazyData: true
 RoxygenNote: 6.1.1
