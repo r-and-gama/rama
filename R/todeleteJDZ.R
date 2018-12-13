@@ -55,6 +55,6 @@ exp0 <- experiment(
 
 exp0
 otp <- run_experiment(exp0)
-str(output)
-newoutput <- realexp(output,exp0)
+str(otp)
+newoutput <- realexp(otp,exp0)
 str(newoutput)
