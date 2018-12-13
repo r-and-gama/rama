@@ -881,21 +881,14 @@ make_wkdir <- function(dir, model) {
 #'
 #' @export
 `$<-.experiment` <- function(x, i, value) {
-<<<<<<< HEAD
-  x_list <- as.list(x)
-  x_list[[i]] <- value
-  new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
-  out <- unique(rbind(x[1, ], new_x)[-1, ])
-  row.names(out) <- NULL
-  out
-=======
   if (is.null(value)) NextMethod()
   else {
     x_list <- as.list(x)
     x_list[[i]] <- value
     new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
-    unique(rbind(x[1, ], new_x)[-1, ])
+    out <- unique(rbind(x[1, ], new_x)[-1, ])
+    row.names(out) <- NULL
+    return(out)
   }
->>>>>>> 69d0a3622bae167a9907b92ffcac1f24c0dd63aa
 }
 
