@@ -22,37 +22,30 @@ From the list of frequencies of each simulation of the experiment
 the values incorrectly associated to the last value observed are reset to NA.
 }
 \examples{
-df <- data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
-                 I0 = c(100, 200, 500),
-                 R0 = 0,
-                 beta = 1.5,
-                 gamma = .15,
-                 S = c(1,2,3),
-                 I = c(2,4,6),
-                 R =c(10,20,30),
-                 nbiter = 100,
-                 seed = "1")
-gaml_file <- system.file("examples", "sir.gaml", package = "rama")
- exp0 <- experiment(df,
-                   parameters = c("S0","I0","R0","beta","gamma"),
-                   obsrates  = c("S", "I", "R"),
-                   tmax = "nbiter",
-                   seed = "seed",
-                   experiment = "sir",
-                   model = gaml_file,
-                   dir = "testsir")
-exp1 <- load_experiment("sir", gaml_file, "sir")
-exp0 <- repl(exp1,3)
-exp0[1,"p_S0"] <- 500
-exp0[2,"p_S0"] <- 800
-exp0[3,"p_S0"] <- 200
-exp0[1,"p_I0"] <- 500
-exp0[2,"p_I0"] <- 200
-exp0[3,"p_I0"] <- 800
-exp0[2,"r_S"] <- 2
-exp0[3,"r_S"] <- 3
-exp0[3,"r_I"] <- 8
+df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
+                  I0 = c(100, 200, 500),
+                  R0 = 0,
+                  beta = 1.5,
+                  gamma = .15,
+                  S = c(1,2,3),
+                  I = c(2,4,6),
+                  R =c(10,20,30),
+                  nbiter = 1000,
+                  seed = "123456789")
 
+exp0 <- experiment(
+ df,
+ parameters = c("S0","I0","R0","beta","gamma"),
+ obsrates  = c("S", "I", "R"),
+ tmax = "nbiter",
+ seed = "seed",
+ experiment = "sir",
+ model = system.file("examples", "sir.gaml", package = "rama"),
+ dir = "testsir"
+)
+
+
+exp0
 otp <- run_experiment(exp0)
 str(otp)
 newoutput <- realexp(otp,exp0)
