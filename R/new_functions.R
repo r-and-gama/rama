@@ -627,7 +627,7 @@ insert_middle <- function(x, n, digits = 4) {
 # print.experiment method ------------------------------------------------------
 
 #' @export
-print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
+print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50, ...) {
 
   attrs <- attributes(x)
 
@@ -774,5 +774,8 @@ show_experiment <- function(file){
   unique(rbind(x[1, ], new_x)[-1, ])
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> f31db9a03d8cf88c28af3f167982f462627a23c7
