@@ -40,10 +40,11 @@
 #' str(opt)
 #' newoutput <- realexp(otp,exp0)
 #' str(newoutput)
+<<<<<<< HEAD
 #'
+=======
+>>>>>>> ca96fe03032255c8eddb35fc7b51d83181d16dc4
 #' @export
-#'
-
 realexp <- function(output,exp0){
 
   newoutput <- list()
