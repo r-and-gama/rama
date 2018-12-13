@@ -44,10 +44,9 @@ get_attributes <- function(x) {
 
 #' @importFrom stats setNames
 make_dictionary <- function(x) {
-  dic <- names(x)
-  dic <- gsub("[[:space:]]|[[:punct:]]", "_", dic)
+  dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
   dic <- gsub("_+", "_", dic)
-  dic <- setNames(dic, names(x))
+  dic <- setNames(dic, x)
 }
 
 
@@ -90,36 +89,11 @@ test_schar <- function(x) {
 #' @export
 load_experiment <- function(experiment, model, dir = "") {
 
-  # Check experiment
-  exp_info <- show_experiment(model)
-  # check if experiment requested is declared in gaml
-  if(!experiment %in% exp_info$experiment)
-    stop(paste0("There is no experiment named \"", experiment, "\" in ",
-           basename(model)))
-  # check if experiment requested has valid type
-  type <- exp_info$type[which(exp_info$experiment == experiment)]
-  if(!grepl("gui", type))
-    stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
+  # Check if experiment and type requested are valid
+  check_experiment(experiment, model)
+  # Make working directory
 
-  # Making working directory
-  message(cat("Creating working directory \"", dir, "\" in \"", getwd(),
-              "\".", sep = ""))
-
-  if(dir == "") {
-    # get model name from gaml file
-    dir <- gsub(".gaml", "", basename(model))
-    message(cat("The directory \"", dir,
-                "\" is created in the current directory \"", getwd(), "\".",
-                sep = ""))
-  }
-
-  wk_dir <- paste0(getwd(), "/", dir)
-  if (!file.exists(wk_dir))
-    # Check if a file name dir exist already
-    dir.create(wk_dir)
-  else
-    message(cat("Simulations results will be saved in \"", wk_dir,
-                "\".", sep = ""))
+  make_wkdir(dir, model)
 
   # Loading experiment
   message(cat("Loading experiment \"", experiment,
@@ -143,22 +117,23 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- out$Simulation
   if (!is.null(out$Outputs)) {
     out_var <- get_variables(out)
-    dic_var <- make_dictionary(out_var)
-    names(out_var) <- paste0("r_", dic_var[names(out_var)])
+    dicar <- make_dictionary(out_var)
+    names(out_var) <- paste0("r_", dicar[names(out_var)])
+
   } else {
     out_var <- data.frame(NULL)
-    dic_var <- NULL
+    dicar <- NULL
   }
   if (!is.null(out$Parameters)) {
     out_par <- get_parameters(out)
-    dic_par <- make_dictionary(out_par)
+    dic_par <- make_dictionary(names(out_par))
     names(out_par) <- paste0("p_", dic_par[names(out_par)])
   } else {
     out_par <- data.frame(NULL)
     dic_par <- NULL
   }
 
-  dic <- c(dic_par, dic_var)
+  dic <- c(dic_par, dicar)
   test_schar(names(dic))
 
   out_attr <- get_attributes(out)
@@ -169,8 +144,8 @@ load_experiment <- function(experiment, model, dir = "") {
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
   attr(output, "wkdir") <- wk_dir
-  attr(output, "dic_v") <- dic
-  attr(output, "dic_res") <- setNames(names(dic), dic)
+  attr(output, "dic") <- dic
+  attr(output, "dic_rev") <- setNames(names(dic), dic)
   return(output)
 }
 
@@ -211,7 +186,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     for(col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_res")[title])
+      title <- as.vector(attr(plan, "dic_rev")[title])
       val <- param[1, 1]
       m_type <- "STRING"
       if (is.numeric(val)) {
@@ -232,7 +207,7 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_res")[title])
+      title <- as.vector(attr(plan, "dic_rev")[title])
       val <- param[1, 1]
       attribut <- c(id        = id_out,
                     name = title,
@@ -472,60 +447,134 @@ repl.experiment <- function(x, n) {
 
 
 # experiment -------------------------------------------------------------------
-
-#' Create an experiment
+#' Create an object of class \code{experiment} from a dataframe.
 #'
-#' Creates an object of class \code{experiment}.
+#' @param df A data frame
+#' @param parameters Vector of column names or indexes in the \code{df} that will be
+#' used as parameters in the experiment.
+#' @param obsrates Vector of column names or indexes in the \code{df} that will be
+#' used as observation rats in the experiment.
+#' @param tmax Name or index of the column in the \code{df} that will be
+#' used as final step in the experiment.
+#' @param seed Name or index of the column in the \code{df} that will be
+#' used as seed in the experiment.
+#' @param dir Name of the output directory to be created in the current directory.
+#' If not specified, name of the model will be used
 #'
-#' This function is polymorph and can takes input of different kind to achieve
-#' this. TO BE DESCRIBED IN MORE DETAIL.
-#'
-#' @param ... One or two data frames.
-#' @param parameters Either a data frame containing the paramters values, or a
-#'                   character vector containing the names of the columns of the
-#'                   first-position data frame argument that correspond to the
-#'                   parameters.
-#' @param obsrates Either a data frame containing the monitoring rates of the
-#'                 observed variables, or a character vector containing the
-#'                 names of the columns of the first-position data frame
-#'                 argument that correspond to the monitored variables.
-#' @param obsrates xxx
-#' @param tmax xxx
-#' @param seed xxx
-#' @param model xxx
-#' @param experiment xxx
-#'
-#' @export
+#' @importFrom dplyr case_when
 #'
 #' @examples
-#' my_experiment <- experiment(
-#'   expand.grid(S0 = c(900, 950, 999),
-#'               I0 = c(100, 50, 1),
-#'               R0 = 0,
-#'               beta = 1.5,
-#'               gamma = .15),
-#'   data.frame(S = 1, I = 1, R = 1),
-#'   tmax = 1000,
-#'   seed = 1,
-#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml",
-#'   experiment = "sir"
-#' )
-#' # If we want to change the seeds:
-#' my_experiment$seed <- 1:9
-experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
-  names(parameters) <- paste0("p_", names(parameters))
-  names(obsrates) <- paste0("r_", names(obsrates))
-  structure(data.frame(parameters, obsrates,
-                       tmax = tmax,
-                       seed = seed),
-            model = model,
-            experiment = experiment,
-            class = c("experiment", "data.frame"))
+#' df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
+#'                 "beta" = rep(1.5, 5), "gama" = runif(5, 0, 1),
+#'                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
+#'                 "a" = rep(1000, 5), "b" = rep(1, 5))
+#' exp <- experiment(df,
+#                    parameters = c("S0", "I0", "R0", "beta", "gama"),
+#'                   obsrates = c("S", "I", "R"),
+#'                   tmax = "a",
+#'                   seed = "b")
+#' exp <- experiment(df,
+#'                   parameter = c(1:5),
+#'                   obsrates(6:8)),
+#'                   tmax = 9,
+#'                   seed = 10)
+#'
+#'
+#'
+#' @export
+experiment <- function(df,
+                       parameters = NULL,
+                       obsrates = NULL,
+                       tmax = NULL,
+                       seed = NULL,
+                       experiment = NULL,
+                       model = NULL,
+                       dir = "") UseMethod("experiment")
+
+
+#' @rdname experiment
+#' @export
+experiment.default <- function(df,
+                               parameters = NULL,
+                               obsrates = NULL,
+                               tmax = NULL,
+                               seed = NULL,
+                               experiment = NULL,
+                               model = NULL,
+                               dir = ""
+) "Unknown class"
+
+
+# experiment constructor from a dataframe --------------------
+#' @rdname experiment
+#' @export
+experiment.data.frame <- function(df,
+                                  parameters = NULL,
+                                  obsrates = NULL,
+                                  tmax = NULL,
+                                  seed = NULL,
+                                  experiment = NULL,
+                                  model = NULL,
+                                  dir = ""
+                                  )
+{
+  if(is.null(parameters) || is.null(obsrates) ||
+     is.null(tmax) || is.null(seed) ||
+     is.null(experiment) || is.null(model))
+    stop(paste0("All parameters need to be set."))
+
+  if(length(tmax) > 1 || length(seed) > 1)
+    stop(paste0("tmax and seed take only one column"))
+
+  if(!file.exists(model))
+    stop(paste0("Model \"", model, "\" does not exist"))
+
+  if(sum(length(parameters) + length(obsrates) +
+         length(tmax) + length(seed)) > ncol(df))
+    stop(paste0("Column(s) selected is out of bound"))
+
+  # check if requested name is in df
+  if (is.character(parameters) && sum(parameters %in% names(df)) == 0)
+    stop(paste0("Requested column(s) for parameters not found."))
+  if (is.character(obsrates) && sum(obsrates %in% names(df)) == 0)
+    stop(paste0("Requested column(s) for obsrates not found."))
+  if(is.character(tmax) && !tmax %in% names(df))
+    stop(paste0("Requested column for tmax not found."))
+  if(is.character(seed) && !seed %in% names(df))
+    stop(paste0("Requested column(s) for seed not found."))
+  # check experiment and type
+  check_experiment(experiment, model)
+  # generate output dir
+  wk_dir <- make_wkdir(dir, model)
+  parameters_n <- dplyr::case_when(
+    is.character(parameters) ~ paste0("p_", parameters),
+    is.numeric(parameters) ~ paste0("p_", names(df)[parameters])
+  )
+  obsrates_n <- dplyr::case_when(
+    is.character(obsrates) ~ paste0("r_", obsrates),
+    is.numeric(obsrates) ~ paste0("r_", names(df)[obsrates])
+  )
+
+ tmax_n <- dplyr::case_when(
+   is.character(tmax) ~ tmax,
+   is.numeric(tmax) ~ names(df)[tmax]
+ )
+
+ seed_n <- dplyr::case_when(
+   is.character(tmax) ~ seed,
+   is.numeric(tmax) ~ names(df)[seed]
+ )
+  dic_n <- make_dictionary(c(parameters_n, obsrates_n))
+  df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
+            "model" = model,
+            "experiment" = experiment,
+            "wkdir" = wk_dir,
+            "dic" = dic_n,
+            "dic_rev" = setNames(names(dic_n), dic_n),
+            "class" = c("experiment", "data.frame"))
+  names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
+  return(df)
 }
-
-
-
-
 # init_experiment --------------------------------------------------------------
 
 #' @export
@@ -730,6 +779,67 @@ show_experiment <- function(file){
   return(exp_info)
 }
 
+#' Test if experiment
+#'
+#' Tests for objects of type \code{"experiment"}.
+#'
+#' @param x object to be tested
+#'
+#' @return The function returns `TRUE` or `FALSE` depending on whether its
+#' argument is of chatacter type or not
+#'
+#' @examples
+#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+#' exp1 <- load_experiment("sir", gaml_file, "sir")
+#'
+#' is.experiment(exp1)
+#' @export
+is.experiment <- function(x) {
+
+  if(any(is.na(x))) stop("An object `experiment` can not contain NA value.")
+  attr <- setdiif(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
+                  names(attributes(x)))
+  class <- setdiff(class(x), c("data.frame", "experiment"))
+  length(c(attr, class)) == 0
+}
+# Check if a requested experiment is valid: name exists and type = gui----------
+
+check_experiment <- function(experiment, model){
+  exp_info <- show_experiment(model)
+  # check if experiment requested is declared in gaml
+  if(!experiment %in% exp_info$experiment)
+    stop(paste0("There is no experiment named \"", experiment, "\" in ",
+                basename(model)))
+  # check if experiment requested has valid type
+  type <- exp_info$type[exp_info$experiment == experiment]
+  if(type != "gui")
+    stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
+  invisible(0)
+}
+
+# Make working directory ----------
+make_wkdir <- function(dir, model) {
+
+  message(cat("Using current directory \"", getwd(), "\"...", sep = ""))
+
+  if(dir == "") {
+    # get model name from gaml file
+    dir <- gsub(".gaml", "", basename(model))
+    message(cat("Using default directory name \"", dir, "\"...", sep = ""))
+  }
+
+  wk_dir <- paste0(getwd(), "/", dir)
+
+  if (file.exists(wk_dir)) {
+    stop(paste0("Directory \"", dir, "\" already exists in \"", getwd(), "\""))
+  } else {
+    # Check if a file name dir exist already
+    dir.create(wk_dir)
+    message(cat("Simulations results will be saved in \"", wk_dir,
+                "\".", sep = ""))
+  }
+  return(wk_dir)
+}
 
 
 

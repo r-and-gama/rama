@@ -2,53 +2,57 @@
 % Please edit documentation in R/new_functions.R
 \name{experiment}
 \alias{experiment}
-\title{Create an experiment}
+\alias{experiment.default}
+\alias{experiment.data.frame}
+\title{Create an object of class \code{experiment} from a dataframe.}
 \usage{
-experiment(parameters, obsrates, tmax, seed, model, experiment)
+experiment(df, parameters = NULL, obsrates = NULL, tmax = NULL,
+  seed = NULL, experiment = NULL, model = NULL, dir = "")
+
+\method{experiment}{default}(df, parameters = NULL, obsrates = NULL,
+  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
+  dir = "")
+
+\method{experiment}{data.frame}(df, parameters = NULL, obsrates = NULL,
+  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
+  dir = "")
 }
 \arguments{
-\item{parameters}{Either a data frame containing the paramters values, or a
-character vector containing the names of the columns of the
-first-position data frame argument that correspond to the
-parameters.}
+\item{df}{A data frame}
 
-\item{obsrates}{Either a data frame containing the monitoring rates of the
-observed variables, or a character vector containing the
-names of the columns of the first-position data frame
-argument that correspond to the monitored variables.}
+\item{parameters}{Vector of column names or indexes in the \code{df} that will be
+used as parameters in the experiment.}
 
-\item{tmax}{xxx}
+\item{obsrates}{Vector of column names or indexes in the \code{df} that will be
+used as observation rats in the experiment.}
 
-\item{seed}{xxx}
+\item{tmax}{Name or index of the column in the \code{df} that will be
+used as final step in the experiment.}
 
-\item{model}{xxx}
+\item{seed}{Name or index of the column in the \code{df} that will be
+used as seed in the experiment.}
 
-\item{experiment}{xxx}
-
-\item{...}{One or two data frames.}
-
-\item{obsrates}{xxx}
+\item{dir}{Name of the output directory to be created in the current directory.
+If not specified, name of the model will be used}
 }
 \description{
-Creates an object of class \code{experiment}.
-}
-\details{
-This function is polymorph and can takes input of different kind to achieve
-this. TO BE DESCRIBED IN MORE DETAIL.
+Create an object of class \code{experiment} from a dataframe.
 }
 \examples{
-my_experiment <- experiment(
-  expand.grid(S0 = c(900, 950, 999),
-              I0 = c(100, 50, 1),
-              R0 = 0,
-              beta = 1.5,
-              gamma = .15),
-  data.frame(S = 1, I = 1, R = 1),
-  tmax = 1000,
-  seed = 1,
-  model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml",
-  experiment = "sir"
-)
-# If we want to change the seeds:
-my_experiment$seed <- 1:9
+df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
+                "beta" = rep(1.5, 5), "gama" = runif(5, 0, 1),
+                "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
+                "a" = rep(1000, 5), "b" = rep(1, 5))
+exp <- experiment(df,
+                  obsrates = c("S", "I", "R"),
+                  tmax = "a",
+                  seed = "b")
+exp <- experiment(df,
+                  parameter = c(1:5),
+                  obsrates(6:8)),
+                  tmax = 9,
+                  seed = 10)
+
+
+
 }
