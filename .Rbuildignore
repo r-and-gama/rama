@@ -8,3 +8,4 @@
 ^ignored/.*$
 tidyverse.R
 pkgdown
+^data-raw$
