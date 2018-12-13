@@ -714,3 +714,48 @@ show_experiment <- function(file){
   exp_info$type <- as.character(exp_info$type)
   return(exp_info)
 }
+
+
+
+
+# $<-.experiment ---------------------------------------------------------------
+
+#' Replace a column of an experiment
+#'
+#' Replaces a column of an experiment with new value(s).
+#'
+#' If the length of the vector used to replace the column is not the same as the
+#' original number of rows of the experiment, there is duplication of the
+#' shortest element.
+#'
+#' @param x An object of class \code{experiment}.
+#' @param i A column index.
+#' @param value A vector used to replace the values of the indexed column.
+#'
+#' @return An object of class \code{experiment}.
+#'
+#' @examples
+#' # Here is an experiment with 1 simulation:
+#' sir1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
+#' sir1
+#' # Let's replace the value of the "p_S0" column by a vector of 3 values:
+#' sir2 <- sir1
+#' sir2$p_S0 <- 1:3
+#' # We can check that it automatically expands the number of simulations:
+#' sir2
+#' # If, on the contrary, we now replace the values of "p_S0" of "sir2" by a
+#' # single value:
+#' sir3 <- sir2
+#' sir3$p_S0 <- 2
+#' # We can check that it automatically reduces the number of simulations (if
+#' # the replacement leads to an experiment with exactly identical simulations):
+#' sir3
+#'
+#' @export
+`$<-.experiment` <- function(x, i, value) {
+  x_list <- as.list(x)
+  x_list[[i]] <- value
+  new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
+  unique(rbind(x[1, ], new_x)[-1, ])
+}
+
