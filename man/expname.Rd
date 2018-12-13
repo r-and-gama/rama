@@ -2,9 +2,15 @@
 % Please edit documentation in R/new_functions.R
 \name{expname}
 \alias{expname}
+\alias{expname.default}
+\alias{expname.experiment}
 \title{Get the name of an experiment}
 \usage{
 expname(x)
+
+\method{expname}{default}(x)
+
+\method{expname}{experiment}(x)
 }
 \arguments{
 \item{x}{An object of class \code{experiment}.}
