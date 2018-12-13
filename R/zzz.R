@@ -68,17 +68,27 @@ init_gama_jar <- function(path) {
 }
 
 
-# ------------------------------------------------------------------------------
-
-defpath <- function(path) {
+# Configure gama -----------------------------------------------------------------
+#' This function allows to config Gama path and Java heap size to run Gama as
+#' global options.
+#'
+#' @param path Path to Gama
+#' @param Xmx Maximum heap size
+#' @param Xms Initial heap size
+#' /dontrun{
+#' @examples
+#' defpath(path = "/Applications/Gama.app/", Xmx = "4096m", Xms = "512m")
+#' }
+#' @export
+defpath <- function(path, Xmx = "2048m", Xms = "512m") {
   defaultjar <- init_gama_jar(path)
   if(is.na(defaultjar)) {
     stop("Gama configuration failed!")
   }
   else {
     options(rama.startjar=defaultjar,
-            rama.Xmx="4096m",
-            rama.Xms="512m",
+            rama.Xmx = Xmx ,
+            rama.Xms = Xms,
             rama.gama.path = path)
     message("Gama configuration succeed!")
   }
