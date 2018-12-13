@@ -34,6 +34,8 @@
 #' # 2. Second type of use: by providing vectors of values to overwrite elements
 #' of the "experiment" object and then expand it into full factorial design:
 #' fullfact(sir2, p_S0 = 1:3, p_I0 = 4:5)
+#'
+#' @export
 fullfact <- function(xprmt, ...) {
   args <- as.list(match.call(expand.dots = FALSE))
   values <- lapply(args$`...`, eval)
@@ -44,8 +46,8 @@ fullfact <- function(xprmt, ...) {
   }
   new_xprmt <- do.call(expand.grid, lapply(to_expand, unique))
   new_xprmt[do.call(order, new_xprmt), ]     # sort rows "from left to right"
-  row.names(new_xprmt) <- NULL               # regenerate row names
   new_xprmt <- rbind(xprmt, new_xprmt)[-1, ] # add class and other attributes
+  row.names(new_xprmt) <- NULL               # regenerate row names
   new_xprmt
 }
 

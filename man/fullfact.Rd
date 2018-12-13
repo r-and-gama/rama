@@ -43,4 +43,5 @@ fullfact(sir2)
 # 2. Second type of use: by providing vectors of values to overwrite elements
 of the "experiment" object and then expand it into full factorial design:
 fullfact(sir2, p_S0 = 1:3, p_I0 = 4:5)
+
 }
