@@ -2,9 +2,15 @@
 % Please edit documentation in R/new_functions.R
 \name{get_wkdir}
 \alias{get_wkdir}
+\alias{get_wkdir.default}
+\alias{get_wkdir.experiment}
 \title{Get and set the output directory}
 \usage{
 get_wkdir(x)
+
+\method{get_wkdir}{default}(x)
+
+\method{get_wkdir}{experiment}(x)
 }
 \arguments{
 \item{x}{An object of class \code{experiment}.}

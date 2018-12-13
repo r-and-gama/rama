@@ -2,9 +2,15 @@
 % Please edit documentation in R/new_functions.R
 \name{parameters}
 \alias{parameters}
+\alias{parameters.default}
+\alias{parameters.experiment}
 \title{Extract parameters values}
 \usage{
 parameters(x)
+
+\method{parameters}{default}(x)
+
+\method{parameters}{experiment}(x)
 }
 \arguments{
 \item{x}{An object of class \code{experiment}.}

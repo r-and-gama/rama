@@ -2,9 +2,15 @@
 % Please edit documentation in R/new_functions.R
 \name{repl}
 \alias{repl}
+\alias{repl.default}
+\alias{repl.experiment}
 \title{Replicate an experiment}
 \usage{
 repl(x, n)
+
+\method{repl}{default}(x, n)
+
+\method{repl}{experiment}(x, n)
 }
 \arguments{
 \item{x}{An object of class \code{experiment}.}
