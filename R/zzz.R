@@ -75,8 +75,6 @@ init_gama_jar <- function(path) {
 #' @param Xmx Maximum heap size
 #' @param Xms Initial heap size
 #'
-#' @examples
-#' defpath(path = "/Applications/Gama.app/", Xmx = "4096m", Xms = "512m")
 #'
 #' @export
 defpath <- function(path, Xmx = "2048m", Xms = "512m") {
