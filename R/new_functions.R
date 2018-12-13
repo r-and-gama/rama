@@ -797,7 +797,7 @@ show_experiment <- function(file){
 is.experiment <- function(x) {
 
   if(any(is.na(x))) stop("An object `experiment` can not contain NA value.")
-  attr <- setdiif(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
+  attr <- setdiff(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
                   names(attributes(x)))
   class <- setdiff(class(x), c("data.frame", "experiment"))
   length(c(attr, class)) == 0
