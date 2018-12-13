@@ -569,6 +569,8 @@ experiment.default <- function(df,
 #' used as final step in the experiment.
 #' @param seed Name or index of the column in the \code{df} that will be
 #' used as seed in the experiment.
+#' @param dir Name of the output directory to be created in the current directory.
+#' If not specified, name of the model will be used
 #'
 #' @importFrom dplyr case_when
 #'
@@ -626,7 +628,6 @@ experiment.data.frame <- function(df,
     stop(paste0("Requested column(s) for seed not found."))
   # check experiment and type
   check_experiment(experiment, model)
-
   # generate output dir
   wk_dir <- make_wkdir(dir, model)
   parameters_n <- dplyr::case_when(
@@ -924,4 +925,42 @@ is.experiment <- function(x) {
                   names(attributes(x)))
   class <- setdiff(class(x), c("data.frame", "experiment"))
   length(c(attr, class)) == 0
+}
+# Check if a requested experiment is valid: name exists and type = gui----------
+
+check_experiment <- function(experiment, model){
+  exp_info <- show_experiment(model)
+  # check if experiment requested is declared in gaml
+  if(!experiment %in% exp_info$experiment)
+    stop(paste0("There is no experiment named \"", experiment, "\" in ",
+                basename(model)))
+  # check if experiment requested has valid type
+  type <- exp_info$type[exp_info$experiment == experiment]
+  if(type != "gui")
+    stop(paste0("Experiment \"", experiment, "\" of type \"", type, "\" is not supported."))
+  invisible(0)
+}
+
+# Make working directory ----------
+make_wkdir <- function(dir, model) {
+
+  message(cat("Using current directory \"", getwd(), "\"...", sep = ""))
+
+  if(dir == "") {
+    # get model name from gaml file
+    dir <- gsub(".gaml", "", basename(model))
+    message(cat("Using default directory name \"", dir, "\"...", sep = ""))
+  }
+
+  wk_dir <- paste0(getwd(), "/", dir)
+
+  if (file.exists(wk_dir)) {
+    stop(paste0("Directory \"", dir, "\" already exists in \"", getwd(), "\""))
+  } else {
+    # Check if a file name dir exist already
+    dir.create(wk_dir)
+    message(cat("Simulations results will be saved in \"", wk_dir,
+                "\".", sep = ""))
+  }
+  return(wk_dir)
 }
