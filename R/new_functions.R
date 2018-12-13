@@ -458,6 +458,8 @@ repl.experiment <- function(x, n) {
 #' used as final step in the experiment.
 #' @param seed Name or index of the column in the \code{df} that will be
 #' used as seed in the experiment.
+#' @param experiment name to the model linked to the experiment
+#' @param model path to the model linked to the experiment
 #' @param dir Name of the output directory to be created in the current directory.
 #' If not specified, name of the model will be used
 #'

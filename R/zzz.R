@@ -27,7 +27,8 @@ get_os <- function() paste0(Sys.info()["sysname"])
 
 
 # Gives distrib as a function of the OS ----------------------------------------
-#' @export
+#' In function of remote distribution of the OS returns the path
+#' @noRd
 gama_remote_distrib <- function() {
   switch(get_os(),
          "Darwin"  = paste0(options("rama.repo"), options("rama.default.gama.osx")),
@@ -36,7 +37,8 @@ gama_remote_distrib <- function() {
 }
 
 # ------------------------------------------------------------------------------
-#' @export
+#' In function of remote distribution of the OS returns the path
+#' @noRd
 gama_local_distrib_path <- function() {
   path <- switch(get_os(),
          "Darwin"  = options("rama.default.gama.osx.appdir"),

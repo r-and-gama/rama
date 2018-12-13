@@ -44,7 +44,6 @@ Imports:
     plot3D,
     stringr,
     downloader,
-    stringr,
     purrr,
     dplyr
 LazyData: true
