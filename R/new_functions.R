@@ -447,11 +447,9 @@ repl.experiment <- function(x, n) {
 
 
 # experiment -------------------------------------------------------------------
-
-
 #' Create an object of class \code{experiment} from a dataframe.
 #'
-#' @param df
+#' @param df A data frame
 #' @param parameters Vector of column names or indexes in the \code{df} that will be
 #' used as parameters in the experiment.
 #' @param obsrates Vector of column names or indexes in the \code{df} that will be
@@ -507,43 +505,10 @@ experiment.default <- function(df,
                                dir = ""
 ) "Unknown class"
 
+
+# experiment constructor from a dataframe --------------------
 #' @rdname experiment
 #' @export
-# experiment constructor from a dataframe --------------------
-#' Create an object of class \code{experiment} from a dataframe.
-#'
-#' @param df
-#' @param parameters Vector of column names or indexes in the \code{df} that will be
-#' used as parameters in the experiment.
-#' @param obsrates Vector of column names or indexes in the \code{df} that will be
-#' used as observation rats in the experiment.
-#' @param tmax Name or index of the column in the \code{df} that will be
-#' used as final step in the experiment.
-#' @param seed Name or index of the column in the \code{df} that will be
-#' used as seed in the experiment.
-#' @param dir Name of the output directory to be created in the current directory.
-#' If not specified, name of the model will be used
-#'
-#' @importFrom dplyr case_when
-#'
-#' @examples
-#' df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
-#'                 "beta" = rep(1.5, 5), "gama" = runif(5, 0, 1),
-#'                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
-#'                 "a" = rep(1000, 5), "b" = rep(1, 5))
-#' exp <- experiment(df,
-#                    parameters = c("S0", "I0", "R0", "beta", "gama"),
-#'                   obsrates = c("S", "I", "R"),
-#'                   tmax = "a",
-#'                   seed = "b")
-#' exp <- experiment(df,
-#'                   parameter = c(1:5),
-#'                   obsrates(6:8)),
-#'                   tmax = 9,
-#'                   seed = 10)
-#'
-
->>>>>>> nearly done experiment constructor from df
 experiment.data.frame <- function(df,
                                   parameters = NULL,
                                   obsrates = NULL,
