@@ -448,57 +448,7 @@ repl.experiment <- function(x, n) {
 
 # experiment -------------------------------------------------------------------
 
-#' Create an experiment
-#'
-#' Creates an object of class \code{experiment}.
-#'
-#' This function is polymorph and can takes input of different kind to achieve
-#' this. TO BE DESCRIBED IN MORE DETAIL.
-#'
-#' @param ... One or two data frames.
-#' @param parameters Either a data frame containing the paramters values, or a
-#'                   character vector containing the names of the columns of the
-#'                   first-position data frame argument that correspond to the
-#'                   parameters.
-#' @param obsrates Either a data frame containing the monitoring rates of the
-#'                 observed variables, or a character vector containing the
-#'                 names of the columns of the first-position data frame
-#'                 argument that correspond to the monitored variables.
-#' @param obsrates xxx
-#' @param tmax xxx
-#' @param seed xxx
-#' @param model xxx
-#' @param experiment xxx
-#'
-#' @export
-#'
-#' @examples
-#' my_experiment <- experiment(
-#'   expand.grid(S0 = c(900, 950, 999),
-#'               I0 = c(100, 50, 1),
-#'               R0 = 0,
-#'               beta = 1.5,
-#'               gamma = .15),
-#'   data.frame(S = 1, I = 1, R = 1),
-#'   tmax = 1000,
-#'   seed = 1,
-#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml",
-#'   experiment = "sir"
-#' )
-#' # If we want to change the seeds:
-#' my_experiment$seed <- 1:9
-# experiment <- function(parameters, obsrates, tmax, seed, model, experiment) {
-#   names(parameters) <- paste0("p_", names(parameters))
-#   names(obsrates) <- paste0("r_", names(obsrates))
-#   structure(data.frame(parameters, obsrates,
-#                        tmax = tmax,
-#                        seed = seed),
-#             model = model,
-#             experiment = experiment,
-#             class = c("experiment", "data.frame"))
-# }
 
-# experiment constructor from a dataframe --------------------
 #' Create an object of class \code{experiment} from a dataframe.
 #'
 #' @param df
@@ -530,6 +480,8 @@ repl.experiment <- function(x, n) {
 #'                   obsrates(6:8)),
 #'                   tmax = 9,
 #'                   seed = 10)
+#'
+#'
 #'
 #' @export
 experiment <- function(df,
@@ -901,7 +853,6 @@ make_wkdir <- function(dir, model) {
   }
   return(wk_dir)
 }
-  # is.experiment ----------------------------------------------------------------
 
 #' Test if experiment
 #'
