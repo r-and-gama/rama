@@ -117,7 +117,7 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- out$Simulation
   if (!is.null(out$Outputs)) {
     out_var <- get_variables(out)
-    dicar <- make_dictionary(out_var)
+    dicar <- make_dictionary(names(out_var))
     names(out_var) <- paste0("r_", dicar[names(out_var)])
 
   } else {
@@ -469,15 +469,20 @@ repl.experiment <- function(x, n) {
 #'                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
 #'                 "a" = rep(1000, 5), "b" = rep(1, 5))
 #' exp <- experiment(df,
-#                    parameters = c("S0", "I0", "R0", "beta", "gama"),
+#'                   parameters = c("S0", "I0", "R0", "beta", "gama"),
 #'                   obsrates = c("S", "I", "R"),
 #'                   tmax = "a",
-#'                   seed = "b")
+#'                   seed = "b",
+#'                   experiment = "sir",
+#'                   model = system.file("examples", "sir.gaml", package = "rama"))
 #' exp <- experiment(df,
-#'                   parameter = c(1:5),
-#'                   obsrates(6:8)),
+#'                   parameters = c(1:5),
+#'                   obsrates = c(6:8),
 #'                   tmax = 9,
-#'                   seed = 10)
+#'                   seed = 10,
+#'                   experiment = "sir",
+#'                   model = system.file("examples", "sir.gaml", package = "rama"),
+#'                   dir = "my_sir_model")
 #'
 #'
 #'
@@ -555,16 +560,24 @@ experiment.data.frame <- function(df,
     is.numeric(obsrates) ~ paste0("r_", names(df)[obsrates])
   )
 
- tmax_n <- dplyr::case_when(
-   is.character(tmax) ~ tmax,
-   is.numeric(tmax) ~ names(df)[tmax]
- )
+  if(is.character(tmax)) tmax_n <- tmax
+  if(is.numeric(tmax)) tmax_n <- names(df)[tmax]
+  if(is.character(seed)) seed_n <- seed
+  if(is.numeric(seed)) seed_n <- names(df)[seed]
+# tmax_n <- dplyr::case_when(
+#    is.character(tmax) ~ tmax,
+#    is.numeric(tmax) ~ names(df)[tmax]
+#  )
 
- seed_n <- dplyr::case_when(
-   is.character(tmax) ~ seed,
-   is.numeric(tmax) ~ names(df)[seed]
- )
-  dic_n <- make_dictionary(c(parameters_n, obsrates_n))
+ # seed_n <- dplyr::case_when(
+ #   is.character(seed) ~ seed,
+ #   is.numeric(seed) ~ names(df)[seed]
+ # )
+  if(is.numeric(parameters) & is.numeric(obsrates))
+    dic_n <- make_dictionary(c(names(df)[parameters], names(df)[obsrates]))
+  else
+    dic_n <- make_dictionary(c(parameters, obsrates))
+
   df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
             "model" = model,
             "experiment" = experiment,
@@ -818,7 +831,7 @@ check_experiment <- function(experiment, model){
 }
 
 # Make working directory ----------
-make_wkdir <- function(dir, model) {
+  wk_dir <- make_wkdir <- function(dir, model) {
 
   message(cat("Using current directory \"", getwd(), "\"...", sep = ""))
 
@@ -828,16 +841,16 @@ make_wkdir <- function(dir, model) {
     message(cat("Using default directory name \"", dir, "\"...", sep = ""))
   }
 
-  wk_dir <- paste0(getwd(), "/", dir)
+  i <- 0
+  repeat {
+    i <- i + 1
+    wk_dir <- paste0(getwd(), "/", dir, "_", i)
+    if(!file.exists(wk_dir)) break
+  }
 
-  if (file.exists(wk_dir)) {
-    stop(paste0("Directory \"", dir, "\" already exists in \"", getwd(), "\""))
-  } else {
-    # Check if a file name dir exist already
     dir.create(wk_dir)
     message(cat("Simulations results will be saved in \"", wk_dir,
                 "\".", sep = ""))
-  }
   return(wk_dir)
 }
 

@@ -44,14 +44,20 @@ df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
                 "a" = rep(1000, 5), "b" = rep(1, 5))
 exp <- experiment(df,
+                  parameters = c("S0", "I0", "R0", "beta", "gama"),
                   obsrates = c("S", "I", "R"),
                   tmax = "a",
-                  seed = "b")
+                  seed = "b",
+                  experiment = "sir",
+                  model = system.file("examples", "sir.gaml", package = "rama"))
 exp <- experiment(df,
-                  parameter = c(1:5),
-                  obsrates(6:8)),
+                  parameters = c(1:5),
+                  obsrates = c(6:8),
                   tmax = 9,
-                  seed = 10)
+                  seed = 10,
+                  experiment = "sir",
+                  model = system.file("examples", "sir.gaml", package = "rama"),
+                  dir = "my_sir_model")
 
 
 
