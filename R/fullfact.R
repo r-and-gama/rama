@@ -46,7 +46,7 @@ fullfact <- function(xprmt, ...) {
   }
   new_xprmt <- do.call(expand.grid, lapply(to_expand, unique))
   new_xprmt[do.call(order, new_xprmt), ]           # sort rows "from left to right"
-  new_xprmt <- rbind(xprmt[-1, ], new_xprmt)[-1, ] # add class and other attributes
+  new_xprmt <- rbind(xprmt[1, ], new_xprmt)[-1, ] # add class and other attributes
   row.names(new_xprmt) <- NULL                     # regenerate row names
   new_xprmt
 }
