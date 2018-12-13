@@ -875,12 +875,18 @@ make_wkdir <- function(dir, model) {
 #' # We can check that it automatically reduces the number of simulations (if
 #' # the replacement leads to an experiment with exactly identical simulations):
 #' sir3
+#' # If you wish to delete one column:
+#' sir3$r_R <- NULL
+#' sir3
 #'
 #' @export
 `$<-.experiment` <- function(x, i, value) {
-  x_list <- as.list(x)
-  x_list[[i]] <- value
-  new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
-  unique(rbind(x[1, ], new_x)[-1, ])
+  if (is.null(value)) NextMethod()
+  else {
+    x_list <- as.list(x)
+    x_list[[i]] <- value
+    new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
+    unique(rbind(x[1, ], new_x)[-1, ])
+  }
 }
 
