@@ -774,8 +774,3 @@ show_experiment <- function(file){
   unique(rbind(x[1, ], new_x)[-1, ])
 }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> f31db9a03d8cf88c28af3f167982f462627a23c7
