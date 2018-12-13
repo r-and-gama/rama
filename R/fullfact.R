@@ -19,24 +19,33 @@
 #'
 #' @examples
 #' sir1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
+#'
+#' # 1. First type of use: tranforming an experiment into one with a full
+#' # factorial design:
 #' sir2 <- sir1
 #' sir2$p_S0 <- 1:3
 #' sir2
 #' sir2[1, 2] <- 2
+#' # "sir2" is not full factorial:
 #' sir2
+#' # this is:
 #' fullfact(sir2)
 #'
+#' # 2. Second type of use: by providing vectors of values to overwrite elements
+#' of the "experiment" object and then expand it into full factorial design:
+#' fullfact(sir2, p_S0 = 1:3, p_I0 = 4:5)
 fullfact <- function(xprmt, ...) {
   args <- as.list(match.call(expand.dots = FALSE))
-  values <- args$`...`
-  to_expand <- as.data.frame(xprmt)
+  values <- lapply(args$`...`, eval)
+  to_expand <- as.data.frame(xprmt, stringsAsFactors = FALSE)
   if (! is.null(values)) {
     the_names <- names(to_expand)
     to_expand <- c(to_expand[setdiff(the_names, names(values))], values)[the_names]
   }
   new_xprmt <- do.call(expand.grid, lapply(to_expand, unique))
-  rbind(xprmt, new_xprmt)[-1, ]
+  new_xprmt[do.call(order, new_xprmt), ]     # sort rows "from left to right"
+  row.names(new_xprmt) <- NULL               # regenerate row names
+  new_xprmt <- rbind(xprmt, new_xprmt)[-1, ] # add class and other attributes
+  new_xprmt
 }
-
-#populate(sir1, p_S0 = 1:3, p_I0 = 5:6)
 
