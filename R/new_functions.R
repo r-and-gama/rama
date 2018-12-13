@@ -771,6 +771,8 @@ show_experiment <- function(file){
   x_list <- as.list(x)
   x_list[[i]] <- value
   new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
-  unique(rbind(x[1, ], new_x)[-1, ])
+  out <- unique(rbind(x[1, ], new_x)[-1, ])
+  row.names(out) <- NULL
+  out
 }
 
