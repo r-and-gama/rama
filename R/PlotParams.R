@@ -48,7 +48,8 @@ plot_parms <- function(exp) {
     stop("There is no set of parameters for this experiment in this experiment.")
   }
 
-  allvar <- sapply(exp[,-ncol(exp)], FUN = var)
+  #allvar <- sapply(exp[,1:length(parameters(exp))], FUN = var)
+  allvar <- sapply(parameters(exp), var)
   allvar <- sort(allvar[ allvar!=0], decreasing = TRUE)
   worthidx <- sapply(X=names(allvar), function(x) which(colnames(exp) == x))
   topidx <- if (length(worthidx) !=0) {worthidx[1:min(3,length(worthidx))]} else {0}
