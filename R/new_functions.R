@@ -93,7 +93,7 @@ load_experiment <- function(experiment, model, dir = "") {
   check_experiment(experiment, model)
   # Make working directory
 
-  make_wkdir(dir, model)
+  wk_dir <- make_wkdir(dir, model)
 
   # Loading experiment
   message(cat("Loading experiment \"", experiment,
