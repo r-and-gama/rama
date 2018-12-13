@@ -117,13 +117,9 @@ load_experiment <- function(experiment, model, dir = "") {
   out <- out$Simulation
   if (!is.null(out$Outputs)) {
     out_var <- get_variables(out)
-<<<<<<< HEAD
-    dic_var <- make_dictionary(names(out_var))
-    names(out_var) <- paste0("r_", dic_var[names(out_var)])
-=======
     dicar <- make_dictionary(out_var)
     names(out_var) <- paste0("r_", dicar[names(out_var)])
->>>>>>> Fix names attributes `dic` and add is.experiment fct
+
   } else {
     out_var <- data.frame(NULL)
     dicar <- NULL
@@ -486,7 +482,8 @@ repl.experiment <- function(x, n) {
 #'   data.frame(S = 1, I = 1, R = 1),
 #'   tmax = 1000,
 #'   seed = 1,
-#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
+#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml",
+#'   experiment = "sir"
 #' )
 #' # If we want to change the seeds:
 #' my_experiment$seed <- 1:9
@@ -874,7 +871,7 @@ make_wkdir <- function(dir, model) {
                 "\".", sep = ""))
   }
   return(wk_dir)
-
+}
   # is.experiment ----------------------------------------------------------------
 
 #' Test if experiment
