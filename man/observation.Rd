@@ -2,9 +2,15 @@
 % Please edit documentation in R/new_functions.R
 \name{observation}
 \alias{observation}
+\alias{observation.default}
+\alias{observation.experiment}
 \title{Extract monitoring rates}
 \usage{
 observation(x)
+
+\method{observation}{default}(x)
+
+\method{observation}{experiment}(x)
 }
 \arguments{
 \item{x}{An object of class \code{experiment}.}

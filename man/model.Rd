@@ -2,9 +2,15 @@
 % Please edit documentation in R/new_functions.R
 \name{model}
 \alias{model}
+\alias{model.default}
+\alias{model.experiment}
 \title{Get and set the model of an experiment}
 \usage{
 model(x)
+
+\method{model}{default}(x)
+
+\method{model}{experiment}(x)
 }
 \arguments{
 \item{x}{An object of class \code{experiment}.}
