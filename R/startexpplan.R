@@ -59,6 +59,10 @@ call_gama <- function(experiment_plan, hpc, output_dir, parameter_xml_file) {
 #' @export
 run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_xml_file = "") {
 
+  if(!is.experiment(experiment_plan)) {
+    stop("The argument `experiment_plan` is not an `experiment` object.")
+  }
+
   # make output directory
   if(output_dir=="")
     output_dir <- create_output_dir(experiment_plan, output_dir)
@@ -74,7 +78,7 @@ run_experiment <- function(experiment_plan, hpc = 1, output_dir = "", parameter_
   # get variables names
   vars <- names(experiment_plan)[grep("r_", names(experiment_plan))]
   vars <- substring(vars, 3)
-  vars <- as.vector(attr(experiment_plan, "dic_v")[vars])
+  vars <- as.vector(attr(experiment_plan, "dic")[vars])
 
   # retrieve all the variables of all the experiments:
   out <- lapply(outfiles, retrieve_results, experiment_plan)
@@ -102,9 +106,8 @@ retrieve_results <- function(outfile, experiment_plan) {
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
-  new_name <- as.vector(attr(experiment_plan, "dic_v")[lst_name])
+  new_name <- as.vector(attr(experiment_plan, "dic")[lst_name])
   names(tmp) <- new_name
-  print(names(tmp))
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
   attr(tmp, "path") <- outfile

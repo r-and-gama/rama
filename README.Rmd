@@ -16,8 +16,10 @@ knitr::opts_chunk$set(
 
 # `rama` <img src="man/figures/logo.png" align="right" width=200/>
 
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
-  
+[![Travis build status](https://travis-ci.org/r-and-gama/rama.svg?branch=master)](https://travis-ci.org/r-and-gama/rama)
+
 `rama` is an R interface to the [GAMA](https://gama-platform.github.io)
 **agent-based** simulation platform. It allows to
 
@@ -34,7 +36,6 @@ a given **model** with
 * a given set of **observed variables**,
 * a **duration** of simulation and
 * a **seed** value.
-
 
 All the simulations of an experiment relate to the same model. In R, an 
 experiment belongs to the class `experiment` that is an extension of the class
@@ -66,6 +67,9 @@ Instead, a safe practice is to develop the model in the [GAMA](https://gama-plat
 `rama` to the design and exploitation of experiments' simulations as outlined
 above.
 
+<div style="text-align:center">
+<img src="man/figures/readme_workflow.png" align="middle" width=400/>
+</div>
 
 ## Structure of experiments in `rama`
 
@@ -73,9 +77,9 @@ The package `rama` contains one unique class, `experiment` that contains all
 the information of an experiment in a GAML model. This class is a subclass of
 `data.frame` as outlined below:
 
-
-<img src="man/figures/rama1_1.png" align="right" width=900/>
-
+<div style="text-align:center">
+<img src="man/figures/readme_experiment_object.png" align="middle" width=900/>
+</div>
 
 Each row of an `experiment` object corresponds to a simulation of the
 experiment. The columns corresponds to four type of data:
@@ -91,7 +95,6 @@ common to all the simulations of the experiment are stored in the attributes of
 the `experiment` object and can be handled with accessor functions.
 
 ## Installation and configuration
-
 
 You can install `rama` from GitHub with:
 

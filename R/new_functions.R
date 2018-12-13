@@ -194,7 +194,7 @@ save_to_gama <- function(plan, file) UseMethod("save_to_gama")
 
 
 
-#' @describeIn save_to_gama
+#' @rdname save_to_gama
 #' @export
 save_to_gama.experiment <- function(plan, file = "out.xml") {
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
@@ -273,14 +273,14 @@ get_wkdir <- function(x) UseMethod("get_wkdir")
 
 
 
-#' @describeIn get_wkdir
+#' @rdname get_wkdir
 #' @export
 get_wkdir.default <- function(x) "Unknown class"
 
 
 
 
-#' @describeIn get_wkdir
+#' @rdname get_wkdir
 #' @export
 get_wkdir.experiment <- function(x) attributes(x)$wkdir
 
@@ -309,14 +309,14 @@ model <- function(x) UseMethod("model")
 
 
 
-#' @describeIn model
+#' @rdname model
 #' @export
 model.default <- function(x) "Unknown class"
 
 
 
 
-#' @describeIn model
+#' @rdname model
 #' @export
 model.experiment <- function(x) attributes(x)$model
 
@@ -346,14 +346,14 @@ expname <- function(x) UseMethod("expname")
 
 
 
-#' @describeIn expname
+#' @rdname expname
 #' @export
 expname.default <- function(x) "Unknown class"
 
 
 
 
-#' @describeIn expname
+#' @rdname expname
 #' @export
 expname.experiment <- function(x) attributes(x)$experiment
 
@@ -382,14 +382,14 @@ parameters <- function(x) UseMethod("parameters")
 
 
 
-#' @describeIn parameters
+#' @rdname parameters
 #' @export
 parameters.default <- function(x) "Unknown class"
 
 
 
 
-#' @describeIn parameters
+#' @rdname parameters
 #' @export
 parameters.experiment <- function(x) {
   as.data.frame(x[, grep("^p_", names(x), value = TRUE), drop = FALSE])
@@ -420,14 +420,14 @@ observation <- function(x) UseMethod("observation")
 
 
 
-#' @describeIn observation
+#' @rdname observation
 #' @export
 observation.default <- function(x) "Unknown class"
 
 
 
 
-#' @describeIn observation
+#' @rdname observation
 #' @export
 observation.experiment <- function(x) {
   as.data.frame(x[, grep("^r_", names(x), value = TRUE), drop = FALSE])
@@ -455,14 +455,14 @@ repl <- function(x, n) UseMethod("repl")
 
 
 
-#' @describeIn repl
+#' @rdname repl
 #' @export
 repl.default <- function(x, n) "Unknown class"
 
 
 
 
-#' @describeIn repl
+#' @rdname repl
 #' @export
 repl.experiment <- function(x, n) {
   do.call(rbind, lapply(1:n, function(y) x))
@@ -507,7 +507,8 @@ repl.experiment <- function(x, n) {
 #'   data.frame(S = 1, I = 1, R = 1),
 #'   tmax = 1000,
 #'   seed = 1,
-#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml"
+#'   model = "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml",
+#'   experiment = "sir"
 #' )
 #' # If we want to change the seeds:
 #' my_experiment$seed <- 1:9
@@ -626,7 +627,7 @@ insert_middle <- function(x, n, digits = 4) {
 # print.experiment method ------------------------------------------------------
 
 #' @export
-print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
+print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50, ...) {
 
   attrs <- attributes(x)
 
@@ -698,7 +699,6 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4, nchar = 50) {
 #'
 #' @importFrom stringr str_match_all str_match regex str_detect
 #' @importFrom  purrr map
-#' @importFrom  readtext readtext
 #'
 #' @export
 #'
@@ -708,8 +708,8 @@ show_experiment <- function(file){
     stop(paste0("There is no file \"", file, "\"."))
   }
 
-  gaml <- readtext(file, verbosity = FALSE)
-  exps <- str_match_all(gaml$text, regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][,2]
+  gaml <- paste(readLines(file, warn = FALSE), collapse = "\n")
+  exps <- str_match_all(gaml, regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][,2]
 
   if(length(exps) == 0)
     stop(paste0("Model \"", file, "\" does not contain any experiment."))
@@ -729,3 +729,48 @@ show_experiment <- function(file){
   exp_info$type <- as.character(exp_info$type)
   return(exp_info)
 }
+
+
+
+
+# $<-.experiment ---------------------------------------------------------------
+
+#' Replace a column of an experiment
+#'
+#' Replaces a column of an experiment with new value(s).
+#'
+#' If the length of the vector used to replace the column is not the same as the
+#' original number of rows of the experiment, there is duplication of the
+#' shortest element.
+#'
+#' @param x An object of class \code{experiment}.
+#' @param i A column index.
+#' @param value A vector used to replace the values of the indexed column.
+#'
+#' @return An object of class \code{experiment}.
+#'
+#' @examples
+#' # Here is an experiment with 1 simulation:
+#' sir1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
+#' sir1
+#' # Let's replace the value of the "p_S0" column by a vector of 3 values:
+#' sir2 <- sir1
+#' sir2$p_S0 <- 1:3
+#' # We can check that it automatically expands the number of simulations:
+#' sir2
+#' # If, on the contrary, we now replace the values of "p_S0" of "sir2" by a
+#' # single value:
+#' sir3 <- sir2
+#' sir3$p_S0 <- 2
+#' # We can check that it automatically reduces the number of simulations (if
+#' # the replacement leads to an experiment with exactly identical simulations):
+#' sir3
+#'
+#' @export
+`$<-.experiment` <- function(x, i, value) {
+  x_list <- as.list(x)
+  x_list[[i]] <- value
+  new_x <- do.call(function(...) data.frame(..., stringsAsFactors = FALSE), x_list)
+  unique(rbind(x[1, ], new_x)[-1, ])
+}
+
