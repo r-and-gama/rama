@@ -1,4 +1,3 @@
-^codecov\.yml$
 ^appveyor\.yml$
 ^\.travis\.yml$
 ^docs$
