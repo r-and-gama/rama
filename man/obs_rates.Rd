@@ -6,14 +6,14 @@
 \alias{obs_rates.experiment}
 \title{Extract monitoring rates}
 \usage{
-obs_rates(x)
+obs_rates(exp)
 
-\method{obs_rates}{default}(x)
+\method{obs_rates}{default}(exp)
 
-\method{obs_rates}{experiment}(x)
+\method{obs_rates}{experiment}(exp)
 }
 \arguments{
-\item{x}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 }
 \value{
 A data frame that is a subset of the inputed \code{experiment} object.

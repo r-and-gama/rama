@@ -6,14 +6,14 @@
 \alias{parameters.experiment}
 \title{Extract parameters values}
 \usage{
-parameters(x)
+parameters(exp)
 
-\method{parameters}{default}(x)
+\method{parameters}{default}(exp)
 
-\method{parameters}{experiment}(x)
+\method{parameters}{experiment}(exp)
 }
 \arguments{
-\item{x}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 }
 \value{
 A data frame that is a subset of the inputed \code{experiment} object.
