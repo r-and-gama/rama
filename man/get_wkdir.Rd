@@ -16,7 +16,8 @@ get_wkdir(exp)
 \item{exp}{An object of class \code{experiment}.}
 }
 \value{
-The path of the directory where the simulations outputs will be saved.
+The path of the directory where the simulations outputs will be
+saved.
 }
 \description{
 These functions allow to get and set the path to the directory where the

@@ -4,17 +4,17 @@
 \alias{create_output_dir}
 \title{Create output folder}
 \usage{
-create_output_dir(experiment_plan, dir = "")
+create_output_dir(exp, dir = "")
 }
 \arguments{
-\item{dir}{path to saved the output of gama}
-
 \item{exp}{an object of class `experiment`}
+
+\item{dir}{path to saved the output of gama}
 }
 \description{
 Creates output folder named by the `experiment` name. If multiple
-`experiment` are called with the same name, a numeric is append to the same
-to avoid confusion.
+`experiment` are called with the same name, a numeric is append to avoid
+confusion.
 }
 \examples{
 #load experiment

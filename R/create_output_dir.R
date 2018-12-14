@@ -2,8 +2,8 @@
 #' Create output folder
 #'
 #' Creates output folder named by the `experiment` name. If multiple
-#' `experiment` are called with the same name, a numeric is append to the same
-#' to avoid confusion.
+#' `experiment` are called with the same name, a numeric is append to avoid
+#' confusion.
 #'
 #' @param exp an object of class `experiment`
 #' @param dir path to saved the output of gama
