@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Experiment_plan>
- <Simulation id="1" seed="1" finalStep="1000" sourcePath="/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml" experiment="sir">
+ <Simulation id="1" seed="1" finalStep="1000" sourcePath="/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="900"/>
    <Parameter name="I0" type="FLOAT" value="100"/>
@@ -14,7 +14,7 @@
    <Output id="2" name="R" framerate="10"/>
   </Outputs>
  </Simulation>
- <Simulation id="2" seed="1" finalStep="1000" sourcePath="/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml" experiment="sir">
+ <Simulation id="2" seed="1" finalStep="1000" sourcePath="/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="800"/>
    <Parameter name="I0" type="FLOAT" value="200"/>
@@ -28,7 +28,7 @@
    <Output id="2" name="R" framerate="20"/>
   </Outputs>
  </Simulation>
- <Simulation id="3" seed="1" finalStep="1000" sourcePath="/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml" experiment="sir">
+ <Simulation id="3" seed="1" finalStep="1000" sourcePath="/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="500"/>
    <Parameter name="I0" type="FLOAT" value="500"/>

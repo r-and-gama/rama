@@ -145,19 +145,19 @@ obs_rates rates of the monitored variables.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>obs_rates</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>obs_rates</span>(<span class='no'>exp</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>obs_rates</span>(<span class='no'>x</span>)
+<span class='fu'>obs_rates</span>(<span class='no'>exp</span>)
 
 <span class='co'># S3 method for experiment</span>
-<span class='fu'>obs_rates</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>obs_rates</span>(<span class='no'>exp</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>exp</th>
       <td><p>An object of class <code>experiment</code>.</p></td>
     </tr>
     </table>
@@ -169,7 +169,7 @@ obs_rates rates of the monitored variables.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
-                                            <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>), <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Using current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_27".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>exp2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>exp1</span>, <span class='fl'>10</span>)
+                                            <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>), <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Using current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_11".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>exp2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>exp1</span>, <span class='fl'>10</span>)
 <span class='fu'>obs_rates</span>(<span class='no'>exp2</span>)</div><div class='output co'>#&gt;    r_S r_I r_R
 #&gt; 1    1   1   1
 #&gt; 2    1   1   1
