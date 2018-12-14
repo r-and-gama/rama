@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get and set the output directory — get_wkdir • rama</title>
+<title>Get the output directory — get_wkdir • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,7 +37,7 @@
 
 
 
-<meta property="og:title" content="Get and set the output directory — get_wkdir" />
+<meta property="og:title" content="Get the output directory — get_wkdir" />
 
 <meta property="og:description" content="These functions allow to get and set the path to the directory where the
 simulations outputs will be saved." />
@@ -133,8 +133,8 @@ simulations outputs will be saved." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get and set the output directory</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/new_functions.R'><code>R/new_functions.R</code></a></small>
+    <h1>Get the output directory</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/get_wkdir.R'><code>R/get_wkdir.R</code></a></small>
     <div class="hidden name"><code>get_wkdir.Rd</code></div>
     </div>
 
@@ -145,19 +145,19 @@ simulations outputs will be saved.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_wkdir</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>get_wkdir</span>(<span class='no'>exp</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>get_wkdir</span>(<span class='no'>x</span>)
+<span class='fu'>get_wkdir</span>(<span class='no'>exp</span>)
 
 <span class='co'># S3 method for experiment</span>
-<span class='fu'>get_wkdir</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>get_wkdir</span>(<span class='no'>exp</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>exp</th>
       <td><p>An object of class <code>experiment</code>.</p></td>
     </tr>
     </table>
@@ -168,7 +168,8 @@ simulations outputs will be saved.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_6".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>get_wkdir</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_6"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
+                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_18".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>get_wkdir</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_18"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

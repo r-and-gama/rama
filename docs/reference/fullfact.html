@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Replace a column of an experiment — $&lt;-.experiment • rama</title>
+<title>Populate an experiment with values — fullfact • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="Replace a column of an experiment — $&lt;-.experiment" />
+<meta property="og:title" content="Populate an experiment with values — fullfact" />
 
-<meta property="og:description" content="Replaces a column of an experiment with new value(s)." />
+<meta property="og:description" content="Generates a full experimental design for an experiment." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,97 +132,107 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Replace a column of an experiment</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/base.R'><code>R/base.R</code></a></small>
-    <div class="hidden name"><code>cash-set-.experiment.Rd</code></div>
+    <h1>Populate an experiment with values</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/fullfact.R'><code>R/fullfact.R</code></a></small>
+    <div class="hidden name"><code>fullfact.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Replaces a column of an experiment with new value(s).</p>
+    <p>Generates a full experimental design for an experiment.</p>
     
     </div>
 
-    <pre class="usage"># S3 method for experiment
-$(exp, i) <- value</pre>
+    <pre class="usage"><span class='fu'>fullfact</span>(<span class='no'>xprmt</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>exp</th>
+      <th>xprmt</th>
       <td><p>An object of class <code>experiment</code>.</p></td>
     </tr>
     <tr>
-      <th>i</th>
-      <td><p>A column index.</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>A vector used to replace the values of the indexed column.</p></td>
+      <th>...</th>
+      <td><p>Vectors used to overwrite columns of <code>xprmt</code>. These arguments
+should be named and their names should match the names of
+<code>xprmt</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>experiment</code>.</p>
+    <p>An object of class <code>experiment</code> with a full factorial design of
+the inputed <code>experiment</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If the length of the vector used to replace the column is not the same as the
-original number of rows of the experiment, there is duplication of the
-shortest element.</p>
+    <p>This function is basically a wrapper around the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/expand.grid'>expand.grid</a></code> function applied to all the column of the
+inputed <code>experiment</code> object. Any of these columns can be replaced by
+user-defined vectors of values, see examples.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Here is an experiment with 1 simulation:</span>
-<span class='no'>sir1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>), <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_13".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>sir1</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
-#&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_13 
-#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
-#&gt; observed variables:  r_S, r_I, r_R 
-#&gt; Experiment overview:
-#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
-#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># Let's replace the value of the "p_S0" column by a vector of 3 values:</span>
+    <pre class="examples"><div class='input'><span class='no'>sir1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
+                         <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>), <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_17".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'>
+<span class='co'># 1. First type of use: tranforming an experiment into one with a full</span>
+<span class='co'># factorial design:</span>
 <span class='no'>sir2</span> <span class='kw'>&lt;-</span> <span class='no'>sir1</span>
 <span class='no'>sir2</span>$<span class='no'>p_S0</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>3</span>
-<span class='co'># We can check that it automatically expands the number of simulations:</span>
 <span class='no'>sir2</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
 #&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_13 
+#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_17 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
 #&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
 #&gt; 2    1    1    0    1.5    0.15   1   1   1 1000    1
 #&gt; 3    2    1    0    1.5    0.15   1   1   1 1000    1
-#&gt; 4    3    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># If, on the contrary, we now replace the values of "p_S0" of "sir2" by a</span>
-<span class='co'># single value:</span>
-<span class='no'>sir3</span> <span class='kw'>&lt;-</span> <span class='no'>sir2</span>
-<span class='no'>sir3</span>$<span class='no'>p_S0</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
-<span class='co'># We can check that it automatically reduces the number of simulations (if</span>
-<span class='co'># the replacement leads to an experiment with exactly identical simulations):</span>
-<span class='no'>sir3</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+#&gt; 4    3    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='no'>sir2</span>[<span class='fl'>1</span>, <span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='fl'>2</span>
+<span class='co'># "sir2" is not full factorial:</span>
+<span class='no'>sir2</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
 #&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_13 
+#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_17 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
 #&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
-#&gt; 1    2    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># If you wish to delete one column:</span>
-<span class='no'>sir3</span>$<span class='no'>r_R</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='no'>sir3</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 2 observed variables
+#&gt; 2    1    2    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3    2    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 4    3    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># this is:</span>
+<span class='fu'>fullfact</span>(<span class='no'>sir2</span>)</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
 #&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_13 
+#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_17 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
-#&gt; observed variables:  r_S, r_I 
+#&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
-#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I tmax seed
-#&gt; 1    2    1    0    1.5    0.15   1   1 1000    1</div><div class='input'>
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    1    2    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2    2    2    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3    3    2    0    1.5    0.15   1   1   1 1000    1
+#&gt; 4    1    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 5    2    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 6    3    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'>
+<span class='co'># 2. Second type of use: by providing vectors of values to overwrite elements</span>
+<span class='co'># of the "experiment" object and then expand it into full factorial design:</span>
+<span class='fu'>fullfact</span>(<span class='no'>sir2</span>, <span class='kw'>p_S0</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>p_I0</span> <span class='kw'>=</span> <span class='fl'>4</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:     sir 
+#&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_17 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    1    4    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2    2    4    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3    3    4    0    1.5    0.15   1   1   1 1000    1
+#&gt; 4    1    5    0    1.5    0.15   1   1   1 1000    1
+#&gt; 5    2    5    0    1.5    0.15   1   1   1 1000    1
+#&gt; 6    3    5    0    1.5    0.15   1   1   1 1000    1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

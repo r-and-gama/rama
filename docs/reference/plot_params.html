@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List the experiments of a model and their types — show_experiment • rama</title>
+<title>Visualize values of parameters — plot_params • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="List the experiments of a model and their types — show_experiment" />
+<meta property="og:title" content="Visualize values of parameters — plot_params" />
 
-<meta property="og:description" content="List the experiments of a given model." />
+<meta property="og:description" content="Plot the parameters that have the greatest variance in the experiments of a model." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,40 +132,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List the experiments of a model and their types</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/show_experiment.R'><code>R/show_experiment.R</code></a></small>
-    <div class="hidden name"><code>show_experiment.Rd</code></div>
+    <h1>Visualize values of parameters</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/plot_params.R'><code>R/plot_params.R</code></a></small>
+    <div class="hidden name"><code>plot_params.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>List the experiments of a given model.</p>
+    <p>Plot the parameters that have the greatest variance in the experiments of a model.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>show_experiment</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_params</span>(<span class='no'>exp</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>path to a gaml model file.</p></td>
+      <th>exp</th>
+      <td><p>An object of class <code>experiment</code>.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns a vector of the variables with highest variances.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>From the list of all parameters of the experiments that do vary (i.e. not
+null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
-<span class='fu'>show_experiment</span>(<span class='no'>gaml_file</span>)</div><div class='output co'>#&gt;   experiment type
-#&gt; 1        sir  gui</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span>   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>900</span>, <span class='fl'>800</span>, <span class='fl'>500</span>), <span class='co'># this is a data frame of 3 lines</span>
+                  <span class='kw'>I0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>500</span>),
+                  <span class='kw'>R0</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+                  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>1.5</span>,
+                  <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>.15</span>,
+                  <span class='kw'>S</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>),
+                  <span class='kw'>I</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>),
+                  <span class='kw'>R</span> <span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>),
+                  <span class='kw'>nbiter</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+                  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"123456789"</span>)
+
+<span class='no'>exp0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='experiment.html'>experiment</a></span>(
+ <span class='no'>df</span>,
+ <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S0"</span>,<span class='st'>"I0"</span>,<span class='st'>"R0"</span>,<span class='st'>"beta"</span>,<span class='st'>"gamma"</span>),
+ <span class='kw'>obsrates</span>  <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>),
+ <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"nbiter"</span>,
+ <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"seed"</span>,
+ <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
+ <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
+ <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"testsir"</span>
+)</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/testsir_3".</div><div class='output co'>#&gt; </div><div class='input'>
+<span class='fu'>plot_params</span>(<span class='no'>exp0</span>)</div><div class='img'><img src='plot_params-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; p_S0 p_I0 
+#&gt;    1    2 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
