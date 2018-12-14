@@ -4,11 +4,11 @@
 \alias{run_experiment}
 \title{Run an experiment}
 \usage{
-run_experiment(experiment_plan, hpc = 1, output_dir = "",
+run_experiment(exp, hpc = 1, output_dir = "",
   parameter_xml_file = "")
 }
 \arguments{
-\item{experiment_plan}{an XML file containing the experiment}
+\item{exp}{an XML file containing the experiment}
 
 \item{hpc}{numeric}
 

@@ -4,12 +4,12 @@
 \alias{realexp}
 \title{Restore the correct values of an output}
 \usage{
-realexp(output, exp0)
+realexp(output, exp)
 }
 \arguments{
 \item{output}{An object of class \code{list}.}
 
-\item{exp0}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 }
 \value{
 Returns a list of dataframes, one for each experiment.
