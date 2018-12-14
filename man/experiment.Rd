@@ -4,7 +4,7 @@
 \alias{experiment}
 \alias{experiment.default}
 \alias{experiment.data.frame}
-\title{Create an object of class \code{experiment} from a dataframe.}
+\title{Create an object of class \code{experiment}}
 \usage{
 experiment(df, parameters = NULL, obsrates = NULL, tmax = NULL,
   seed = NULL, experiment = NULL, model = NULL, dir = "")
@@ -40,7 +40,7 @@ used as seed in the experiment.}
 If not specified, name of the model will be used}
 }
 \description{
-Create an object of class \code{experiment} from a dataframe.
+Create an object of class \code{experiment}
 }
 \examples{
 df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),

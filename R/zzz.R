@@ -77,9 +77,8 @@ init_gama_jar <- function(path) {
 }
 
 
-# Configure gama -----------------------------------------------------------------
-#' This function allows to config Gama path and Java heap size to run Gama as
-#' global options.
+# Configure gama ---------------------------------------------------------------
+#' Configure GAMA path and Java heap size
 #'
 #' @param path Path to Gama
 #' @param Xmx Maximum heap size

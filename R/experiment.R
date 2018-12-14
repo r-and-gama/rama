@@ -32,7 +32,7 @@ make_dictionary <- function(x) {
 }
 
 # experiment -------------------------------------------------------------------
-#' Create an object of class \code{experiment} from a dataframe.
+#' Create an object of class \code{experiment}
 #'
 #' @param df A data frame
 #' @param parameters Vector of column names or indexes in the \code{df} that will be
