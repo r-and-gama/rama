@@ -1,12 +1,11 @@
-
-#' Populate an experiment with values
+ #' Populate an experiment with values
 #'
 #' Generates a full experimental design for an experiment.
 #'
-#' This function is basically a wrapper around the \code{\link[base]{populate}}
-#' function applied to all the column of the inputed \code{experiment} object.
-#' Any of these columns can be replaced by user-defined vectors of values, see
-#' examples.
+#' This function is basically a wrapper around the
+#' \code{\link[base]{expand.grid}} function applied to all the column of the
+#' inputed \code{experiment} object. Any of these columns can be replaced by
+#' user-defined vectors of values, see examples.
 #'
 #' @param xprmt An object of class \code{experiment}.
 #' @param ... Vectors used to overwrite columns of \code{xprmt}. These arguments
