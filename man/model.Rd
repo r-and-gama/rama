@@ -6,14 +6,14 @@
 \alias{model.experiment}
 \title{Get the model of an experiment}
 \usage{
-model(x)
+model(exp)
 
-\method{model}{default}(x)
+\method{model}{default}(exp)
 
-\method{model}{experiment}(x)
+\method{model}{experiment}(exp)
 }
 \arguments{
-\item{x}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 }
 \value{
 The path to the \code{.gaml} file that contains the model definition.
@@ -24,7 +24,7 @@ contains the model of an \code{experiment} object.
 }
 \examples{
 exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-                        package = "rama"))
+                       package = "rama"))
 model(exp1)
 
 }

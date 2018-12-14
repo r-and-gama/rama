@@ -7,12 +7,12 @@
 #' name and parameters.
 #'
 #' @param outfile XML file to parse
-#' @param experiment_plan object of class `experiment` used to create the
+#' @param exp object of class `experiment` used to create the
 #' outfile
 #'
 #' @importFrom XML xmlToDataFrame
 #' @noRd
-retrieve_results <- function(outfile, experiment_plan) {
+retrieve_results <- function(outfile, exp) {
   # Extract a data frame
   tmp <- XML::xmlToDataFrame(XML::xmlParse(outfile), stringsAsFactors = F)
   # Extract names of the variable
@@ -30,7 +30,7 @@ retrieve_results <- function(outfile, experiment_plan) {
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
-  new_name <- as.vector(attr(experiment_plan, "dic_rev")[lst_name])
+  new_name <- as.vector(attr(exp, "dic_rev")[lst_name])
   names(tmp) <- new_name
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
@@ -48,7 +48,7 @@ retrieve_results <- function(outfile, experiment_plan) {
 #' simulation and also the simulation output of Gama in XML file stored in
 #' `output_dir` (created by \code{\link[rama]{create_output_dir}})
 #'
-#' @param experiment_plan an XML file containing the experiment
+#' @param exp an XML file containing the experiment
 #' @param hpc numeric
 #' @param output_dir path to saved the output of gama
 #' @param parameter_xml_file path to folder containing the xml file
@@ -60,34 +60,34 @@ retrieve_results <- function(outfile, experiment_plan) {
 #' # run experiment
 #' out <- run_experiment(exp1)
 #' @export
-run_experiment <- function(experiment_plan, hpc = 1, output_dir = "",
+run_experiment <- function(exp, hpc = 1, output_dir = "",
                            parameter_xml_file = "") {
 
-  if (!is.experiment(experiment_plan)) {
-    stop("The argument `experiment_plan` is not an `experiment` object.")
+  if (!is.experiment(exp)) {
+    stop("The argument `exp` is not an `experiment` object.")
   }
 
   # make output directory
   if (output_dir == "")
-    output_dir <- create_output_dir(experiment_plan, output_dir)
+    output_dir <- create_output_dir(exp, output_dir)
 
-  # generate xml file from experiment_plan
+  # generate xml file from exp
   if (parameter_xml_file == "")
-    parameter_xml_file <-  paste0(expname(experiment_plan), ".xml")
-  parameter_xml_file <- save_to_gama(experiment_plan,
+    parameter_xml_file <-  paste0(expname(exp), ".xml")
+  parameter_xml_file <- save_to_gama(exp,
                                      paste0(output_dir, "/",
                                             parameter_xml_file))
 
   # run all the experiments
-  outfiles <- call_gama(experiment_plan, hpc, output_dir, parameter_xml_file)
+  outfiles <- call_gama(exp, hpc, output_dir, parameter_xml_file)
 
   # get variables names
-  vars <- names(experiment_plan)[grep("r_", names(experiment_plan))]
+  vars <- names(exp)[grep("r_", names(exp))]
   vars <- substring(vars, 3)
-  vars <- as.vector(attr(experiment_plan, "dic")[vars])
+  vars <- as.vector(attr(exp, "dic")[vars])
 
   # retrieve all the variables of all the experiments:
-  out <- lapply(outfiles, retrieve_results, experiment_plan)
+  out <- lapply(outfiles, retrieve_results, exp)
 
   # deleting the "workspace" folder:
   unlink("workspace", T, T)

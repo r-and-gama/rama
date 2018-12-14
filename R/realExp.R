@@ -7,7 +7,7 @@
 #' the values incorrectly associated to the last value observed are reset to NA.
 #'
 #' @param output An object of class \code{list}.
-#' @param exp0 An object of class \code{experiment}.
+#' @param exp An object of class \code{experiment}.
 #'
 #' @return Returns a list of dataframes, one for each experiment.
 #'
@@ -42,12 +42,12 @@
 #'str(newoutput)
 #'
 #' @export
-realexp <- function(output, exp0){
+realexp <- function(output, exp){
 
   newoutput <- list()
-  for (j in 1:nrow(exp0)) {
+  for (j in 1:nrow(exp)) {
 
-    curexp <- exp0
+    curexp <- exp
     cursimulnum  <- j
     # In the current experiment object,
     # cursimul gives the line of the simulation
