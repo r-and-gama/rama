@@ -4,7 +4,7 @@
 #' From a XML file containing an experiment plan, send and run it in GAMA and
 #' returns one XML file by simulation containing the output.
 #'
-#' @param experiment_plan an XML file containing the experiment
+#' @param exp an XML file containing the experiment
 #' @param hpc numeric, number of cores
 #' @param output_dir path to saved the output of gama
 #' @param parameter_xml_file path to folder containing the xml file
@@ -23,11 +23,11 @@
 #'    paste0(output_dir, "/", parameter_xml_file))
 #'
 #' # Call gama
-#' outfiles <- call_gama(experiment_plan, hpc = 1, output_dir,
+#' outfiles <- call_gama(exp1, hpc = 1, output_dir,
 #'    parameter_xml_file)
 #'
 #' @export
-call_gama <- function(experiment_plan, hpc, output_dir, parameter_xml_file) {
+call_gama <- function(exp, hpc, output_dir, parameter_xml_file) {
   cat(paste0("Running experiment plan ..."))
 
   output_display <- ""
@@ -45,7 +45,7 @@ call_gama <- function(experiment_plan, hpc, output_dir, parameter_xml_file) {
 
   if (gama_command > 0)
       stop(paste0("Gama fails to run your experiment \"",
-                  expname(experiment_plan), "\"."))
+                  expname(exp), "\"."))
   return(dir(path = output_dir,
              pattern = "[simulation-outputs[:digit:]+]\\.xml",
              full.names = TRUE))
