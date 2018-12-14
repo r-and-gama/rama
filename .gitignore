@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 .DS_Store
-ignored/*
+building_package_and_website/making_logo_and_figures/*
 inst/doc
 vignettes/*_cache/*
 workspace

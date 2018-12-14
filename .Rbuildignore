@@ -5,7 +5,7 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README-.*\.png$
-^ignored/.*$
+^building_package_and_website/.*$
 tidyverse.R
 pkgdown
 ^data-raw$
