@@ -5,7 +5,7 @@
 #' `experiment` are called with the same name, a numeric is append to the same
 #' to avoid confusion.
 #'
-#' @param experiment_plan an XML file containing the experiment
+#' @param exp an XML file containing the experiment
 #' @param dir path to saved the output of gama
 #'
 #' @examples
@@ -17,10 +17,10 @@
 #' output_dir <- create_output_dir(exp1, "")
 #' parameter_xml_file <-  paste0(expname(exp1), ".xml")
 #' @export
-create_output_dir <- function(experiment_plan, dir = "") {
-  wkdir <- get_wkdir(experiment_plan)
+create_output_dir <- function(exp, dir = "") {
+  wkdir <- get_wkdir(exp)
   if (dir == ""){
-    dir <- gsub("\"", "", expname(experiment_plan)) # name of experiment
+    dir <- gsub("\"", "", expname(exp)) # name of experiment
   }
 
   i <- 0
