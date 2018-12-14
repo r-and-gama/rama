@@ -8,10 +8,8 @@
 #' argument is of chatacter type or not
 #'
 #' @examples
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' exp1 <- load_experiment("sir", gaml_file, "sir")
-#'
-#' is.experiment(exp1)
+#' is.experiment(exp)
+#' @rdname experiment
 #' @export
 is.experiment <- function(exp) {
 

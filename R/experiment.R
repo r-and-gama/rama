@@ -71,8 +71,6 @@ make_dictionary <- function(x) {
 #'                   model = system.file("examples", "sir.gaml", package = "rama"),
 #'                   dir = "my_sir_model")
 #'
-#'
-#'
 #' @export
 experiment <- function(df,
                        parameters = NULL,
