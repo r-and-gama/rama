@@ -41,7 +41,6 @@
 #'newoutput <- realexp(otp,exp0)
 #'str(newoutput)
 #'
-#' @export
 realexp <- function(output, exp){
 
   newoutput <- list()
