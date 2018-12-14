@@ -4,7 +4,7 @@
 #' These functions allow to get and set the path to the directory where the
 #' simulations outputs will be saved.
 #'
-#' @param x An object of class \code{experiment}.
+#' @param exp An object of class \code{experiment}.
 #'
 #' @return The path of the directory where the simulations outputs will be saved.
 #'
@@ -15,12 +15,12 @@
 #'
 #' @export
 #'
-get_wkdir <- function(x) UseMethod("get_wkdir")
+get_wkdir <- function(exp) UseMethod("get_wkdir")
 
 #' @rdname get_wkdir
 #' @export
-get_wkdir.default <- function(x) "Unknown class"
+get_wkdir.default <- function(exp) "Unknown class"
 
 #' @rdname get_wkdir
 #' @export
-get_wkdir.experiment <- function(x) attributes(x)$wkdir
+get_wkdir.experiment <- function(ex0) attributes(exp)$wkdir
