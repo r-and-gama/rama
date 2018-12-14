@@ -40,7 +40,7 @@
 #'str(otp)
 #'newoutput <- realexp(otp,exp0)
 #'str(newoutput)
-#'
+#'@noRd
 realexp <- function(output, exp){
 
   newoutput <- list()
