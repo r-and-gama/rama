@@ -134,7 +134,7 @@ experiment object." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Replicate an experiment</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/new_functions.R'><code>R/new_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/repl.R'><code>R/repl.R</code></a></small>
     <div class="hidden name"><code>repl.Rd</code></div>
     </div>
 
@@ -145,24 +145,25 @@ experiment object." />
     
     </div>
 
-    <pre class="usage"><span class='fu'>repl</span>(<span class='no'>x</span>, <span class='no'>n</span>)
+    <pre class="usage"><span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>repl</span>(<span class='no'>x</span>, <span class='no'>n</span>)
+<span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for experiment</span>
-<span class='fu'>repl</span>(<span class='no'>x</span>, <span class='no'>n</span>)</pre>
+<span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>exp</th>
       <td><p>An object of class <code>experiment</code>.</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>The number of times to repeat the experiment <code>x</code>.</p></td>
+      <th>times</th>
+      <td><p>Number of replicates or a named vector of rows to propagate in
+<code>exp</code>.</p></td>
     </tr>
     </table>
     
@@ -171,7 +172,43 @@ experiment object." />
     <p>An object of class <code>experiment</code> that is the replication of the
 inputed <code>x</code> argument.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>Parameters <code>times</code> and <code>exp</code> are exclusive.
+If both specified, <code>times</code> will be taken.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
+                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using current directory "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_24".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Experiment with 4 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:     sir 
+#&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_24 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 4  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='st'>"4"</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Row "4" requested is out of bound. Rows of NAs are returned</span></div><div class='output co'>#&gt; Experiment with 9 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:     sir 
+#&gt; input gaml file:     /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/jdz/Library/Mobile Documents/com~apple~CloudDocs/DOCS-CLEFS/Programmation/R/R-FONCTIONS/RAMA-GAMAR/rama/docs/reference/sir_24 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 4  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 5   NA   NA   NA     NA      NA  NA  NA  NA   NA   NA
+#&gt; 6   NA   NA   NA     NA      NA  NA  NA  NA   NA   NA
+#&gt; 7   NA   NA   NA     NA      NA  NA  NA  NA   NA   NA
+#&gt; 8   NA   NA   NA     NA      NA  NA  NA  NA   NA   NA
+#&gt; 9   NA   NA   NA     NA      NA  NA  NA  NA   NA   NA</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -179,7 +216,11 @@ inputed <code>x</code> argument.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
