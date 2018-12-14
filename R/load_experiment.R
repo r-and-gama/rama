@@ -30,16 +30,16 @@ get_attributes <- function(x) {
 }
 
 # Check if a requested experiment is valid: name exists and type = gui----------
-check_experiment <- function(experiment, model){
+check_experiment <- function(exp, model){
   exp_info <- show_experiment(model)
   # check if experiment requested is declared in gaml
-  if (!experiment %in% exp_info$experiment)
-    stop(paste0("There is no experiment named \"", experiment, "\" in ",
+  if (!exp %in% exp_info$experiment)
+    stop(paste0("There is no experiment named \"", exp, "\" in ",
                 basename(model)))
   # check if experiment requested has valid type
-  type <- exp_info$type[exp_info$experiment == experiment]
+  type <- exp_info$type[exp_info$experiment == exp]
   if (type != "gui")
-    stop(paste0("Experiment \"", experiment, "\" of type \"", type,
+    stop(paste0("Experiment \"", exp, "\" of type \"", type,
                 "\" is not supported."))
   invisible(0)
 }
@@ -54,7 +54,7 @@ check_experiment <- function(experiment, model){
 #' directory of the \code{rama} package file hierarchy. These models can be
 #' accessed with the \code{system.file()} function as explained in the example.
 #'
-#' @param experiment The name of the experiment to load.
+#' @param exp The name of the experiment to load.
 #' @param model The name of the file from which to load the experiment.
 #' @param dir The name of the directory to save the output of the runs for each
 #' model. If not specified, name of the gaml file will be used
@@ -71,16 +71,16 @@ check_experiment <- function(experiment, model){
 #' @importFrom XML xmlToList xmlParse
 #'
 #' @export
-load_experiment <- function(experiment, model, dir = "") {
+load_experiment <- function(exp, model, dir = "") {
 
   # Check if experiment and type requested are valid
-  check_experiment(experiment, model)
+  check_experiment(exp, model)
 
   # Make working directory
   wk_dir <- make_wkdir(dir, model)
 
   # Loading experiment
-  message(cat("Loading experiment \"", experiment,
+  message(cat("Loading experiment \"", exp,
               "\" from file \"", basename(model), "\"...", sep = ""))
   tmp <- tempfile(fileext = ".xml")
   system(paste0("java -jar ", getOption("rama.startjar"),
@@ -88,7 +88,7 @@ load_experiment <- function(experiment, model, dir = "") {
                 " -Xmx", getOption("rama.Xmx"),
                 " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
                 " -application msi.gama.headless.id4 -xml ",
-                experiment, " '", model, "' ", tmp, " > /dev/null"),
+                exp, " '", model, "' ", tmp, " > /dev/null"),
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE)
 
@@ -123,7 +123,7 @@ load_experiment <- function(experiment, model, dir = "") {
   out_attr <- get_attributes(out)
   output <- as.data.frame(c(out_par, out_var, out_attr))
   output$gaml <- NULL
-  output$experiment <- NULL
+  output$exp <- NULL
   class(output) <- c("experiment", class(output))
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))

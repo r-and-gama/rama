@@ -23,4 +23,4 @@ get_wkdir.default <- function(exp) "Unknown class"
 
 #' @rdname get_wkdir
 #' @export
-get_wkdir.experiment <- function(ex0) attributes(exp)$wkdir
+get_wkdir.experiment <- function(exp) attributes(exp)$wkdir

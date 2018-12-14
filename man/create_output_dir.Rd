@@ -7,9 +7,9 @@
 create_output_dir(experiment_plan, dir = "")
 }
 \arguments{
-\item{experiment_plan}{an XML file containing the experiment}
-
 \item{dir}{path to saved the output of gama}
+
+\item{exp}{an object of class `experiment`}
 }
 \description{
 Creates output folder named by the `experiment` name. If multiple

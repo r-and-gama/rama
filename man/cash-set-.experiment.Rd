@@ -4,10 +4,10 @@
 \alias{$<-.experiment}
 \title{Replace a column of an experiment}
 \usage{
-\method{$}{experiment}(x, i) <- value
+\method{$}{experiment}(exp, i) <- value
 }
 \arguments{
-\item{x}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 
 \item{i}{A column index.}
 

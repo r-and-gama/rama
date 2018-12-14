@@ -6,14 +6,14 @@
 \alias{get_wkdir.experiment}
 \title{Get the output directory}
 \usage{
-get_wkdir(x)
+get_wkdir(exp)
 
-\method{get_wkdir}{default}(x)
+\method{get_wkdir}{default}(exp)
 
-\method{get_wkdir}{experiment}(x)
+\method{get_wkdir}{experiment}(exp)
 }
 \arguments{
-\item{x}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 }
 \value{
 The path of the directory where the simulations outputs will be saved.

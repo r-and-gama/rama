@@ -4,10 +4,10 @@
 \alias{is.experiment}
 \title{Test if object is experiment}
 \usage{
-is.experiment(x)
+is.experiment(exp)
 }
 \arguments{
-\item{x}{object to be tested}
+\item{exp}{object to be tested}
 }
 \value{
 The function returns `TRUE` or `FALSE` depending on whether its

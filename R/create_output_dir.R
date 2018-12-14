@@ -5,7 +5,7 @@
 #' `experiment` are called with the same name, a numeric is append to the same
 #' to avoid confusion.
 #'
-#' @param exp an XML file containing the experiment
+#' @param exp an object of class `experiment`
 #' @param dir path to saved the output of gama
 #'
 #' @examples

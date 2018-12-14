@@ -4,10 +4,10 @@
 \alias{call_gama}
 \title{Run GAMA on a XML file}
 \usage{
-call_gama(experiment_plan, hpc, output_dir, parameter_xml_file)
+call_gama(exp, hpc, output_dir, parameter_xml_file)
 }
 \arguments{
-\item{experiment_plan}{an XML file containing the experiment}
+\item{exp}{an XML file containing the experiment}
 
 \item{hpc}{numeric, number of cores}
 
@@ -33,7 +33,7 @@ parameter_xml_file <- save_to_gama(exp1,
    paste0(output_dir, "/", parameter_xml_file))
 
 # Call gama
-outfiles <- call_gama(experiment_plan, hpc = 1, output_dir,
+outfiles <- call_gama(exp1, hpc = 1, output_dir,
    parameter_xml_file)
 
 }

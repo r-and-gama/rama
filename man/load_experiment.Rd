@@ -4,10 +4,10 @@
 \alias{load_experiment}
 \title{Load an experiment from a model}
 \usage{
-load_experiment(experiment, model, dir = "")
+load_experiment(exp, model, dir = "")
 }
 \arguments{
-\item{experiment}{The name of the experiment to load.}
+\item{exp}{The name of the experiment to load.}
 
 \item{model}{The name of the file from which to load the experiment.}
 

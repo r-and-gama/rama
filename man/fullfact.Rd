@@ -21,10 +21,10 @@ the inputed \code{experiment}.
 Generates a full experimental design for an experiment.
 }
 \details{
-This function is basically a wrapper around the \code{\link[base]{populate}}
-function applied to all the column of the inputed \code{experiment} object.
-Any of these columns can be replaced by user-defined vectors of values, see
-examples.
+This function is basically a wrapper around the
+\code{\link[base]{expand.grid}} function applied to all the column of the
+inputed \code{experiment} object. Any of these columns can be replaced by
+user-defined vectors of values, see examples.
 }
 \examples{
 sir1 <- load_experiment("sir", system.file("examples", "sir.gaml",
