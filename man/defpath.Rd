@@ -2,8 +2,7 @@
 % Please edit documentation in R/zzz.R
 \name{defpath}
 \alias{defpath}
-\title{This function allows to config Gama path and Java heap size to run Gama as
-global options.}
+\title{Configure GAMA path and Java heap size}
 \usage{
 defpath(path, Xmx = "2048m", Xms = "512m")
 }
@@ -15,8 +14,7 @@ defpath(path, Xmx = "2048m", Xms = "512m")
 \item{Xms}{Initial heap size}
 }
 \description{
-This function allows to config Gama path and Java heap size to run Gama as
-global options.
+Configure GAMA path and Java heap size
 }
 \examples{
 \dontrun{
