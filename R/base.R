@@ -146,7 +146,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #' original number of rows of the experiment, there is duplication of the
 #' shortest element.
 #'
-#' @param x An object of class \code{experiment}.
+#' @param exp An object of class \code{experiment}.
 #' @param i A column index.
 #' @param value A vector used to replace the values of the indexed column.
 #'
@@ -173,13 +173,13 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #' sir3
 #'
 #' @export
-`$<-.experiment` <- function(x, i, value) {
+`$<-.experiment` <- function(exp, i, value) {
   if (is.null(value)) NextMethod()
   else {
-    x_list <- as.list(x)
+    x_list <- as.list(exp)
     x_list[[i]] <- value
     new_x <- do.call(function(...)
       data.frame(..., stringsAsFactors = FALSE), x_list)
-    unique(rbind(x[1, ], new_x)[-1, ])
+    unique(rbind(exp[1, ], new_x)[-1, ])
   }
 }
