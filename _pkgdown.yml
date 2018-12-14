@@ -22,23 +22,41 @@ authors:
 reference:
   - title: Configuring the rama package
     contents:
+    - def_path
+    - is_gama_installed
     - setup_gama
+  - title: Constructor of experiment class
+    contents:
+    - experiment
+    - is.experiment
   - title: Reading GAML files
     contents:
-    - list_experiment
     - load_experiment
     - save_to_gama
     - show_experiment
   - title: Manipulating experiment objects
     contents:
-    - experiment
+    - cash-set-.experiment
+    - create_output_dir
     - expname
+    - fullfact
     - get_wkdir
     - model
-    - observation
+    - obs_rates
     - parameters
-    - plot_parms
+    - plot_params
     - repl
+  - title: Running experiments
+    contents:
+    - call_gama
+    - realexp
+    - run_experiment
+    - save_to_gama
+  - title: Built-in experiments
+    contents:
+    - sir1
+
+
 
 
 
