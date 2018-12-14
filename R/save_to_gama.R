@@ -3,7 +3,7 @@
 #'
 #' Save an object of class \code{experiment} to an XML file GAMA-compliant.
 #'
-#' @param plan An object of class \code{experiment}.
+#' @param exp An object of class \code{experiment}.
 #' @param file The path to the output XML file.
 #'
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
@@ -15,26 +15,26 @@
 #' save_to_gama(exp1)
 #'
 #' @export
-save_to_gama <- function(plan, file) UseMethod("save_to_gama")
+save_to_gama <- function(exp, file) UseMethod("save_to_gama")
 
 #' @rdname save_to_gama
 #' @export
-save_to_gama.experiment <- function(plan, file = "out.xml") {
+save_to_gama.experiment <- function(exp, file = "out.xml") {
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
   id_simulation <- 0
-  for (row_id in 1:nrow(plan)) {
+  for (row_id in 1:nrow(exp)) {
     attrib <- c(id         = row_id,
-                seed       = plan[row_id, ]$seed,
-                finalStep  = plan[row_id, ]$tmax,
-                sourcePath = model(plan),
-                experiment = expname(plan))
+                seed       = exp[row_id, ]$seed,
+                finalStep  = exp[row_id, ]$tmax,
+                sourcePath = model(exp),
+                experiment = expname(exp))
     xmlFile$addTag("Simulation", attrs = attrib, close = FALSE)
     xmlFile$addTag("Parameters", close = FALSE)
-    y <- parameters(plan[row_id, ])
+    y <- parameters(exp[row_id, ])
     for (col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_rev")[title])
+      title <- as.vector(attr(exp, "dic_rev")[title])
       val <- param[1, 1]
       m_type <- "STRING"
       if (is.numeric(val)) {
@@ -49,12 +49,12 @@ save_to_gama.experiment <- function(plan, file = "out.xml") {
     }
     xmlFile$closeTag()
     xmlFile$addTag("Outputs", close = FALSE)
-    y <- obs_rates(plan[row_id, ])
+    y <- obs_rates(exp[row_id, ])
     id_out <- 0
     for (col_id in 1:ncol(y)) {
       param <- y[, col_id, drop = FALSE]
       title <- substr(names(param), 3, nchar(names(param)))
-      title <- as.vector(attr(plan, "dic_rev")[title])
+      title <- as.vector(attr(exp, "dic_rev")[title])
       val <- param[1, 1]
       attribut <- c(id        = id_out,
                     name = title,

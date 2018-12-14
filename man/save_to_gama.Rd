@@ -5,12 +5,12 @@
 \alias{save_to_gama.experiment}
 \title{Save an experiment plan to a GAMA XML file}
 \usage{
-save_to_gama(plan, file)
+save_to_gama(exp, file)
 
-\method{save_to_gama}{experiment}(plan, file = "out.xml")
+\method{save_to_gama}{experiment}(exp, file = "out.xml")
 }
 \arguments{
-\item{plan}{An object of class \code{experiment}.}
+\item{exp}{An object of class \code{experiment}.}
 
 \item{file}{The path to the output XML file.}
 }
