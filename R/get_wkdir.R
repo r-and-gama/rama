@@ -6,7 +6,8 @@
 #'
 #' @param exp An object of class \code{experiment}.
 #'
-#' @return The path of the directory where the simulations outputs will be saved.
+#' @return The path of the directory where the simulations outputs will be
+#' saved.
 #'
 #' @examples
 #' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
