@@ -180,6 +180,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
     x_list[[i]] <- value
     new_x <- do.call(function(...)
       data.frame(..., stringsAsFactors = FALSE), x_list)
-    unique(rbind(exp[1, ], new_x)[-1, ])
+    new_x <- unique(rbind(exp[1, ], new_x)[-1, ])
+    row.names(new_x) <- NULL
+    return(new_x)
   }
 }
