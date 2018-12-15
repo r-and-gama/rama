@@ -171,17 +171,32 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #' # If you wish to delete one column:
 #' sir3$r_R <- NULL
 #' sir3
+#' # You can do the operation successively for 2 columns:
+#' sir4 <- sir1
+#' sir4
+#' sir4$p_S0 <- c(1, 10, 100)
+#' sir4
+#' sir4$p_beta <- c(1.3, 1.7)
+#' sir4
+#' # which is equivalent to
+#' fullfact(sir1, p_S0 = c(1, 10, 100), p_beta = c(1.3, 1.7))
 #'
 #' @export
 `$<-.experiment` <- function(exp, i, value) {
   if (is.null(value)) NextMethod()
   else {
-    x_list <- as.list(exp)
-    x_list[[i]] <- value
-    new_x <- do.call(function(...)
-      data.frame(..., stringsAsFactors = FALSE), x_list)
-    new_x <- unique(rbind(exp[1, ], new_x)[-1, ])
-    row.names(new_x) <- NULL
-    return(new_x)
+# Note: this code is very similar to the one of the fullfact function. Might be
+# worth trying to optimize this in the future.
+    to_expand <- as.data.frame(exp, stringsAsFactors = FALSE)
+    the_names <- names(to_expand)
+    to_expand <- c(to_expand[setdiff(the_names, i)], setNames(list(value), i))[the_names]
+    new_exp <- do.call(expand.grid, lapply(to_expand, unique))
+    # sort rows "from left to right"
+    new_exp[do.call(order, new_exp), ]
+    # add class and other attributes
+    new_exp <- rbind(exp[1, ], new_exp)[-1, ]
+    # regenerate row names
+    row.names(new_exp) <- NULL
+    new_exp
   }
 }

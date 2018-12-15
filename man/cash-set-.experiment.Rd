@@ -43,5 +43,14 @@ sir3
 # If you wish to delete one column:
 sir3$r_R <- NULL
 sir3
+# You can do the operation successively for 2 columns:
+sir4 <- sir1
+sir4
+sir4$p_S0 <- c(1, 10, 100)
+sir4
+sir4$p_beta <- c(1.3, 1.7)
+sir4
+# which is equivalent to
+fullfact(sir1, p_S0 = c(1, 10, 100), p_beta = c(1.3, 1.7))
 
 }
