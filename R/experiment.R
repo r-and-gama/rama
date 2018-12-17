@@ -1,19 +1,26 @@
-# Make working directory -------------------------------------------------------
-make_wkdir <- function(dir, model) {
 
-  message(cat("Using current directory \"", getwd(), "\"...", sep = ""))
+# Make working directory -------------------------------------------------------
+# Use full path dir if specified. If only name specified, use current directory.
+# If not specified, use default name.
+
+make_wkdir <- function(dir, model) {
 
   if (dir == "") {
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
-    message(cat("Using default directory name \"", dir, "\"...", sep = ""))
+    message(cat("Using default directory name \"", dir,
+                "\" in current directory \"", getwd(), "\".", sep = ""))
   }
 
-  i <- 0
-  repeat {
-    i <- i + 1
-    wk_dir <- paste0(getwd(), "/", dir, "_", i)
-    if (!file.exists(wk_dir)) break
+  if(!grepl("/", dir)) {
+    i <- 0
+    repeat {
+      i <- i + 1
+      wk_dir <- paste0(getwd(), "/", dir, "_", i)
+      if (!file.exists(wk_dir)) break
+    }
+  } else {
+    wk_dir <-  dir
   }
 
   dir.create(wk_dir)

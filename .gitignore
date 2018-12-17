@@ -8,3 +8,4 @@ inst/doc
 vignettes/*_cache/*
 workspace
 sir
+ignored/*
