@@ -3,7 +3,9 @@
 \name{experiment}
 \alias{experiment}
 \alias{experiment.default}
+\alias{experiment.character}
 \alias{experiment.data.frame}
+\alias{experiment.experiment}
 \alias{is.experiment}
 \title{Create an object of class \code{experiment}}
 \usage{
@@ -14,9 +16,15 @@ experiment(df, parameters = NULL, obsrates = NULL, tmax = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
   dir = "")
 
-\method{experiment}{data.frame}(df, parameters = NULL, obsrates = NULL,
+\method{experiment}{character}(df, parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
   dir = "")
+
+\method{experiment}{data.frame}(parameters = NULL, obsrates = NULL,
+  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
+  dir = "")
+
+\method{experiment}{experiment}(df, exp, dir = "")
 
 is.experiment(exp)
 }
