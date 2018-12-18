@@ -17,7 +17,7 @@ cache:
 environment:
   R_VERSION: release
   R_BUILD_ARGS: ----no-build-vignettes
-  R_CHECK_ARGS: --no-examples, --no-tests, --no-vignettes
+  R_CHECK_ARGS: --no-examples --no-tests --no-vignettes
 
 build_script:
   - travis-tool.sh install_deps
