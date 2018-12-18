@@ -23,7 +23,7 @@ null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
 df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
                   I0 = c(100, 200, 500),
                   R0 = 0,
-                  beta = 1.5,
+                  beta = c(1.4,1.5,1.6),
                   gamma = .15,
                   S = c(1,2,3),
                   I = c(2,4,6),

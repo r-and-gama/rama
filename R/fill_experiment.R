@@ -35,7 +35,7 @@
 #'
 #'exp0
 #'otp <- run_experiment(exp0)
-#'newoutput <- realexp(otp,exp0)
+#'newoutput <- fill_experiment(otp,exp0)
 #'
 #'
 #' @export
