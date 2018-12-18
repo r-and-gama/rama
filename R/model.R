@@ -26,6 +26,8 @@ model.default <- function(exp) "Unknown class"
 model.experiment <- function(exp) attributes(exp)$model
 
 # set_model---------------------------------------------------------------------
+#' Set the model of an experiment
+#'
 #' This function allows to change the model path of an experiment object
 #'
 #' @param exp Experiment in question
@@ -40,14 +42,13 @@ model.experiment <- function(exp) attributes(exp)$model
 #' model(exp1)
 #'
 #' @export
-
 `model<-` <- function(exp, value) UseMethod("model<-")
 
-#' @rdname model<-
+#' @rdname `model<-`
 #' @export
 `model<-.default` <- function(exp, value) "Unknown class"
 
-#' @rdname model<-
+#' @rdname `model<-`
 #' @export
 `model<-.experiment` <- function(exp, value){
   # check if experiment name and type are valid in the requested model

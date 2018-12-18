@@ -56,20 +56,22 @@ make_dictionary <- function(x) {
 #' If not specified, name of the model will be used
 #'
 #' @importFrom dplyr case_when
-#'
 #' @examples
+#' # Experiment constructor with a dataframe and indexes/names of columns
+#' # indicating parameters, observation rates, tmax and seed
+#'
 #' df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
 #'                 "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
 #'                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
 #'                 "a" = rep(1000, 5), "b" = rep(1, 5))
-#' exp <- experiment(df,
+#' exp1 <- experiment(df,
 #'                   parameters = c("S0", "I0", "R0", "beta", "gama"),
 #'                   obsrates = c("S", "I", "R"),
 #'                   tmax = "a",
 #'                   seed = "b",
 #'                   experiment = "sir",
 #'                   model = system.file("examples", "sir.gaml", package = "rama"))
-#' exp <- experiment(df,
+#' exp2 <- experiment(df,
 #'                   parameters = c(1:5),
 #'                   obsrates = c(6:8),
 #'                   tmax = 9,
@@ -78,6 +80,24 @@ make_dictionary <- function(x) {
 #'                   model = system.file("examples", "sir.gaml", package = "rama"),
 #'                   dir = "my_sir_model")
 #'
+#' # Experiment constructor that uses for data frames (of paramaters, observation
+#' # rates, tmax and seed) as input.
+#'
+#' df1 <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
+#'                  "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1))
+#' df2 <- data.frame("S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5))
+#' tmax <- rep(1000, 5)
+#' seed <- rep(1, 5)
+#' exp3 <- experiment(parameters = df1, obsrates = df2,
+#'                    tmax = tmax, seed = seed,
+#'                    experiment = "sir",
+#'                    model = system.file("examples", "sir.gaml", package = "rama"))
+#'
+#' # Experiment constructor that uses a data frame and an experiment as template
+#' # to create an experiment object.
+#'
+#' df4 <- data.frame(matrix(nrow=5, ncol=12))
+#' exp4 <- experiment(df4, exp1)
 #' @export
 experiment <- function(df,
                        parameters = NULL,
@@ -86,8 +106,7 @@ experiment <- function(df,
                        seed = NULL,
                        experiment = NULL,
                        model = NULL,
-                       dir = "") UseMethod("experiment", y )
-
+                      dir = "") UseMethod("experiment", parameters)
 
 #' @rdname experiment
 #' @export
@@ -199,7 +218,7 @@ experiment.experiment <- function(df, exp, dir = ""){
     stop(paste0("Number of columns in data frame is not valid
                 for the requested experiment."))
   names(df) <- c(attr(exp, "dic"), "tmax", "seed",
-                 names(df)[ncol(exp) + 1 : ncol(df)])
+                 names(df)[(ncol(exp) + 1) : ncol(df)])
   params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[,2])
   obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[,2])
   experiment(df,
