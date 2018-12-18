@@ -9,7 +9,7 @@ model(exp) <- value
 \arguments{
 \item{exp}{Experiment in question}
 
-\item{model}{Path of new gaml model file}
+\item{value}{Path of new gaml model file}
 }
 \description{
 This function allows to change the model path of an experiment object
@@ -19,7 +19,7 @@ exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
                         package = "rama"))
 model(exp1)
 model(exp1) <-  system.file("examples", "CopyOfsir.gaml",
-                        package = "rama"))
+                        package = "rama")
 model(exp1)
 
 }

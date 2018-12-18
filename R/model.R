@@ -31,14 +31,14 @@ model.experiment <- function(exp) attributes(exp)$model
 #' This function allows to change the model path of an experiment object
 #'
 #' @param exp Experiment in question
-#' @param model Path of new gaml model file
+#' @param value Path of new gaml model file
 #'
 #' @examples
 #' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
 #'                         package = "rama"))
 #' model(exp1)
 #' model(exp1) <-  system.file("examples", "CopyOfsir.gaml",
-#'                         package = "rama"))
+#'                         package = "rama")
 #' model(exp1)
 #'
 #' @export

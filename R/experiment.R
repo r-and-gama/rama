@@ -54,6 +54,7 @@ make_dictionary <- function(x) {
 #' @param model path to the model linked to the experiment
 #' @param dir Name of the output directory to be created in the current directory.
 #' If not specified, name of the model will be used
+#' @param ... Additional paramaters
 #'
 #' @importFrom dplyr case_when
 #' @examples
@@ -100,7 +101,7 @@ make_dictionary <- function(x) {
 #' exp4 <- experiment(df4, exp1)
 #' @export
 
-experiment <- function(x, parameters, ...) UseMethod("experiment", parameters)
+experiment <- function(df, parameters, ...) UseMethod("experiment", parameters)
 
 #' @rdname experiment
 #' @export
@@ -274,6 +275,8 @@ experiment.data.frame <- function(parameters = NULL,
 
 #' @rdname experiment
 #' @importFrom stringr str_match
+#' @importFrom stats na.omit
+#' @importFrom utils capture.output
 #' @export
 experiment.experiment <- function(df, exp, dir = ""){
   # check ncol(df) >= para + obsrates + tmax + seed

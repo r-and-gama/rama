@@ -10,7 +10,7 @@
 \alias{is.experiment}
 \title{Create an object of class \code{experiment}}
 \usage{
-experiment(x, y, ...)
+experiment(df, parameters, ...)
 
 \method{experiment}{default}(df, parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
@@ -37,6 +37,8 @@ is.experiment(exp)
 
 \item{parameters}{Vector of column names or indexes in the \code{df} that will be
 used as parameters in the experiment.}
+
+\item{...}{Additional paramaters}
 
 \item{obsrates}{Vector of column names or indexes in the \code{df} that will be
 used as obs_rates rats in the experiment.}
