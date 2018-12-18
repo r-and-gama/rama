@@ -3,7 +3,12 @@
 
 # `rama` <img src="man/figures/logo.png" align="right" width=200/>
 
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
+[![Travis build
+status](https://travis-ci.org/r-and-gama/rama.svg?branch=master)](https://travis-ci.org/r-and-gama/rama)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/r-and-gama/rama?branch=master&svg=true)](https://ci.appveyor.com/project/r-and-gama/rama)
 
 `rama` is an R interface to the [GAMA](https://gama-platform.github.io)
 **agent-based** simulation platform. It allows to
@@ -17,7 +22,7 @@ An **experiment** is a group of simulations. A **simulation** is an
 execution of a given **model**
 with
 
-[<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama1.html)
+<!-- [<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama.html) -->
 
   - a given set of **parameters values**,
   - a given set of **observed variables**,
@@ -56,13 +61,24 @@ practice is to develop the model in the
 of `rama` to the design and exploitation of experiments’ simulations as
 outlined above.
 
+<div style="text-align:center">
+
+<img src="man/figures/readme_workflow.png" align="middle" width=400/>
+
+</div>
+
 ## Structure of experiments in `rama`
 
 The package `rama` contains one unique class, `experiment` that contains
 all the information of an experiment in a GAML model. This class is a
-subclass of `data.frame` as outlined below:
+subclass of `data.frame` as outlined
+below:
 
-<img src="man/figures/rama1_1.png" align="right" width=900/>
+<div style="text-align:center">
+
+<img src="man/figures/readme_experiment_object.png" align="middle" width=900/>
+
+</div>
 
 Each row of an `experiment` object corresponds to a simulation of the
 experiment. The columns corresponds to four type of data:
