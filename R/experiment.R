@@ -86,7 +86,7 @@ experiment <- function(df,
                        seed = NULL,
                        experiment = NULL,
                        model = NULL,
-                       dir = "") UseMethod("experiment")
+                       dir = "") UseMethod("experiment", y )
 
 
 #' @rdname experiment
@@ -104,7 +104,7 @@ experiment.default <- function(df,
 # experiment constructor from a dataframe --------------------
 #' @rdname experiment
 #' @export
-experiment.data.frame <- function(df,
+experiment.character <- function(df,
                                   parameters = NULL,
                                   obsrates = NULL,
                                   tmax = NULL,
@@ -167,4 +167,47 @@ experiment.data.frame <- function(df,
                   "class" = c("experiment", "data.frame"))
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
+}
+
+#' @rdname experiment
+#' @export
+experiment.data.frame <- function(parameters = NULL,
+                            obsrates = NULL,
+                            tmax = NULL,
+                            seed = NULL,
+                            experiment = NULL,
+                            model = NULL,
+                            dir = "") {
+  df <- cbind(parameters, obsrates, tmax, seed)
+  exp <- experiment(df,
+                    names(parameters),
+                    names(obsrates),
+                    "tmax",
+                    "seed",
+                    experiment,
+                    model,
+                    dir)
+  return(exp)
+}
+
+#' @rdname experiment
+#' @importFrom stringr str_match
+#' @export
+experiment.experiment <- function(df, exp, dir = ""){
+  # check ncol(df) >= para + obsrates + tmax + seed
+  if(ncol(df) < ncol(exp))
+    stop(paste0("Number of columns in data frame is not valid
+                for the requested experiment."))
+  names(df) <- c(attr(exp, "dic"), "tmax", "seed",
+                 names(df)[ncol(exp) + 1 : ncol(df)])
+  params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[,2])
+  obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[,2])
+  experiment(df,
+             parameters = params,
+             obsrates = obs,
+             tmax = "tmax",
+             seed = "seed",
+             experiment = expname(exp),
+             model = model(exp),
+             dir = dir)
 }
