@@ -100,6 +100,6 @@ exp3 <- experiment(parameters = df1, obsrates = df2,
 # to create an experiment object.
 
 df4 <- data.frame(matrix(nrow=5, ncol=12))
-exp4 <- experiment(df, exp1)
+exp4 <- experiment(df4, exp1)
 is.experiment(exp)
 }
