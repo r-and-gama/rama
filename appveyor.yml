@@ -15,6 +15,7 @@ cache:
 
 # Adapt as necessary starting from here
 environment:
+  R_VERSION: release
   R_CHECK_ARGS: --no-examples, --no-tests, --no-vignettes
 
 build_script:
