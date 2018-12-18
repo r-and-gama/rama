@@ -96,7 +96,7 @@ make_dictionary <- function(x) {
 #' # Experiment constructor that uses a data frame and an experiment as template
 #' # to create an experiment object.
 #'
-#' df4 <- data.frame(matrix(nrow=5, ncol=12))
+#' df4 <- data.frame(matrix(1, nrow=5, ncol=12))
 #' exp4 <- experiment(df4, exp1)
 #' @export
 experiment <- function(df,
@@ -187,6 +187,75 @@ experiment.character <- function(df,
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
 }
+
+# experiment constructor from a dataframe --------------------
+#' @rdname experiment
+#' @export
+experiment.numeric <- function(df,
+                                 parameters = NULL,
+                                 obsrates = NULL,
+                                 tmax = NULL,
+                                 seed = NULL,
+                                 experiment = NULL,
+                                 model = NULL,
+                                 dir = "") {
+  if (is.null(parameters) || is.null(obsrates) ||
+      is.null(tmax) || is.null(seed) ||
+      is.null(experiment) || is.null(model))
+    stop(paste0("All parameters need to be set."))
+
+  if (length(tmax) > 1 || length(seed) > 1)
+    stop(paste0("tmax and seed take only one column"))
+
+  if (!file.exists(model))
+    stop(paste0("Model \"", model, "\" does not exist"))
+
+  if (sum(length(parameters) + length(obsrates) +
+          length(tmax) + length(seed)) > ncol(df))
+    stop(paste0("Column(s) selected is out of bound"))
+
+  # check if requested name is in df
+  if (is.character(parameters) && sum(parameters %in% names(df)) == 0)
+    stop(paste0("Requested column(s) for parameters not found."))
+  if (is.character(obsrates) && sum(obsrates %in% names(df)) == 0)
+    stop(paste0("Requested column(s) for obsrates not found."))
+  if (is.character(tmax) && !tmax %in% names(df))
+    stop(paste0("Requested column for tmax not found."))
+  if (is.character(seed) && !seed %in% names(df))
+    stop(paste0("Requested column(s) for seed not found."))
+  # check experiment and type
+  check_experiment(experiment, model)
+  # generate output dir
+  wk_dir <- make_wkdir(dir, model)
+  parameters_n <- dplyr::case_when(
+    is.character(parameters) ~ paste0("p_", parameters),
+    is.numeric(parameters) ~ paste0("p_", names(df)[parameters])
+  )
+  obsrates_n <- dplyr::case_when(
+    is.character(obsrates) ~ paste0("r_", obsrates),
+    is.numeric(obsrates) ~ paste0("r_", names(df)[obsrates])
+  )
+
+  if (is.character(tmax)) tmax_n <- tmax
+  if (is.numeric(tmax)) tmax_n <- names(df)[tmax]
+  if (is.character(seed)) seed_n <- seed
+  if (is.numeric(seed)) seed_n <- names(df)[seed]
+  if (is.numeric(parameters) & is.numeric(obsrates))
+    dic_n <- make_dictionary(c(names(df)[parameters], names(df)[obsrates]))
+  else
+    dic_n <- make_dictionary(c(parameters, obsrates))
+
+  df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
+                  "model" = model,
+                  "experiment" = experiment,
+                  "wkdir" = wk_dir,
+                  "dic" = dic_n,
+                  "dic_rev" = setNames(names(dic_n), dic_n),
+                  "class" = c("experiment", "data.frame"))
+  names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
+  return(df)
+}
+
 
 #' @rdname experiment
 #' @export
