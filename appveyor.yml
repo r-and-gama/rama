@@ -15,7 +15,7 @@ cache:
 
 # Adapt as necessary starting from here
 environment:
-  R_CHECK_ARGS: --no-examples, --no-tests
+  R_CHECK_ARGS: --no-examples, --no-tests, --no-vignettes
 
 build_script:
   - travis-tool.sh install_deps
