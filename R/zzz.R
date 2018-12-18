@@ -25,7 +25,16 @@ set_environment_variables <- function() {
 
 # Returns the OS ---------------------------------------------------------------
 
-get_os <- function() paste0(Sys.info()["sysname"])
+get_os <- function(){
+  os <- paste0(Sys.info()["sysname"])
+  if (is.null(os)){
+    if (grepl("^darwin", R.version$os))
+      os <- ""
+    if (grepl("linux-gnu", R.version$os))
+      os <- "Linux"
+  }
+  os
+}
 
 
 # Gives distrib as a function of the OS ----------------------------------------
@@ -38,7 +47,7 @@ gama_remote_distrib <- function() {
          "Windows" = paste0(options("rama.repo"),
                             options("rama.default.gama.win")),
          # to complete C:\Program Files\
-         "linux"   =  paste0(options("rama.repo"),
+         "Linux"   =  paste0(options("rama.repo"),
                              options("rama.default.gama.linux")))
          # to complete
 }
@@ -51,7 +60,7 @@ gama_local_distrib_path <- function() {
          "Darwin"  = options("rama.default.gama.osx.appdir"),
          "Windows" = options("rama.default.gama.win.appdir"),
          # to complete C:\Program Files\
-         "linux"  = options("rama.default.gama.linux.appdir"))
+         "Linux"  = options("rama.default.gama.linux.appdir"))
   # to complete
   unlist(path)
 }
