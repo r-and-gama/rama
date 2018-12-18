@@ -4,19 +4,23 @@
 \alias{experiment}
 \alias{experiment.default}
 \alias{experiment.character}
+\alias{experiment.numeric}
 \alias{experiment.data.frame}
 \alias{experiment.experiment}
 \alias{is.experiment}
 \title{Create an object of class \code{experiment}}
 \usage{
-experiment(df, parameters = NULL, obsrates = NULL, tmax = NULL,
-  seed = NULL, experiment = NULL, model = NULL, dir = "")
+experiment(x, y, ...)
 
 \method{experiment}{default}(df, parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
   dir = "")
 
 \method{experiment}{character}(df, parameters = NULL, obsrates = NULL,
+  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
+  dir = "")
+
+\method{experiment}{numeric}(df, parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
   dir = "")
 
@@ -99,7 +103,7 @@ exp3 <- experiment(parameters = df1, obsrates = df2,
 # Experiment constructor that uses a data frame and an experiment as template
 # to create an experiment object.
 
-df4 <- data.frame(matrix(nrow=5, ncol=12))
+df4 <- data.frame(matrix(1, nrow=5, ncol=12))
 exp4 <- experiment(df4, exp1)
 is.experiment(exp)
 }

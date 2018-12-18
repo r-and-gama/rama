@@ -99,14 +99,8 @@ make_dictionary <- function(x) {
 #' df4 <- data.frame(matrix(1, nrow=5, ncol=12))
 #' exp4 <- experiment(df4, exp1)
 #' @export
-experiment <- function(df,
-                       parameters = NULL,
-                       obsrates = NULL,
-                       tmax = NULL,
-                       seed = NULL,
-                       experiment = NULL,
-                       model = NULL,
-                      dir = "") UseMethod("experiment", parameters)
+
+experiment <- function(x, parameters, ...) UseMethod("experiment", parameters)
 
 #' @rdname experiment
 #' @export
