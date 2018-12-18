@@ -4,7 +4,6 @@
 .Ruserdata
 .DS_Store
 building_package_and_website/making_logo_and_figures/*
-inst/doc
 vignettes/*_cache/*
 workspace
 sir
