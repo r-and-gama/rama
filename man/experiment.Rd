@@ -6,39 +6,31 @@
 \alias{experiment.character}
 \alias{experiment.numeric}
 \alias{experiment.data.frame}
-\alias{experiment.experiment}
 \alias{is.experiment}
 \title{Create an object of class \code{experiment}}
 \usage{
-experiment(df, parameters, ...)
+experiment(parameters, obsrates, tmax, seed, experiment, model, ...)
 
-\method{experiment}{default}(df, parameters = NULL, obsrates = NULL,
-  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
-  dir = "")
+\method{experiment}{default}(parameters, obsrates, tmax, seed, experiment,
+  model, dir, ...)
 
-\method{experiment}{character}(df, parameters = NULL, obsrates = NULL,
+\method{experiment}{character}(parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
-  dir = "")
+  dir = "", df = NULL)
 
-\method{experiment}{numeric}(df, parameters = NULL, obsrates = NULL,
+\method{experiment}{numeric}(parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
-  dir = "")
+  dir = "", df = NULL)
 
 \method{experiment}{data.frame}(parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
   dir = "")
 
-\method{experiment}{experiment}(df, exp, dir = "")
-
 is.experiment(exp)
 }
 \arguments{
-\item{df}{A data frame}
-
 \item{parameters}{Vector of column names or indexes in the \code{df} that will be
 used as parameters in the experiment.}
-
-\item{...}{Additional paramaters}
 
 \item{obsrates}{Vector of column names or indexes in the \code{df} that will be
 used as obs_rates rats in the experiment.}
@@ -53,8 +45,14 @@ used as seed in the experiment.}
 
 \item{model}{path to the model linked to the experiment}
 
-\item{dir}{Name of the output directory to be created in the current directory.
-If not specified, name of the model will be used}
+\item{...}{Additional paramaters}
+
+\item{dir}{Either absolute path or name output of directory. In the latter
+case, current directory will be used. If \code{dir} is not
+specified, name of model will be used to create an output
+directory in the current directory.}
+
+\item{df}{A data frame used to initialize an experiment object.}
 
 \item{exp}{object to be tested}
 }
@@ -73,21 +71,21 @@ df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
                 "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
                 "a" = rep(1000, 5), "b" = rep(1, 5))
-exp1 <- experiment(df,
-                  parameters = c("S0", "I0", "R0", "beta", "gama"),
+exp1 <- experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),
                   obsrates = c("S", "I", "R"),
                   tmax = "a",
                   seed = "b",
                   experiment = "sir",
-                  model = system.file("examples", "sir.gaml", package = "rama"))
-exp2 <- experiment(df,
-                  parameters = c(1:5),
+                  model = system.file("examples", "sir.gaml", package = "rama"),
+                  df = df)
+exp2 <- experiment(parameters = c(1:5),
                   obsrates = c(6:8),
                   tmax = 9,
                   seed = 10,
                   experiment = "sir",
                   model = system.file("examples", "sir.gaml", package = "rama"),
-                  dir = "my_sir_model")
+                  dir = "my_sir_model",
+                  df = df)
 
 # Experiment constructor that uses for data frames (of paramaters, observation
 # rates, tmax and seed) as input.
@@ -97,15 +95,12 @@ df1 <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
 df2 <- data.frame("S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5))
 tmax <- rep(1000, 5)
 seed <- rep(1, 5)
-exp3 <- experiment(parameters = df1, obsrates = df2,
-                   tmax = tmax, seed = seed,
+exp3 <- experiment(parameters = df1,
+                   obsrates = df2,
+                   tmax = tmax,
+                   seed = seed,
                    experiment = "sir",
                    model = system.file("examples", "sir.gaml", package = "rama"))
 
-# Experiment constructor that uses a data frame and an experiment as template
-# to create an experiment object.
-
-df4 <- data.frame(matrix(1, nrow=5, ncol=12))
-exp4 <- experiment(df4, exp1)
 is.experiment(exp)
 }

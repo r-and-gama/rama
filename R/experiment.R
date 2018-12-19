@@ -41,19 +41,21 @@ make_dictionary <- function(x) {
 # experiment -------------------------------------------------------------------
 #' Create an object of class \code{experiment}
 #'
-#' @param df A data frame
 #' @param parameters Vector of column names or indexes in the \code{df} that will be
 #' used as parameters in the experiment.
 #' @param obsrates Vector of column names or indexes in the \code{df} that will be
 #' used as obs_rates rats in the experiment.
 #' @param tmax Name or index of the column in the \code{df} that will be
-#' used as final step in the experiment.
+#'             used as final step in the experiment.
 #' @param seed Name or index of the column in the \code{df} that will be
-#' used as seed in the experiment.
+#'             used as seed in the experiment.
 #' @param experiment name to the model linked to the experiment
 #' @param model path to the model linked to the experiment
-#' @param dir Name of the output directory to be created in the current directory.
-#' If not specified, name of the model will be used
+#' @param dir Either absolute path or name output of directory. In the latter
+#'            case, current directory will be used. If \code{dir} is not
+#'            specified, name of model will be used to create an output
+#'            directory in the current directory.
+#' @param df A data frame used to initialize an experiment object.
 #' @param ... Additional paramaters
 #'
 #' @importFrom dplyr case_when
@@ -65,21 +67,21 @@ make_dictionary <- function(x) {
 #'                 "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
 #'                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
 #'                 "a" = rep(1000, 5), "b" = rep(1, 5))
-#' exp1 <- experiment(df,
-#'                   parameters = c("S0", "I0", "R0", "beta", "gama"),
+#' exp1 <- experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),
 #'                   obsrates = c("S", "I", "R"),
 #'                   tmax = "a",
 #'                   seed = "b",
 #'                   experiment = "sir",
-#'                   model = system.file("examples", "sir.gaml", package = "rama"))
-#' exp2 <- experiment(df,
-#'                   parameters = c(1:5),
+#'                   model = system.file("examples", "sir.gaml", package = "rama"),
+#'                   df = df)
+#' exp2 <- experiment(parameters = c(1:5),
 #'                   obsrates = c(6:8),
 #'                   tmax = 9,
 #'                   seed = 10,
 #'                   experiment = "sir",
 #'                   model = system.file("examples", "sir.gaml", package = "rama"),
-#'                   dir = "my_sir_model")
+#'                   dir = "my_sir_model",
+#'                   df = df)
 #'
 #' # Experiment constructor that uses for data frames (of paramaters, observation
 #' # rates, tmax and seed) as input.
@@ -89,46 +91,41 @@ make_dictionary <- function(x) {
 #' df2 <- data.frame("S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5))
 #' tmax <- rep(1000, 5)
 #' seed <- rep(1, 5)
-#' exp3 <- experiment(parameters = df1, obsrates = df2,
-#'                    tmax = tmax, seed = seed,
+#' exp3 <- experiment(parameters = df1,
+#'                    obsrates = df2,
+#'                    tmax = tmax,
+#'                    seed = seed,
 #'                    experiment = "sir",
 #'                    model = system.file("examples", "sir.gaml", package = "rama"))
 #'
-#' # Experiment constructor that uses a data frame and an experiment as template
-#' # to create an experiment object.
-#'
-#' df4 <- data.frame(matrix(1, nrow=5, ncol=12))
-#' exp4 <- experiment(df4, exp1)
+
 #' @export
 
-experiment <- function(df, parameters, ...) UseMethod("experiment", parameters)
+experiment <- function(parameters, obsrates, tmax, seed,
+                       experiment, model, ...)
+                      UseMethod("experiment")
 
 #' @rdname experiment
 #' @export
-experiment.default <- function(df,
-                               parameters = NULL,
-                               obsrates = NULL,
-                               tmax = NULL,
-                               seed = NULL,
-                               experiment = NULL,
-                               model = NULL,
-                               dir = "") "Unknown class"
+experiment.default <- function(parameters, obsrates, tmax, seed,
+                               experiment, model, dir, ...)
+                      "Unknown class"
 
 
-# experiment constructor from a dataframe --------------------
+# experiment constructor from a dataframe and names of cols--------------------
 #' @rdname experiment
 #' @export
-experiment.character <- function(df,
-                                  parameters = NULL,
-                                  obsrates = NULL,
-                                  tmax = NULL,
-                                  seed = NULL,
-                                  experiment = NULL,
-                                  model = NULL,
-                                  dir = "") {
+experiment.character <- function(parameters = NULL,
+                                 obsrates = NULL,
+                                 tmax = NULL,
+                                 seed = NULL,
+                                 experiment = NULL,
+                                 model = NULL,
+                                 dir = "",
+                                 df = NULL) {
   if (is.null(parameters) || is.null(obsrates) ||
      is.null(tmax) || is.null(seed) ||
-     is.null(experiment) || is.null(model))
+     is.null(experiment) || is.null(model) || is.null(df))
     stop(paste0("All parameters need to be set."))
 
   if (length(tmax) > 1 || length(seed) > 1)
@@ -183,20 +180,20 @@ experiment.character <- function(df,
   return(df)
 }
 
-# experiment constructor from a dataframe --------------------
+# experiment constructor from a dataframe and indexes of cols-----------------
 #' @rdname experiment
 #' @export
-experiment.numeric <- function(df,
-                                 parameters = NULL,
-                                 obsrates = NULL,
-                                 tmax = NULL,
-                                 seed = NULL,
-                                 experiment = NULL,
-                                 model = NULL,
-                                 dir = "") {
+experiment.numeric <- function(parameters = NULL,
+                               obsrates = NULL,
+                               tmax = NULL,
+                               seed = NULL,
+                               experiment = NULL,
+                               model = NULL,
+                               dir = "",
+                               df = NULL) {
   if (is.null(parameters) || is.null(obsrates) ||
       is.null(tmax) || is.null(seed) ||
-      is.null(experiment) || is.null(model))
+      is.null(experiment) || is.null(model) || is.null(df))
     stop(paste0("All parameters need to be set."))
 
   if (length(tmax) > 1 || length(seed) > 1)
@@ -251,7 +248,7 @@ experiment.numeric <- function(df,
   return(df)
 }
 
-
+# experment constructor from a group of data frame -----------------------------
 #' @rdname experiment
 #' @export
 experiment.data.frame <- function(parameters = NULL,
@@ -262,23 +259,37 @@ experiment.data.frame <- function(parameters = NULL,
                             model = NULL,
                             dir = "") {
   df <- cbind(parameters, obsrates, tmax, seed)
-  exp <- experiment(df,
-                    names(parameters),
+  exp <- experiment(names(parameters),
                     names(obsrates),
                     "tmax",
                     "seed",
                     experiment,
                     model,
-                    dir)
+                    dir,
+                    df)
   return(exp)
 }
-
-#' @rdname experiment
+# experiment constructor from a data frame and an experiment as template--------
+#' Create an experiment object using another one as template
+#'
+#' @param df A data frame used to initialize an experiment object.
+#' @param exp An experiment object used as template.
+#' @param dir Either absolute path or name output of directory. In the latter
+#'            case, current directory will be used. If \code{dir} is not
+#'            specified, name of model will be used to create an output
+#'            directory in the current directory.
+#'
+#' @examples
+#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
+#' df <- data.frame(matrix(1, nrow=5, ncol=12))
+#' exp2 <- as_experiment(df, exp1)
+#'
 #' @importFrom stringr str_match
 #' @importFrom stats na.omit
 #' @importFrom utils capture.output
 #' @export
-experiment.experiment <- function(df, exp, dir = ""){
+
+as_experiment <- function(df, exp, dir = ""){
   # check ncol(df) >= para + obsrates + tmax + seed
   if(ncol(df) < ncol(exp))
     stop(paste0("Number of columns in data frame is not valid
@@ -287,12 +298,12 @@ experiment.experiment <- function(df, exp, dir = ""){
                  names(df)[(ncol(exp) + 1) : ncol(df)])
   params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[,2])
   obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[,2])
-  experiment(df,
-             parameters = params,
+  experiment(parameters = params,
              obsrates = obs,
              tmax = "tmax",
              seed = "seed",
              experiment = expname(exp),
              model = model(exp),
-             dir = dir)
+             dir = dir,
+             df)
 }
