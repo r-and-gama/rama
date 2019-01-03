@@ -130,5 +130,6 @@ load_experiment <- function(exp, model, dir = "") {
   attr(output, "wkdir") <- wk_dir
   attr(output, "dic") <- dic
   attr(output, "dic_rev") <- setNames(names(dic), dic)
-  return(output)
+
+  output
 }

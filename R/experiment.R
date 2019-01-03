@@ -12,7 +12,7 @@ make_wkdir <- function(dir, model) {
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
 
-  if(!grepl("/", dir)) {
+  if (!grepl("/", dir)) {
     i <- 0
     repeat {
       i <- i + 1
@@ -26,7 +26,8 @@ make_wkdir <- function(dir, model) {
   dir.create(wk_dir)
   message(cat("Simulations results will be saved in \"", wk_dir,
               "\".", sep = ""))
-  return(wk_dir)
+
+  wk_dir
 }
 
 # make_dictionary --------------------------------------------------------------
