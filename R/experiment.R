@@ -36,7 +36,7 @@ make_wkdir <- function(dir, model) {
 make_dictionary <- function(x) {
   dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
   dic <- gsub("_+", "_", dic)
-  dic <- setNames(dic, x)
+  setNames(dic, x)
 }
 
 # experiment -------------------------------------------------------------------
