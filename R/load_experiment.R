@@ -29,8 +29,8 @@ get_attributes <- function(x) {
   out
 }
 
-# Check if a requested experiment is valid: name exists and type = gui----------
-check_experiment <- function(exp, model){
+# Check if a requested experiment is valid: name exists and type = gui ---------
+check_experiment <- function(exp, model) {
   exp_info <- show_experiment(model)
   # check if experiment requested is declared in gaml
   if (!exp %in% exp_info$experiment)
