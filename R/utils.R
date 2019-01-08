@@ -8,6 +8,34 @@ isWindows <- function() {
   return (Sys.info()["sysname"] == "Windows")
 }
 
+# Returns the OS ---------------------------------------------------------------
+
+get_os <- function(){
+  os <- paste0(Sys.info()["sysname"])
+  if (is.null(os)){
+    if (grepl("^darwin", R.version$os))
+      os <- ""
+    if (grepl("linux-gnu", R.version$os))
+      os <- "Linux"
+  }
+  os
+}
+
+# Gives distrib as a function of the OS ----------------------------------------
+#' In function of remote distribution of the OS returns the path
+#' @noRd
+gama_remote_distrib <- function() {
+  switch(get_os(),
+         "Darwin"  = paste0(options("rama.repo"),
+                            options("rama.default.gama.osx")),
+         "Windows" = paste0(options("rama.repo"),
+                            options("rama.default.gama.win")),
+         # to complete C:\Program Files\
+         "Linux"   =  paste0(options("rama.repo"),
+                             options("rama.default.gama.linux")))
+  # to complete
+}
+
 # Downloads gama ---------------------------------------------------------------
 #' @importFrom utils download.file unzip untar
 #' @importFrom downloader download
