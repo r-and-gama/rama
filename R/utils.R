@@ -8,18 +8,6 @@ isWindows <- function() {
   return (Sys.info()["sysname"] == "Windows")
 }
 
-# Returns the OS ---------------------------------------------------------------
-get_os <- function() paste0(Sys.info()["sysname"])
-
-# Gives distrib as a function of the OS ----------------------------------------
-gama_remote_distrib <- function() {
-  switch(get_os(),
-         "Darwin" = paste0(options("rama.repo"),
-                           options("rama.default.gama.osx")),
-         "Window" = "truc",   # to complete
-         "linux"  = "bidule") # to complete
-}
-
 # Downloads gama ---------------------------------------------------------------
 #' @importFrom utils download.file unzip untar
 #' @importFrom downloader download
