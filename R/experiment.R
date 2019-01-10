@@ -20,7 +20,7 @@ make_wkdir <- function(dir, model) {
     wk_dir <-  dir
   }
 
-  dir.create(wk_dir)
+  dir.create(wk_dir, recursive = TRUE)
   message(cat("Simulations results will be saved in \"", wk_dir,
               "\".", sep = ""))
 
