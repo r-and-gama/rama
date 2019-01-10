@@ -77,8 +77,7 @@ setup_gama_ui <- function() {
     if (answer[1] == "Q" | answer[1] == "q" ) return(NA)
     defaultjar <- is_gama_installed(answer)
     if (defaultjar) break
-    else
-    {
+    else {
       warning("Gama is not found at the specified location")
       warning("Please give the correct location")
     }
@@ -112,7 +111,7 @@ setup_gama <- function(path = NA) {
   if (is_gama_installed()) {
     message("Gama is already installed, do you want to setup a new one ? ")
     answer <- toupper(readline("[Y]es/[N]"))
-    if(answer[1] == "N") return(NA)
+    if (answer[1] == "N") return(NA)
   }
 
   repeat {
@@ -127,7 +126,7 @@ setup_gama <- function(path = NA) {
   }
     if (answer[1] == "K") {
        gama_path <- setup_gama_ui()
-       if(is.na(gama_path)) return(NA)
+       if (is.na(gama_path)) return(NA)
        defpath(gama_path)
   }
 }

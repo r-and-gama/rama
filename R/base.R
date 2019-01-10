@@ -189,7 +189,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 # worth trying to optimize this in the future.
     to_expand <- as.data.frame(exp, stringsAsFactors = FALSE)
     the_names <- names(to_expand)
-    to_expand <- c(to_expand[setdiff(the_names, i)], setNames(list(value), i))[the_names]
+    to_expand <- c(
+      to_expand[setdiff(the_names, i)], setNames(list(value), i))[the_names]
     new_exp <- do.call(expand.grid, lapply(to_expand, unique))
     # sort rows "from left to right"
     new_exp[do.call(order, new_exp), ]

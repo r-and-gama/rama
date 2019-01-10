@@ -58,13 +58,14 @@ model.experiment <- function(exp) attributes(exp)$model
                                                   value,
                                                   dir = tempfile(c("abcd")))))
 
-  if(all(parameters(exp) == parameters(tmp)) &
+  if (all(parameters(exp) == parameters(tmp)) &
      all(obs_rates(exp) == obs_rates(tmp)) &
      any(names(exp) == "tmax") &
      any(names(exp) == "seed"))
     attr(exp, "model") <- value
   else
     stop(paste0("Either Parameters or observation rates or tmax or seed in \"",
-                exp, "\" doesn't match with the requested model \"", value, "\""))
+                exp, "\" doesn't match with the requested model \"",
+                value, "\""))
   return(exp)
 }

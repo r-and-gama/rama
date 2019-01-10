@@ -40,14 +40,15 @@ repl.experiment <- function(exp, times = NULL) {
   } else {
     # check if the row requested is out of bound
     requested_row <- as.numeric(names(times))
-    if(sum(requested_row > nrow(exp)) > 0)
+    if (sum(requested_row > nrow(exp)) > 0)
       warning(paste0("Row \"", names(times)[requested_row > nrow(exp)],
                      "\" requested is out of bound. Rows of NAs are returned"))
     out <- rbind(exp,
                  do.call(rbind, lapply(1:length(times), function(x){
-                   tmp <- exp[names(times)[x],]
+                   tmp <- exp[names(times)[x], ]
                    tmp <- do.call(rbind, lapply(1:times[x], function(y) tmp))
-                   return(tmp)}
+                   return(tmp)
+                  }
                  )))
     row.names(out) <- c(1:nrow(out))
     return(out)

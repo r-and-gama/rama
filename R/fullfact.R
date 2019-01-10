@@ -1,4 +1,4 @@
- #' Populate an experiment with values
+#' Populate an experiment with values
 #'
 #' Generates a full experimental design for an experiment.
 #'
@@ -53,4 +53,3 @@ fullfact <- function(xprmt, ...) {
   row.names(new_xprmt) <- NULL
   new_xprmt
 }
-

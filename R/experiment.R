@@ -1,8 +1,6 @@
-
 # Make working directory -------------------------------------------------------
 # Use full path dir if specified. If only name specified, use current directory.
 # If not specified, use default name.
-
 make_wkdir <- function(dir, model) {
 
   if (dir == "") {
@@ -281,13 +279,13 @@ experiment.data.frame <- function(parameters = NULL,
 #' @export
 experiment.experiment <- function(df, exp, dir = ""){
   # check ncol(df) >= para + obsrates + tmax + seed
-  if(ncol(df) < ncol(exp))
+  if (ncol(df) < ncol(exp))
     stop(paste0("Number of columns in data frame is not valid
                 for the requested experiment."))
   names(df) <- c(attr(exp, "dic"), "tmax", "seed",
                  names(df)[(ncol(exp) + 1) : ncol(df)])
-  params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[,2])
-  obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[,2])
+  params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[, 2])
+  obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[, 2])
   experiment(df,
              parameters = params,
              obsrates = obs,
