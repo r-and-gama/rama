@@ -177,7 +177,7 @@ experiment.character <- function(parameters = NULL,
                   "wkdir" = wk_dir,
                   "dic" = dic_n,
                   "dic_rev" = setNames(names(dic_n), dic_n),
-                  "class" = c("experiment", "tbl_df", "tbl", "data.frame"))
+                  "class" = c("experiment", "data.frame"))
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
 }
@@ -245,7 +245,7 @@ experiment.numeric <- function(parameters = NULL,
                   "wkdir" = wk_dir,
                   "dic" = dic_n,
                   "dic_rev" = setNames(names(dic_n), dic_n),
-                  "class" = c("experiment", "tbl_df", "tbl", "data.frame"))
+                  "class" = c("experiment", "data.frame"))
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
 }
