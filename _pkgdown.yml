@@ -40,9 +40,9 @@ reference:
     - create_output_dir
     - expname
     - fullfact
-    - get_wkdir
     - model
     - obs_rates
+    - output_dir
     - parameters
     - plot_params
     - repl

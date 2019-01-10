@@ -46,7 +46,7 @@
 <li>
   <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -58,7 +58,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -81,7 +81,7 @@
 <li>
   <a href="https://github.com/r-and-gama/rama">
     <span class="fa fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -92,19 +92,26 @@
 </div>
 <!--/.navbar -->
 
-      
+
       </header><div class="row">
   <div class="col-md-9 contents">
-    
+    <div class="page-header toc-ignore">
+      <h1></h1>
 
-    
-    
+
+
+      <div class="hidden name"><code></code></div>
+
+    </div>
+
+
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="rama" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#rama" class="anchor"></a><code>rama</code> <img src="reference/figures/logo.png" align="right" width="200/">
-</h1></div>
-
+<h1 class="hasAnchor">
+<a href="#rama" class="anchor"></a><code>rama</code> <img src="man/figures/logo.png" align="right" width="200/">
+</h1>
+<p><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=rama"><img src="http://www.r-pkg.org/badges/version/rama" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/r-and-gama/rama"><img src="https://travis-ci.org/r-and-gama/rama.svg?branch=master" alt="Travis build status"></a> <a href="https://ci.appveyor.com/project/r-and-gama/rama"><img src="https://ci.appveyor.com/api/projects/status/github/r-and-gama/rama?branch=master&amp;svg=true" alt="AppVeyor build status"></a></p>
 <p><code>rama</code> is an R interface to the <a href="https://gama-platform.github.io">GAMA</a> <strong>agent-based</strong> simulation platform. It allows to</p>
 <ul>
 <li>
@@ -133,7 +140,7 @@
 </ul>
 <p>In addition to above-mentionned data frame, an object of class <code>experiment</code> contains a link to a <code>.gaml</code> file containing the GAML model (<strong>input</strong>) and a link to a folder containing the <strong>outputs</strong> of simulations. It is possible to change these links but potentially dangerous and not advised. The <code>.gaml</code> file can be visualized in R but is not supposed to be modified by the user in R. Instead, a safe practice is to develop the model in the <a href="https://gama-platform.github.io">GAMA</a> software and to reserve the use of <code>rama</code> to the design and exploitation of experiments’ simulations as outlined above.</p>
 <div style="text-align:center">
-<p><img src="reference/figures/readme_workflow.png" align="middle" width="400/"></p>
+<p><img src="man/figures/readme_workflow.png" align="middle" width="400/"></p>
 </div>
 <div id="structure-of-experiments-in-rama" class="section level2">
 <h2 class="hasAnchor">
@@ -141,7 +148,7 @@
 </h2>
 <p>The package <code>rama</code> contains one unique class, <code>experiment</code> that contains all the information of an experiment in a GAML model. This class is a subclass of <code>data.frame</code> as outlined below:</p>
 <div style="text-align:center">
-<p><img src="reference/figures/readme_experiment_object.png" align="middle" width="900/"></p>
+<p><img src="man/figures/readme_experiment_object.png" align="middle" width="900/"></p>
 </div>
 <p>Each row of an <code>experiment</code> object corresponds to a simulation of the experiment. The columns corresponds to four type of data:</p>
 <ul>
@@ -171,11 +178,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/rama">https://​www.bioconductor.org/​packages/​rama</a>
+<li>Browse source code at <br><a href="https://github.com/r-and-gama/rama">https://github.com/r-and-gama/rama</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/r-and-gama/rama">https://​github.com/​r-and-gama/​rama</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/r-and-gama/rama/issues">https://​github.com/​r-and-gama/​rama/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/r-and-gama/rama/issues">https://github.com/r-and-gama/rama/issues</a>
 </li>
 </ul>
 </div>
@@ -208,16 +213,7 @@
 </ul>
 </div>
 
-      <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a></li>
-<li><a href="https://cran.r-project.org/package=rama"><img src="http://www.r-pkg.org/badges/version/rama" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://travis-ci.org/r-and-gama/rama"><img src="https://travis-ci.org/r-and-gama/rama.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/r-and-gama/rama"><img src="https://ci.appveyor.com/api/projects/status/github/r-and-gama/rama?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
-</ul>
-</div>
-</div>
+      </div>
 
 </div>
 
@@ -232,7 +228,7 @@
       </footer>
 </div>
 
-  
+
 
   </body>
 </html>

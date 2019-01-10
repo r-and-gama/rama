@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the name of an experiment — expname • rama</title>
+<title>Get the name of an experiment — name • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,7 +37,7 @@
 
 
 
-<meta property="og:title" content="Get the name of an experiment — expname" />
+<meta property="og:title" content="Get the name of an experiment — name" />
 
 <meta property="og:description" content="Retrieves the name of the experiment that an experiment object is
 linked to." />
@@ -134,8 +134,8 @@ linked to." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get the name of an experiment</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/expname.R'><code>R/expname.R</code></a></small>
-    <div class="hidden name"><code>expname.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/name.R'><code>R/name.R</code></a></small>
+    <div class="hidden name"><code>name.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -145,13 +145,13 @@ linked to.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>expname</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>name</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>expname</span>(<span class='no'>x</span>)
+<span class='fu'>name</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for experiment</span>
-<span class='fu'>expname</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>name</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,7 +169,7 @@ is linked to.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/mac/Desktop/rama/docs/reference/sir_24".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>expname</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "sir"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_10".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>name</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "sir"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

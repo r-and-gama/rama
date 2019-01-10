@@ -184,21 +184,19 @@
  <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
  <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"testsir"</span>
-)</div><div class='output co'>#&gt; Simulations results will be saved in "/Users/mac/Desktop/rama/docs/reference/testsir_4".</div><div class='output co'>#&gt; </div><div class='input'>
+)</div><div class='output co'>#&gt; Simulations results will be saved in "testsir".</div><div class='output co'>#&gt; </div><div class='input'>
 
 <span class='no'>exp0</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
 #&gt; input gaml file:     /Users/mac/Desktop/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/mac/Desktop/rama/docs/reference/testsir_4 
+#&gt; output directory:    testsir 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
 #&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax      seed
 #&gt; 1  900  100    0    1.5    0.15   1   2  10 1000 123456789
 #&gt; 2  800  200    0    1.5    0.15   2   4  20 1000 123456789
-#&gt; 3  500  500    0    1.5    0.15   3   6  30 1000 123456789</div><div class='input'><span class='no'>otp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='run_experiment.html'>run_experiment</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Running experiment plan ...</div><div class='output co'>#&gt; <span class='error'>Error in x[j]: invalid subscript type 'list'</span></div><div class='input'><span class='no'>newoutput</span> <span class='kw'>&lt;-</span> <span class='fu'>fill_experiment</span>(<span class='no'>otp</span>,<span class='no'>exp0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in fill_experiment(otp, exp0): object 'otp' not found</span></div><div class='input'>
-
-</div></pre>
+#&gt; 3  500  500    0    1.5    0.15   3   6  30 1000 123456789</div><div class='input'><span class='no'>otp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='run_experiment.html'>run_experiment</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Running experiment plan ...</div><div class='input'><span class='no'>newoutput</span> <span class='kw'>&lt;-</span> <span class='fu'>fill_experiment</span>(<span class='no'>otp</span>,<span class='no'>exp0</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

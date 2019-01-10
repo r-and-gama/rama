@@ -157,7 +157,7 @@ run_experiment <- function(exp, hpc = 1, output_dir = "",
 
   # generate xml file from exp
   if (parameter_xml_file == "")
-    parameter_xml_file <-  paste0(expname(exp), ".xml")
+    parameter_xml_file <-  paste0(name(exp), ".xml")
   parameter_xml_file <- save_to_gama(exp,
                                      paste0(output_dir, "/",
                                             parameter_xml_file))

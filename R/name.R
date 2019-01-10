@@ -1,4 +1,4 @@
-# expname ----------------------------------------------------------------------
+# name ----------------------------------------------------------------------
 #' Get the name of an experiment
 #'
 #' Retrieves the name of the experiment that an \code{experiment} object is
@@ -11,15 +11,15 @@
 #'
 #' @examples
 #' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
-#' expname(exp1)
+#' name(exp1)
 #'
 #' @export
-expname <- function(x) UseMethod("expname")
+name <- function(x) UseMethod("name")
 
-#' @rdname expname
+#' @rdname name
 #' @export
-expname.default <- function(x) "Unknown class"
+name.default <- function(x) "Unknown class"
 
-#' @rdname expname
+#' @rdname name
 #' @export
-expname.experiment <- function(x) attributes(x)$experiment
+name.experiment <- function(x) attributes(x)$experiment

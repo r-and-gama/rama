@@ -291,7 +291,7 @@ experiment.experiment <- function(df, exp, dir = ""){
              obsrates = obs,
              tmax = "tmax",
              seed = "seed",
-             experiment = expname(exp),
+             experiment = name(exp),
              model = model(exp),
              dir = dir)
 }

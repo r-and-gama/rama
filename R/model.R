@@ -52,9 +52,9 @@ model.experiment <- function(exp) attributes(exp)$model
 #' @export
 `model<-.experiment` <- function(exp, value){
   # check if experiment name and type are valid in the requested model
-  check_experiment(expname(exp), value)
+  check_experiment(name(exp), value)
   # check if model parameters and observed parameters correspond
-  invisible(capture.output(tmp <- load_experiment(expname(exp),
+  invisible(capture.output(tmp <- load_experiment(name(exp),
                                                   value,
                                                   dir = tempfile(c("abcd")))))
 

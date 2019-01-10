@@ -180,10 +180,10 @@ If both specified, <code>times</code> will be taken.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
-                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "/Users/mac/Desktop/rama/docs/reference/sir_8".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Experiment with 4 simulations of 5 parameters and 3 observed variables
+                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_14".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Experiment with 4 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
 #&gt; input gaml file:     /Users/mac/Desktop/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; output directory:    sir_14 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -194,7 +194,7 @@ If both specified, <code>times</code> will be taken.</p>
 #&gt; 4  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='st'>"4"</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Row "4" requested is out of bound. Rows of NAs are returned</span></div><div class='output co'>#&gt; Experiment with 9 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
 #&gt; input gaml file:     /Users/mac/Desktop/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; output directory:    sir_14 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:

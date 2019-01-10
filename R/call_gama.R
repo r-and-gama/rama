@@ -16,7 +16,7 @@
 #'
 #' #create path to folder in working direction
 #' output_dir <- create_output_dir(exp1, "")
-#' parameter_xml_file <-  paste0(expname(exp1), ".xml")
+#' parameter_xml_file <-  paste0(name(exp1), ".xml")
 #'
 #' # create the XML input file
 #' parameter_xml_file <- save_to_gama(exp1,
@@ -45,7 +45,7 @@ call_gama <- function(exp, hpc, output_dir, parameter_xml_file) {
 
   if (gama_command > 0)
       stop(paste0("Gama fails to run your experiment \"",
-                  expname(exp), "\"."))
+                  name(exp), "\"."))
   return(dir(path = output_dir,
              pattern = "[simulation-outputs[:digit:]+]\\.xml",
              full.names = TRUE))
