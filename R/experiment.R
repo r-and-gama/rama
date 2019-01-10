@@ -9,7 +9,9 @@ make_wkdir <- function(dir, model) {
     message(cat("Using default directory name \"", dir,
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
-
+  if(!grepl("/", dir))
+    dir <- paste0(getwd(), "/", dir)
+  
   if (dir.exists(dir)) {
     i <- 0
     repeat {
@@ -20,7 +22,7 @@ make_wkdir <- function(dir, model) {
   } else {
     wk_dir <-  dir
   }
-
+  
   dir.create(wk_dir)
   message(cat("Simulations results will be saved in \"", wk_dir,
               "\".", sep = ""))
@@ -298,8 +300,7 @@ map_experiment <- function(df, exp, dir = ""){
                  names(df)[(ncol(exp) + 1) : ncol(df)])
   params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[, 2])
   obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[, 2])
-  experiment(df,
-             parameters = params,
+  experiment(parameters = params,
              obsrates = obs,
              tmax = "tmax",
              seed = "seed",
