@@ -9,7 +9,7 @@ make_wkdir <- function(dir, model) {
     message(cat("Using default directory name \"", dir,
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
-    if (dir.exists(dir)) {
+     if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
@@ -100,13 +100,13 @@ make_dictionary <- function(x) {
 #' @export
 
 experiment <- function(parameters, obsrates, tmax, seed,
-                       experiment, model, dir, ...)
+                       experiment, model, dir, df)
                       UseMethod("experiment")
 
 #' @rdname experiment
 #' @export
 experiment.default <- function(parameters, obsrates, tmax, seed,
-                               experiment, model, dir, ...)
+                               experiment, model, dir, df)
                       "Unknown class"
 
 
