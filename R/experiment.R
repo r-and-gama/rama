@@ -38,7 +38,7 @@ make_dictionary <- function(x) {
   dic <- setNames(dic, x)
 }
 
-# experiment -------------------------------------------------------------------
+# experiment constructor -------------------------------------------------------
 #' Create an object of class \code{experiment}
 #'
 #' @param parameters Vector of column names or indexes in the \code{df} that will be
@@ -270,7 +270,8 @@ experiment.data.frame <- function(parameters = NULL,
   return(exp)
 }
 # experiment constructor from a data frame and an experiment as template--------
-#' Create an experiment object using another one as template
+#' Create an experiment object using a data frame and an experiment object
+#' as template
 #'
 #' @param df A data frame used to initialize an experiment object.
 #' @param exp An experiment object used as template.
@@ -282,14 +283,14 @@ experiment.data.frame <- function(parameters = NULL,
 #' @examples
 #' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
 #' df <- data.frame(matrix(1, nrow=5, ncol=12))
-#' exp2 <- as_experiment(df, exp1)
+#' exp2 <- map_experiment(df, exp1)
 #'
 #' @importFrom stringr str_match
 #' @importFrom stats na.omit
 #' @importFrom utils capture.output
 #' @export
 
-as_experiment <- function(df, exp, dir = ""){
+map_experiment <- function(df, exp, dir = ""){
   # check ncol(df) >= para + obsrates + tmax + seed
   if(ncol(df) < ncol(exp))
     stop(paste0("Number of columns in data frame is not valid
