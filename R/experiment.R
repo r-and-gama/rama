@@ -103,7 +103,11 @@ make_dictionary <- function(x) {
 #' @export
 
 experiment <- function(parameters, obsrates, tmax, seed,
+<<<<<<< HEAD
                        experiment, model, dir, df)
+=======
+                       experiment, model, dir, ...)
+>>>>>>> Fix experiment and documentation
                       UseMethod("experiment")
 
 #' @rdname experiment

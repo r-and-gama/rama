@@ -9,7 +9,11 @@
 \alias{is.experiment}
 \title{Create an object of class \code{experiment}}
 \usage{
+<<<<<<< HEAD
 experiment(parameters, obsrates, tmax, seed, experiment, model, dir, df)
+=======
+experiment(parameters, obsrates, tmax, seed, experiment, model, dir, ...)
+>>>>>>> Fix experiment and documentation
 
 \method{experiment}{default}(parameters, obsrates, tmax, seed, experiment,
   model, dir, df)
@@ -49,6 +53,8 @@ used as seed in the experiment.}
 case, current directory will be used. If \code{dir} is not
 specified, name of model will be used to create an output
 directory in the current directory.}
+
+\item{...}{Additional paramaters}
 
 \item{df}{A data frame used to initialize an experiment object.}
 
