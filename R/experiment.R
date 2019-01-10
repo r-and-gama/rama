@@ -9,7 +9,8 @@ make_wkdir <- function(dir, model) {
     message(cat("Using default directory name \"", dir,
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
-   if (dir.exists(dir)) {
+
+  if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
