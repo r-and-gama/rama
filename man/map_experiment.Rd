@@ -22,7 +22,8 @@ Create an experiment object using a data frame and an experiment object
 as template
 }
 \examples{
-exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
+exp1 <- load_experiment("sir",
+    system.file("examples", "sir.gaml", package = "rama"))
 df <- data.frame(matrix(1, nrow=5, ncol=12))
 exp2 <- map_experiment(df, exp1)
 

@@ -29,11 +29,11 @@ experiment(parameters, obsrates, tmax, seed, experiment, model, dir, df)
 is.experiment(exp)
 }
 \arguments{
-\item{parameters}{Vector of column names or indexes in the \code{df} that will be
-used as parameters in the experiment.}
+\item{parameters}{Vector of column names or indexes in the \code{df} that
+will be used as parameters in the experiment.}
 
-\item{obsrates}{Vector of column names or indexes in the \code{df} that will be
-used as obs_rates rats in the experiment.}
+\item{obsrates}{Vector of column names or indexes in the \code{df} that will
+be used as obs_rates rats in the experiment.}
 
 \item{tmax}{Name or index of the column in the \code{df} that will be
 used as final step in the experiment.}
@@ -76,19 +76,21 @@ exp1 <- experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),
                   tmax = "a",
                   seed = "b",
                   experiment = "sir",
-                  model = system.file("examples", "sir.gaml", package = "rama"),
+                  model =
+                    system.file("examples", "sir.gaml", package = "rama"),
                   df = df)
 exp2 <- experiment(parameters = c(1:5),
                   obsrates = c(6:8),
                   tmax = 9,
                   seed = 10,
                   experiment = "sir",
-                  model = system.file("examples", "sir.gaml", package = "rama"),
+                  model =
+                    system.file("examples", "sir.gaml", package = "rama"),
                   dir = "my_sir_model",
                   df = df)
 
-# Experiment constructor that uses for data frames (of paramaters, observation
-# rates, tmax and seed) as input.
+# Experiment constructor that uses for data frames (of paramaters,
+# observation rates, tmax and seed) as input.
 
 df1 <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
                  "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1))
@@ -100,7 +102,8 @@ exp3 <- experiment(parameters = df1,
                    tmax = tmax,
                    seed = seed,
                    experiment = "sir",
-                   model = system.file("examples", "sir.gaml", package = "rama"))
+                   model =
+                   system.file("examples", "sir.gaml", package = "rama"))
 
 is.experiment(exp)
 }
