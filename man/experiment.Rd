@@ -9,30 +9,7 @@
 \alias{is.experiment}
 \title{Create an object of class \code{experiment}}
 \usage{
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Fix experiment and documentation
-=======
->>>>>>> conflict resolved
 experiment(parameters, obsrates, tmax, seed, experiment, model, dir, df)
-=======
-experiment(parameters, obsrates, tmax, seed, experiment, model, dir, ...)
->>>>>>> Fix experiment and documentation
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-experiment(parameters, obsrates, tmax, seed, experiment, model, dir, df)
->>>>>>> consistency of generic/method of experiment
-=======
->>>>>>> Fix experiment and documentation
-=======
-=======
-experiment(parameters, obsrates, tmax, seed, experiment, model, dir, df)
->>>>>>> conflict resolved
->>>>>>> conflict resolved
 
 \method{experiment}{default}(parameters, obsrates, tmax, seed, experiment,
   model, dir, df)
@@ -78,8 +55,6 @@ directory in the current directory.}
 \item{...}{Additional paramaters}
 
 \item{exp}{object to be tested}
-
-\item{...}{Additional paramaters}
 }
 \value{
 The function returns `TRUE` or `FALSE` depending on whether its
