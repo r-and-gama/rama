@@ -21,7 +21,7 @@
 #'                   nbiter = 1000,
 #'                   seed = "123456789")
 #'
-#'exp0 <- experiment(
+#' exp0 <- experiment(
 #'  parameters = c("S0","I0","R0","beta","gamma"),
 #'  obsrates  = c("S", "I", "R"),
 #'  tmax = "nbiter",
@@ -30,12 +30,12 @@
 #'  model = system.file("examples", "sir.gaml", package = "rama"),
 #'  dir = "testsir",
 #'  df
-#')
+#' )
 #'
 #'
-#'exp0
-#'otp <- run_experiment(exp0)
-#'newoutput <- fill_experiment(otp,exp0)
+#' exp0
+#' otp <- run_experiment(exp0)
+#' newoutput <- fill_experiment(otp,exp0)
 #'
 #'
 #' @export

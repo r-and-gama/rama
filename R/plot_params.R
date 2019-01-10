@@ -15,7 +15,7 @@
 #' @return Returns a vector of the variables with highest variances.
 #'
 #' @examples
-#'df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
+#' df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
 #'                   I0 = c(100, 200, 500),
 #'                   R0 = 0,
 #'                   beta = c(1.4,1.5,1.6),
@@ -26,16 +26,16 @@
 #'                   nbiter = 1000,
 #'                   seed = "123456789")
 #'
-#'exp0 <- experiment(
-#'  df,
+#' exp0 <- experiment(
 #'  parameters = c("S0","I0","R0","beta","gamma"),
 #'  obsrates  = c("S", "I", "R"),
 #'  tmax = "nbiter",
 #'  seed = "seed",
 #'  experiment = "sir",
 #'  model = system.file("examples", "sir.gaml", package = "rama"),
-#'  dir = "testsir"
-#')
+#'  dir = "testsir",
+#'  df
+#' )
 #'
 #' plot_params(exp0)
 #'
