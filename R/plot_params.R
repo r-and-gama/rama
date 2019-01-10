@@ -45,17 +45,20 @@
 #'
 plot_params <- function(exp) {
   if (nrow(exp) == 0) return("There is no simulation in this experiment")
-  if (nrow(exp) == 1) return("There is only one simulation in this experiment so no ")
+  if (nrow(exp) == 1) return(
+    "There is only one simulation in this experiment so no ")
 
   allvar <- sapply(parameters(exp), var)
   allvar <- sort(allvar[ allvar != 0], decreasing = TRUE)
-  if (length(allvar) == 0) return(paste("There is only one set of parameters for these",nrow(exp),"experiments"))
+  if (length(allvar) == 0) return(paste(
+    "There is only one set of parameters for these", nrow(exp), "experiments"))
 
   worthidx <- sapply(X = names(allvar), function(x) which(colnames(exp) == x))
   topidx <- if (length(worthidx) != 0) {
     worthidx[1:min(3, length(worthidx))]
     } else {
-    0}
+      0
+    }
   n <- length(topidx)
 
   # check n the number of parameters to be plotted

@@ -26,7 +26,7 @@ exp1 <- load_experiment("sir", gaml_file, "sir")
 
 #create path to folder in working direction
 output_dir <- create_output_dir(exp1, "")
-parameter_xml_file <-  paste0(expname(exp1), ".xml")
+parameter_xml_file <-  paste0(name(exp1), ".xml")
 
 # create the XML input file
 parameter_xml_file <- save_to_gama(exp1,

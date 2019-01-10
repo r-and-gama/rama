@@ -15,12 +15,12 @@
 #'
 #' #create path to folder in working direction
 #' output_dir <- create_output_dir(exp1, "")
-#' parameter_xml_file <-  paste0(expname(exp1), ".xml")
+#' parameter_xml_file <-  paste0(name(exp1), ".xml")
 #' @export
 create_output_dir <- function(exp, dir = "") {
-  wkdir <- get_wkdir(exp)
+  wkdir <- output_dir(exp)
   if (dir == ""){
-    dir <- gsub("\"", "", expname(exp)) # name of experiment
+    dir <- gsub("\"", "", name(exp)) # name of experiment
   }
 
   i <- 0

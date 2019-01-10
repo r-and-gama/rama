@@ -29,8 +29,8 @@ get_attributes <- function(x) {
   out
 }
 
-# Check if a requested experiment is valid: name exists and type = gui----------
-check_experiment <- function(exp, model){
+# Check if a requested experiment is valid: name exists and type = gui ---------
+check_experiment <- function(exp, model) {
   exp_info <- show_experiment(model)
   # check if experiment requested is declared in gaml
   if (!exp %in% exp_info$experiment)
@@ -75,9 +75,6 @@ load_experiment <- function(exp, model, dir = "") {
 
   # Check if experiment and type requested are valid
   check_experiment(exp, model)
-
-  # Make working directory
-  wk_dir <- make_wkdir(dir, model)
 
   # Loading experiment
   message(cat("Loading experiment \"", exp,
@@ -127,8 +124,10 @@ load_experiment <- function(exp, model, dir = "") {
   class(output) <- c("experiment", class(output))
   attr(output, "model") <- as.character(unname(out_attr$gaml))
   attr(output, "experiment") <- as.character(unname(out_attr$experiment))
+  wk_dir <- make_wkdir(dir, model)
   attr(output, "wkdir") <- wk_dir
   attr(output, "dic") <- dic
   attr(output, "dic_rev") <- setNames(names(dic), dic)
-  return(output)
+
+  output
 }

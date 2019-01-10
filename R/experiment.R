@@ -1,8 +1,6 @@
-
 # Make working directory -------------------------------------------------------
 # Use full path dir if specified. If only name specified, use current directory.
 # If not specified, use default name.
-
 make_wkdir <- function(dir, model) {
 
   if (dir == "") {
@@ -12,11 +10,11 @@ make_wkdir <- function(dir, model) {
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
 
-  if(!grepl("/", dir)) {
+  if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
-      wk_dir <- paste0(getwd(), "/", dir, "_", i)
+      wk_dir <- paste0(dir, "_", i)
       if (!file.exists(wk_dir)) break
     }
   } else {
@@ -26,7 +24,8 @@ make_wkdir <- function(dir, model) {
   dir.create(wk_dir)
   message(cat("Simulations results will be saved in \"", wk_dir,
               "\".", sep = ""))
-  return(wk_dir)
+
+  wk_dir
 }
 
 # make_dictionary --------------------------------------------------------------
@@ -35,7 +34,7 @@ make_wkdir <- function(dir, model) {
 make_dictionary <- function(x) {
   dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
   dic <- gsub("_+", "_", dic)
-  dic <- setNames(dic, x)
+  setNames(dic, x)
 }
 
 # experiment constructor -------------------------------------------------------
@@ -292,18 +291,19 @@ experiment.data.frame <- function(parameters = NULL,
 
 map_experiment <- function(df, exp, dir = ""){
   # check ncol(df) >= para + obsrates + tmax + seed
-  if(ncol(df) < ncol(exp))
+  if (ncol(df) < ncol(exp))
     stop(paste0("Number of columns in data frame is not valid
                 for the requested experiment."))
   names(df) <- c(attr(exp, "dic"), "tmax", "seed",
                  names(df)[(ncol(exp) + 1) : ncol(df)])
-  params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[,2])
-  obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[,2])
-  experiment(parameters = params,
+  params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[, 2])
+  obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[, 2])
+  experiment(df,
+             parameters = params,
              obsrates = obs,
              tmax = "tmax",
              seed = "seed",
-             experiment = expname(exp),
+             experiment = name(exp),
              model = model(exp),
              dir = dir,
              df)

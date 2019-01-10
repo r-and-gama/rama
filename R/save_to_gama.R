@@ -27,7 +27,7 @@ save_to_gama.experiment <- function(exp, file = "out.xml") {
                 seed       = exp[row_id, ]$seed,
                 finalStep  = exp[row_id, ]$tmax,
                 sourcePath = model(exp),
-                experiment = expname(exp))
+                experiment = name(exp))
     xmlFile$addTag("Simulation", attrs = attrib, close = FALSE)
     xmlFile$addTag("Parameters", close = FALSE)
     y <- parameters(exp[row_id, ])
