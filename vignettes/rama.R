@@ -26,10 +26,10 @@ df <- data.frame("S0" = 999, "I0" = 1, "R0" = 0, "beta" = 1.5,
                  "a" = 1000, "b" = 1)
 
 ## ------------------------------------------------------------------------
-exp2 <- experiment(df, 
+exp2 <- experiment( 
            parameters = c("S0", "I0", "R0", "beta", "gama"),
            obsrates = c("S", "I", "R"), tmax = "a", seed = "b",
-           experiment = "sir", model = gaml_file)
+           experiment = "sir", model = gaml_file, df = df)
 
 ## ------------------------------------------------------------------------
 exp2
@@ -38,9 +38,9 @@ exp2
 df <- data.frame("S0" = c(999, 990), "I0" = c(1, 2), "R0" = 0, "beta" = 1.5,
                  "gama" = 5, "S" = 1, "I" = 1, "R" = 1,
                  "a" = 1000, "b" = 1)
-exp3 <- experiment(df, parameters = c(1:5),
+exp3 <- experiment(parameters = c(1:5),
            obsrates = c(6:8), tmax = "a", seed = "b",
-           experiment = "sir", model = gaml_file)
+           experiment = "sir", model = gaml_file, df = df)
 
 ## ------------------------------------------------------------------------
 exp3
@@ -57,9 +57,9 @@ df <- expand.grid(S0 = c(900, 950, 999),
                tmax = 1000,
                seed = 1)
 
-exp4 <- experiment(df, parameters = c(1:5),
+exp4 <- experiment(parameters = c(1:5),
            obsrates = c(6:8), tmax = "tmax", seed = "seed",
-           experiment = "sir", model = gaml_file)
+           experiment = "sir", model = gaml_file, df = df)
 
 ## ------------------------------------------------------------------------
 exp4
@@ -83,9 +83,9 @@ df$I0 <- 1000 - df$S0
 df
 
 ## ----eval = F, include = F-----------------------------------------------
-#  exp5 <- experiment(df, parameters = c("S0", "R0", "beta", "gamma"),
+#  exp5 <- experiment(parameters = c("S0", "R0", "beta", "gamma"),
 #             obsrates = c("S", "I"), tmax = "tmax", seed = "seed",
-#             experiment = "sir", model = gaml_file)
+#             experiment = "sir", model = gaml_file, df = df)
 
 ## ------------------------------------------------------------------------
 nrow(exp4)
