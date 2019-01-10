@@ -10,7 +10,7 @@
 #' @return Returns an experiment that contains its results.
 #'
 #' @examples
-#'df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
+#' df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
 #'                   I0 = c(100, 200, 500),
 #'                   R0 = 0,
 #'                   beta = 1.5,
