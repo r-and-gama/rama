@@ -24,7 +24,7 @@ experiment(parameters, obsrates, tmax, seed, experiment, model, dir, df)
 
 \method{experiment}{data.frame}(parameters = NULL, obsrates = NULL,
   tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
-  dir = "")
+  dir = "", ...)
 
 is.experiment(exp)
 }
@@ -52,9 +52,9 @@ directory in the current directory.}
 
 \item{df}{A data frame used to initialize an experiment object.}
 
-\item{exp}{object to be tested}
-
 \item{...}{Additional paramaters}
+
+\item{exp}{object to be tested}
 }
 \value{
 The function returns `TRUE` or `FALSE` depending on whether its

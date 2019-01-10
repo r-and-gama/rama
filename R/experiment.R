@@ -39,10 +39,10 @@ make_dictionary <- function(x) {
 # experiment constructor -------------------------------------------------------
 #' Create an object of class \code{experiment}
 #'
-#' @param parameters Vector of column names or indexes in the \code{df} that will be
-#' used as parameters in the experiment.
-#' @param obsrates Vector of column names or indexes in the \code{df} that will be
-#' used as obs_rates rats in the experiment.
+#' @param parameters Vector of column names or indexes in the \code{df} that
+#' will be used as parameters in the experiment.
+#' @param obsrates Vector of column names or indexes in the \code{df} that will
+#' be used as obs_rates rats in the experiment.
 #' @param tmax Name or index of the column in the \code{df} that will be
 #'             used as final step in the experiment.
 #' @param seed Name or index of the column in the \code{df} that will be
@@ -70,19 +70,21 @@ make_dictionary <- function(x) {
 #'                   tmax = "a",
 #'                   seed = "b",
 #'                   experiment = "sir",
-#'                   model = system.file("examples", "sir.gaml", package = "rama"),
+#'                   model =
+#'                     system.file("examples", "sir.gaml", package = "rama"),
 #'                   df = df)
 #' exp2 <- experiment(parameters = c(1:5),
 #'                   obsrates = c(6:8),
 #'                   tmax = 9,
 #'                   seed = 10,
 #'                   experiment = "sir",
-#'                   model = system.file("examples", "sir.gaml", package = "rama"),
+#'                   model =
+#'                     system.file("examples", "sir.gaml", package = "rama"),
 #'                   dir = "my_sir_model",
 #'                   df = df)
 #'
-#' # Experiment constructor that uses for data frames (of paramaters, observation
-#' # rates, tmax and seed) as input.
+#' # Experiment constructor that uses for data frames (of paramaters,
+#' # observation rates, tmax and seed) as input.
 #'
 #' df1 <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
 #'                  "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1))
@@ -94,7 +96,8 @@ make_dictionary <- function(x) {
 #'                    tmax = tmax,
 #'                    seed = seed,
 #'                    experiment = "sir",
-#'                    model = system.file("examples", "sir.gaml", package = "rama"))
+#'                    model =
+#'                    system.file("examples", "sir.gaml", package = "rama"))
 #'
 
 #' @export
@@ -255,7 +258,8 @@ experiment.data.frame <- function(parameters = NULL,
                             seed = NULL,
                             experiment = NULL,
                             model = NULL,
-                            dir = "") {
+                            dir = "",
+                            ...) {
   df <- cbind(parameters, obsrates, tmax, seed)
   exp <- experiment(names(parameters),
                     names(obsrates),
@@ -279,7 +283,8 @@ experiment.data.frame <- function(parameters = NULL,
 #'            directory in the current directory.
 #'
 #' @examples
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
+#' exp1 <- load_experiment("sir",
+#'     system.file("examples", "sir.gaml", package = "rama"))
 #' df <- data.frame(matrix(1, nrow=5, ncol=12))
 #' exp2 <- map_experiment(df, exp1)
 #'
