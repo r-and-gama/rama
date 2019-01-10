@@ -9,10 +9,7 @@ make_wkdir <- function(dir, model) {
     message(cat("Using default directory name \"", dir,
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
-  if(!grepl("/", dir))
-    dir <- paste0(getwd(), "/", dir)
-  
-  if (dir.exists(dir)) {
+    if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
@@ -22,7 +19,7 @@ make_wkdir <- function(dir, model) {
   } else {
     wk_dir <-  dir
   }
-  
+
   dir.create(wk_dir)
   message(cat("Simulations results will be saved in \"", wk_dir,
               "\".", sep = ""))
@@ -176,7 +173,7 @@ experiment.character <- function(parameters = NULL,
                   "wkdir" = wk_dir,
                   "dic" = dic_n,
                   "dic_rev" = setNames(names(dic_n), dic_n),
-                  "class" = c("experiment", "data.frame"))
+                  "class" = c("experiment", "tbl_df", "tbl", "data.frame"))
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
 }
@@ -244,7 +241,7 @@ experiment.numeric <- function(parameters = NULL,
                   "wkdir" = wk_dir,
                   "dic" = dic_n,
                   "dic_rev" = setNames(names(dic_n), dic_n),
-                  "class" = c("experiment", "data.frame"))
+                  "class" = c("experiment", "tbl_df", "tbl", "data.frame"))
   names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
   return(df)
 }
