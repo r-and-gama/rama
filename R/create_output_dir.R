@@ -17,18 +17,21 @@
 #' output_dir <- create_output_dir(exp1, "")
 #' parameter_xml_file <-  paste0(name(exp1), ".xml")
 #' @export
-create_output_dir <- function(exp, dir = "") {
+create_output_dir <-  function(exp, dir = "") {
   wkdir <- output_dir(exp)
   if (dir == ""){
     dir <- gsub("\"", "", name(exp)) # name of experiment
   }
+  if (dir.exists(dir)) {
+    i <- 0
+    repeat {
+      i <- i + 1
+      out_dir <- paste0(wkdir, "/", dir, "_", i)
+      if (!file.exists(out_dir)) break
+    }
+  } else
+    out_dir <- dir
 
-  i <- 0
-  repeat {
-    i <- i + 1
-    out_dir <- paste0(wkdir, "/", dir, "_", i)
-    if (!file.exists(out_dir)) break
-  }
   dir.create(out_dir)
   out_dir
 }

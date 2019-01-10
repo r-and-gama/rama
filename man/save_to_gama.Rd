@@ -2,17 +2,14 @@
 % Please edit documentation in R/save_to_gama.R
 \name{save_to_gama}
 \alias{save_to_gama}
-\alias{save_to_gama.experiment}
 \title{Save an experiment plan to a GAMA XML file}
 \usage{
-save_to_gama(exp, file)
-
-\method{save_to_gama}{experiment}(exp, file = "out.xml")
+save_to_gama(exp, parameter_xml_file)
 }
 \arguments{
 \item{exp}{An object of class \code{experiment}.}
 
-\item{file}{The path to the output XML file.}
+\item{parameter_xml_file}{The path to the output XML file.}
 }
 \description{
 Save an object of class \code{experiment} to an XML file GAMA-compliant.

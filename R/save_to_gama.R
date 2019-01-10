@@ -4,9 +4,10 @@
 #' Save an object of class \code{experiment} to an XML file GAMA-compliant.
 #'
 #' @param exp An object of class \code{experiment}.
-#' @param file The path to the output XML file.
+#' @param parameter_xml_file The path to the output XML file.
 #'
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
+#' @importFrom purrr map
 #' @examples
 #' #load experiment
 #' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
@@ -14,14 +15,19 @@
 #'
 #' save_to_gama(exp1)
 #'
-#' @export
-save_to_gama <- function(exp, file) UseMethod("save_to_gama")
-
 #' @rdname save_to_gama
 #' @export
-save_to_gama.experiment <- function(exp, file = "out.xml") {
+
+save_to_gama <- function(exp, parameter_xml_file) UseMethod("save_to_gama")
+
+save_to_gama.default <- function(exp, parameter_xml_file)
+                        "Unknown class"
+
+save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
+
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
   id_simulation <- 0
+
   for (row_id in 1:nrow(exp)) {
     attrib <- c(id         = row_id,
                 seed       = exp[row_id, ]$seed,
@@ -66,6 +72,6 @@ save_to_gama.experiment <- function(exp, file = "out.xml") {
     xmlFile$closeTag()
   }
   xmlFile$closeTag()
-  saveXML(xmlFile$value(), file)
-  normalizePath(file)
+  saveXML(xmlFile$value(), parameter_xml_file)
+  normalizePath(parameter_xml_file)
 }
