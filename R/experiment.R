@@ -100,7 +100,7 @@ make_dictionary <- function(x) {
 #' @export
 
 experiment <- function(parameters, obsrates, tmax, seed,
-                       experiment, model, ...)
+                       experiment, model, dir, ...)
                       UseMethod("experiment")
 
 #' @rdname experiment
@@ -287,7 +287,6 @@ experiment.data.frame <- function(parameters = NULL,
 #' @importFrom stats na.omit
 #' @importFrom utils capture.output
 #' @export
-
 map_experiment <- function(df, exp, dir = ""){
   # check ncol(df) >= para + obsrates + tmax + seed
   if (ncol(df) < ncol(exp))
@@ -304,5 +303,5 @@ map_experiment <- function(df, exp, dir = ""){
              experiment = name(exp),
              model = model(exp),
              dir = dir,
-             df)
+             df = df)
 }

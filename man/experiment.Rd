@@ -9,7 +9,7 @@
 \alias{is.experiment}
 \title{Create an object of class \code{experiment}}
 \usage{
-experiment(parameters, obsrates, tmax, seed, experiment, model, ...)
+experiment(parameters, obsrates, tmax, seed, experiment, model, dir, ...)
 
 \method{experiment}{default}(parameters, obsrates, tmax, seed, experiment,
   model, dir, ...)
@@ -45,12 +45,12 @@ used as seed in the experiment.}
 
 \item{model}{path to the model linked to the experiment}
 
-\item{...}{Additional paramaters}
-
 \item{dir}{Either absolute path or name output of directory. In the latter
 case, current directory will be used. If \code{dir} is not
 specified, name of model will be used to create an output
 directory in the current directory.}
+
+\item{...}{Additional paramaters}
 
 \item{df}{A data frame used to initialize an experiment object.}
 
