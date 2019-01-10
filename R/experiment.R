@@ -9,14 +9,7 @@ make_wkdir <- function(dir, model) {
     message(cat("Using default directory name \"", dir,
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
-<<<<<<< HEAD
-     if (dir.exists(dir)) {
-=======
-  if(!grepl("/", dir))
-    dir <- paste0(getwd(), "/", dir)
-
-  if (dir.exists(dir)) {
->>>>>>> consistency of generic/method of experiment
+   if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
@@ -27,11 +20,7 @@ make_wkdir <- function(dir, model) {
     wk_dir <-  dir
   }
 
-<<<<<<< HEAD
   dir.create(wk_dir, recursive = TRUE)
-=======
-  dir.create(wk_dir)
->>>>>>> consistency of generic/method of experiment
   message(cat("Simulations results will be saved in \"", wk_dir,
               "\".", sep = ""))
 
@@ -114,15 +103,7 @@ make_dictionary <- function(x) {
 #' @export
 
 experiment <- function(parameters, obsrates, tmax, seed,
-<<<<<<< HEAD
-<<<<<<< HEAD
                        experiment, model, dir, df)
-=======
-                       experiment, model, dir, ...)
->>>>>>> Fix experiment and documentation
-=======
-                       experiment, model, dir, df)
->>>>>>> consistency of generic/method of experiment
                       UseMethod("experiment")
 
 #' @rdname experiment
