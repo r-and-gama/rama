@@ -20,9 +20,13 @@
 
 save_to_gama <- function(exp, parameter_xml_file) UseMethod("save_to_gama")
 
+#' @rdname save_to_gama
+#' @export
 save_to_gama.default <- function(exp, parameter_xml_file)
                         "Unknown class"
 
+#' @rdname save_to_gama
+#' @export
 save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
 
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
