@@ -1,4 +1,4 @@
-# get_wkdir --------------------------------------------------------------------
+# output_dir --------------------------------------------------------------------
 #' Get the output directory
 #'
 #' These functions allow to get and set the path to the directory where the
@@ -12,16 +12,16 @@
 #' @examples
 #' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
 #'                         package = "rama"))
-#' get_wkdir(exp1)
+#' output_dir(exp1)
 #'
 #' @export
 #'
-get_wkdir <- function(exp) UseMethod("get_wkdir")
+output_dir <- function(exp) UseMethod("output_dir")
 
-#' @rdname get_wkdir
+#' @rdname output_dir
 #' @export
-get_wkdir.default <- function(exp) "Unknown class"
+output_dir.default <- function(exp) "Unknown class"
 
-#' @rdname get_wkdir
+#' @rdname output_dir
 #' @export
-get_wkdir.experiment <- function(exp) attributes(exp)$wkdir
+output_dir.experiment <- function(exp) attributes(exp)$wkdir

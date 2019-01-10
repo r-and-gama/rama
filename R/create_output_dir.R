@@ -18,7 +18,7 @@
 #' parameter_xml_file <-  paste0(expname(exp1), ".xml")
 #' @export
 create_output_dir <- function(exp, dir = "") {
-  wkdir <- get_wkdir(exp)
+  wkdir <- output_dir(exp)
   if (dir == ""){
     dir <- gsub("\"", "", expname(exp)) # name of experiment
   }
