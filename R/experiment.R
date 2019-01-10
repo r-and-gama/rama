@@ -10,11 +10,11 @@ make_wkdir <- function(dir, model) {
                 "\" in current directory \"", getwd(), "\".", sep = ""))
   }
 
-  if (!grepl("/", dir)) {
+  if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
-      wk_dir <- paste0(getwd(), "/", dir, "_", i)
+      wk_dir <- paste0(dir, "_", i)
       if (!file.exists(wk_dir)) break
     }
   } else {
