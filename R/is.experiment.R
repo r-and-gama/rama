@@ -1,5 +1,4 @@
-#' Tests for objects of type \code{"experiment"}.
-#' Test if an experiment object is valid to pass on to gama.
+#' Tests if an object of type \code{"experiment"} is valid to pass on to gama.
 #'
 #' @param exp object to be tested
 #'
@@ -24,9 +23,9 @@
 is.experiment <- function(exp) {
 
   if (any(is.na(exp)))
-    stop("An object `experiment` can not contain NA value.")
+    stop("An object `experiment` cannot contain NA value.")
   if (any(is.null(exp)))
-    stop("An object `experiment` can not contain NULL value.")
+    stop("An object `experiment` cannot contain NULL value.")
 
   attr <- setdiff(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
                   names(attributes(exp)))
