@@ -4,36 +4,23 @@
 \alias{call_gama}
 \title{Run GAMA on a XML file}
 \usage{
-call_gama(exp, hpc, output_dir, parameter_xml_file)
+call_gama(parameter_xml_file, hpc, output_dir = "")
 }
 \arguments{
-\item{exp}{an XML file containing the experiment}
+\item{parameter_xml_file}{path to an XML file containing an experiment.}
 
 \item{hpc}{numeric, number of cores}
 
-\item{output_dir}{path to saved the output of gama}
-
-\item{parameter_xml_file}{path to folder containing the xml file}
+\item{output_dir}{path to saved the output of gama. If not specified, current
+working directory will be used. If `output_dir` doesn't
+exist, it will be created.}
 }
 \description{
 From a XML file containing an experiment plan, send and run it in GAMA and
 returns one XML file by simulation containing the output.
 }
 \examples{
-#load experiment
-gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-exp1 <- load_experiment("sir", gaml_file, "sir")
-
-#create path to folder in working direction
-output_dir <- create_output_dir(exp1, "")
-parameter_xml_file <-  paste0(name(exp1), ".xml")
-
-# create the XML input file
-parameter_xml_file <- save_to_gama(exp1,
-   paste0(output_dir, "/", parameter_xml_file))
-
-# Call gama
-outfiles <- call_gama(exp1, hpc = 1, output_dir,
-   parameter_xml_file)
+parameter_xml_file <- system.file("examples", "sir.xml", package = "rama")
+(outfiles <- call_gama(parameter_xml_file, hpc = 1, output_dir = tempdir()))
 
 }
