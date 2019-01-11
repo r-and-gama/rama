@@ -24,4 +24,11 @@ output_dir.default <- function(exp) "Unknown class"
 
 #' @rdname output_dir
 #' @export
-output_dir.experiment <- function(exp) attributes(exp)$wkdir
+output_dir.experiment <- function(exp){
+  dir <- attributes(exp)$wkdir
+  if(!dir.exists(dir)) {
+    stop(paste0("The directory '", dir, "' associated with the experiment '",
+                name(exp), "' doesn't exist"))
+  }
+  dir
+}

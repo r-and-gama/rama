@@ -9,7 +9,8 @@ create_output_dir(exp, dir = "")
 \arguments{
 \item{exp}{an object of class `experiment`}
 
-\item{dir}{path to saved the output of gama}
+\item{dir}{name of directory to save the output of gama in the experiment
+output directory. If not specified, experiment name will be used.}
 }
 \description{
 Creates output folder named by the `experiment` name. If multiple

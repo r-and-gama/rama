@@ -10,7 +10,7 @@
 #' @return Returns an experiment that contains its results.
 #'
 #' @examples
-#'df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
+#' df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
 #'                   I0 = c(100, 200, 500),
 #'                   R0 = 0,
 #'                   beta = 1.5,
@@ -21,21 +21,21 @@
 #'                   nbiter = 1000,
 #'                   seed = "123456789")
 #'
-#'exp0 <- experiment(
-#'  df,
+#' exp0 <- experiment(
 #'  parameters = c("S0","I0","R0","beta","gamma"),
 #'  obsrates  = c("S", "I", "R"),
 #'  tmax = "nbiter",
 #'  seed = "seed",
 #'  experiment = "sir",
 #'  model = system.file("examples", "sir.gaml", package = "rama"),
-#'  dir = "testsir"
-#')
+#'  dir = "testsir",
+#'  df
+#' )
 #'
 #'
-#'exp0
-#'otp <- run_experiment(exp0)
-#'newoutput <- fill_experiment(otp,exp0)
+#' exp0
+#' otp <- run_experiment(exp0)
+#' newoutput <- fill_experiment(otp,exp0)
 #'
 #'
 #' @export
