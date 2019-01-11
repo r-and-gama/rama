@@ -29,7 +29,8 @@ get_attributes <- function(x) {
   out
 }
 
-# Check if a requested experiment is valid: name exists and type = gui ---------
+# Check the consistency between gaml and experiment created in rama
+# Check if a requested experiment is valid: name `exp` exists and type = gui ---------
 check_experiment <- function(exp, model) {
   exp_info <- show_experiment(model)
   # check if experiment requested is declared in gaml
