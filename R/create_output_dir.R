@@ -34,5 +34,5 @@ create_output_dir <-  function(exp, dir = "") {
   }
 
   dir.create(out_dir, recursive = TRUE)
-  out_dir
+  normalizePath(out_dir)
 }
