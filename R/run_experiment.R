@@ -135,7 +135,9 @@ retrieve_results <- function(outfile, exp) {
 #' @param exp an XML file containing the experiment
 #' @param hpc numeric
 #' @param output_dir path to saved the output of gama
-#' @param parameter_xml_file path to folder containing the xml file
+#' @param parameter_xml_file name of xml parameter file. This file is created
+#'                           in the working dirctory of 'exp'. If not specified,
+#'                           name of 'exp' is used.
 #'
 #' #' @examples
 #' #load experiment
@@ -157,9 +159,7 @@ run_experiment <- function(exp, hpc = 1, output_dir = "",
   # generate xml file from exp
   if (parameter_xml_file == "")
     parameter_xml_file <-  paste0(name(exp), ".xml")
-    parameter_xml_file <- save_to_gama(exp,
-                                     paste0(output_dir, "/",
-                                            parameter_xml_file))
+    parameter_xml_file <- save_to_gama(exp, parameter_xml_file)
 
   # run all the experiments
   outfiles <- call_gama(exp, hpc, output_dir, parameter_xml_file)

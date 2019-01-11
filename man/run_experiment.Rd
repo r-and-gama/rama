@@ -14,7 +14,9 @@ run_experiment(exp, hpc = 1, output_dir = "",
 
 \item{output_dir}{path to saved the output of gama}
 
-\item{parameter_xml_file}{path to folder containing the xml file
+\item{parameter_xml_file}{name of xml parameter file. This file is created
+                          in the working dirctory of 'exp'. If not specified,
+                          name of 'exp' is used.
 
 #' @examples
 #load experiment

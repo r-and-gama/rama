@@ -4,7 +4,9 @@
 #' Save an object of class \code{experiment} to an XML file GAMA-compliant.
 #'
 #' @param exp An object of class \code{experiment}.
-#' @param parameter_xml_file The path to the output XML file.
+#' @param parameter_xml_file name of xml parameter file. This file is created
+#'                           in the working dirctory of 'exp'. If not specified,
+#'                           name of 'exp' is used.
 #'
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #' @importFrom purrr map2 pmap
@@ -113,7 +115,7 @@ save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
   #   xmlFile$closeTag()
   # }
   # xmlFile$closeTag()
-  saveXML(xmlFile$value(), parameter_xml_file)
+  saveXML(xmlFile$value(), paste0(output_dir(exp), "/", parameter_xml_file))
   normalizePath(parameter_xml_file)
 }
 
