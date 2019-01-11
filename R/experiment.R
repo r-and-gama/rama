@@ -25,7 +25,7 @@ make_wkdir <- function(dir, model) {
   message(cat("Simulations results will be saved in \"", wk_dir,
               "\".", sep = ""))
 
-  wk_dir
+  normalizePath(wk_dir)
 }
 
 # make_dictionary --------------------------------------------------------------
