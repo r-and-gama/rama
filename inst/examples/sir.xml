@@ -1,1 +1,73 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Experiment_plan><Simulation experiment="sir" finalStep="1000" id="0" seed="1" sourcePath="/Users/haihb/Documents/Work/rama/inst/examples/sir.gaml"><Parameters><Parameter name="S0" type="INT" value="999" var="S"/><Parameter name="I0" type="INT" value="1" var="I"/><Parameter name="R0" type="INT" value="0" var="R"/><Parameter name="beta" type="FLOAT" value="1.5" var="beta"/><Parameter name="gamma" type="FLOAT" value="0.15" var="gamma"/></Parameters><Outputs><Output framerate="1" id="0" name="S"/><Output framerate="1" id="1" name="I"/><Output framerate="1" id="2" name="R"/></Outputs></Simulation></Experiment_plan>
+<?xml version="1.0"?>
+<Experiment_plan>
+ <Simulation id="1" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+  <Parameters>
+   <Parameter name="S0" type="FLOAT" value="1"/>
+   <Parameter name="I0" type="FLOAT" value="1"/>
+   <Parameter name="R0" type="FLOAT" value="1"/>
+   <Parameter name="beta" type="FLOAT" value="1"/>
+   <Parameter name="gamma" type="FLOAT" value="1"/>
+  </Parameters>
+  <Outputs>
+   <Output id="0" name="S" framerate="1"/>
+   <Output id="1" name="I" framerate="1"/>
+   <Output id="2" name="R" framerate="1"/>
+  </Outputs>
+ </Simulation>
+ <Simulation id="2" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+  <Parameters>
+   <Parameter name="S0" type="FLOAT" value="1"/>
+   <Parameter name="I0" type="FLOAT" value="1"/>
+   <Parameter name="R0" type="FLOAT" value="1"/>
+   <Parameter name="beta" type="FLOAT" value="1"/>
+   <Parameter name="gamma" type="FLOAT" value="1"/>
+  </Parameters>
+  <Outputs>
+   <Output id="0" name="S" framerate="1"/>
+   <Output id="1" name="I" framerate="1"/>
+   <Output id="2" name="R" framerate="1"/>
+  </Outputs>
+ </Simulation>
+ <Simulation id="3" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+  <Parameters>
+   <Parameter name="S0" type="FLOAT" value="1"/>
+   <Parameter name="I0" type="FLOAT" value="1"/>
+   <Parameter name="R0" type="FLOAT" value="1"/>
+   <Parameter name="beta" type="FLOAT" value="1"/>
+   <Parameter name="gamma" type="FLOAT" value="1"/>
+  </Parameters>
+  <Outputs>
+   <Output id="0" name="S" framerate="1"/>
+   <Output id="1" name="I" framerate="1"/>
+   <Output id="2" name="R" framerate="1"/>
+  </Outputs>
+ </Simulation>
+ <Simulation id="4" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+  <Parameters>
+   <Parameter name="S0" type="FLOAT" value="1"/>
+   <Parameter name="I0" type="FLOAT" value="1"/>
+   <Parameter name="R0" type="FLOAT" value="1"/>
+   <Parameter name="beta" type="FLOAT" value="1"/>
+   <Parameter name="gamma" type="FLOAT" value="1"/>
+  </Parameters>
+  <Outputs>
+   <Output id="0" name="S" framerate="1"/>
+   <Output id="1" name="I" framerate="1"/>
+   <Output id="2" name="R" framerate="1"/>
+  </Outputs>
+ </Simulation>
+ <Simulation id="5" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+  <Parameters>
+   <Parameter name="S0" type="FLOAT" value="1"/>
+   <Parameter name="I0" type="FLOAT" value="1"/>
+   <Parameter name="R0" type="FLOAT" value="1"/>
+   <Parameter name="beta" type="FLOAT" value="1"/>
+   <Parameter name="gamma" type="FLOAT" value="1"/>
+  </Parameters>
+  <Outputs>
+   <Output id="0" name="S" framerate="1"/>
+   <Output id="1" name="I" framerate="1"/>
+   <Output id="2" name="R" framerate="1"/>
+  </Outputs>
+ </Simulation>
+</Experiment_plan>

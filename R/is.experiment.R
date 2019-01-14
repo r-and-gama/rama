@@ -1,6 +1,4 @@
-#' Test if object is experiment
-#'
-#' Tests for objects of type \code{"experiment"}.
+#' Tests if an object of type \code{"experiment"} is valid to pass on to gama.
 #'
 #' @param exp object to be tested
 #'
@@ -8,12 +6,27 @@
 #' argument is of chatacter type or not
 #'
 #' @examples
+#' df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
+#'                 "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
+#'                 "S" = rep(NA, 5), "I" = rep(1, 5), "R" = rep(1, 5),
+#'                 "a" = rep(1000, 5), "b" = rep(1, 5))
+#' exp <- experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),
+#'                   obsrates = c("S", "I", "R"),
+#'                   tmax = "a",
+#'                   seed = "b",
+#'                   experiment = "sir",
+#'                   model =
+#'                     system.file("examples", "sir.gaml", package = "rama"),
+#'                   df = df)
 #' is.experiment(exp)
-#' @rdname experiment
 #' @export
 is.experiment <- function(exp) {
 
-  if (any(is.na(exp))) stop("An object `experiment` can not contain NA value.")
+  if (any(is.na(exp)))
+    stop("An object `experiment` cannot contain NA value.")
+  if (any(is.null(exp)))
+    stop("An object `experiment` cannot contain NULL value.")
+
   attr <- setdiff(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
                   names(attributes(exp)))
   class <- setdiff(class(exp), c("data.frame", "experiment"))

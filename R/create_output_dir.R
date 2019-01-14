@@ -24,7 +24,7 @@ create_output_dir <-  function(exp, dir = "") {
     dir <- gsub("\"", "", name(exp)) # name of experiment
   }
   out_dir <- paste0(wkdir, "/", dir)
-  if (dir.exists(dir)) {
+  if (dir.exists(out_dir)) {
     i <- 0
     repeat {
       i <- i + 1
@@ -34,5 +34,5 @@ create_output_dir <-  function(exp, dir = "") {
   }
 
   dir.create(out_dir, recursive = TRUE)
-  out_dir
+  normalizePath(out_dir)
 }
