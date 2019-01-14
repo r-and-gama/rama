@@ -6,6 +6,8 @@
 #' argument is of chatacter type or not
 #'
 #' @examples
+#' # to test if an object is a class `experiment`
+#' \dontrun{
 #' df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
 #'                 "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
 #'                 "S" = rep(NA, 5), "I" = rep(1, 5), "R" = rep(1, 5),
@@ -18,7 +20,10 @@
 #'                   model =
 #'                     system.file("examples", "sir.gaml", package = "rama"),
 #'                   df = df)
+#' # expected an error because the input contains "NA"
 #' is.experiment(exp)
+#' }
+#' @rdname experiment
 #' @export
 is.experiment <- function(exp) {
 
