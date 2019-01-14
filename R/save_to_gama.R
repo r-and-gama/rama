@@ -66,7 +66,7 @@ save_to_gama.default <- function(exp, parameter_xml_file)
 #' @rdname save_to_gama
 #' @export
 save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
-
+  check_experiment(exp, model(exp))
   params <- parameters(exp)
   param_names <- attr(exp, "dic_rev")[gsub("p_", "", names(params))]
   params <- as.list(as.data.frame(t(params)))
