@@ -33,6 +33,7 @@ get_attributes <- function(x) {
 check_param_type <- function(exp, model) {
 # pending
 }
+
 # Check if a requested experiment is valid: name `exp` exists and type = gui ---
 check_experiment <- function(exp, model) {
   exp_info <- show_experiment(model)
