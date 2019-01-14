@@ -1,3 +1,38 @@
+# infer type of simulation values
+get_type <- function(val){
+  case_when(
+    is.character(val) ~ "STRING",
+    is.integer(val) ~ "INT",
+    is.double(val) ~ "FLOAT",
+    is.factor(val) ~ "STRING",
+    is.na(val) ~ "STRING",
+    is.null(val) ~ "STRING",
+    TRUE ~ "STRING"
+  )
+
+}
+
+# ------------------------------------------------------------------------------
+# generate xml tags for each parameter
+generate_param <- function(param, names){
+  purrr::map2(unlist(param), names, function(p, n){
+    c(name = n,
+      type = get_type(p),
+      value = p)
+  })
+}
+
+# ------------------------------------------------------------------------------
+# generate xml tags for each observation rate
+generate_obsrate <- function(obsrate, names){
+  purrr::pmap(list(unlist(obsrate), names, seq_along(unlist(obsrate))),
+              function(p, n, i){
+                c(id = i - 1,
+                  name = n,
+                  framerate = p)
+              })
+}
+
 # save_to_gama -----------------------------------------------------------------
 #' Save an experiment plan to a GAMA XML file
 #'
@@ -5,8 +40,8 @@
 #'
 #' @param exp An object of class \code{experiment}.
 #' @param parameter_xml_file name of XML parameter file. This file is created
-#'                           in the working dirctory of `exp`. If not specified,
-#'                           name of `exp`` is used.
+#'                           in the working directory of `exp`. If not
+#'                           specified, name of `exp`` is used.
 #'
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #' @importFrom purrr map2 pmap
@@ -75,36 +110,4 @@ save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
   parameter_xml_file <- paste0(output_dir(exp), "/", parameter_xml_file)
   saveXML(xmlFile$value(), file = parameter_xml_file)
   normalizePath(parameter_xml_file)
-}
-
-# infer type of simulation values
-get_type <- function(val){
-  case_when(
-    is.character(val) ~ "STRING",
-    is.integer(val) ~ "INT",
-    is.double(val) ~ "FLOAT",
-    is.factor(val) ~ "STRING",
-    is.na(val) ~ "STRING",
-    is.null(val) ~ "STRING",
-    TRUE ~ "STRING"
-  )
-
-}
-# generate xml tags for each parameter
-generate_param <- function(param, names){
-  purrr::map2(unlist(param), names, function(p, n){
-    c(name = n,
-      type = get_type(p),
-      value = p)
-  })
-}
-
-# generate xml tags for each observation rate
-generate_obsrate <- function(obsrate, names){
-  purrr::pmap(list(unlist(obsrate), names, seq_along(unlist(obsrate))),
-       function(p, n, i){
-    c(id = i - 1,
-      name = n,
-      framerate = p)
-  })
 }

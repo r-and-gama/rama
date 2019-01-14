@@ -16,8 +16,8 @@ save_to_gama(exp, parameter_xml_file)
 \item{exp}{An object of class \code{experiment}.}
 
 \item{parameter_xml_file}{name of XML parameter file. This file is created
-in the working dirctory of `exp`. If not specified,
-name of `exp`` is used.}
+in the working directory of `exp`. If not
+specified, name of `exp`` is used.}
 }
 \description{
 Save an object of class \code{experiment} to an XML file GAMA-compliant.

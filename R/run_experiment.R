@@ -136,10 +136,10 @@ retrieve_results <- function(outfile, exp) {
 #' @param hpc numeric
 #' @param output_dir path to saved the output of gama
 #' @param parameter_xml_file name of XML parameter file. This file is created
-#'                           in the working dirctory of `exp`. If not specified,
-#'                           name of `exp` is used.
+#'                           in the working directory of `exp`. If not
+#'                           specified, name of `exp` is used.
 #'
-#' #' @examples
+#' @examples
 #' #load experiment
 #' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
 #' exp1 <- load_experiment("sir", gaml_file, "sir")

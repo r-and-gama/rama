@@ -15,15 +15,8 @@ run_experiment(exp, hpc = 1, output_dir = "",
 \item{output_dir}{path to saved the output of gama}
 
 \item{parameter_xml_file}{name of XML parameter file. This file is created
-                          in the working dirctory of `exp`. If not specified,
-                          name of `exp` is used.
-
-#' @examples
-#load experiment
-gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-exp1 <- load_experiment("sir", gaml_file, "sir")
-# run experiment
-out <- run_experiment(exp1)}
+in the working directory of `exp`. If not
+specified, name of `exp` is used.}
 }
 \description{
 From a `experiment` object, run an experiment by creating an XML file of the
@@ -31,4 +24,11 @@ experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 (\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
 simulation and also the simulation output of Gama in XML file stored in
 `output_dir` (created by \code{\link[rama]{create_output_dir}})
+}
+\examples{
+#load experiment
+gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+exp1 <- load_experiment("sir", gaml_file, "sir")
+# run experiment
+out <- run_experiment(exp1)
 }

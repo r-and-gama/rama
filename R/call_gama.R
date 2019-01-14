@@ -16,10 +16,10 @@
 #'
 #' @export
 call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
-  if(output_dir == "")
+  if (output_dir == "")
     output_dir <- getwd()
 
-  if(!dir.exists(output_dir))
+  if (!dir.exists(output_dir))
     dir.create(output_dir, recursive = TRUE)
 
   cat(paste0("Running experiment plan ... \n"))
