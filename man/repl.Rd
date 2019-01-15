@@ -33,7 +33,9 @@ If both specified, \code{times} will be taken.
 \examples{
 exp <- load_experiment("sir", system.file("examples", "sir.gaml",
                         package = "rama"))
-repl(exp, times = 4)
-repl(exp, times = c("1" = 3, "4" = 5))
+exp1 <- repl(exp, times = 4)
+
+exp1$seed <- c(1:4)
+repl(exp1, times = c("1" = 3, "4" = 5))
 
 }
