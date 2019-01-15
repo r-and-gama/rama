@@ -1,3 +1,26 @@
+#' Clean output of run_gama
+#'
+#' Remove folder `snapchot`` and the file `console-outputs` if empty.
+#'
+#' @param output_dir path to the output of gama.
+#' @noRd
+clean_output <- function(output_dir) {
+
+  # remove empty folder snapshot
+  snap_path <- paste0(output_dir, "/snapshot")
+  if (file.exists(snap_path) & length(dir(snap_path)) == 0) {
+    file.remove(snap_path)
+  }
+
+  # remove empty file console_outputs
+  path_file <- grep("console-outputs", dir(output_dir), value = TRUE)
+  path_file <- paste0(output_dir, "/", path_file)
+  out_file <- file.info(path_file)
+  empty_file <- out_file[which(out_file$size == 0), ]
+  empty_file <- rownames(empty_file)
+  file.remove(empty_file)
+}
+
 ################################################################################
 #' Run GAMA on a XML file
 #'
@@ -38,6 +61,10 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
 
   if (gama_command > 0)
       stop(paste0("Gama fails to run your experiment."))
+
+  # remove empty output
+  clean_output(output_dir)
+
   return(normalizePath(dir(path = output_dir,
              pattern = "[simulation-outputs[:digit:]+]\\.xml",
              full.names = TRUE)))
