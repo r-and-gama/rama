@@ -1,37 +1,34 @@
-devtools::install_github("choisy/gamar")
-library(gamar)
-defpath("/Applications/Gama.app")
-# Extract the model parameters from the definition of the model sir.gaml
-experimentSIR <- getmodelparameter(paste0(system.file("examples",package="gamar"),"/sir.gaml"),"sir")
-getparameternames(experimentSIR)
+# install and load the package
+devtools::install_github("r-and-gama/rama")
+library(rama)
+
+# if necessary to configure GAMA path
+# defpath("/Applications/Gama.app")
+
+# Load the experiment "sir" from the definition of the model sir.gaml
+exp <- load_experiment("sir",
+                          system.file("examples", "sir.gaml", package = "rama"))
+exp
+
 # Define a first type of experiments on SIR having the same initial value
-# called experimentA with S0=950, I0=50 and R0=0
-experimentA <- experimentSIR
-getoutputnames(experimentA)
-experimentA <- setparametervalue(experimentA,"S0",900)
-experimentA <- setparametervalue(experimentA,"I0",100)
-experimentA <- setparametervalue(experimentA,"R0",0)
-# ... and with 100 steps and a frame rate of 1 for the images of the susceptibles
-experimentA <- setfinalstep(experimentA,100)
-experimentA <- setoutputframerate(experimentA,"susceptibles",1)
-
-
-# Define a first experiment on this model
-experimentA1 <- experimentA
-experimentA1 <- setparametervalue(experimentA1,"beta",.3)
-experimentA1 <- setparametervalue(experimentA1,"gamma",.1)
-experimentplanA <- addtoexperimentplan(simulation = experimentA1)
-
-# Define a secod experiment on this model
-experimentA2 <- experimentA
-experimentA2 <- setparametervalue(experimentA2,"beta",.5)
-experimentA2 <- setparametervalue(experimentA2,"gamma",.10)
-experimentplanA <- addtoexperimentplan(simulation = experimentA2,experimentplan = experimentplanA)
+# called expA with S0=950, I0=50 and R0=0
+exp$p_S0 <- 950
+exp$p_I0 <- 50
+exp$p_R0 <- 0
+# ... and with 100 steps and a frame rate of 1 for the images of the
+# susceptibles
+exp$tmax <- 100
+exp$r_S <- 1
+# Define a two experiments on this model
+exp$p_beta <- c(0.3, 0.5)
+exp$p_gamma <- 0.1
 
 # Execute all the exeperiments in the plan
-outputA <- runexpplan(experimentplanA,hpc = 2)
+out <- run_experiment(exp)
+
 # Visualize the number of infected for the two experiments
-par(mfrow=c(2,2))
-with(outputA[[1]],plot(step,I,type="l",lwd=2,col="red"))
-with(outputA[[2]],plot(step,I,type="l",lwd=2,col="blue"))
-makemovie(outputA[[1]])
+par(mfrow=c(1,2))
+with(out[[1]],plot(Step,I,type="l",lwd=2,col="red"))
+with(out[[2]],plot(Step,I,type="l",lwd=2,col="blue"))
+
+#makemovie(out[[1]])
