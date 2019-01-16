@@ -4,16 +4,27 @@
 \alias{model}
 \alias{model.default}
 \alias{model.experiment}
-\title{Get the model of an experiment}
+\alias{model<-}
+\alias{model<-.default}
+\alias{model<-.experiment}
+\title{Get/Set the model of an experiment}
 \usage{
 model(exp)
 
 \method{model}{default}(exp)
 
 \method{model}{experiment}(exp)
+
+model(exp) <- value
+
+\method{model}{default}(exp) <- value
+
+\method{model}{experiment}(exp) <- value
 }
 \arguments{
 \item{exp}{An object of class \code{experiment}.}
+
+\item{value}{Path of new gaml model file}
 }
 \value{
 The path to the \code{.gaml} file that contains the model definition.
@@ -25,6 +36,13 @@ contains the model of an \code{experiment} object.
 \examples{
 exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
                        package = "rama"))
+model(exp1)
+
+exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
+                        package = "rama"))
+model(exp1)
+model(exp1) <-  system.file("examples", "copysir.gaml",
+                        package = "rama")
 model(exp1)
 
 }
