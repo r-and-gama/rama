@@ -24,6 +24,6 @@ exp$tmax <- 100
 #out <- run_experiment(exp)
 
 # to visualize the output
-with(out[[1]],plot(Step,`Number of preys`,type="l",lwd=2,col="red"))
+with(out[[1]], plot(Step, `Number of preys`, type = "l", lwd = 2, col = "red"))
 
 #makemovie(output[[1]])

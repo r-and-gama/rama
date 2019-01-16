@@ -20,7 +20,7 @@ exp$p_danger_distance <-  c(100, 200, 300, 400, 500, 600, 700, 800, 900,
                             20000, 25000, 30000, 40000, 50000)
 exp$p_environment_size <- c(500, 10000, 15000, 20000, 30000, 40000, 50000)
 
-exp$seed<- seq(1, 30, 1)
+exp$seed <- seq(1, 30, 1)
 exp$tmax <- 5000
 # To test we set a shorter duration...
 exp$tmax <- 3

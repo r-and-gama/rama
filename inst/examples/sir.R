@@ -27,8 +27,8 @@ exp$p_gamma <- 0.1
 out <- run_experiment(exp)
 
 # Visualize the number of infected for the two experiments
-par(mfrow=c(1,2))
-with(out[[1]],plot(Step,I,type="l",lwd=2,col="red"))
-with(out[[2]],plot(Step,I,type="l",lwd=2,col="blue"))
+par(mfrow = c(1, 2))
+with(out[[1]], plot(Step, I, type = "l", lwd = 2, col = "red"))
+with(out[[2]], plot(Step, I, type = "l", lwd = 2, col = "blue"))
 
 #makemovie(out[[1]])
