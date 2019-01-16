@@ -35,11 +35,19 @@ show_experiment <- function(file){
     stop(paste0("Model \"", file, "\" does not contain any experiment."))
   exps <- trimws(gsub("\\n+$", "", exps))
   exp_info <- purrr::map(exps, function(x){
-    if (str_detect(x, "type"))
+    if (str_detect(x, "type")) {
       tmp <- cbind(str_match(x, ".*?(?=\\s+type?)"),
                    trimws(str_match(x, "type\\:(.*)"))[, 2])
-    else
+      # if the experiment type contains other information (ex:"gui keep:true")
+      if (grepl(":", tmp[1, 2])) {
+        # remove group of character with ":" (ex:" keep:true")
+        tmp[1, 2] <- gsub(" (.*)\\:(.*)", "", tmp[1, 2])
+        tmp
+      }
+    } else {
       tmp <- cbind(x, "gui")
+    }
+    tmp
   })
 
   exp_info <- as.data.frame(do.call(rbind, lapply(exp_info, function(x) x)))
