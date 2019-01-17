@@ -82,10 +82,13 @@ df$I0 <- 1000 - df$S0
 ## ------------------------------------------------------------------------
 df
 
-## ----eval = F, include = F-----------------------------------------------
-#  exp5 <- experiment(parameters = c("S0", "R0", "beta", "gamma"),
-#             obsrates = c("S", "I"), tmax = "tmax", seed = "seed",
-#             experiment = "sir", model = gaml_file, df = df)
+## ------------------------------------------------------------------------
+exp5 <- experiment(parameters = c("S0", "R0", "beta", "gamma"), 
+           obsrates = c("S", "I"), tmax = "tmax", seed = "seed",
+           experiment = "sir", model = gaml_file, df = df)
+
+## ------------------------------------------------------------------------
+exp5
 
 ## ------------------------------------------------------------------------
 nrow(exp4)

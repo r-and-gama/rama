@@ -160,12 +160,17 @@ df
 
 Let's now transform this data frame into an `experiment`:
 
-```{r eval = F, include = F}
+```{r}
 exp5 <- experiment(parameters = c("S0", "R0", "beta", "gamma"), 
            obsrates = c("S", "I"), tmax = "tmax", seed = "seed",
            experiment = "sir", model = gaml_file, df = df)
 ```
 
+Which gives:
+
+```{r}
+exp5
+```
 
 ## 1.2 Manipulating experiments
 
