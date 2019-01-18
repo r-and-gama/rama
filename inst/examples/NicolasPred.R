@@ -14,13 +14,12 @@ exp <- load_experiment("prey_predator",
 
 
 # to set the experiment
-exp$p_danger_distance <-  c(100, 200, 300, 400, 500, 600, 700, 800, 900,
-                            1000, 1500, 2000, 2500, 3000, 3500, 4000, 5500,
-                            6000, 7000, 8000, 9000, 10000, 12000, 14000, 16000,
-                            20000, 25000, 30000, 40000, 50000)
-exp$p_environment_size <- c(500, 10000, 15000, 20000, 30000, 40000, 50000)
+exp$p_danger_distance <-  c(100 * c(1:10, seq(15, 60, 5)),
+                            1000 * c(7:10, seq(12, 16, 2), seq(20, 30, 5)),
+                            10000 * 4:5)
+exp$p_environment_size <- c(1000 * seq(5, 20, 5), 10000 * 3:5)
 
-exp$seed <- seq(1, 30, 1)
+exp$seed <- 1:30
 exp$tmax <- 5000
 # To test we set a shorter duration...
 exp$tmax <- 3
