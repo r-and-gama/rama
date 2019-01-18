@@ -175,15 +175,15 @@ user-defined vectors of values, see examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>sir1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
-                         <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>), <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_6".</div><div class='output co'>#&gt; </div><div class='input'>
+                         <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>), <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_35".</div><div class='output co'>#&gt; </div><div class='input'>
 <span class='co'># 1. First type of use: tranforming an experiment into one with a full</span>
 <span class='co'># factorial design:</span>
 <span class='no'>sir2</span> <span class='kw'>&lt;-</span> <span class='no'>sir1</span>
 <span class='no'>sir2</span>$<span class='no'>p_S0</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>3</span>
 <span class='no'>sir2</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/mac/Desktop/rama/inst/examples/sir.gaml 
-#&gt; output directory:    sir_6 
+#&gt; input gaml file:     /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_35 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -194,8 +194,8 @@ user-defined vectors of values, see examples.</p>
 <span class='co'># "sir2" is not full factorial:</span>
 <span class='no'>sir2</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/mac/Desktop/rama/inst/examples/sir.gaml 
-#&gt; output directory:    sir_6 
+#&gt; input gaml file:     /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_35 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -205,8 +205,8 @@ user-defined vectors of values, see examples.</p>
 #&gt; 3    3    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># this is:</span>
 <span class='fu'>fullfact</span>(<span class='no'>sir2</span>)</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/mac/Desktop/rama/inst/examples/sir.gaml 
-#&gt; output directory:    sir_6 
+#&gt; input gaml file:     /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_35 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -221,8 +221,8 @@ user-defined vectors of values, see examples.</p>
 <span class='co'># of the "experiment" object and then expand it into full factorial design:</span>
 <span class='fu'>fullfact</span>(<span class='no'>sir2</span>, <span class='kw'>p_S0</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>p_I0</span> <span class='kw'>=</span> <span class='fl'>4</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/mac/Desktop/rama/inst/examples/sir.gaml 
-#&gt; output directory:    sir_6 
+#&gt; input gaml file:     /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml 
+#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_35 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -252,7 +252,7 @@ user-defined vectors of values, see examples.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en'>Benoît Gaudou</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://quadram.ac.uk/people/thanh-le-viet'>Viet Thanh Le</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
 </div>
 
 <div class="pkgdown">

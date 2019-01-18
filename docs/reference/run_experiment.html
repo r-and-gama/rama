@@ -171,30 +171,33 @@ simulation and also the simulation output of Gama in XML file stored in
     </tr>
     <tr>
       <th>parameter_xml_file</th>
-      <td><p>path to folder containing the xml file</p>
-<p>#' @examples
-#load experiment
-gaml_file &lt;- system.file("examples", "sir.gaml", package = "rama")
-exp1 &lt;- load_experiment("sir", gaml_file, "sir")
-# run experiment
-out &lt;- run_experiment(exp1)</p></td>
+      <td><p>name of XML parameter file. This file is created
+in the working directory of `exp`. If not
+specified, name of `exp` is used.</p></td>
     </tr>
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>#load experiment</span>
+<span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>, <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_46".</div><div class='output co'>#&gt; </div><div class='input'><span class='co'># run experiment</span>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; Running experiment plan ... </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en'>Benoît Gaudou</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://quadram.ac.uk/people/thanh-le-viet'>Viet Thanh Le</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
 </div>
 
 <div class="pkgdown">

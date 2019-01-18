@@ -177,15 +177,15 @@ null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.</
                   <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"123456789"</span>)
 
 <span class='no'>exp0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='experiment.html'>experiment</a></span>(
- <span class='no'>df</span>,
  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S0"</span>,<span class='st'>"I0"</span>,<span class='st'>"R0"</span>,<span class='st'>"beta"</span>,<span class='st'>"gamma"</span>),
  <span class='kw'>obsrates</span>  <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>),
  <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"nbiter"</span>,
  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"seed"</span>,
  <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
  <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
- <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"testsir"</span>
-)</div><div class='output co'>#&gt; Simulations results will be saved in "testsir_1".</div><div class='output co'>#&gt; </div><div class='input'>
+ <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"testsir"</span>,
+ <span class='no'>df</span>
+)</div><div class='output co'>#&gt; Simulations results will be saved in "testsir_6".</div><div class='output co'>#&gt; </div><div class='input'>
 <span class='fu'>plot_params</span>(<span class='no'>exp0</span>)</div><div class='img'><img src='plot_params-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   p_S0   p_I0 p_beta 
 #&gt;      1      2      4 </div><div class='input'>
 </div></pre>
@@ -207,7 +207,7 @@ null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.</
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en'>Benoît Gaudou</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://quadram.ac.uk/people/thanh-le-viet'>Viet Thanh Le</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
 </div>
 
 <div class="pkgdown">
