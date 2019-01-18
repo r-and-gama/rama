@@ -80,55 +80,58 @@ returns one XML file by simulation containing the output." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/rama.html">Get started</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example1.html">Example: NicolasPred model</a>
+      <a href="../articles/rama1.html">Testing hypotheses</a>
     </li>
     <li>
-      <a href="../articles/example2.html">Example: predator-prey model</a>
+      <a href="../articles/rama2.html">Sensitivity analysis</a>
     </li>
     <li>
-      <a href="../articles/example3.html">Example: SIR model</a>
+      <a href="../articles/rama3.html">Parameters estimation</a>
     </li>
     <li>
-      <a href="../articles/example4.html">Example: snubbies</a>
-    </li>
-    <li>
-      <a href="../articles/rama1.html">1 Testing hypotheses</a>
-    </li>
-    <li>
-      <a href="../articles/rama2.html">2 Sensivity analysis</a>
-    </li>
-    <li>
-      <a href="../articles/rama3.html">3 Parameters estimation</a>
-    </li>
-    <li>
-      <a href="../articles/rama4.html">4 Comparing ODE, IBM and ABM</a>
+      <a href="../articles/rama4.html">Comparing ODE, IBM and ABM</a>
     </li>
   </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/example1.html">NicolasPred model</a>
+    </li>
+    <li>
+      <a href="../articles/example2.html">Predator-prey model</a>
+    </li>
+    <li>
+      <a href="../articles/example3.html">SIR model</a>
+    </li>
+    <li>
+      <a href="../articles/example4.html">Snub-nose monkeys</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/r-and-gama/rama">
+  <a href="https://github.com/tidyverse/dplyr">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -181,11 +184,11 @@ exist, it will be created.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>parameter_xml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.xml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
-(<span class='no'>outfiles</span> <span class='kw'>&lt;-</span> <span class='fu'>call_gama</span>(<span class='no'>parameter_xml_file</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>()))</div><div class='output co'>#&gt; Running experiment plan ... </div><div class='output co'>#&gt; [1] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp6nRX9S/simulation-outputs1.xml"
-#&gt; [2] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp6nRX9S/simulation-outputs2.xml"
-#&gt; [3] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp6nRX9S/simulation-outputs3.xml"
-#&gt; [4] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp6nRX9S/simulation-outputs4.xml"
-#&gt; [5] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp6nRX9S/simulation-outputs5.xml"</div><div class='input'>
+(<span class='no'>outfiles</span> <span class='kw'>&lt;-</span> <span class='fu'>call_gama</span>(<span class='no'>parameter_xml_file</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>()))</div><div class='output co'>#&gt; Running experiment plan ... </div><div class='output co'>#&gt; [1] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp4XuzrG/simulation-outputs1.xml"
+#&gt; [2] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp4XuzrG/simulation-outputs2.xml"
+#&gt; [3] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp4XuzrG/simulation-outputs3.xml"
+#&gt; [4] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp4XuzrG/simulation-outputs4.xml"
+#&gt; [5] "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/Rtmp4XuzrG/simulation-outputs5.xml"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

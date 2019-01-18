@@ -20,7 +20,33 @@ authors:
   Lucie Contamin:
     href: https://www.researchgate.net/profile/Lucie_Contamin
 
-
-
-
-
+navbar:
+  type: default
+  left:
+  - text: Get started
+    href: articles/rama.html
+  - text: Tutorials
+    menu:
+    - text: Testing hypotheses
+      href: articles/rama1.html
+    - text: Sensitivity analysis
+      href: articles/rama2.html
+    - text: Parameters estimation
+      href: articles/rama3.html
+    - text: Comparing ODE, IBM and ABM
+      href: articles/rama4.html
+  - text: Examples
+    menu:
+    - text: NicolasPred model
+      href: articles/example1.html
+    - text: Predator-prey model
+      href: articles/example2.html
+    - text: SIR model
+      href: articles/example3.html
+    - text: Snub-nose monkeys
+      href: articles/example4.html
+  - text: Reference
+    href: reference/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/tidyverse/dplyr
