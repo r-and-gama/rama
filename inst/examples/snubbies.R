@@ -1,5 +1,6 @@
-## Install and load the package
-devtools::install_github("r-and-gama/rama")
+# install and load the package
+#install.packages("devtools")
+#devtools::install_github("r-and-gama/rama")
 library(rama)
 
 # if necessary to configure GAMA path
