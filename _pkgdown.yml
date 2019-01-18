@@ -12,50 +12,13 @@ authors:
     href: https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en
   IRD:
     href: http://www.ird.fr
+    html: <img src="../man/figures/ird.png" height="24" />
   Nicolas Marilleau:
     href: https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en
   Bich Hai Ho:
     href: https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952
   Lucie Contamin:
     href: https://www.researchgate.net/profile/Lucie_Contamin
-
-reference:
-  - title: Configuring the rama package
-    contents:
-    - def_path
-    - is_gama_installed
-    - setup_gama
-  - title: Constructor of experiment class
-    contents:
-    - experiment
-    - is.experiment
-  - title: Reading GAML files
-    contents:
-    - load_experiment
-    - save_to_gama
-    - show_experiment
-  - title: Manipulating experiment objects
-    contents:
-    - cash-set-.experiment
-    - create_output_dir
-    - expname
-    - fullfact
-    - model
-    - obs_rates
-    - output_dir
-    - parameters
-    - plot_params
-    - repl
-  - title: Running experiments
-    contents:
-    - call_gama
-    - realexp
-    - run_experiment
-    - save_to_gama
-  - title: Built-in experiments
-    contents:
-    - sir1
-
 
 
 

@@ -99,6 +99,18 @@ experiment." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/example1.html">Example: NicolasPred model</a>
+    </li>
+    <li>
+      <a href="../articles/example2.html">Example: predator-prey model</a>
+    </li>
+    <li>
+      <a href="../articles/example3.html">Example: SIR model</a>
+    </li>
+    <li>
+      <a href="../articles/example4.html">Example: snubbies</a>
+    </li>
+    <li>
       <a href="../articles/rama1.html">1 Testing hypotheses</a>
     </li>
     <li>
@@ -179,11 +191,10 @@ function as explained in the example.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Looking at the sir.gaml file in the examples directory of the rama library:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; [1] "CopyOfsir.gaml"   "NicolasPred.gaml" "NicolasPred.R"    "predator_prey"   
-#&gt; [5] "predator_prey.R"  "sir.gaml"         "sir.R"            "sir.xml"         
-#&gt; [9] "snubbies.gaml"   </div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>dir</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; [1] "CopyOfsir.gaml"   "NicolasPred.gaml" "predator_prey"    "sir.gaml"        
+#&gt; [5] "sir.xml"          "snubbies.gaml"   </div><div class='input'>
 <span class='co'># Loading an experiment:</span>
-<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_36".</div><div class='output co'>#&gt; </div><div class='input'>
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>load_experiment</span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_189".</div><div class='output co'>#&gt; </div><div class='input'>
 <span class='co'># Checking the class:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "experiment" "data.frame"</div><div class='input'>
 </div></pre>

@@ -1,11 +1,37 @@
+---
+title: "Example: NicolasPred model"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+```{r}
 #install.packages("devtools")
 #devtools::install_github("choisy/gamar")
 library(gamar)
+```
+
+```{r}
 defpath("/Applications/Gama.app")
 myModelPath <- "/Users/jdz/git/gamar/inst/examples"
 #(myModelFile <- paste0(system.file("examples",package="gamar"),"/cluster_ind.gaml"))
 (myModelFile <- paste0(myModelPath,"/NicolasPred.gaml"))
+```
 
+
+```{r}
 (experimentPREY <- getmodelparameter(modelfile = myModelFile,experimentname = "prey_predator"))
 (getparameternames(experimentPREY))
 
@@ -26,6 +52,9 @@ sim2 <- simulations
 experiment1 <- experimentPREY
 experimentplan <- NULL
 
+```
+
+```{r}
 for (i in 1:nrow(sim2))
 {
   local_experiment <-  setparametervalue(experiment1,"danger_distance",sim2[i,"action_distance"])
@@ -48,3 +77,5 @@ for (i in 1:nrow(sim2))
   outFile <- paste0("/tmp/experiment/input_",i,".xml")
   writemodelparameterfile(experimentPlan,outFile)
 }
+```
+

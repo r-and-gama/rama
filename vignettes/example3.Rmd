@@ -1,3 +1,23 @@
+---
+title: "Example: SIR model"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+```{r}
 devtools::install_github("choisy/gamar")
 library(gamar)
 defpath("/Applications/Gama.app")
@@ -35,3 +55,5 @@ par(mfrow=c(2,2))
 with(outputA[[1]],plot(step,I,type="l",lwd=2,col="red"))
 with(outputA[[2]],plot(step,I,type="l",lwd=2,col="blue"))
 makemovie(outputA[[1]])
+```
+
