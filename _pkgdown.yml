@@ -1,6 +1,7 @@
 development:
   mode: unreleased
 
+
 authors:
   Marc Choisy:
     href: http://marcchoisy.free.fr
@@ -20,9 +21,48 @@ authors:
   Lucie Contamin:
     href: https://www.researchgate.net/profile/Lucie_Contamin
 
+
+reference:
+  - title: Configuring the rama package
+    contents:
+    - defpath
+    - is_gama_installed
+    - setup_gama
+  - title: Constructor of experiment class
+    contents:
+    - experiment
+    - is.experiment
+  - title: Reading GAML files
+    contents:
+    - load_experiment
+    - save_to_gama
+    - show_experiment
+  - title: Manipulating experiment objects
+    contents:
+    - create_output_dir
+    - fullfact
+    - model
+    - name
+    - obs_rates
+    - output_dir
+    - parameters
+    - plot_params
+    - repl
+  - title: Running experiments
+    contents:
+    - call_gama
+    - run_experiment
+    - save_to_gama
+  - title: Built-in experiments
+    contents:
+    - sir1
+
+
 navbar:
   type: default
   left:
+  - icon: fa-home fa-lg
+    href: index.html
   - text: Get started
     href: articles/rama.html
   - text: Tutorials
@@ -50,3 +90,6 @@ navbar:
   right:
   - icon: fa-github fa-lg
     href: https://github.com/tidyverse/dplyr
+
+
+

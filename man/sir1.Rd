@@ -3,7 +3,7 @@
 \docType{data}
 \name{sir1}
 \alias{sir1}
-\title{SIR epidemiological model.}
+\title{SIR epidemiological model}
 \format{An object of class \code{experiment} (inherits from \code{data.frame}) with 1 rows and 10 columns.}
 \usage{
 sir1
