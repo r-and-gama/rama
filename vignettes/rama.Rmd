@@ -270,8 +270,7 @@ output <- run_experiment(exp1)
 ```
 
 
-
 ```{r cleaning, include = FALSE}
-unlink("sir", TRUE)
+unlink("sir*", TRUE)
 ```
 
