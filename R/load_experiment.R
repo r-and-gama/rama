@@ -84,23 +84,7 @@ load_experiment <- function(exp, model, dir = "") {
   # Loading experiment
   message(paste0("Loading experiment \"", exp,
                  "\" from file \"", basename(model), "\"..."))
-  tmp <- tempfile(fileext = ".xml")
-  system(paste0("java -jar ", getOption("rama.startjar"),
-                " -Xms", getOption("rama.Xms"),
-                " -Xmx", getOption("rama.Xmx"),
-                " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
-                " -application msi.gama.headless.id4 -xml ",
-                exp, " '", model, "' ", tmp, " > /dev/null"),
-         ignore.stdout = TRUE, ignore.stderr = TRUE)
-  unlink("workspace", TRUE, TRUE)
-
-  if (file.exists(tmp)) {
-    out <- XML::xmlToList(XML::xmlParse(tmp))
-  } else {
-    stop(paste0("Gama fails to read your experiment"))
-  }
-
-  out <- out$Simulation
+  out <- read_gaml_experiment(exp, model)
 
   if (is.null(out$Outputs)) {
     out_var <- data.frame(NULL)
