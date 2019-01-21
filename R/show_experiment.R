@@ -29,7 +29,7 @@ show_experiment <- function(file){
       tmp <- cbind(str_match(x, ".*?(?=\\s+type?)"),
                    trimws(str_match(x, "type\\:(.*)"))[, 2])
     else
-      tmp <- cbind(x, "gui")
+      tmp <- cbind(x, "gui") # because, in GAMA, default type is GUI
   })
 
   exp_info <- as.data.frame(do.call(rbind, exp_info), stringsAsFactors = FALSE)
