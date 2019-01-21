@@ -81,8 +81,8 @@ load_experiment <- function(exp, model, dir = "") {
   check_experiment(exp, model)
 
   # Loading experiment
-  message(cat("Loading experiment \"", exp,
-              "\" from file \"", basename(model), "\"...", sep = ""))
+  message(paste0("Loading experiment \"", exp,
+                 "\" from file \"", basename(model), "\"..."))
   tmp <- tempfile(fileext = ".xml")
   system(paste0("java -jar ", getOption("rama.startjar"),
                 " -Xms", getOption("rama.Xms"),
