@@ -91,7 +91,7 @@ load_experiment <- function(exp, model, dir = "") {
     dic_var <- NULL
   } else {
     out_var <- get_variables(out)
-    dic_var <- make_dictionary(names(out_var))
+    dic_var <- paste0("r_", make_dictionary(names(out_var)))
     names(out_var) <- paste0("r_", dic_var[names(out_var)])
   }
 
@@ -100,7 +100,7 @@ load_experiment <- function(exp, model, dir = "") {
     dic_par <- NULL
   } else {
     out_par <- get_parameters(out)
-    dic_par <- make_dictionary(names(out_par))
+    dic_par <- paste0("p_", make_dictionary(names(out_par)))
     names(out_par) <- paste0("p_", dic_par[names(out_par)])
   }
 
