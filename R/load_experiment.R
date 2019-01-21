@@ -15,7 +15,8 @@ get_variables <- function(x) {
   x2 <- do.call(rbind, x[["Outputs"]])
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
   x3 <- setNames(x3, x2[, "name"])
-  x3[] <- lapply(x3, as.integer)
+  sel <- grep("INT", x2[, "type"])
+  if (length(sel) > 0) x3[, sel] <- lapply(x3[, sel], as.integer)
   x3
 }
 
