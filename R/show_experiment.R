@@ -32,8 +32,7 @@ show_experiment <- function(file){
       tmp <- cbind(x, "gui")
   })
 
-  exp_info <- as.data.frame(do.call(rbind, lapply(exp_info, function(x) x)),
-                            stringsAsFactors = FALSE)
+  exp_info <- as.data.frame(do.call(rbind, exp_info), stringsAsFactors = FALSE)
   names(exp_info) <- c("experiment", "type")
   # test if there is special character in experiment name
   test_schar(exp_info$experiment)
