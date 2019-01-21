@@ -101,22 +101,23 @@ load_experiment <- function(exp, model, dir = "") {
   }
 
   out <- out$Simulation
-  if (!is.null(out$Outputs)) {
+
+  if (is.null(out$Outputs)) {
+    out_var <- data.frame(NULL)
+    dicar <- NULL
+  } else {
     out_var <- get_variables(out)
     dicar <- make_dictionary(names(out_var))
     names(out_var) <- paste0("r_", dicar[names(out_var)])
-
-  } else {
-    out_var <- data.frame(NULL)
-    dicar <- NULL
   }
-  if (!is.null(out$Parameters)) {
+
+  if (is.null(out$Parameters)) {
+    out_par <- data.frame(NULL)
+    dic_par <- NULL
+  } else {
     out_par <- get_parameters(out)
     dic_par <- make_dictionary(names(out_par))
     names(out_par) <- paste0("p_", dic_par[names(out_par)])
-  } else {
-    out_par <- data.frame(NULL)
-    dic_par <- NULL
   }
 
   dic <- c(dic_par, dicar)
