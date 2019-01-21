@@ -131,7 +131,7 @@ load_experiment <- function(exp, model, dir = "") {
   class(output) <- c("experiment", "data.frame")
   attr(output, "model") <- unname(out_attr$gaml)
   attr(output, "experiment") <- unname(out_attr$experiment)
-  attr(output, "wkdir") <- make_wkdir(dir, model)
+  attr(output, "wkdir") <- make_wkdir(model, dir)
   attr(output, "dic") <- dic
   attr(output, "dic_rev") <- setNames(names(dic), dic)
 

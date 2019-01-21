@@ -1,16 +1,14 @@
 # Make working directory -------------------------------------------------------
-# Use full path dir if specified. If only name specified, use current directory.
-# If not specified, use default name.
-make_wkdir <- function(dir, model) {
+# Uses full path "dir" if specified. If only name specified (i.e. without any
+# "/"), use current directory. If not specified, use default name.
+make_wkdir <- function(model, dir = "") {
 
   if (dir == "") {
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
     message(paste0("Using default directory name \"", dir,
                    "\" in current directory \"", getwd(), "\"."))
-  }
-
-  if (dir.exists(dir)) {
+  } else if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
@@ -144,7 +142,7 @@ experiment.character <- function(parameters = NULL,
   # check experiment and type
   check_experiment(experiment, model)
   # generate output dir
-  wk_dir <- make_wkdir(dir, model)
+  wk_dir <- make_wkdir(model, dir)
   parameters_n <- dplyr::case_when(
     is.character(parameters) ~ paste0("p_", parameters),
     is.numeric(parameters) ~ paste0("p_", names(df)[parameters])
@@ -212,7 +210,7 @@ experiment.numeric <- function(parameters = NULL,
   # check experiment and type
   check_experiment(experiment, model)
   # generate output dir
-  wk_dir <- make_wkdir(dir, model)
+  wk_dir <- make_wkdir(model, dir)
   parameters_n <- dplyr::case_when(
     is.character(parameters) ~ paste0("p_", parameters),
     is.numeric(parameters) ~ paste0("p_", names(df)[parameters])
