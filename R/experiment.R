@@ -1,4 +1,4 @@
-# experiment constructor -------------------------------------------------------
+# Generic of the experiment constructor ----------------------------------------
 #' Create an object of class \code{experiment}
 #'
 #' @param parameters Vector of column names or indexes in the \code{df} that
@@ -19,6 +19,7 @@
 #' @param ... Additional paramaters
 #'
 #' @importFrom dplyr case_when
+#'
 #' @examples
 #' # Experiment constructor with a dataframe and indexes/names of columns
 #' # indicating parameters, observation rates, tmax and seed
@@ -61,21 +62,22 @@
 #'                    model =
 #'                    system.file("examples", "sir.gaml", package = "rama"))
 #'
-
 #' @export
-
+#'
 experiment <- function(parameters, obsrates, tmax, seed,
-                       experiment, model, dir, df)
-                      UseMethod("experiment")
+                       experiment, model, dir, df) UseMethod("experiment")
 
+
+
+# Default method of the experiment constructor ---------------------------------
 #' @rdname experiment
 #' @export
 experiment.default <- function(parameters, obsrates, tmax, seed,
-                               experiment, model, dir, df)
-                      "Unknown class"
+                               experiment, model, dir, df) "Unknown class"
 
 
-# experiment constructor from a dataframe and names of cols--------------------
+
+# experiment constructor from a dataframe and names of cols---------------------
 #' @rdname experiment
 #' @export
 experiment.character <- function(parameters = NULL,
@@ -143,7 +145,9 @@ experiment.character <- function(parameters = NULL,
   return(df)
 }
 
-# experiment constructor from a dataframe and indexes of cols-----------------
+
+
+# experiment constructor from a dataframe and indexes of cols-------------------
 #' @rdname experiment
 #' @export
 experiment.numeric <- function(parameters = NULL,
@@ -211,6 +215,8 @@ experiment.numeric <- function(parameters = NULL,
   return(df)
 }
 
+
+
 # experment constructor from a group of data frame -----------------------------
 #' @rdname experiment
 #' @export
@@ -233,6 +239,9 @@ experiment.data.frame <- function(parameters = NULL,
                     df)
   return(exp)
 }
+
+
+
 # experiment constructor from a data frame and an experiment as template--------
 #' Create an experiment object using a data frame and an experiment object
 #' as template
@@ -254,7 +263,7 @@ experiment.data.frame <- function(parameters = NULL,
 #' @importFrom stats na.omit
 #' @importFrom utils capture.output
 #' @export
-map_experiment <- function(df, exp, dir = ""){
+map_experiment <- function(df, exp, dir = "") {
   # check ncol(df) >= para + obsrates + tmax + seed
   if (ncol(df) < ncol(exp))
     stop(paste0("Number of columns in data frame is not valid
