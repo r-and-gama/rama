@@ -1,15 +1,28 @@
+# test special characters ------------------------------------------------------
+test_schar <- function(x) {
+  if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
+    stop(paste0("The rama package does not support the specials characters `<`",
+                ", `>`, `&` and `'` in parameters, outputs and experiments names."))
+  }
+}
+
+
+
 # Defines the GAMA repository --------------------------------------------------
 gama_repo <- function(repo = NULL) {
   if (! is.null(repo)) options(rama.repo = repo)
 }
+
+
 
 # Test if operating system is Windows ------------------------------------------
 isWindows <- function() {
   return (Sys.info()["sysname"] == "Windows")
 }
 
-# Returns the OS ---------------------------------------------------------------
 
+
+# Returns the OS ---------------------------------------------------------------
 get_os <- function(){
   os <- paste0(Sys.info()["sysname"])
   if (is.null(os)){
@@ -20,6 +33,8 @@ get_os <- function(){
   }
   os
 }
+
+
 
 # Gives distrib as a function of the OS ----------------------------------------
 #' In function of remote distribution of the OS returns the path
@@ -35,6 +50,8 @@ gama_remote_distrib <- function() {
                              options("rama.default.gama.linux")))
   # to complete
 }
+
+
 
 # Downloads gama ---------------------------------------------------------------
 #' @importFrom utils download.file unzip untar
@@ -68,6 +85,8 @@ download_gama <- function() {
   expDir
 }
 
+
+
 # Setup GAMA UI ----------------------------------------------------------------
 setup_gama_ui <- function() {
   defaultjar <- ""
@@ -84,6 +103,8 @@ setup_gama_ui <- function() {
   }
   answer
 }
+
+
 
 # download GAMA when necessary -------------------------------------------------
 #' Download GAMA and configure

@@ -1,14 +1,3 @@
-# test special characters ------------------------------------------------------
-test_schar <- function(x) {
-  if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
-    stop(paste0("The rama package does not support the specials characters `<`",
-                ", `>`, `&` and `'` in parameters, outputs and experiments names."))
-  }
-}
-
-
-
-# show_experiment --------------------------------------------------------------
 #' List the experiments of a model and their types
 #'
 #' List the experiments of a given model.
