@@ -27,14 +27,7 @@ make_wkdir <- function(dir, model) {
   normalizePath(wk_dir)
 }
 
-# make_dictionary --------------------------------------------------------------
 
-#' @importFrom stats setNames
-make_dictionary <- function(x) {
-  dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
-  dic <- gsub("_+", "_", dic)
-  setNames(dic, x)
-}
 
 # experiment constructor -------------------------------------------------------
 #' Create an object of class \code{experiment}

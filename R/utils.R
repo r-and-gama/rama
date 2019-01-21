@@ -27,6 +27,16 @@ check_experiment <- function(exp, model) {
 
 
 
+# make_dictionary --------------------------------------------------------------
+#' @importFrom stats setNames
+make_dictionary <- function(x) {
+  dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
+  dic <- gsub("_+", "_", dic)
+  setNames(dic, x)
+}
+
+
+
 # Defines the GAMA repository --------------------------------------------------
 gama_repo <- function(repo = NULL) {
   if (! is.null(repo)) options(rama.repo = repo)
