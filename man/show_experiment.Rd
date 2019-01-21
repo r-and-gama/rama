@@ -7,7 +7,7 @@
 show_experiment(file)
 }
 \arguments{
-\item{file}{path to a gaml model file.}
+\item{file}{Path to a \code{.gaml} file.}
 }
 \description{
 List the experiments of a given model.
