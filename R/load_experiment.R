@@ -73,6 +73,7 @@ check_param_type <- function(exp, model) {
 #' class(exp1)
 #'
 #' @importFrom XML xmlToList xmlParse
+#' @importFrom tibble as_tibble
 #'
 #' @export
 load_experiment <- function(exp, model, dir = "") {
@@ -124,10 +125,10 @@ load_experiment <- function(exp, model, dir = "") {
 
   out_attr <- get_attributes(out)
 
-  output <- as.data.frame(c(out_par, out_var, out_attr), stringsAsFactors = FALSE)
+  output <- as_tibble(c(out_par, out_var, out_attr))
   output$gaml <- NULL
   output$experiment <- NULL
-  class(output) <- c("experiment", "data.frame")
+  class(output) <- c("experiment", "tbl_df", "tbl", "data.frame")
   attr(output, "model") <- unname(out_attr$gaml)
   attr(output, "experiment") <- unname(out_attr$experiment)
   attr(output, "wkdir") <- make_wkdir(model, dir)
