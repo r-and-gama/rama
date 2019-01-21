@@ -8,7 +8,9 @@ make_wkdir <- function(model, dir = "") {
     dir <- gsub(".gaml", "", basename(model))
     message(paste0("Using default directory name \"", dir,
                    "\" in current directory \"", getwd(), "\"."))
-  } else if (dir.exists(dir)) {
+  }
+
+  if (dir.exists(dir)) {
     i <- 0
     repeat {
       i <- i + 1
@@ -16,12 +18,11 @@ make_wkdir <- function(model, dir = "") {
       if (!file.exists(wk_dir)) break
     }
   } else {
-    wk_dir <-  dir
+     wk_dir <-  dir
   }
 
   dir.create(wk_dir, recursive = TRUE)
   message(paste0("Simulations results will be saved in \"", wk_dir, "\"."))
-
   normalizePath(wk_dir)
 }
 
