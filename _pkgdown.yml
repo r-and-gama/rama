@@ -13,7 +13,7 @@ authors:
     href: https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en
   IRD:
     href: http://www.ird.fr
-    html: <img src="../man/figures/ird.png" height="20" />
+    html: <img src="reference/figures/ird.png" height="20" />
   Nicolas Marilleau:
     href: https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en
   Bich Hai Ho:
@@ -89,7 +89,7 @@ navbar:
     href: reference/index.html
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/tidyverse/dplyr
+    href: https://github.com/r-and-gama/rama
 
 
 
