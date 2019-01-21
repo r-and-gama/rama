@@ -1,24 +1,24 @@
-# get_parameters ---------------------------------------------------------------
-get_parameters <- function(x) {
-  x2 <- do.call(rbind, x[["Parameters"]])
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
-  x3 <- setNames(x3, x2[, "name"])
-  sel <- grep("INT", x2[, "type"])
-  if (length(sel) > 0) x3[, sel] <- lapply(x3[, sel], as.integer)
-  x3
+# template of get functions ----------------------------------------------------
+get_template <- function(lev1, lev2) {
+  function(x) {
+    x2 <- do.call(rbind, x[[lev1]])
+    x3 <- do.call(data.frame, as.list(as.numeric(x2[, lev2])))
+    x3 <- setNames(x3, x2[, "name"])
+    sel <- grep("INT", x2[, "type"])
+    if (length(sel) > 0) x3[, sel] <- lapply(x3[, sel], as.integer)
+    x3
+  }
 }
+
+
+
+# get_parameters ---------------------------------------------------------------
+get_parameters <- get_template("Parameters", "value")
 
 
 
 # get_variables ----------------------------------------------------------------
-get_variables <- function(x) {
-  x2 <- do.call(rbind, x[["Outputs"]])
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
-  x3 <- setNames(x3, x2[, "name"])
-  sel <- grep("INT", x2[, "type"])
-  if (length(sel) > 0) x3[, sel] <- lapply(x3[, sel], as.integer)
-  x3
-}
+get_variables <- get_template("Outputs", "framerate")
 
 
 
