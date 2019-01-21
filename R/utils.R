@@ -8,6 +8,25 @@ test_schar <- function(x) {
 
 
 
+# Check if a requested experiment is valid -------------------------------------
+# For a requested experiment to be valid, we need
+# * the name to exist in the file;
+# * the experiment to be of type "GUI".
+check_experiment <- function(exp, model) {
+  exp_info <- show_experiment(model)
+  # check if the requested experiment is present in the file:
+  if (!exp %in% exp_info$experiment)
+    stop(paste0("There is no experiment named \"", exp, "\" in ",
+                basename(model)))
+  # check if the requested experiment has a valid (i.e. "GUI") type:
+  type <- exp_info$type[exp_info$experiment == exp]
+  if (type != "gui")
+    stop(paste0("Experiments of type \"", type, "\" are not supported by rama."))
+  invisible(0)
+}
+
+
+
 # Defines the GAMA repository --------------------------------------------------
 gama_repo <- function(repo = NULL) {
   if (! is.null(repo)) options(rama.repo = repo)

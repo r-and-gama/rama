@@ -8,6 +8,8 @@ get_parameters <- function(x) {
   x3
 }
 
+
+
 # get_variables ----------------------------------------------------------------
 get_variables <- function(x) {
   x2 <- do.call(rbind, x[["Outputs"]])
@@ -16,6 +18,8 @@ get_variables <- function(x) {
   x3[] <- lapply(x3, as.integer)
   x3
 }
+
+
 
 # get_attributes ---------------------------------------------------------------
 #' @importFrom stats setNames
@@ -29,25 +33,14 @@ get_attributes <- function(x) {
   out
 }
 
+
+
 # Check the consistency between gaml and experiment object `exp` created in rama
 check_param_type <- function(exp, model) {
 # pending
 }
 
-# Check if a requested experiment is valid: name `exp` exists and type = gui ---
-check_experiment <- function(exp, model) {
-  exp_info <- show_experiment(model)
-  # check if experiment requested is declared in gaml
-  if (!exp %in% exp_info$experiment)
-    stop(paste0("There is no experiment named \"", exp, "\" in ",
-                basename(model)))
-  # check if experiment requested has valid type
-  type <- exp_info$type[exp_info$experiment == exp]
-  if (type != "gui")
-    stop(paste0("Experiment \"", exp, "\" of type \"", type,
-                "\" is not supported."))
-  invisible(0)
-}
+
 
 # load_experiment --------------------------------------------------------------
 #' Load an experiment from a GAML file
@@ -66,14 +59,14 @@ check_experiment <- function(exp, model) {
 #' @param exp The name of the experiment to load.
 #' @param model The name of the GAML file from which to load the experiment.
 #' @param dir The name of the directory in which to save the outputs of the
-#' experiment's simulations. If empty character string, the name of the GAML
-#' file will be used to name the simulations output directory.
+#' experiment's simulations. If empty character string (default), the name of
+#' the GAML file will be used to name the simulations' output directory.
 #'
 #' @examples
-#' # Looking at the sir.gaml file in the examples directory of the rama library:
+#' # Listing the models available in the "examples" directory of the "rama" library:
 #' dir(system.file("examples", package = "rama"))
 #'
-#' # Loading an experiment:
+#' # Loading experiment "sir" from the "sir.gaml" file:
 #' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
 #'
 #' # Checking the class:
