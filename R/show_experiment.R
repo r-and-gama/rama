@@ -1,21 +1,22 @@
-# test special character -------------------------------------------------------
+# test special characters ------------------------------------------------------
 test_schar <- function(x) {
   if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
-    stop(paste0("Rama package does not support these specials characters : `<`",
-                ", `>`, `&` and `'` in parameters, outputs and experiment name",
-                ". Please rewrite them without these specials characters"))
+    stop(paste0("The rama package does not support the specials characters `<`",
+                ", `>`, `&` and `'` in parameters, outputs and experiments names."))
   }
 }
 
-#show_experiment --------------------------------------------------------------
+
+
+# show_experiment --------------------------------------------------------------
 #' List the experiments of a model and their types
 #'
 #' List the experiments of a given model.
 #'
-#' @param file path to a gaml model file.
+#' @param file Path to a \code{.gaml} file.
 #'
 #' @importFrom stringr str_match_all str_match regex str_detect
-#' @importFrom  purrr map
+#' @importFrom purrr map
 #'
 #' @examples
 #' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
@@ -24,17 +25,17 @@ test_schar <- function(x) {
 #' @export
 show_experiment <- function(file){
   if (!file.exists(file)) {
-    stop(paste0("There is no file \"", file, "\"."))
+    stop(paste0("File \"", file, "\" does not exist."))
   }
 
   gaml <- paste(readLines(file, warn = FALSE), collapse = "\n")
   exps <- str_match_all(gaml,
-                        regex("\\nexperiment (.*?)\\{", dotall = T))[[1]][, 2]
+                        regex("\\nexperiment (.*?)\\{", dotall = TRUE))[[1:2]]
 
-  if (length(exps) == 0)
-    stop(paste0("Model \"", file, "\" does not contain any experiment."))
+  if (length(exps) < 1)
+    stop(paste0("File \"", file, "\" does not contain any experiment."))
   exps <- trimws(gsub("\\n+$", "", exps))
-  exp_info <- purrr::map(exps, function(x){
+  exp_info <- purrr::map(exps, function(x) {
     if (str_detect(x, "type"))
       tmp <- cbind(str_match(x, ".*?(?=\\s+type?)"),
                    trimws(str_match(x, "type\\:(.*)"))[, 2])
@@ -42,11 +43,10 @@ show_experiment <- function(file){
       tmp <- cbind(x, "gui")
   })
 
-  exp_info <- as.data.frame(do.call(rbind, lapply(exp_info, function(x) x)))
+  exp_info <- as.data.frame(do.call(rbind, lapply(exp_info, function(x) x)),
+                            stringsAsFactors = FALSE)
   names(exp_info) <- c("experiment", "type")
-  exp_info$experiment <- as.character(exp_info$experiment)
   # test if there is special character in experiment name
   test_schar(exp_info$experiment)
-  exp_info$type <- as.character(exp_info$type)
-  return(exp_info)
+  exp_info
 }
