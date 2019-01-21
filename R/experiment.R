@@ -1,33 +1,3 @@
-# Make working directory -------------------------------------------------------
-# Uses full path "dir" if specified. If only name specified (i.e. without any
-# "/"), use current directory. If not specified, use default name.
-make_wkdir <- function(model, dir = "") {
-
-  if (dir == "") {
-    # get model name from gaml file
-    dir <- gsub(".gaml", "", basename(model))
-    message(paste0("Using default directory name \"", dir,
-                   "\" in current directory \"", getwd(), "\"."))
-  }
-
-  if (dir.exists(dir)) {
-    i <- 0
-    repeat {
-      i <- i + 1
-      wk_dir <- paste0(dir, "_", i)
-      if (!file.exists(wk_dir)) break
-    }
-  } else {
-     wk_dir <-  dir
-  }
-
-  dir.create(wk_dir, recursive = TRUE)
-  message(paste0("Simulations results will be saved in \"", wk_dir, "\"."))
-  normalizePath(wk_dir)
-}
-
-
-
 # experiment constructor -------------------------------------------------------
 #' Create an object of class \code{experiment}
 #'
