@@ -12,8 +12,8 @@ load_experiment(exp, model, dir = "")
 \item{model}{The name of the GAML file from which to load the experiment.}
 
 \item{dir}{The name of the directory in which to save the outputs of the
-experiment's simulations. If empty character string, the name of the GAML
-file will be used to name the simulations output directory.}
+experiment's simulations. If empty character string (default), the name of
+the GAML file will be used to name the simulations' output directory.}
 }
 \description{
 Loads an experiment from a \code{.gaml} file and returns an object of class
@@ -25,14 +25,14 @@ models are specified, at minima, by a \code{.gaml}. Additional files such as
 shapefile can be used to specify a model, in which case they are in the same
 directory as the \code{.gaml} file. The internal collection of GAMA models is
 in the \code{examples} directory of the \code{rama} package file hierarchy.
-These models can be accessed with the \code{\link[base]{system.file()}}
+These models can be accessed with the \code{\link[base]{system.file}}
 function as explained in the example.
 }
 \examples{
-# Looking at the sir.gaml file in the examples directory of the rama library:
+# Listing the models available in the "examples" directory of the "rama" library:
 dir(system.file("examples", package = "rama"))
 
-# Loading an experiment:
+# Loading experiment "sir" from the "sir.gaml" file:
 exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
 
 # Checking the class:

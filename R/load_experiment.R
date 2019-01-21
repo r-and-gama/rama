@@ -53,7 +53,7 @@ check_param_type <- function(exp, model) {
 #' shapefile can be used to specify a model, in which case they are in the same
 #' directory as the \code{.gaml} file. The internal collection of GAMA models is
 #' in the \code{examples} directory of the \code{rama} package file hierarchy.
-#' These models can be accessed with the \code{\link[base]{system.file()}}
+#' These models can be accessed with the \code{\link[base]{system.file}}
 #' function as explained in the example.
 #'
 #' @param exp The name of the experiment to load.
