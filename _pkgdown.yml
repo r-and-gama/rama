@@ -34,6 +34,7 @@ reference:
     - is.experiment
   - title: Reading GAML files
     contents:
+    - get_parameters_names
     - load_experiment
     - save_to_gama
     - show_experiment
