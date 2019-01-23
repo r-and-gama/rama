@@ -2,111 +2,69 @@
 % Please edit documentation in R/experiment.R, R/is.experiment.R
 \name{experiment}
 \alias{experiment}
-\alias{experiment.default}
-\alias{experiment.character}
-\alias{experiment.numeric}
-\alias{experiment.data.frame}
 \alias{is.experiment}
-\title{Create an object of class \code{experiment}}
+\title{Constructor of experiments}
 \usage{
-experiment(parameters, obsrates, tmax, seed, experiment, model, dir, df)
-
-\method{experiment}{default}(parameters, obsrates, tmax, seed, experiment,
-  model, dir, df)
-
-\method{experiment}{character}(parameters = NULL, obsrates = NULL,
-  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
-  dir = "", df = NULL)
-
-\method{experiment}{numeric}(parameters = NULL, obsrates = NULL,
-  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
-  dir = "", df = NULL)
-
-\method{experiment}{data.frame}(parameters = NULL, obsrates = NULL,
-  tmax = NULL, seed = NULL, experiment = NULL, model = NULL,
-  dir = "", ...)
+experiment(parameters, obsrates, tmax, seed, experiment, model, dir = "",
+  dic = NULL)
 
 is.experiment(exp)
 }
 \arguments{
-\item{parameters}{Vector of column names or indexes in the \code{df} that
-will be used as parameters in the experiment.}
+\item{parameters}{A data frame of numerical values giving the values of each
+parameter (in column), for each simulation (in row).}
 
-\item{obsrates}{Vector of column names or indexes in the \code{df} that will
-be used as obs_rates rats in the experiment.}
+\item{obsrates}{A data frame of positive integer values giving the periods,
+in time steps, at which observed variables are observed.
+Should have the same number of rows as \code{parameters}.}
 
-\item{tmax}{Name or index of the column in the \code{df} that will be
-used as final step in the experiment.}
+\item{tmax}{A positive integer vector, the length of which is either 1 or
+equal to the number of \code{parameters} and \code{obsrates}: it
+gives the end of simulations, in numbers of time steps.}
 
-\item{seed}{Name or index of the column in the \code{df} that will be
-used as seed in the experiment.}
+\item{seed}{A numerical vector, the length of which is either 1 or equal to
+the number of \code{parameters} and \code{obsrates}: it gives the
+seeds of the simulations.}
 
-\item{experiment}{name to the model linked to the experiment}
+\item{experiment}{The name of an experiment of the \code{GAML} file
+\code{model}.}
 
-\item{model}{path to the model linked to the experiment}
+\item{model}{The path to a \code{GAML} file.}
 
-\item{dir}{Either absolute path or name output of directory. In the latter
-case, current directory will be used. If \code{dir} is not
-specified, name of model will be used to create an output
-directory in the current directory.}
+\item{dir}{The path to a directory where the simulations output are saved. If
+not specified (i.e. empty character string, default), then the
+simulations are saved in a subdirectory of the working directory,
+the name of which is made from the name of \code{model}. See
+\code{Details} for more information.}
 
-\item{df}{A data frame used to initialize an experiment object.}
-
-\item{...}{Additional paramaters}
+\item{dic}{A named vector of character strings. The values and the names of
+this vector should be consistent with the names of
+\code{parameters}, \code{obsrates} as well as the variables and
+parameters defined in the \code{model} \code{GAML} file. See
+Details for more information.}
 
 \item{exp}{object to be tested}
 }
 \value{
+An object of call \code{experiment}.
+
 The function returns `TRUE` or `FALSE` depending on whether its
 argument is of chatacter type or not
 }
 \description{
-Create an object of class \code{experiment}
+Allows to build an object of class \code{experiment} from individual parts.
+}
+\details{
+The class \code{experiment} inherits from the class \code{tibble}
+(\code{tbl_df}). It contains parameters values as well as periods of
+observation of the observed variables and it connects to a \code{GAML} file
+that specifies the full model as well as to a directory that contains the
+outputs of simuations.
 
-Tests if an object of type \code{"experiment"} is valid to pass on to gama.
+TO DO: Explains how \code{dir} is made is not specified. Explains what
+\code{dic} is.
 }
 \examples{
-# Experiment constructor with a dataframe and indexes/names of columns
-# indicating parameters, observation rates, tmax and seed
-
-df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
-                "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
-                "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
-                "a" = rep(1000, 5), "b" = rep(1, 5))
-exp1 <- experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),
-                  obsrates = c("S", "I", "R"),
-                  tmax = "a",
-                  seed = "b",
-                  experiment = "sir",
-                  model =
-                    system.file("examples", "sir.gaml", package = "rama"),
-                  df = df)
-exp2 <- experiment(parameters = c(1:5),
-                  obsrates = c(6:8),
-                  tmax = 9,
-                  seed = 10,
-                  experiment = "sir",
-                  model =
-                    system.file("examples", "sir.gaml", package = "rama"),
-                  dir = "my_sir_model",
-                  df = df)
-
-# Experiment constructor that uses for data frames (of paramaters,
-# observation rates, tmax and seed) as input.
-
-df1 <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
-                 "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1))
-df2 <- data.frame("S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5))
-tmax <- rep(1000, 5)
-seed <- rep(1, 5)
-exp3 <- experiment(parameters = df1,
-                   obsrates = df2,
-                   tmax = tmax,
-                   seed = seed,
-                   experiment = "sir",
-                   model =
-                   system.file("examples", "sir.gaml", package = "rama"))
-
 # to test if an object is a class `experiment`
 \dontrun{
 df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
