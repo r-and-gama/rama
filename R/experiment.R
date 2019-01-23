@@ -33,7 +33,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model,
             experiment = experiment,
-            wkdir      = dir,
+            wkdir      = make_wkdir(model, dir),
             dic        = dic,
             dic_rev    = setNames(names(dic), dic))
 }
