@@ -43,7 +43,7 @@ names of the folder where we wish to save the simulations outputs. If not
 specified, the name of the `.gaml` is used by default:
 
 ```{r}
-exp1 <- load_experiment("sir", gaml_file, "sir")
+exp1 <- load_experiment("sir", gaml_file)
 ```
 
 which gives:
@@ -68,16 +68,16 @@ constructor:
 
 ```{r}
 df <- data.frame("S0" = 999, "I0" = 1, "R0" = 0, "beta" = 1.5,
-                 "gama" = 0.15, "S" = 1, "I" = 1, "R" = 1,
+                 "gamma" = 0.15, "S" = 1, "I" = 1, "R" = 1,
                  "a" = 1000, "b" = 1)
 ```
 
 
 ```{r}
-exp2 <- experiment( 
-           parameters = c("S0", "I0", "R0", "beta", "gama"),
+exp2 <- as_experiment(df = df,
+           parameters = c("S0", "I0", "R0", "beta", "gamma"),
            obsrates = c("S", "I", "R"), tmax = "a", seed = "b",
-           experiment = "sir", model = gaml_file, df = df)
+           experiment = "sir", model = gaml_file)
 ```
 
 Which gives the same thing:
@@ -91,11 +91,11 @@ complete:
 
 ```{r}
 df <- data.frame("S0" = c(999, 990), "I0" = c(1, 2), "R0" = 0, "beta" = 1.5,
-                 "gama" = 5, "S" = 1, "I" = 1, "R" = 1,
+                 "gamma" = 5, "S" = 1, "I" = 1, "R" = 1,
                  "a" = 1000, "b" = 1)
-exp3 <- experiment(parameters = c(1:5),
+exp3 <- as_experiment(df = df, parameters = c(1:5),
            obsrates = c(6:8), tmax = "a", seed = "b",
-           experiment = "sir", model = gaml_file, df = df)
+           experiment = "sir", model = gaml_file)
 ```
 
 Which gives:
@@ -119,9 +119,9 @@ df <- expand.grid(S0 = c(900, 950, 999),
                tmax = 1000,
                seed = 1)
 
-exp4 <- experiment(parameters = c(1:5),
+exp4 <- as_experiment(df, parameters = c(1:5),
            obsrates = c(6:8), tmax = "tmax", seed = "seed",
-           experiment = "sir", model = gaml_file, df = df)
+           experiment = "sir", model = gaml_file)
 ```
 
 Which gives:
@@ -159,10 +159,10 @@ df
 
 Let's now transform this data frame into an `experiment`:
 
-```{r eval = F, include = F}
-exp5 <- experiment(parameters = c("S0", "R0", "beta", "gamma"), 
+```{r}
+exp5 <- as_experiment(df, parameters = c("S0", "R0", "beta", "gamma"), 
            obsrates = c("S", "I"), tmax = "tmax", seed = "seed",
-           experiment = "sir", model = gaml_file, df = df)
+           experiment = "sir", model = gaml_file)
 ```
 
 
@@ -264,7 +264,7 @@ Then, we run the experiment by one command `run_experiment`, in which we specify
 the experiment and optionally number of cores, output folder for the results of
 this experiment, parameters file in xml format. 
 
-```{r eval = FALSE}
+```{r}
 output <- run_experiment(exp1)
 ```
 
