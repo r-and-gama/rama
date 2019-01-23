@@ -1,6 +1,7 @@
 # constructor ------------------------------------------------------------------
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            dir = "", dic = NULL) {
+
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
   stopifnot(nrow(parameters) == nrow(obsrates))
@@ -13,14 +14,22 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
 
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
-  parvarnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
+  oldparvarnames <- c(names_param, names_obsrates)
+  newparvarnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
 
-  if (is.null(dic))
-    dic <- setNames(c(parvarnames, "tmax", "seed"),
-                    c(names_param, names_obsrates, "tmax", "seed"))
+  if (is.null(dic)) {
+    dic <- setNames(newparvarnames, oldparvarnames)
+  } else {
+    stopifnot(all(names(dic) %in% oldparvarnames))
+    dic <- c(setNames(paste0("p_", dic[names_param]), names_param),
+             setNames(paste0("r_", dic[names_obsrates]), names_obsrates))
+  }
 
   obsrates[] <- lapply(obsrates, as.integer)
-  structure(setNames(cbind(parameters, obsrates, tmax = as.integer(tmax), seed = seed), dic),
+  structure(setNames(cbind(parameters,
+                           obsrates,
+                           tmax = as.integer(tmax),
+                           seed = seed), c(newparvarnames, "tmax", "seed")),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model,
             experiment = experiment,

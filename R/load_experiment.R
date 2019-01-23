@@ -95,12 +95,12 @@ load_experiment <- function(exp, model, dir = "") {
     if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
     the_names <- names(x)
     dic <- make_dictionary(the_names)
-    dic <- setNames(paste0(prefix, dic), the_names)
+    dic <- setNames(dic, the_names)
     names(x) <- dic
     list(out = x, dic = dic)
   }
-  variables <- make_df_dic(get_variables(out), "r_")
-  parameters <- make_df_dic(get_parameters(out), "p_")
+  variables <- make_df_dic(get_variables(out))
+  parameters <- make_df_dic(get_parameters(out))
   out_attr <- get_attributes(out)
 
   # Returning experiment object:
