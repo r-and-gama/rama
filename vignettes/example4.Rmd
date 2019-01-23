@@ -1,6 +1,5 @@
 ---
 title: "Example: snubbies"
-author: "Patrick Giraudoux and Nicolas Marilleau"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -13,7 +12,8 @@ editor_options:
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
