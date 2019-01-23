@@ -20,7 +20,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                     c(names_param, names_obsrates, "tmax", "seed"))
 
   obsrates[] <- lapply(obsrates, as.integer)
-  structure(cbind(parameters, obsrates, tmax = as.integer(tmax), seed = seed),
+  structure(setNames(cbind(parameters, obsrates, tmax = as.integer(tmax), seed = seed), dic),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model,
             experiment = experiment,
@@ -102,7 +102,7 @@ validate_experiment <- function(x) {
 #'            parameters defined in the \code{model} \code{GAML} file. See
 #'            Details for more information.
 #'
-#' @return An object of call \code{experiment}.
+#' @return An object of class \code{experiment}.
 #'
 #' @export
 #'

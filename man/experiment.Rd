@@ -46,7 +46,7 @@ Details for more information.}
 \item{exp}{object to be tested}
 }
 \value{
-An object of call \code{experiment}.
+An object of class \code{experiment}.
 
 The function returns `TRUE` or `FALSE` depending on whether its
 argument is of chatacter type or not
