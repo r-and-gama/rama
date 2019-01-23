@@ -34,6 +34,6 @@ is.experiment <- function(exp) {
 
   attr <- setdiff(c("class", "model", "experiment", "wkdir", "dic", "dic_rev"),
                   names(attributes(exp)))
-  class <- setdiff(class(exp), c("data.frame", "experiment"))
+  class <- setdiff(class(exp), c("experiment", "tbl_df", "tbl", "data.frame"))
   length(c(attr, class)) == 0
 }
