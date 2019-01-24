@@ -45,25 +45,20 @@ realexp <- function(output, exp){
 
   newoutput <- list()
   for (j in 1:nrow(exp)) {
-
-    curexp <- exp
-    cursimulnum  <- j
     # In the current experiment object,
     # cursimul gives the line of the simulation
-    curoutput    <- output[cursimulnum][[1]]
+    curoutput <- output[j][[1]]
     # build the vector of observed variables
-    curobs <- attributes(curoutput)$names[-1]
+    curobs <- grep("Step", attributes(curoutput)$names,
+                   value = TRUE, invert = TRUE)
     # build the index of the variables whose rate is computed
-    curobsidx <- sapply(X = curobs, function(x) which(colnames(curoutput) == x))
-    # build the vector of text corresponding of the attributes of rates
-    observed <- paste("r_", curobs, sep = "")
+    curobsidx <- grep(paste(curobs, collapse = "|"), names(curoutput))
     # build the index of the variables whose rate is computed
-    ratesidx <- sapply(X = observed, function(x) which(colnames(curexp) == x))
+    ratesidx <- grep(paste(curobs, collapse = "|"), names(exp))
     # retrieve the value of the rates
-    ratesval <- (as.data.frame(curexp)[cursimulnum, ratesidx])
+    ratesval <- as.data.frame(exp)[j, ratesidx]
 
-    curoutput    <- output[cursimulnum][[1]]
-    for (i in 1:length(as.vector(curobsidx))) {
+    for (i in 1:length(curobsidx)) {
       freq <- as.integer(ratesval[i])
       curvalue <- curoutput[, curobsidx[i]]
       max <- length(curvalue)
