@@ -6,7 +6,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   stopifnot(is.data.frame(obsrates))
   stopifnot(nrow(parameters) == nrow(obsrates))
   stopifnot(is.numeric(tmax))
-  stopifnot(is.numeric(seed))
   stopifnot(is.character(experiment))
   stopifnot(is.character(model))
   stopifnot(is.character(dir))
