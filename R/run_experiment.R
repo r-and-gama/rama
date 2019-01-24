@@ -114,7 +114,7 @@ retrieve_results <- function(outfile, exp) {
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
-  new_name <- as.vector(attr(exp, "dic_rev")[lst_name])
+  new_name <- as.vector(attr(exp, "dic_r2g")[lst_name])
   names(tmp) <- new_name
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
@@ -165,7 +165,7 @@ run_experiment <- function(exp, hpc = 1, output_dir = "",
   # get variables names
   vars <- names(exp)[grep("r_", names(exp))]
   vars <- substring(vars, 3)
-  vars <- as.vector(attr(exp, "dic")[vars])
+  vars <- as.vector(attr(exp, "dic_g2r")[vars])
 
   # retrieve all the variables of all the experiments:
   out <- lapply(outfiles, retrieve_results, exp)

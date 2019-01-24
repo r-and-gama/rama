@@ -1,6 +1,6 @@
 # constructor ------------------------------------------------------------------
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
-                           dir = "", dic = NULL) {
+                           dir = "", dic_g2r = NULL) {
 
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
@@ -10,19 +10,19 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   stopifnot(is.character(experiment))
   stopifnot(is.character(model))
   stopifnot(is.character(dir))
-  stopifnot(is.character(dic) | is.null(dic))
+  stopifnot(is.character(dic_g2r) | is.null(dic_g2r))
 
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
   oldparvarnames <- c(names_param, names_obsrates)
   newparvarnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
 
-  if (is.null(dic)) {
-    dic <- setNames(newparvarnames, oldparvarnames)
+  if (is.null(dic_g2r)) {
+    dic_g2r <- setNames(newparvarnames, oldparvarnames)
   } else {
-    stopifnot(all(names(dic) %in% oldparvarnames))
-    dic <- c(setNames(paste0("p_", dic[names_param]), names_param),
-             setNames(paste0("r_", dic[names_obsrates]), names_obsrates))
+    stopifnot(all(names(dic_g2r) %in% oldparvarnames))
+    dic_g2r <- c(setNames(paste0("p_", dic_g2r[names_param]), names_param),
+             setNames(paste0("r_", dic_g2r[names_obsrates]), names_obsrates))
   }
 
   obsrates[] <- lapply(obsrates, as.integer)
@@ -34,8 +34,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
             model      = model,
             experiment = experiment,
             wkdir      = make_wkdir(model, dir),
-            dic        = dic,
-            dic_rev    = setNames(names(dic), dic))
+            dic_g2r    = dic_g2r,
+            dic_r2g    = setNames(names(dic_g2r), dic_g2r))
 }
 
 
@@ -43,12 +43,12 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
 # validator --------------------------------------------------------------------
 validate_experiment <- function(x) {
   model <- model(x)
-  dic <- attr(x, "dic")
-  dic_rev <- attr(x, "dic_rev")
+  dic_g2r <- attr(x, "dic_g2r")
+  dic_r2g <- attr(x, "dic_r2g")
   colnames <- unlist(lapply(c(parameters, obs_rates), function(f) names(f(x))))
 
   check_experiment(name(x), model)
-  test_schar(names(dic))
+  test_schar(names(dic_g2r))
 
   if (any(obs_rates(x) < 0))
     stop("The period of observation should be positive integers.")
@@ -56,10 +56,10 @@ validate_experiment <- function(x) {
   if (any(x$tmax < 0))
     stop("The end steps of simulations should be positive integers.")
 
-  if (length(setdiff(colnames, dic)) > 0)
+  if (length(setdiff(colnames, dic_g2r)) > 0)
     stop("Some variables or parameters names are not in the dictionary.")
 
-  if (setequal(dic, names(dic_rev)) + setequal(names(dic), dic_rev) < 2)
+  if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
     stop("The dictionaries are inconsistent.")
 
   if (length(setdiff(sub("^[pr]_", "", colnames), get_all_names(model))) > 0)

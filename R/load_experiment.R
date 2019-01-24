@@ -91,13 +91,14 @@ load_experiment <- function(exp, model, dir = "") {
   out <- read_gaml_experiment(exp, model)
 
   # Retrieving information:
-  make_df_dic <- function(x, prefix) {
+  make_df_dic <- function(x) {
     if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
     the_names <- names(x)
-    dic <- make_dictionary(the_names)
-    dic <- setNames(dic, the_names)
-    names(x) <- dic
-    list(out = x, dic = dic)
+#    dic <- make_dictionary(the_names)
+#    dic <- setNames(dic, the_names)
+    dic_g2r <- make_dictionary(the_names)
+    names(x) <- dic_g2r
+    list(out = x, dic_g2r = dic_g2r)
   }
   variables <- make_df_dic(get_variables(out))
   parameters <- make_df_dic(get_parameters(out))
@@ -105,7 +106,7 @@ load_experiment <- function(exp, model, dir = "") {
 
   # Returning experiment object:
   experiment(parameters$out, variables$out, out_attr$tmax, out_attr$seed,
-             exp, model, dir, c(parameters$dic, variables$dic))
+             exp, model, dir, c(parameters$dic_g2r, variables$dic_g2r))
 }
 
 
