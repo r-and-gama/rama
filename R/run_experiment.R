@@ -114,7 +114,7 @@ retrieve_results <- function(outfile, exp) {
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
-  new_name <- as.vector(attr(exp, "dic_r2g")[lst_name])
+  new_name <- as.vector(attr(exp, "dic_g2r")[lst_name])
   names(tmp) <- new_name
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
