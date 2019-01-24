@@ -29,16 +29,12 @@ df <-   data.frame(S0 = c(900, 800, 500),
                   nbiter = 1000,
                   seed = "123456789")
 
-(exp0 <- experiment(
- parameters = c("S0","I0","R0","beta","gamma"),
- obsrates  = c("S", "I", "R"),
- tmax = "nbiter",
- seed = "seed",
- experiment = "sir",
- model = system.file("examples", "sir.gaml", package = "rama"),
- dir = "testsir",
- df
-))
+exp0 <- as_experiment(df, parameters = c("S0","I0","R0","beta","gamma"),
+                      obsrates  = c("S", "I", "R"),
+                      tmax = "nbiter", seed = "seed", experiment = "sir",
+                      model =
+                       system.file("examples", "sir.gaml", package = "rama"))
+
 otp <- run_experiment(exp0)
 new_output <- fill_experiment(otp, exp0)
 

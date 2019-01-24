@@ -26,16 +26,11 @@
 #'                   nbiter = 1000,
 #'                   seed = "123456789")
 #'
-#' exp0 <- experiment(
-#'  parameters = c("S0","I0","R0","beta","gamma"),
-#'  obsrates  = c("S", "I", "R"),
-#'  tmax = "nbiter",
-#'  seed = "seed",
-#'  experiment = "sir",
-#'  model = system.file("examples", "sir.gaml", package = "rama"),
-#'  dir = "testsir",
-#'  df
-#' )
+#' exp0 <- as_experiment(df, parameters = c("S0","I0","R0","beta","gamma"),
+#'                       obsrates  = c("S", "I", "R"),
+#'                       tmax = "nbiter", seed = "seed", experiment = "sir",
+#'                       model =
+#'                        system.file("examples", "sir.gaml", package = "rama"))
 #'
 #' plot_params(exp0)
 #'
@@ -52,8 +47,7 @@ plot_params <- function(exp) {
   allvar <- sort(allvar[ allvar != 0], decreasing = TRUE)
   if (length(allvar) == 0) return(paste(
     "There is only one set of parameters for these", nrow(exp), "experiments"))
-
-  worthidx <- sapply(X = names(allvar), function(x) which(colnames(exp) == x))
+  worthidx <- grep(paste(names(allvar), collapse = "|"), names(exp))
   topidx <- if (length(worthidx) != 0) {
     worthidx[1:min(3, length(worthidx))]
     } else {
@@ -62,6 +56,7 @@ plot_params <- function(exp) {
   n <- length(topidx)
 
   # check n the number of parameters to be plotted
+  exp <- as.data.frame(exp)
   # if n is equal to 0
   if (n == 0) stop(paste0("There is no parameters to plot in this experiment"))
   if (n == 1) stripchart(exp[, topidx[1]], xlab = colnames(exp)[topidx[1]])
