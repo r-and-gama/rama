@@ -12,5 +12,5 @@ exp0 <- as_experiment(df, parameters = c("S0","I0","R0","beta","gamma"),
                       obsrates  = c("S", "I", "R"),
                       tmax = "nbiter", seed = "seed", experiment = "sir",
                       model =
-                       system.file("examples", "sir.gaml", package = "rama"))
+                       system.file("models", "sir.gaml", package = "rama"))
 plot_params(exp0)

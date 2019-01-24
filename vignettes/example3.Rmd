@@ -22,7 +22,7 @@ devtools::install_github("choisy/gamar")
 library(gamar)
 defpath("/Applications/Gama.app")
 # Extract the model parameters from the definition of the model sir.gaml
-experimentSIR <- getmodelparameter(paste0(system.file("examples",package="gamar"),"/sir.gaml"),"sir")
+experimentSIR <- getmodelparameter(paste0(system.file("models",package="gamar"),"/sir.gaml"),"sir")
 getparameternames(experimentSIR)
 # Define a first type of experiments on SIR having the same initial value
 # called experimentA with S0=950, I0=50 and R0=0

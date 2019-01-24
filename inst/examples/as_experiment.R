@@ -1,5 +1,5 @@
 # A first example:
-rm(sir1)
+if (exists("sir1", inherits = FALSE)) rm(sir1)
 df <- as.data.frame(repl(sir1, 5))
 exp_name <- name(sir1)
 gaml_file <- model(sir1)

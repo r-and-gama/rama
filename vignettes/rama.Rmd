@@ -35,7 +35,7 @@ the `experiment()` constructor.
 Let's use the following `gaml` file:
 
 ```{r}
-gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+gaml_file <- system.file("models", "sir.gaml", package = "rama")
 ```
 
 Loading the experiment `sir` from this file. Note that we also indicate the

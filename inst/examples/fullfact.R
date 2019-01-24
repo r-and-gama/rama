@@ -1,5 +1,6 @@
-sir1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-                         package = "rama"), "sir")
+sir1 <- load_experiment("sir",
+                        system.file("models", "sir.gaml", package = "rama"),
+                        "sir")
 # 1. First type of use: tranforming an experiment into one with a full
 # factorial design:
 sir2 <- sir1

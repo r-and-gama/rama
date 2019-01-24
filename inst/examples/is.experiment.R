@@ -9,5 +9,5 @@ exp <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),
                      seed = "b",
                      experiment = "sir",
                      model =
-                       system.file("examples", "sir.gaml", package = "rama"))
+                       system.file("models", "sir.gaml", package = "rama"))
 is.experiment(exp)

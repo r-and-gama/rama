@@ -26,7 +26,7 @@ The GAML file is parsed directly from R and does not requires to launch java
 and GAMA. Thus, much faster!
 }
 \examples{
-file <- system.file("examples", "sir.gaml", package = "rama")
+file <- system.file("models", "sir.gaml", package = "rama")
 get_parameters_names(file)
 get_variables_names(file)
 get_all_names(file)

@@ -27,8 +27,9 @@ inputed \code{experiment} object. Any of these columns can be replaced by
 user-defined vectors of values, see examples.
 }
 \examples{
-sir1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-                         package = "rama"), "sir")
+sir1 <- load_experiment("sir",
+                        system.file("models", "sir.gaml", package = "rama"),
+                        "sir")
 # 1. First type of use: tranforming an experiment into one with a full
 # factorial design:
 sir2 <- sir1

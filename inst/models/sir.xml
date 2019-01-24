@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Experiment_plan>
- <Simulation id="1" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+ <Simulation id="1" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="1"/>
    <Parameter name="I0" type="FLOAT" value="1"/>
@@ -14,7 +14,7 @@
    <Output id="2" name="R" framerate="1"/>
   </Outputs>
  </Simulation>
- <Simulation id="2" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+ <Simulation id="2" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="1"/>
    <Parameter name="I0" type="FLOAT" value="1"/>
@@ -28,7 +28,7 @@
    <Output id="2" name="R" framerate="1"/>
   </Outputs>
  </Simulation>
- <Simulation id="3" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+ <Simulation id="3" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="1"/>
    <Parameter name="I0" type="FLOAT" value="1"/>
@@ -42,7 +42,7 @@
    <Output id="2" name="R" framerate="1"/>
   </Outputs>
  </Simulation>
- <Simulation id="4" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+ <Simulation id="4" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="1"/>
    <Parameter name="I0" type="FLOAT" value="1"/>
@@ -56,7 +56,7 @@
    <Output id="2" name="R" framerate="1"/>
   </Outputs>
  </Simulation>
- <Simulation id="5" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/examples/sir.gaml" experiment="sir">
+ <Simulation id="5" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml" experiment="sir">
   <Parameters>
    <Parameter name="S0" type="FLOAT" value="1"/>
    <Parameter name="I0" type="FLOAT" value="1"/>

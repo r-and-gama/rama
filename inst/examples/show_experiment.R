@@ -1,2 +1,2 @@
-gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+gaml_file <- system.file("models", "sir.gaml", package = "rama")
 show_experiment(gaml_file)

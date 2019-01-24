@@ -25,8 +25,8 @@ library(gamar)
 
 ```{r}
 defpath("/Applications/Gama.app")
-myModelPath <- "/Users/jdz/git/gamar/inst/examples"
-#(myModelFile <- paste0(system.file("examples",package="gamar"),"/cluster_ind.gaml"))
+myModelPath <- "/Users/jdz/git/gamar/inst/models"
+#(myModelFile <- paste0(system.file("models",package="gamar"),"/cluster_ind.gaml"))
 (myModelFile <- paste0(myModelPath,"/NicolasPred.gaml"))
 ```
 

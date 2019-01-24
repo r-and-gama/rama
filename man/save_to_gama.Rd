@@ -23,7 +23,7 @@ specified, name of `exp`` is used.}
 Save an object of class \code{experiment} to an XML file GAMA-compliant.
 }
 \examples{
-gaml_file <- system.file("examples", "sir.gaml", package = "rama")
+gaml_file <- system.file("models", "sir.gaml", package = "rama")
 exp1 <- load_experiment("sir", gaml_file, "sir")
 save_to_gama(exp1)
 }

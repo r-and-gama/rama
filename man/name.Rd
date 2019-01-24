@@ -25,6 +25,6 @@ linked to.
 }
 \examples{
 exp1 <- load_experiment("sir",
-                        system.file("examples", "sir.gaml", package = "rama"))
+                        system.file("models", "sir.gaml", package = "rama"))
 name(exp1)
 }
