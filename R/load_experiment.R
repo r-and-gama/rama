@@ -77,7 +77,7 @@ load_experiment <- function(exp, model, dir = "") {
   check_experiment(exp, model)
 
   # Reading GAML file:
-  message(paste0("Loading experiment \"", exp,
+  message(cat("Loading experiment \"", exp,
                  "\" from file \"", basename(model), "\"..."))
   out <- read_gaml_experiment(exp, model)
 

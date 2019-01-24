@@ -20,8 +20,8 @@
 #' @export
 #'
 plot_params <- function(exp) {
-  if (nrow(exp) == 0) return("There is no simulation in this experiment")
-  if (nrow(exp) == 1) return(
+  if (nrow(exp) == 0) stop("There is no simulation in this experiment")
+  if (nrow(exp) == 1) stop(
     "There is only one simulation in this experiment so no ")
 
   allvar <- sapply(parameters(exp), var)
@@ -39,7 +39,7 @@ plot_params <- function(exp) {
   # check n the number of parameters to be plotted
   exp <- as.data.frame(exp)
   # if n is equal to 0
-  if (n == 0) stop(paste0("There is no parameters to plot in this experiment"))
+  if (n == 0) stop("There is no parameters to plot in this experiment")
   if (n == 1) stripchart(exp[, topidx[1]], xlab = colnames(exp)[topidx[1]])
   if (n == 2) scatter2D(exp[, topidx[1]], exp[, topidx[2]],
                       xlab = colnames(exp)[topidx[1]],

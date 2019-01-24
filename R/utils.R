@@ -63,7 +63,7 @@ make_wkdir <- function(model, dir = "") {
   if (dir == "") {
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
-    message(paste0("Using default directory name \"", dir,
+    message(cat("Using default directory name \"", dir,
                    "\" in current directory \"", getwd(), "\"."))
   }
 
@@ -79,7 +79,7 @@ make_wkdir <- function(model, dir = "") {
   }
 
   dir.create(wk_dir, recursive = TRUE)
-  message(paste0("Simulations results will be saved in \"", wk_dir, "\"."))
+  message(cat("Simulations results will be saved in \"", wk_dir, "\"."))
   normalizePath(wk_dir)
 }
 
@@ -168,7 +168,7 @@ download_gama <- function() {
 setup_gama_ui <- function() {
   defaultjar <- ""
   repeat{
-    message("Give the path of Gama platform or [Q]uit:")
+    message(cat("Give the path of Gama platform or [Q]uit:"))
     answer <- readline()
     if (answer[1] == "Q" | answer[1] == "q" ) return(NA)
     defaultjar <- is_gama_installed(answer)
@@ -207,13 +207,13 @@ setup_gama <- function(path = NA) {
     return(NA)
   }
   if (is_gama_installed()) {
-    message("Gama is already installed, do you want to setup a new one ? ")
+    message(cat("Gama is already installed, do you want to setup a new one ? "))
     answer <- toupper(readline("[Y]es/[N]"))
     if (answer[1] == "N") return(NA)
   }
 
   repeat {
-    message("Do you want to download the last version of Gama?")
+    message(cat("Do you want to download the last version of Gama?"))
     answer <- toupper(readline(" [Y]es/[N] or [K]eep my current version."))
     if (answer[1] == "Y" | answer[1] == "N" | answer[1] == "K") break
     else print("Sorry, I din't understand... try again")
