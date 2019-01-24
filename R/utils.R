@@ -18,7 +18,8 @@ read_gaml_experiment <- function(exp, model) {
 test_schar <- function(x) {
   if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
     stop(paste0("The rama package does not support the specials characters `<`",
-                ", `>`, `&` and `'` in parameters, outputs and experiments names."))
+                ", `>`, `&` and `'` in parameters,",
+                " outputs and experiments names."))
   }
 }
 
@@ -37,7 +38,8 @@ check_experiment <- function(exp, model) {
   # check if the requested experiment has a valid (i.e. "GUI") type:
   type <- exp_info$type[exp_info$experiment == exp]
   if (type != "gui")
-    stop(paste0("Experiments of type \"", type, "\" are not supported by rama."))
+    stop(paste0("Experiments of type \"", type,
+                "\" are not supported by rama."))
   invisible(0)
 }
 

@@ -63,7 +63,8 @@ validate_experiment <- function(x) {
 
   if (length(setdiff(sub("^[pr]_", "", colnames), get_all_names(model))) > 0)
     stop(paste("The names of parameters and observed variables in experiment",
-               substitute(x), "do not correspond to the names of parameters and",
+               substitute(x),
+               "do not correspond to the names of parameters and",
                "variables defined in the", model, "file."))
 
   x
@@ -119,4 +120,3 @@ experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   validate_experiment(new_experiment(parameters, obsrates, tmax, seed,
                                      experiment, model, dir, dic))
 }
-

@@ -28,7 +28,8 @@
 #'
 #' @example inst/examples/as_experiment.R
 as_experiment <- function(df, parameters = NULL, obsrates = NULL, tmax = "tmax",
-                          seed = "seed", experiment, model, dir = "", dic = NULL) {
+                          seed = "seed", experiment, model, dir = "",
+                          dic = NULL) {
 
   if (missing(experiment))
     stop ("A name of experiment should be provided for argument 'experiment'.")

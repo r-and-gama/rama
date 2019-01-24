@@ -62,12 +62,10 @@ save_to_gama.default <- function(exp, parameter_xml_file)
 save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
   check_experiment(attr(exp, "experiment"), model(exp))
   params <- parameters(exp)
-#  param_names <- attr(exp, "dic_r2g")[gsub("p_", "", names(params))]
   param_names <- attr(exp, "dic_r2g")[names(params)]
   params <- as.list(as.data.frame(t(params)))
 
   obsrates <- obs_rates(exp)
-#  obsrates_names <- attr(exp, "dic_r2g")[gsub("r_", "", names(obsrates))]
   obsrates_names <- attr(exp, "dic_r2g")[names(obsrates)]
   obsrates <- as.list(as.data.frame(t(obsrates)))
 

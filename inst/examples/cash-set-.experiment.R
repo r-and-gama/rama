@@ -1,5 +1,7 @@
 # Here is an experiment with 1 simulation:
-sir1 <- load_experiment("sir", system.file("models", "sir.gaml", package = "rama"), "sir")
+sir1 <- load_experiment("sir",
+                        system.file("models", "sir.gaml", package = "rama"),
+                        "sir")
 sir1
 # Let's replace the value of the "p_S0" column by a vector of 3 values:
 sir2 <- sir1

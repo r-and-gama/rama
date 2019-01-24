@@ -88,7 +88,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
   if (ncol(x) < 1) {
 
     cat(
-      "Experiment without any simulation, tunable parameter or observed variable\n")
+      "Experiment without any simulation, ",
+      "tunable parameter or observed variable\n")
     print_info()
 
   } else {

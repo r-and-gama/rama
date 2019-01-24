@@ -85,8 +85,6 @@ load_experiment <- function(exp, model, dir = "") {
   make_df_dic <- function(x) {
     if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
     the_names <- names(x)
-#    dic <- make_dictionary(the_names)
-#    dic <- setNames(dic, the_names)
     dic_g2r <- make_dictionary(the_names)
     names(x) <- dic_g2r
     list(out = x, dic_g2r = dic_g2r)
@@ -99,6 +97,3 @@ load_experiment <- function(exp, model, dir = "") {
   experiment(parameters$out, variables$out, out_attr$tmax, out_attr$seed,
              exp, model, dir, c(parameters$dic_g2r, variables$dic_g2r))
 }
-
-
-
