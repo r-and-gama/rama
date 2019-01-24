@@ -24,7 +24,7 @@ Retrieves the name of the experiment that an \code{experiment} object is
 linked to.
 }
 \examples{
-exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
+exp1 <- load_experiment("sir",
+                        system.file("examples", "sir.gaml", package = "rama"))
 name(exp1)
-
 }

@@ -46,13 +46,7 @@ generate_obsrate <- function(obsrate, names){
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #' @importFrom purrr map2 pmap
 #' @importFrom dplyr case_when
-#' @examples
-#' #load experiment
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' exp1 <- load_experiment("sir", gaml_file, "sir")
-#'
-#' save_to_gama(exp1)
-#'
+#' @example inst/examples/save_to_gama.R
 #' @rdname save_to_gama
 #' @export
 

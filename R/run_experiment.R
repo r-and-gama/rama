@@ -10,37 +10,7 @@
 #' @param exp An object of class \code{experiment}.
 #'
 #' @return Returns a list of dataframes, one for each experiment.
-#'
-#' @examples
-#'df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
-#'                   I0 = c(100, 200, 500),
-#'                   R0 = 0,
-#'                   beta = 1.5,
-#'                   gamma = .15,
-#'                   S = c(1,2,3),
-#'                   I = c(2,4,6),
-#'                   R =c(10,20,30),
-#'                   nbiter = 1000,
-#'                   seed = "123456789")
-#'
-#'exp0 <- experiment(
-#'  df,
-#'  parameters = c("S0","I0","R0","beta","gamma"),
-#'  obsrates  = c("S", "I", "R"),
-#'  tmax = "nbiter",
-#'  seed = "seed",
-#'  experiment = "sir",
-#'  model = system.file("examples", "sir.gaml", package = "rama"),
-#'  dir = "testsir"
-#')
-#'
-#'
-#'exp0
-#'otp <- run_experiment(exp0)
-#'str(otp)
-#'newoutput <- realexp(otp,exp0)
-#'str(newoutput)
-#'@noRd
+#' @noRd
 realexp <- function(output, exp){
 
   newoutput <- list()
@@ -134,12 +104,7 @@ retrieve_results <- function(outfile, exp) {
 #'                           in the working directory of `exp`. If not
 #'                           specified, name of `exp` is used.
 #'
-#' @examples
-#' #load experiment
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' exp1 <- load_experiment("sir", gaml_file, "sir")
-#' # run experiment
-#' out <- run_experiment(exp1)
+#' @example inst/examples/run_experiment.R
 #' @export
 run_experiment <- function(exp, hpc = 1, output_dir = "",
                            parameter_xml_file = "") {

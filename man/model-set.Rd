@@ -21,5 +21,4 @@ model(exp1)
 model(exp1) <-  system.file("examples", "CopyOfsir.gaml",
                         package = "rama")
 model(exp1)
-
 }

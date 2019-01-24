@@ -66,16 +66,7 @@ check_param_type <- function(exp, model) {
 #' experiment's simulations. If empty character string (default), the name of
 #' the GAML file will be used to name the simulations' output directory.
 #'
-#' @examples
-#' # Listing the models available in the "examples" directory of the "rama" library:
-#' dir(system.file("examples", package = "rama"))
-#'
-#' # Loading experiment "sir" from the "sir.gaml" file:
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
-#'
-#' # Checking the class:
-#' class(exp1)
-#'
+#' @example inst/examples/load_experiment.R
 #' @importFrom XML xmlToList xmlParse
 #' @importFrom tibble as_tibble
 #'

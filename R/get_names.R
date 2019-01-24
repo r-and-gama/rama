@@ -27,12 +27,7 @@ get_names_template <- function(x) {
 #'
 #' @export
 #'
-#' @examples
-#' file <- system.file("examples", "sir.gaml", package = "rama")
-#' get_parameters_names(file)
-#' get_variables_names(file)
-#' get_all_names(file)
-#'
+#' @example inst/examples/get_parameters_names.R
 get_parameters_names <- get_names_template("parameter")
 
 

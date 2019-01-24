@@ -66,20 +66,16 @@ TO DO: Explains how \code{dir} is made is not specified. Explains what
 }
 \examples{
 # to test if an object is a class `experiment`
-\dontrun{
 df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
-                "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
-                "S" = rep(NA, 5), "I" = rep(1, 5), "R" = rep(1, 5),
+                "beta" = rep(1.5, 5), "gamma" = runif (5, 0, 1),
+                "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
                 "a" = rep(1000, 5), "b" = rep(1, 5))
-exp <- experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),
-                  obsrates = c("S", "I", "R"),
-                  tmax = "a",
-                  seed = "b",
-                  experiment = "sir",
-                  model =
-                    system.file("examples", "sir.gaml", package = "rama"),
-                  df = df)
-# expected an error because the input contains "NA"
+exp <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),
+                     obsrates = c("S", "I", "R"),
+                     tmax = "a",
+                     seed = "b",
+                     experiment = "sir",
+                     model =
+                       system.file("examples", "sir.gaml", package = "rama"))
 is.experiment(exp)
-}
 }

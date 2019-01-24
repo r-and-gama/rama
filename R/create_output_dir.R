@@ -9,14 +9,7 @@
 #' @param dir name of directory to save the output of gama in the experiment
 #'            output directory. If not specified, experiment name will be used.
 #'
-#' @examples
-#' #load experiment
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' exp1 <- load_experiment("sir", gaml_file, "sir")
-#'
-#' #create path to folder in working direction
-#' output_dir <- create_output_dir(exp1, "")
-#' parameter_xml_file <-  paste0(name(exp1), ".xml")
+#' @example inst/examples/create_output_dir.R
 #' @export
 create_output_dir <-  function(exp, dir = "") {
   wkdir <- output_dir(exp)

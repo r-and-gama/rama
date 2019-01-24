@@ -7,10 +7,7 @@
 #' @importFrom stringr str_match_all str_match regex str_detect
 #' @importFrom purrr map
 #'
-#' @examples
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' show_experiment(gaml_file)
-#'
+#' @example inst/examples/show_experiment.R
 #' @export
 show_experiment <- function(file){
   if (!file.exists(file)) {

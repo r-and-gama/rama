@@ -14,14 +14,7 @@
 #' @return An object of class \code{experiment} that is the replication of the
 #' inputed \code{x} argument.
 #'
-#' @examples
-#' exp <- load_experiment("sir", system.file("examples", "sir.gaml",
-#'                         package = "rama"))
-#' exp1 <- repl(exp, times = 4)
-#'
-#' exp1$seed <- c(1:4)
-#' repl(exp1, times = c("1" = 3, "4" = 5))
-#'
+#' @example inst/examples/repl.R
 #' @export
 repl <- function(exp, times = NULL) UseMethod("repl")
 
@@ -52,7 +45,6 @@ repl.experiment <- function(exp, times = NULL) {
                    return(tmp)
                   }
                  )))
-    row.names(out) <- c(1:nrow(out))
     return(out)
   }
 }

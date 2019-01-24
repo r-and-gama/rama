@@ -29,7 +29,6 @@ user-defined vectors of values, see examples.
 \examples{
 sir1 <- load_experiment("sir", system.file("examples", "sir.gaml",
                          package = "rama"), "sir")
-
 # 1. First type of use: tranforming an experiment into one with a full
 # factorial design:
 sir2 <- sir1
@@ -44,5 +43,4 @@ fullfact(sir2)
 # 2. Second type of use: by providing vectors of values to overwrite elements
 # of the "experiment" object and then expand it into full factorial design:
 fullfact(sir2, p_S0 = 1:3, p_I0 = 4:5)
-
 }
