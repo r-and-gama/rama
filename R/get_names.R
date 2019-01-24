@@ -39,14 +39,14 @@ get_parameters_names <- get_names_template("parameter")
 
 # get_variables_names ----------------------------------------------------------
 #' @rdname get_parameters_names
-#'
+#' @export
 get_variables_names <- get_names_template("monitor")
 
 
 
 # get_all_names ----------------------------------------------------------------
 #' @rdname get_parameters_names
-#'
+#' @export
 get_all_names <- function(file) {
   unlist(lapply(c("parameter", "monitor"), get_names, readLines(file)))
 }

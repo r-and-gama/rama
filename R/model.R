@@ -49,6 +49,7 @@ model.experiment <- function(exp) attributes(exp)$model
 `model<-.default` <- function(exp, value) "Unknown class"
 
 #' @rdname `model<-`
+#' @importFrom utils capture.output
 #' @export
 `model<-.experiment` <- function(exp, value){
   # check if experiment name and type are valid in the requested model
