@@ -18,6 +18,6 @@ is.experiment <- function(exp) {
   attr <- setdiff(c("class", "model", "experiment", "wkdir", "dic_g2r",
                     "dic_r2g"),
                   names(attributes(exp)))
-  class <- setdiff(class(exp), c("experiment", "tbl_df", "tbl", "data.frame"))
+  class <- setdiff(class(exp), c("data.frame", "tbl_df", "tbl", "experiment"))
   length(c(attr, class)) == 0
 }
