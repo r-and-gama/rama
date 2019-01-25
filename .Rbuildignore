@@ -6,7 +6,6 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README-.*\.png$
-^building_package_and_website/.*$
 building_package_and_website
 tidyverse.R
 pkgdown
