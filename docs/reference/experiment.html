@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an object of class <code>experiment</code> — experiment • rama</title>
+<title>Constructor of experiments — experiment • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,10 +37,9 @@
 
 
 
-<meta property="og:title" content="Create an object of class <code>experiment</code> — experiment" />
+<meta property="og:title" content="Constructor of experiments — experiment" />
 
-<meta property="og:description" content="Create an object of class experiment
-Tests if an object of type &quot;experiment&quot; is valid to pass on to gama." />
+<meta property="og:description" content="Allows to build an object of class experiment from individual parts." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -154,34 +153,19 @@ Tests if an object of type &quot;experiment&quot; is valid to pass on to gama." 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create an object of class <code>experiment</code></h1>
+    <h1>Constructor of experiments</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/experiment.R'><code>R/experiment.R</code></a>, <a href='https://github.com/r-and-gama/rama/blob/master/R/is.experiment.R'><code>R/is.experiment.R</code></a></small>
     <div class="hidden name"><code>experiment.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create an object of class <code>experiment</code></p>
-<p>Tests if an object of type <code>"experiment"</code> is valid to pass on to gama.</p>
+    <p>Allows to build an object of class <code>experiment</code> from individual parts.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>experiment</span>()
-
-<span class='fu'>experiment.default</span>(<span class='no'>parameters</span>, <span class='no'>obsrates</span>, <span class='no'>tmax</span>, <span class='no'>seed</span>, <span class='no'>experiment</span>, <span class='no'>model</span>,
-  <span class='no'>dir</span>, <span class='no'>df</span>)
-
-<span class='fu'>experiment.character</span>(<span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>experiment.numeric</span>(<span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>experiment.data.frame</span>(<span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>experiment</span>(<span class='no'>parameters</span>, <span class='no'>obsrates</span>, <span class='no'>tmax</span>, <span class='no'>seed</span>, <span class='no'>experiment</span>, <span class='no'>model</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>dic</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</pre>
     
@@ -190,46 +174,51 @@ Tests if an object of type &quot;experiment&quot; is valid to pass on to gama." 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>parameters</th>
-      <td><p>Vector of column names or indexes in the <code>df</code> that
-will be used as parameters in the experiment.</p></td>
+      <td><p>A data frame of numerical values giving the values of each
+parameter (in column), for each simulation (in row).</p></td>
     </tr>
     <tr>
       <th>obsrates</th>
-      <td><p>Vector of column names or indexes in the <code>df</code> that will
-be used as obs_rates rats in the experiment.</p></td>
+      <td><p>A data frame of positive integer values giving the periods,
+in time steps, at which observed variables are observed.
+Should have the same number of rows as <code>parameters</code>.</p></td>
     </tr>
     <tr>
       <th>tmax</th>
-      <td><p>Name or index of the column in the <code>df</code> that will be
-used as final step in the experiment.</p></td>
+      <td><p>A positive integer vector, the length of which is either 1 or
+equal to the number of <code>parameters</code> and <code>obsrates</code>: it
+gives the end of simulations, in numbers of time steps.</p></td>
     </tr>
     <tr>
       <th>seed</th>
-      <td><p>Name or index of the column in the <code>df</code> that will be
-used as seed in the experiment.</p></td>
+      <td><p>A numerical vector, the length of which is either 1 or equal to
+the number of <code>parameters</code> and <code>obsrates</code>: it gives the
+seeds of the simulations.</p></td>
     </tr>
     <tr>
       <th>experiment</th>
-      <td><p>name to the model linked to the experiment</p></td>
+      <td><p>The name of an experiment of the <code>GAML</code> file
+<code>model</code>.</p></td>
     </tr>
     <tr>
       <th>model</th>
-      <td><p>path to the model linked to the experiment</p></td>
+      <td><p>The path to a <code>GAML</code> file.</p></td>
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>Either absolute path or name output of directory. In the latter
-case, current directory will be used. If <code>dir</code> is not
-specified, name of model will be used to create an output
-directory in the current directory.</p></td>
+      <td><p>The path to a directory where the simulations output are saved. If
+not specified (i.e. empty character string, default), then the
+simulations are saved in a subdirectory of the working directory,
+the name of which is made from the name of <code>model</code>. See
+<code>Details</code> for more information.</p></td>
     </tr>
     <tr>
-      <th>df</th>
-      <td><p>A data frame used to initialize an experiment object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional paramaters</p></td>
+      <th>dic</th>
+      <td><p>A named vector of character strings. The values and the names of
+this vector should be consistent with the names of
+<code>parameters</code>, <code>obsrates</code> as well as the variables and
+parameters defined in the <code>model</code> <code>GAML</code> file. See
+Details for more information.</p></td>
     </tr>
     <tr>
       <th>exp</th>
@@ -239,66 +228,45 @@ directory in the current directory.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function returns `TRUE` or `FALSE` depending on whether its
+    <p>An object of class <code>experiment</code>.</p>
+<p>The function returns `TRUE` or `FALSE` depending on whether its
 argument is of chatacter type or not</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The class <code>experiment</code> inherits from the class <code>tibble</code>
+(<code>tbl_df</code>). It contains parameters values as well as periods of
+observation of the observed variables and it connects to a <code>GAML</code> file
+that specifies the full model as well as to a directory that contains the
+outputs of simuations.</p>
+<p>TO DO: Explains how <code>dir</code> is made is not specified. Explains what
+<code>dic</code> is.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Experiment constructor with a dataframe and indexes/names of columns</span>
-<span class='co'># indicating parameters, observation rates, tmax and seed</span>
-
+    <pre class="examples"><div class='input'><span class='fu'>experiment</span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S0</span> <span class='kw'>=</span> <span class='fl'>999</span>, <span class='kw'>I0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>.15</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fl'>1</span>),
+  <span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using default directory name " sir " in current directory " /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_41 ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+#&gt; experiment name:     sir 
+#&gt; input gaml file:     /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_41 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># to test if an object is a class `experiment`</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='st'>"S0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>999</span>, <span class='fl'>5</span>), <span class='st'>"I0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"R0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>),
-                <span class='st'>"beta"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1.5</span>, <span class='fl'>5</span>), <span class='st'>"gama"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>1</span>),
+                <span class='st'>"beta"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1.5</span>, <span class='fl'>5</span>), <span class='st'>"gamma"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>1</span>),
                 <span class='st'>"S"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"I"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"R"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>),
                 <span class='st'>"a"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1000</span>, <span class='fl'>5</span>), <span class='st'>"b"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
-<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>experiment</span>(<span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S0"</span>, <span class='st'>"I0"</span>, <span class='st'>"R0"</span>, <span class='st'>"beta"</span>, <span class='st'>"gama"</span>),
-                  <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>),
-                  <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"a"</span>,
-                  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"b"</span>,
-                  <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
-                  <span class='kw'>model</span> <span class='kw'>=</span>
-                    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
-                  <span class='kw'>df</span> <span class='kw'>=</span> <span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='error'>Error in experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),     obsrates = c("S", "I", "R"), tmax = "a", seed = "b", experiment = "sir",     model = system.file("examples", "sir.gaml", package = "rama"),     df = df): arguments inutilisés (parameters = c("S0", "I0", "R0", "beta", "gama"), obsrates = c("S", "I", "R"), tmax = "a", seed = "b", experiment = "sir", model = system.file("examples", "sir.gaml", package = "rama"), df = df)</span></div><div class='input'><span class='no'>exp2</span> <span class='kw'>&lt;-</span> <span class='fu'>experiment</span>(<span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>),
-                  <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>6</span>:<span class='fl'>8</span>),
-                  <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='fl'>9</span>,
-                  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-                  <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
-                  <span class='kw'>model</span> <span class='kw'>=</span>
-                    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
-                  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"my_sir_model"</span>,
-                  <span class='kw'>df</span> <span class='kw'>=</span> <span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='error'>Error in experiment(parameters = c(1:5), obsrates = c(6:8), tmax = 9,     seed = 10, experiment = "sir", model = system.file("examples",         "sir.gaml", package = "rama"), dir = "my_sir_model",     df = df): arguments inutilisés (parameters = c(1:5), obsrates = c(6:8), tmax = 9, seed = 10, experiment = "sir", model = system.file("examples", "sir.gaml", package = "rama"), dir = "my_sir_model", df = df)</span></div><div class='input'>
-<span class='co'># Experiment constructor that uses for data frames (of paramaters,</span>
-<span class='co'># observation rates, tmax and seed) as input.</span>
-
-<span class='no'>df1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='st'>"S0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>999</span>, <span class='fl'>5</span>), <span class='st'>"I0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"R0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>),
-                 <span class='st'>"beta"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1.5</span>, <span class='fl'>5</span>), <span class='st'>"gama"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))
-<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='st'>"S"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"I"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"R"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
-<span class='no'>tmax</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1000</span>, <span class='fl'>5</span>)
-<span class='no'>seed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>)
-<span class='no'>exp3</span> <span class='kw'>&lt;-</span> <span class='fu'>experiment</span>(<span class='kw'>parameters</span> <span class='kw'>=</span> <span class='no'>df1</span>,
-                   <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='no'>df2</span>,
-                   <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='no'>tmax</span>,
-                   <span class='kw'>seed</span> <span class='kw'>=</span> <span class='no'>seed</span>,
-                   <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
-                   <span class='kw'>model</span> <span class='kw'>=</span>
-                   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in experiment(parameters = df1, obsrates = df2, tmax = tmax, seed = seed,     experiment = "sir", model = system.file("examples", "sir.gaml",         package = "rama")): arguments inutilisés (parameters = df1, obsrates = df2, tmax = tmax, seed = seed, experiment = "sir", model = system.file("examples", "sir.gaml", package = "rama"))</span></div><div class='input'>
-# to test if an object is a class `experiment`
-</div><span class='co'># NOT RUN {</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='st'>"S0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>999</span>, <span class='fl'>5</span>), <span class='st'>"I0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"R0"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>),
-                <span class='st'>"beta"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1.5</span>, <span class='fl'>5</span>), <span class='st'>"gama"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>1</span>),
-                <span class='st'>"S"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>NA</span>, <span class='fl'>5</span>), <span class='st'>"I"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='st'>"R"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>),
-                <span class='st'>"a"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1000</span>, <span class='fl'>5</span>), <span class='st'>"b"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
-<span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'>experiment</span>(<span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S0"</span>, <span class='st'>"I0"</span>, <span class='st'>"R0"</span>, <span class='st'>"beta"</span>, <span class='st'>"gama"</span>),
-                  <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>),
-                  <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"a"</span>,
-                  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"b"</span>,
-                  <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
-                  <span class='kw'>model</span> <span class='kw'>=</span>
-                    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
-                  <span class='kw'>df</span> <span class='kw'>=</span> <span class='no'>df</span>)
-<span class='co'># expected an error because the input contains "NA"</span>
-<span class='fu'>is.experiment</span>(<span class='no'>exp</span>)
-<span class='co'># }</span></pre>
+<span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_experiment.html'>as_experiment</a></span>(<span class='no'>df</span>, <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S0"</span>, <span class='st'>"I0"</span>, <span class='st'>"R0"</span>, <span class='st'>"beta"</span>, <span class='st'>"gamma"</span>),
+                     <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>),
+                     <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"a"</span>,
+                     <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"b"</span>,
+                     <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
+                     <span class='kw'>model</span> <span class='kw'>=</span>
+                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using default directory name " sir " in current directory " /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_42 ".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -306,6 +274,8 @@ argument is of chatacter type or not</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

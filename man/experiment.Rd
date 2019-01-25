@@ -65,6 +65,10 @@ TO DO: Explains how \code{dir} is made is not specified. Explains what
 \code{dic} is.
 }
 \examples{
+experiment(
+  data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
+  data.frame(S = 1, I = 1, R = 1),
+  1000, 1, "sir", system.file("models", "sir.gaml", package = "rama"))
 # to test if an object is a class `experiment`
 df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
                 "beta" = rep(1.5, 5), "gamma" = runif (5, 0, 1),

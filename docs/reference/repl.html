@@ -200,14 +200,13 @@ If both specified, <code>times</code> will be taken.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
-                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; <span class='message'>Loading experiment "sir" from file "sir.gaml"...</span></div><div class='output co'>#&gt; <span class='message'>Using default directory name "sir" in current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</span></div><div class='output co'>#&gt; <span class='message'>Simulations results will be saved in "sir_11".</span></div><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-
+    <pre class="examples"><div class='input'><span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>,
+                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment " sir " from file " sir.gaml "...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name " sir " in current directory " /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_53 ".</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 <span class='no'>exp1</span>$<span class='no'>seed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>)
-<span class='fu'>repl</span>(<span class='no'>exp1</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='st'>"4"</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting row names on a tibble is deprecated.</span></div><div class='output co'>#&gt; Experiment with 12 simulations of 5 parameters and 3 observed variables
+<span class='fu'>repl</span>(<span class='no'>exp1</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='st'>"4"</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; Experiment with 12 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/examples/sir.gaml 
-#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_11 
+#&gt; input gaml file:     /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; output directory:    /Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference/sir_53 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -223,8 +222,7 @@ If both specified, <code>times</code> will be taken.</p>
 #&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    4
 #&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    4
 #&gt; 11  999    1    0    1.5    0.15   1   1   1 1000    4
-#&gt; 12  999    1    0    1.5    0.15   1   1   1 1000    4</div><div class='input'>
-</div></pre>
+#&gt; 12  999    1    0    1.5    0.15   1   1   1 1000    4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

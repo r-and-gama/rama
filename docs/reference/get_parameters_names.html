@@ -190,9 +190,8 @@ and GAMA. Thus, much faster!</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
-<span class='fu'>get_parameters_names</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; [1] "S0"    "I0"    "R0"    "beta"  "gamma"</div><div class='input'><span class='fu'>get_variables_names</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; <span class='error'>Error in get_variables_names(file): impossible de trouver la fonction "get_variables_names"</span></div><div class='input'><span class='fu'>get_all_names</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; <span class='error'>Error in get_all_names(file): impossible de trouver la fonction "get_all_names"</span></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
+<span class='fu'>get_parameters_names</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; [1] "S0"    "I0"    "R0"    "beta"  "gamma"</div><div class='input'><span class='fu'>get_variables_names</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; [1] "S" "I" "R"</div><div class='input'><span class='fu'>get_all_names</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; [1] "S0"    "I0"    "R0"    "beta"  "gamma" "S"     "I"     "R"    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

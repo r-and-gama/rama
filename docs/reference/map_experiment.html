@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an experiment object using a data frame and an experiment object
-as template — map_experiment • rama</title>
+<title>Map a data frame on an experiment — map_experiment • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -38,11 +37,10 @@ as template — map_experiment • rama</title>
 
 
 
-<meta property="og:title" content="Create an experiment object using a data frame and an experiment object
-as template — map_experiment" />
+<meta property="og:title" content="Map a data frame on an experiment — map_experiment" />
 
-<meta property="og:description" content="Create an experiment object using a data frame and an experiment object
-as template" />
+<meta property="og:description" content="Maps the data of a data frame on the structure on an object of class
+experiment." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -156,53 +154,88 @@ as template" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create an experiment object using a data frame and an experiment object
-as template</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/experiment.R'><code>R/experiment.R</code></a></small>
+    <h1>Map a data frame on an experiment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/map_experiment.R'><code>R/map_experiment.R</code></a></small>
     <div class="hidden name"><code>map_experiment.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create an experiment object using a data frame and an experiment object
-as template</p>
+    <p>Maps the data of a data frame on the structure on an object of class
+<code>experiment</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>A data frame used to initialize an experiment object.</p></td>
+      <td><p>A data frame containing variables and parameters values for a
+number of simulations we wish to use for the experiment <code>exp</code>.</p></td>
     </tr>
     <tr>
       <th>exp</th>
-      <td><p>An experiment object used as template.</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p>Either absolute path or name output of directory. In the latter
-case, current directory will be used. If <code>dir</code> is not
-specified, name of model will be used to create an output
-directory in the current directory.</p></td>
+      <td><p>An object of class <code>experiment</code>. See <code>Details</code> for
+constraints on this object.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The names of the columns of the data frame should correspond to the names of
+the variables and parameters of the experiment. This can work only if one of
+the following conditions is met:</p><ul>
+<li><p>the sets of names of the data frame and experiment are identical;</p></li>
+<li><p>the names of the data frame are included in the names of the
+        experiment AND the numbers of rows of the data frame and the
+        experiment are identical.</p></li>
+</ul>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>,
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; <span class='message'>Loading experiment "sir" from file "sir.gaml"...</span></div><div class='output co'>#&gt; <span class='message'>Using default directory name "sir" in current directory "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference".</span></div><div class='output co'>#&gt; <span class='message'>Simulations results will be saved in "sir_4".</span></div><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fl'>1</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>12</span>))
-<span class='no'>exp2</span> <span class='kw'>&lt;-</span> <span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in experiment(parameters = params, obsrates = obs, tmax = "tmax",     seed = "seed", experiment = name(exp), model = model(exp),     dir = dir, df = df): arguments inutilisés (parameters = params, obsrates = obs, tmax = "tmax", seed = "seed", experiment = name(exp), model = model(exp), dir = dir, df = df)</span></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># First situation: the sets of names of the data frame and the experiment</span>
+<span class='co'># are exactly the same:</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/exists'>exists</a></span>(<span class='st'>"sir1"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='no'>sir1</span>)
+<span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='no'>sir1</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>sir1</span>, <span class='fl'>3</span>))
+<span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp</span>)</div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:     sir 
+#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
+#&gt; output directory:    /Users/mac/Desktop/rama/sir 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># Second situation: the names of the data frame are included in the names of</span>
+<span class='co'># the experiment AND the numbers of rows of the data frame and the experiment</span>
+<span class='co'># are equal:</span>
+<span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>sir1</span>, <span class='fl'>3</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>exp</span>)[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>6</span>)]
+<span class='no'>df</span>[] <span class='kw'>&lt;-</span> <span class='fl'>2</span>
+<span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp</span>)</div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:     sir 
+#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
+#&gt; output directory:    /Users/mac/Desktop/rama/sir 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    2    1    2    1.5    0.15   2   1   1 1000    1
+#&gt; 2    2    1    2    1.5    0.15   2   1   1 1000    1
+#&gt; 3    2    1    2    1.5    0.15   2   1   1 1000    1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

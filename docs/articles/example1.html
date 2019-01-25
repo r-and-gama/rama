@@ -131,8 +131,8 @@
 <a class="sourceLine" id="cb1-2" title="2"><span class="co">#devtools::install_github("choisy/gamar")</span></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gamar)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/defpath.html">defpath</a></span>(<span class="st">"/Applications/Gama.app"</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">myModelPath &lt;-<span class="st"> "/Users/jdz/git/gamar/inst/examples"</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co">#(myModelFile &lt;- paste0(system.file("examples",package="gamar"),"/cluster_ind.gaml"))</span></a>
+<a class="sourceLine" id="cb2-2" title="2">myModelPath &lt;-<span class="st"> "/Users/jdz/git/gamar/inst/models"</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co">#(myModelFile &lt;- paste0(system.file("models",package="gamar"),"/cluster_ind.gaml"))</span></a>
 <a class="sourceLine" id="cb2-4" title="4">(myModelFile &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(myModelPath,<span class="st">"/NicolasPred.gaml"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">(experimentPREY &lt;-<span class="st"> </span><span class="kw">getmodelparameter</span>(<span class="dt">modelfile =</span> myModelFile,<span class="dt">experimentname =</span> <span class="st">"prey_predator"</span>))</a>
 <a class="sourceLine" id="cb3-2" title="2">(<span class="kw">getparameternames</span>(experimentPREY))</a>
