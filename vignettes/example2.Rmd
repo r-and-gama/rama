@@ -1,6 +1,10 @@
 ---
 title: "Example: predator-prey model"
 output: rmarkdown::html_vignette
+knit: (function(inputFile, encoding, output_dir) { 
+      rmarkdown::render(inputFile,
+                        encoding=encoding, 
+                        output_dir=paste0(dirname(normalizePath(getwd())), "/inst/doc"))})
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}
@@ -17,7 +21,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r, eval=FALSE}
 library(gamar)
 defpath("/Applications/Gama.app")
 experiment1 <- getmodelparameter("inst/models/predator_prey/models/predator_prey.gaml","prey_predator")

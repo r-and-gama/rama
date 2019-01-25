@@ -274,7 +274,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(gamar)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">defpath</span>(<span class="st">&quot;/Applications/Gama.app&quot;</span>)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Extract the model parameters from the definition of the model sir.gaml</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">experimentSIR &lt;-<span class="st"> </span><span class="kw">getmodelparameter</span>(<span class="kw">paste0</span>(<span class="kw">system.file</span>(<span class="st">&quot;examples&quot;</span>,<span class="dt">package=</span><span class="st">&quot;gamar&quot;</span>),<span class="st">&quot;/sir.gaml&quot;</span>),<span class="st">&quot;sir&quot;</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">experimentSIR &lt;-<span class="st"> </span><span class="kw">getmodelparameter</span>(<span class="kw">paste0</span>(<span class="kw">system.file</span>(<span class="st">&quot;models&quot;</span>,<span class="dt">package=</span><span class="st">&quot;gamar&quot;</span>),<span class="st">&quot;/sir.gaml&quot;</span>),<span class="st">&quot;sir&quot;</span>)</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">getparameternames</span>(experimentSIR)</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Define a first type of experiments on SIR having the same initial value</span></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># called experimentA with S0=950, I0=50 and R0=0</span></a>
