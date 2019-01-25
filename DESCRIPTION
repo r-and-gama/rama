@@ -45,7 +45,8 @@ Imports:
     stringr,
     downloader,
     purrr,
-    dplyr
+    dplyr,
+    tibble
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: 
