@@ -52,7 +52,6 @@ repl.experiment <- function(exp, times = NULL) {
                    return(tmp)
                   }
                  )))
-    row.names(out) <- c(1:nrow(out))
     return(out)
   }
 }
