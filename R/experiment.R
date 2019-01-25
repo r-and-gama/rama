@@ -115,6 +115,9 @@ validate_experiment <- function(x) {
 #'
 #' @export
 #'
+#' @example inst/examples/experiment.R
+#'
+#'
 experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                        dir = "", dic = NULL) {
   validate_experiment(new_experiment(parameters, obsrates, tmax, seed,
