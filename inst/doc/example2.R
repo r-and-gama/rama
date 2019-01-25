@@ -1,0 +1,22 @@
+## ----setup, include = FALSE----------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+
+## ------------------------------------------------------------------------
+#  library(gamar)
+#  defpath("/Applications/Gama.app")
+#  experiment1 <- getmodelparameter("inst/examples/predator_prey/models/predator_prey.gaml","prey_predator")
+#  getparameternames(experiment1)
+#  getoutputnames(experiment1)
+#  experiment1 <- setparametervalue(experiment1,"Initial number of preys: ",990)
+#  experiment1 <- setparametervalue(experiment1,"Initial number of predators: ",100)
+#  experiment1 <- setparametervalue(experiment1,"Predator probability reproduce: ",0.1)
+#  experiment1 <- setfinalstep(experiment1,100)
+#  experimentplan <- addtoexperimentplan(experiment1)
+#  output <- runexpplan(experimentplan,1)
+#  with(output[[1]],plot(step,`Number of preys`,type="l",lwd=2,col="red"))
+#  makemovie(output[[1]])
+
