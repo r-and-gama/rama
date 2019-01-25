@@ -44,7 +44,7 @@ validate_experiment <- function(x) {
   model <- model(x)
   dic_g2r <- attr(x, "dic_g2r")
   dic_r2g <- attr(x, "dic_r2g")
-  colnames <- unlist(lapply(c(parameters, obs_rates), function(f) names(f(x))))
+  colnames <- lapply(c(parameters, obs_rates), function(f) names(f(x)))
 
   check_experiment(name(x), model)
   test_schar(names(dic_g2r))
@@ -55,17 +55,29 @@ validate_experiment <- function(x) {
   if (any(x$tmax < 0))
     stop("The end steps of simulations should be positive integers.")
 
-  if (length(setdiff(colnames, dic_g2r)) > 0)
+  if (length(setdiff(unlist(colnames), dic_g2r)) > 0)
     stop("Some variables or parameters names are not in the dictionary.")
 
   if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
     stop("The dictionaries are inconsistent.")
 
-  if (length(setdiff(sub("^[pr]_", "", colnames), get_all_names(model))) > 0)
-    stop(paste("The names of parameters and observed variables in experiment",
-               substitute(x),
-               "do not correspond to the names of parameters and",
-               "variables defined in the", model, "file."))
+  diff <- setdiff(sub("^[p]_", "", colnames[[1]]), get_parameters_names(model))
+  if (length(diff) > 1) {
+    stop(paste0("The parameters names '", substitute(diff),
+               "' do not correspond to any parameter in the '", basename(model), "' file."))
+  } else if (length(diff) > 0) {
+    stop(paste0("The parameter name '", substitute(diff),
+               "' does not correspond to any parameter in the '", basename(model), "' file."))
+  }
+
+  diff <- setdiff(sub("^[r]_", "", colnames[[2]]), get_variables_names(model))
+  if (length(diff) > 1) {
+    stop(paste0("The variables names '", substitute(diff),
+               "' do not correspond to any variable in the '", basename(model), "' file."))
+  } else if (length(diff) > 0) {
+    stop(paste0("The variable name '", substitute(diff),
+               "' does not correspond to any variable in the '", basename(model), "' file."))
+  }
 
   x
 }
