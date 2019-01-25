@@ -19,4 +19,3 @@
   unlink("docs/reference/testsir*", TRUE)
   unlink("docs/reference/my_sir_model*", TRUE)
 }
-

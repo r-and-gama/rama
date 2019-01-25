@@ -46,13 +46,7 @@ generate_obsrate <- function(obsrate, names){
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #' @importFrom purrr map2 pmap
 #' @importFrom dplyr case_when
-#' @examples
-#' #load experiment
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' exp1 <- load_experiment("sir", gaml_file, "sir")
-#'
-#' save_to_gama(exp1)
-#'
+#' @example inst/examples/save_to_gama.R
 #' @rdname save_to_gama
 #' @export
 
@@ -68,11 +62,11 @@ save_to_gama.default <- function(exp, parameter_xml_file)
 save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
   check_experiment(attr(exp, "experiment"), model(exp))
   params <- parameters(exp)
-  param_names <- attr(exp, "dic_rev")[gsub("p_", "", names(params))]
+  param_names <- attr(exp, "dic_r2g")[names(params)]
   params <- as.list(as.data.frame(t(params)))
 
   obsrates <- obs_rates(exp)
-  obsrates_names <- attr(exp, "dic_rev")[gsub("r_", "", names(obsrates))]
+  obsrates_names <- attr(exp, "dic_r2g")[names(obsrates)]
   obsrates <- as.list(as.data.frame(t(obsrates)))
 
   simulations <- as.list(as.data.frame(rbind(id = row.names(exp),

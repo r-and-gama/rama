@@ -33,10 +33,7 @@ clean_output <- function(output_dir) {
 #'                   working directory will be used. If `output_dir` doesn't
 #'                   exist, it will be created.
 #'
-#' @examples
-#' parameter_xml_file <- system.file("examples", "sir.xml", package = "rama")
-#' (outfiles <- call_gama(parameter_xml_file, hpc = 1, output_dir = tempdir()))
-#'
+#' @example inst/examples/call_gama.R
 #' @export
 call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
   if (output_dir == "")

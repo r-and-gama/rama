@@ -272,7 +272,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(gamar)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">defpath</span>(<span class="st">&quot;/Applications/Gama.app&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">experiment1 &lt;-<span class="st"> </span><span class="kw">getmodelparameter</span>(<span class="st">&quot;inst/examples/predator_prey/models/predator_prey.gaml&quot;</span>,<span class="st">&quot;prey_predator&quot;</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">experiment1 &lt;-<span class="st"> </span><span class="kw">getmodelparameter</span>(<span class="st">&quot;inst/models/predator_prey/models/predator_prey.gaml&quot;</span>,<span class="st">&quot;prey_predator&quot;</span>)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">getparameternames</span>(experiment1)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">getoutputnames</span>(experiment1)</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6">experiment1 &lt;-<span class="st"> </span><span class="kw">setparametervalue</span>(experiment1,<span class="st">&quot;Initial number of preys: &quot;</span>,<span class="dv">990</span>)</a>

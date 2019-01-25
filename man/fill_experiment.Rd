@@ -23,24 +23,16 @@ df <-   data.frame(S0 = c(900, 800, 500),
                   R0 = 0,
                   beta = 1.5,
                   gamma = .15,
-                  S = c(1,2,3),
-                  I = c(2,4,6),
-                  R =c(10,20,30),
+                  S = c(1, 2, 3),
+                  I = c(2, 4, 6),
+                  R = c(10, 20, 30),
                   nbiter = 1000,
                   seed = "123456789")
-
-(exp0 <- experiment(
- parameters = c("S0","I0","R0","beta","gamma"),
- obsrates  = c("S", "I", "R"),
- tmax = "nbiter",
- seed = "seed",
- experiment = "sir",
- model = system.file("examples", "sir.gaml", package = "rama"),
- dir = "testsir",
- df
-))
+exp0 <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),
+                      obsrates  = c("S", "I", "R"),
+                      tmax = "nbiter", seed = "seed", experiment = "sir",
+                      model =
+                       system.file("models", "sir.gaml", package = "rama"))
 otp <- run_experiment(exp0)
 new_output <- fill_experiment(otp, exp0)
-
-
 }

@@ -8,11 +8,7 @@
 #'
 #' @return The path to the \code{.gaml} file that contains the model definition.
 #'
-#' @examples
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-#'                        package = "rama"))
-#' model(exp1)
-#'
+#' @example inst/examples/model.R
 #' @export
 #'
 model <- function(exp) UseMethod("model")
@@ -33,14 +29,7 @@ model.experiment <- function(exp) attributes(exp)$model
 #' @param exp Experiment in question
 #' @param value Path of new gaml model file
 #'
-#' @examples
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-#'                         package = "rama"))
-#' model(exp1)
-#' model(exp1) <-  system.file("examples", "CopyOfsir.gaml",
-#'                         package = "rama")
-#' model(exp1)
-#'
+#' @example inst/examples/model.R
 #' @export
 `model<-` <- function(exp, value) UseMethod("model<-")
 
@@ -49,6 +38,7 @@ model.experiment <- function(exp) attributes(exp)$model
 `model<-.default` <- function(exp, value) "Unknown class"
 
 #' @rdname `model<-`
+#' @importFrom utils capture.output
 #' @export
 `model<-.experiment` <- function(exp, value){
   # check if experiment name and type are valid in the requested model

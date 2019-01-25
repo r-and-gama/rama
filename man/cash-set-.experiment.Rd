@@ -26,7 +26,9 @@ shortest element.
 }
 \examples{
 # Here is an experiment with 1 simulation:
-sir1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"), "sir")
+sir1 <- load_experiment("sir",
+                        system.file("models", "sir.gaml", package = "rama"),
+                        "sir")
 sir1
 # Let's replace the value of the "p_S0" column by a vector of 3 values:
 sir2 <- sir1
@@ -52,5 +54,4 @@ sir4$p_beta <- c(1.3, 1.7)
 sir4
 # which is equivalent to
 fullfact(sir1, p_S0 = c(1, 10, 100), p_beta = c(1.3, 1.7))
-
 }

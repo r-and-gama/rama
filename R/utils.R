@@ -1,8 +1,25 @@
+read_gaml_experiment <- function(exp, model) {
+  tmp <- tempfile(fileext = ".xml")
+  system(paste0("java -jar ", getOption("rama.startjar"),
+                " -Xms", getOption("rama.Xms"),
+                " -Xmx", getOption("rama.Xmx"),
+                " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
+                " -application msi.gama.headless.id4 -xml ",
+                exp, " '", model, "' ", tmp, " > /dev/null"),
+         ignore.stdout = TRUE, ignore.stderr = TRUE)
+  unlink("workspace", TRUE, TRUE)
+
+  if (file.exists(tmp)) return(XML::xmlToList(XML::xmlParse(tmp))$Simulation)
+  stop(paste0("Gama fails to read your experiment"))
+}
+
+
 # test special characters ------------------------------------------------------
 test_schar <- function(x) {
   if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
     stop(paste0("The rama package does not support the specials characters `<`",
-                ", `>`, `&` and `'` in parameters, outputs and experiments names."))
+                ", `>`, `&` and `'` in parameters,",
+                " outputs and experiments names."))
   }
 }
 
@@ -21,7 +38,8 @@ check_experiment <- function(exp, model) {
   # check if the requested experiment has a valid (i.e. "GUI") type:
   type <- exp_info$type[exp_info$experiment == exp]
   if (type != "gui")
-    stop(paste0("Experiments of type \"", type, "\" are not supported by rama."))
+    stop(paste0("Experiments of type \"", type,
+                "\" are not supported by rama."))
   invisible(0)
 }
 
@@ -45,7 +63,7 @@ make_wkdir <- function(model, dir = "") {
   if (dir == "") {
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
-    message(paste0("Using default directory name \"", dir,
+    message(cat("Using default directory name \"", dir,
                    "\" in current directory \"", getwd(), "\"."))
   }
 
@@ -61,7 +79,7 @@ make_wkdir <- function(model, dir = "") {
   }
 
   dir.create(wk_dir, recursive = TRUE)
-  message(paste0("Simulations results will be saved in \"", wk_dir, "\"."))
+  message(cat("Simulations results will be saved in \"", wk_dir, "\"."))
   normalizePath(wk_dir)
 }
 
@@ -150,7 +168,7 @@ download_gama <- function() {
 setup_gama_ui <- function() {
   defaultjar <- ""
   repeat{
-    message("Give the path of Gama platform or [Q]uit:")
+    message(cat("Give the path of Gama platform or [Q]uit:"))
     answer <- readline()
     if (answer[1] == "Q" | answer[1] == "q" ) return(NA)
     defaultjar <- is_gama_installed(answer)
@@ -189,13 +207,13 @@ setup_gama <- function(path = NA) {
     return(NA)
   }
   if (is_gama_installed()) {
-    message("Gama is already installed, do you want to setup a new one ? ")
+    message(cat("Gama is already installed, do you want to setup a new one ? "))
     answer <- toupper(readline("[Y]es/[N]"))
     if (answer[1] == "N") return(NA)
   }
 
   repeat {
-    message("Do you want to download the last version of Gama?")
+    message(cat("Do you want to download the last version of Gama?"))
     answer <- toupper(readline(" [Y]es/[N] or [K]eep my current version."))
     if (answer[1] == "Y" | answer[1] == "N" | answer[1] == "K") break
     else print("Sorry, I din't understand... try again")

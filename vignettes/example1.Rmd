@@ -1,6 +1,10 @@
 ---
 title: "Example: NicolasPred model"
 output: rmarkdown::html_vignette
+knit: (function(inputFile, encoding, output_dir) { 
+      rmarkdown::render(inputFile,
+                        encoding=encoding, 
+                        output_dir=paste0(dirname(normalizePath(getwd())), "/inst/doc"))})
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}
@@ -17,21 +21,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r, eval=FALSE}
 #install.packages("devtools")
 #devtools::install_github("choisy/gamar")
 library(gamar)
 ```
 
-```{r}
+```{r, eval=FALSE}
 defpath("/Applications/Gama.app")
-myModelPath <- "/Users/jdz/git/gamar/inst/examples"
-#(myModelFile <- paste0(system.file("examples",package="gamar"),"/cluster_ind.gaml"))
+myModelPath <- "/Users/jdz/git/gamar/inst/models"
+#(myModelFile <- paste0(system.file("models",package="gamar"),"/cluster_ind.gaml"))
 (myModelFile <- paste0(myModelPath,"/NicolasPred.gaml"))
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 (experimentPREY <- getmodelparameter(modelfile = myModelFile,experimentname = "prey_predator"))
 (getparameternames(experimentPREY))
 
@@ -54,7 +58,7 @@ experimentplan <- NULL
 
 ```
 
-```{r}
+```{r, eval=FALSE}
 for (i in 1:nrow(sim2))
 {
   local_experiment <-  setparametervalue(experiment1,"danger_distance",sim2[i,"action_distance"])

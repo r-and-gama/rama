@@ -9,13 +9,8 @@
 #' @return The path of the directory where the simulations outputs will be
 #' saved.
 #'
-#' @examples
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-#'                         package = "rama"))
-#' output_dir(exp1)
-#'
+#' @example inst/examples/output_dir.R
 #' @export
-#'
 output_dir <- function(exp) UseMethod("output_dir")
 
 #' @rdname output_dir

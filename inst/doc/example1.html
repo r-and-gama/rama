@@ -274,8 +274,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#devtools::install_github(&quot;choisy/gamar&quot;)</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(gamar)</a></code></pre>
 <pre class="sourceCode r" id="cb2"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">defpath</span>(<span class="st">&quot;/Applications/Gama.app&quot;</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">myModelPath &lt;-<span class="st"> &quot;/Users/jdz/git/gamar/inst/examples&quot;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#(myModelFile &lt;- paste0(system.file(&quot;examples&quot;,package=&quot;gamar&quot;),&quot;/cluster_ind.gaml&quot;))</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">myModelPath &lt;-<span class="st"> &quot;/Users/jdz/git/gamar/inst/models&quot;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#(myModelFile &lt;- paste0(system.file(&quot;models&quot;,package=&quot;gamar&quot;),&quot;/cluster_ind.gaml&quot;))</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">(myModelFile &lt;-<span class="st"> </span><span class="kw">paste0</span>(myModelPath,<span class="st">&quot;/NicolasPred.gaml&quot;</span>))</a></code></pre>
 <pre class="sourceCode r" id="cb3"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">(experimentPREY &lt;-<span class="st"> </span><span class="kw">getmodelparameter</span>(<span class="dt">modelfile =</span> myModelFile,<span class="dt">experimentname =</span> <span class="st">&quot;prey_predator&quot;</span>))</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">(<span class="kw">getparameternames</span>(experimentPREY))</a>

@@ -1,0 +1,29 @@
+# Here is an experiment with 1 simulation:
+sir1 <- load_experiment("sir",
+                        system.file("models", "sir.gaml", package = "rama"),
+                        "sir")
+sir1
+# Let's replace the value of the "p_S0" column by a vector of 3 values:
+sir2 <- sir1
+sir2$p_S0 <- 1:3
+# We can check that it automatically expands the number of simulations:
+sir2
+# If, on the contrary, we now replace the values of "p_S0" of "sir2" by a
+# single value:
+sir3 <- sir2
+sir3$p_S0 <- 2
+# We can check that it automatically reduces the number of simulations (if
+# the replacement leads to an experiment with exactly identical simulations):
+sir3
+# If you wish to delete one column:
+sir3$r_R <- NULL
+sir3
+# You can do the operation successively for 2 columns:
+sir4 <- sir1
+sir4
+sir4$p_S0 <- c(1, 10, 100)
+sir4
+sir4$p_beta <- c(1.3, 1.7)
+sir4
+# which is equivalent to
+fullfact(sir1, p_S0 = c(1, 10, 100), p_beta = c(1.3, 1.7))

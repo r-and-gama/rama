@@ -20,7 +20,6 @@ From a XML file containing an experiment plan, send and run it in GAMA and
 returns one XML file by simulation containing the output.
 }
 \examples{
-parameter_xml_file <- system.file("examples", "sir.xml", package = "rama")
-(outfiles <- call_gama(parameter_xml_file, hpc = 1, output_dir = tempdir()))
-
+parameter_xml_file <- system.file("models", "sir.xml", package = "rama")
+outfiles <- call_gama(parameter_xml_file, hpc = 1, output_dir = tempdir())
 }

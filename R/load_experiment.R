@@ -1,6 +1,8 @@
 # get_parameters ---------------------------------------------------------------
 get_parameters <- function(x) {
-  x2 <- do.call(rbind, x[["Parameters"]])
+  parameters <- x[["Parameters"]]
+  if (is.null(parameters)) return(NULL)
+  x2 <- do.call(rbind, parameters)
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
   x3 <- setNames(x3, x2[, "name"])
   sel <- grep("INT", x2[, "type"])
@@ -12,7 +14,9 @@ get_parameters <- function(x) {
 
 # get_variables ----------------------------------------------------------------
 get_variables <- function(x) {
-  x2 <- do.call(rbind, x[["Outputs"]])
+  outputs <- x[["Outputs"]]
+  if (is.null(outputs)) return(NULL)
+  x2 <- do.call(rbind, outputs)
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
   x3 <- setNames(x3, x2[, "name"])
   x3[] <- lapply(x3, as.integer) # frame rates are necessarily integers.
@@ -62,78 +66,34 @@ check_param_type <- function(exp, model) {
 #' experiment's simulations. If empty character string (default), the name of
 #' the GAML file will be used to name the simulations' output directory.
 #'
-#' @examples
-#' # Listing the models available in the "examples" directory of the "rama" library:
-#' dir(system.file("examples", package = "rama"))
-#'
-#' # Loading experiment "sir" from the "sir.gaml" file:
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
-#'
-#' # Checking the class:
-#' class(exp1)
-#'
+#' @example inst/examples/load_experiment.R
 #' @importFrom XML xmlToList xmlParse
 #' @importFrom tibble as_tibble
 #'
 #' @export
 load_experiment <- function(exp, model, dir = "") {
 
-  # Check if experiment and type requested are valid
+  # Check if experiment and type requested are valid:
   check_experiment(exp, model)
 
-  # Loading experiment
-  message(paste0("Loading experiment \"", exp,
+  # Reading GAML file:
+  message(cat("Loading experiment \"", exp,
                  "\" from file \"", basename(model), "\"..."))
-  tmp <- tempfile(fileext = ".xml")
-  system(paste0("java -jar ", getOption("rama.startjar"),
-                " -Xms", getOption("rama.Xms"),
-                " -Xmx", getOption("rama.Xmx"),
-                " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
-                " -application msi.gama.headless.id4 -xml ",
-                exp, " '", model, "' ", tmp, " > /dev/null"),
-         ignore.stdout = TRUE, ignore.stderr = TRUE)
-  unlink("workspace", TRUE, TRUE)
+  out <- read_gaml_experiment(exp, model)
 
-  if (file.exists(tmp)) {
-    out <- XML::xmlToList(XML::xmlParse(tmp))
-  } else {
-    stop(paste0("Gama fails to read your experiment"))
+  # Retrieving information:
+  make_df_dic <- function(x) {
+    if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
+    the_names <- names(x)
+    dic_g2r <- make_dictionary(the_names)
+    names(x) <- dic_g2r
+    list(out = x, dic_g2r = dic_g2r)
   }
-
-  out <- out$Simulation
-
-  if (is.null(out$Outputs)) {
-    out_var <- data.frame(NULL)
-    dic_var <- NULL
-  } else {
-    out_var <- get_variables(out)
-    dic_var <- make_dictionary(names(out_var))
-    names(out_var) <- paste0("r_", dic_var[names(out_var)])
-  }
-
-  if (is.null(out$Parameters)) {
-    out_par <- data.frame(NULL)
-    dic_par <- NULL
-  } else {
-    out_par <- get_parameters(out)
-    dic_par <- make_dictionary(names(out_par))
-    names(out_par) <- paste0("p_", dic_par[names(out_par)])
-  }
-
-  dic <- c(dic_par, dic_var)
-  test_schar(names(dic))
-
+  variables <- make_df_dic(get_variables(out))
+  parameters <- make_df_dic(get_parameters(out))
   out_attr <- get_attributes(out)
 
-  output <- as_tibble(c(out_par, out_var, out_attr))
-  output$gaml <- NULL
-  output$experiment <- NULL
-  class(output) <- c("experiment", "tbl_df", "tbl", "data.frame")
-  attr(output, "model") <- unname(out_attr$gaml)
-  attr(output, "experiment") <- unname(out_attr$experiment)
-  attr(output, "wkdir") <- make_wkdir(model, dir)
-  attr(output, "dic") <- dic
-  attr(output, "dic_rev") <- setNames(names(dic), dic)
-
-  output
+  # Returning experiment object:
+  experiment(parameters$out, variables$out, out_attr$tmax, out_attr$seed,
+             exp, model, dir, c(parameters$dic_g2r, variables$dic_g2r))
 }
