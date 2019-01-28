@@ -9,10 +9,7 @@
 #' @return The name of the experiment that the inputed \code{experiment} object
 #' is linked to.
 #'
-#' @examples
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
-#' name(exp1)
-#'
+#' @example inst/examples/name.R
 #' @export
 name <- function(x) UseMethod("name")
 

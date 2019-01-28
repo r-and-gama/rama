@@ -10,13 +10,12 @@
   sel <- sel:(sel + 1)
   index <- index[-sel]
 
-# inserting favicon into index.html:
-  # sel <- grep("</head>", index)
-  # index <- c(index[1:(sel - 1)],
-  #            "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"favicon.ico\">",
-  #            index[sel:length(index)])
-
 # rewriting index.html:
   writeLines(index, index_file)
-}
 
+# removing output folders:
+  unlink("docs/reference/sir", TRUE)
+  unlink("docs/reference/sir_*", TRUE)
+  unlink("docs/reference/testsir*", TRUE)
+  unlink("docs/reference/my_sir_model*", TRUE)
+}

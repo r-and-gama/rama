@@ -1,15 +1,105 @@
+read_gaml_experiment <- function(exp, model) {
+  tmp <- tempfile(fileext = ".xml")
+  system(paste0("java -jar ", getOption("rama.startjar"),
+                " -Xms", getOption("rama.Xms"),
+                " -Xmx", getOption("rama.Xmx"),
+                " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
+                " -application msi.gama.headless.id4 -xml ",
+                exp, " '", model, "' ", tmp, " > /dev/null"),
+         ignore.stdout = TRUE, ignore.stderr = TRUE)
+  unlink("workspace", TRUE, TRUE)
+
+  if (file.exists(tmp)) return(XML::xmlToList(XML::xmlParse(tmp))$Simulation)
+  stop(paste0("Gama fails to read your experiment"))
+}
+
+
+# test special characters ------------------------------------------------------
+test_schar <- function(x) {
+  if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
+    stop(paste0("The rama package does not support the specials characters `<`",
+                ", `>`, `&` and `'` in parameters,",
+                " outputs and experiments names."))
+  }
+}
+
+
+
+# Check if a requested experiment is valid -------------------------------------
+# For a requested experiment to be valid, we need
+# * the name to exist in the file;
+# * the experiment to be of type "GUI".
+check_experiment <- function(exp, model) {
+  exp_info <- show_experiment(model)
+  # check if the requested experiment is present in the file:
+  if (!exp %in% exp_info$experiment)
+    stop(paste0("There is no experiment named \"", exp, "\" in ",
+                basename(model)))
+  # check if the requested experiment has a valid (i.e. "GUI") type:
+  type <- exp_info$type[exp_info$experiment == exp]
+  if (type != "gui")
+    stop(paste0("Experiments of type \"", type,
+                "\" are not supported by rama."))
+  invisible(0)
+}
+
+
+
+# make_dictionary --------------------------------------------------------------
+#' @importFrom stats setNames
+make_dictionary <- function(x) {
+  dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
+  dic <- gsub("_+", "_", dic)
+  setNames(dic, x)
+}
+
+
+
+# Make working directory -------------------------------------------------------
+# Uses full path "dir" if specified. If only name specified (i.e. without any
+# "/"), use current directory. If not specified, use default name.
+make_wkdir <- function(model, dir = "") {
+
+  if (dir == "") {
+    # get model name from gaml file
+    dir <- gsub(".gaml", "", basename(model))
+    message(cat("Using default directory name \"", dir,
+                   "\" in current directory \"", getwd(), "\"."))
+  }
+
+  if (dir.exists(dir)) {
+    i <- 0
+    repeat {
+      i <- i + 1
+      wk_dir <- paste0(dir, "_", i)
+      if (!file.exists(wk_dir)) break
+    }
+  } else {
+    wk_dir <-  dir
+  }
+
+  dir.create(wk_dir, recursive = TRUE)
+  message(cat("Simulations results will be saved in \"", wk_dir, "\"."))
+  normalizePath(wk_dir)
+}
+
+
+
 # Defines the GAMA repository --------------------------------------------------
 gama_repo <- function(repo = NULL) {
   if (! is.null(repo)) options(rama.repo = repo)
 }
+
+
 
 # Test if operating system is Windows ------------------------------------------
 isWindows <- function() {
   return (Sys.info()["sysname"] == "Windows")
 }
 
-# Returns the OS ---------------------------------------------------------------
 
+
+# Returns the OS ---------------------------------------------------------------
 get_os <- function(){
   os <- paste0(Sys.info()["sysname"])
   if (is.null(os)){
@@ -20,6 +110,8 @@ get_os <- function(){
   }
   os
 }
+
+
 
 # Gives distrib as a function of the OS ----------------------------------------
 #' In function of remote distribution of the OS returns the path
@@ -35,6 +127,8 @@ gama_remote_distrib <- function() {
                              options("rama.default.gama.linux")))
   # to complete
 }
+
+
 
 # Downloads gama ---------------------------------------------------------------
 #' @importFrom utils download.file unzip untar
@@ -68,11 +162,13 @@ download_gama <- function() {
   expDir
 }
 
+
+
 # Setup GAMA UI ----------------------------------------------------------------
 setup_gama_ui <- function() {
   defaultjar <- ""
   repeat{
-    message("Give the path of Gama platform or [Q]uit:")
+    message(cat("Give the path of Gama platform or [Q]uit:"))
     answer <- readline()
     if (answer[1] == "Q" | answer[1] == "q" ) return(NA)
     defaultjar <- is_gama_installed(answer)
@@ -84,6 +180,8 @@ setup_gama_ui <- function() {
   }
   answer
 }
+
+
 
 # download GAMA when necessary -------------------------------------------------
 #' Download GAMA and configure
@@ -109,13 +207,13 @@ setup_gama <- function(path = NA) {
     return(NA)
   }
   if (is_gama_installed()) {
-    message("Gama is already installed, do you want to setup a new one ? ")
+    message(cat("Gama is already installed, do you want to setup a new one ? "))
     answer <- toupper(readline("[Y]es/[N]"))
     if (answer[1] == "N") return(NA)
   }
 
   repeat {
-    message("Do you want to download the last version of Gama?")
+    message(cat("Do you want to download the last version of Gama?"))
     answer <- toupper(readline(" [Y]es/[N] or [K]eep my current version."))
     if (answer[1] == "Y" | answer[1] == "N" | answer[1] == "K") break
     else print("Sorry, I din't understand... try again")

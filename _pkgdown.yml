@@ -1,6 +1,7 @@
 development:
   mode: unreleased
 
+
 authors:
   Marc Choisy:
     href: http://marcchoisy.free.fr
@@ -12,6 +13,7 @@ authors:
     href: https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en
   IRD:
     href: http://www.ird.fr
+    html: <img src="reference/figures/ird.png" height="20" />
   Nicolas Marilleau:
     href: https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en
   Bich Hai Ho:
@@ -19,28 +21,32 @@ authors:
   Lucie Contamin:
     href: https://www.researchgate.net/profile/Lucie_Contamin
 
+
 reference:
   - title: Configuring the rama package
     contents:
-    - def_path
+    - defpath
     - is_gama_installed
     - setup_gama
   - title: Constructor of experiment class
     contents:
+    - as_experiment
     - experiment
     - is.experiment
+    - map_experiment
   - title: Reading GAML files
     contents:
+    - get_parameters_names
     - load_experiment
     - save_to_gama
     - show_experiment
   - title: Manipulating experiment objects
     contents:
-    - cash-set-.experiment
     - create_output_dir
-    - expname
     - fullfact
+    - get_parameters_names
     - model
+    - name
     - obs_rates
     - output_dir
     - parameters
@@ -49,7 +55,6 @@ reference:
   - title: Running experiments
     contents:
     - call_gama
-    - realexp
     - run_experiment
     - save_to_gama
   - title: Built-in experiments
@@ -57,7 +62,38 @@ reference:
     - sir1
 
 
-
+navbar:
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Get started
+    href: articles/rama.html
+  - text: Tutorials
+    menu:
+    - text: Testing hypotheses
+      href: articles/rama1.html
+    - text: Sensitivity analysis
+      href: articles/rama2.html
+    - text: Parameters estimation
+      href: articles/rama3.html
+    - text: Comparing ODE, IBM and ABM
+      href: articles/rama4.html
+  - text: Examples
+    menu:
+    - text: NicolasPred model
+      href: articles/example1.html
+    - text: Predator-prey model
+      href: articles/example2.html
+    - text: SIR model
+      href: articles/example3.html
+    - text: Snub-nose monkeys
+      href: articles/example4.html
+  - text: Reference
+    href: reference/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/r-and-gama/rama
 
 
 

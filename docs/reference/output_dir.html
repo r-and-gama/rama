@@ -88,29 +88,50 @@ simulations outputs will be saved." />
 <li>
   <a href="../articles/rama.html">Get started</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/rama1.html">1 Testing hypotheses</a>
+      <a href="../articles/rama1.html">Testing hypotheses</a>
     </li>
     <li>
-      <a href="../articles/rama2.html">2 Sensivity analysis</a>
+      <a href="../articles/rama2.html">Sensitivity analysis</a>
     </li>
     <li>
-      <a href="../articles/rama3.html">3 Parameters estimation</a>
+      <a href="../articles/rama3.html">Parameters estimation</a>
     </li>
     <li>
-      <a href="../articles/rama4.html">4 Comparing ODE, IBM and ABM</a>
+      <a href="../articles/rama4.html">Comparing ODE, IBM and ABM</a>
     </li>
   </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/example1.html">NicolasPred model</a>
+    </li>
+    <li>
+      <a href="../articles/example2.html">Predator-prey model</a>
+    </li>
+    <li>
+      <a href="../articles/example3.html">SIR model</a>
+    </li>
+    <li>
+      <a href="../articles/example4.html">Snub-nose monkeys</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       
@@ -169,9 +190,8 @@ saved.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>,
-                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_12".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>output_dir</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/mac/Desktop/rama/docs/reference/sir_12"</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>,
+                        <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment " sir " from file " sir.gaml "...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name " sir " in current directory " /Users/mac/Desktop/rama/docs/reference ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_15 ".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>output_dir</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/mac/Desktop/rama/docs/reference/sir_15"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -188,7 +208,7 @@ saved.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en'>Benoît Gaudou</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://quadram.ac.uk/people/thanh-le-viet'>Viet Thanh Le</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -88,29 +88,50 @@ model." />
 <li>
   <a href="../articles/rama.html">Get started</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/rama1.html">1 Testing hypotheses</a>
+      <a href="../articles/rama1.html">Testing hypotheses</a>
     </li>
     <li>
-      <a href="../articles/rama2.html">2 Sensivity analysis</a>
+      <a href="../articles/rama2.html">Sensitivity analysis</a>
     </li>
     <li>
-      <a href="../articles/rama3.html">3 Parameters estimation</a>
+      <a href="../articles/rama3.html">Parameters estimation</a>
     </li>
     <li>
-      <a href="../articles/rama4.html">4 Comparing ODE, IBM and ABM</a>
+      <a href="../articles/rama4.html">Comparing ODE, IBM and ABM</a>
     </li>
   </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/example1.html">NicolasPred model</a>
+    </li>
+    <li>
+      <a href="../articles/example2.html">Predator-prey model</a>
+    </li>
+    <li>
+      <a href="../articles/example3.html">SIR model</a>
+    </li>
+    <li>
+      <a href="../articles/example4.html">Snub-nose monkeys</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       
@@ -171,27 +192,18 @@ null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span>   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>900</span>, <span class='fl'>800</span>, <span class='fl'>500</span>), <span class='co'># this is a data frame of 3 lines</span>
                   <span class='kw'>I0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>500</span>),
                   <span class='kw'>R0</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-                  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.4</span>,<span class='fl'>1.5</span>,<span class='fl'>1.6</span>),
+                  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.4</span>, <span class='fl'>1.5</span>, <span class='fl'>1.6</span>),
                   <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>.15</span>,
-                  <span class='kw'>S</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>),
-                  <span class='kw'>I</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>6</span>),
-                  <span class='kw'>R</span> <span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>),
+                  <span class='kw'>S</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
+                  <span class='kw'>I</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>),
+                  <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>),
                   <span class='kw'>nbiter</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
                   <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"123456789"</span>)
-
-<span class='no'>exp0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='experiment.html'>experiment</a></span>(
- <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S0"</span>,<span class='st'>"I0"</span>,<span class='st'>"R0"</span>,<span class='st'>"beta"</span>,<span class='st'>"gamma"</span>),
- <span class='kw'>obsrates</span>  <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>),
- <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"nbiter"</span>,
- <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"seed"</span>,
- <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
- <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"examples"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
- <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"testsir"</span>,
- <span class='no'>df</span>
-)</div><div class='output co'>#&gt; Simulations results will be saved in "testsir_1".</div><div class='output co'>#&gt; </div><div class='input'>
-<span class='fu'>plot_params</span>(<span class='no'>exp0</span>)</div><div class='img'><img src='plot_params-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   p_S0   p_I0 p_beta 
-#&gt;      1      2      4 </div><div class='input'>
-</div></pre>
+<span class='no'>exp0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_experiment.html'>as_experiment</a></span>(<span class='no'>df</span>, <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S0"</span>, <span class='st'>"I0"</span>, <span class='st'>"R0"</span>, <span class='st'>"beta"</span>, <span class='st'>"gamma"</span>),
+                      <span class='kw'>obsrates</span>  <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>),
+                      <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"nbiter"</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"seed"</span>, <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
+                      <span class='kw'>model</span> <span class='kw'>=</span>
+                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using default directory name " sir " in current directory " /Users/mac/Desktop/rama/docs/reference ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_17 ".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>plot_params</span>(<span class='no'>exp0</span>)</div><div class='img'><img src='plot_params-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; [1] 1 2 4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -210,7 +222,7 @@ null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&hl=en'>Benoît Gaudou</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://quadram.ac.uk/people/thanh-le-viet'>Viet Thanh Le</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>.</p>
 </div>
 
 <div class="pkgdown">

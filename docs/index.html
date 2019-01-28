@@ -52,29 +52,50 @@
 <li>
   <a href="articles/rama.html">Get started</a>
 </li>
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorials
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/rama1.html">1 Testing hypotheses</a>
+      <a href="articles/rama1.html">Testing hypotheses</a>
     </li>
     <li>
-      <a href="articles/rama2.html">2 Sensivity analysis</a>
+      <a href="articles/rama2.html">Sensitivity analysis</a>
     </li>
     <li>
-      <a href="articles/rama3.html">3 Parameters estimation</a>
+      <a href="articles/rama3.html">Parameters estimation</a>
     </li>
     <li>
-      <a href="articles/rama4.html">4 Comparing ODE, IBM and ABM</a>
+      <a href="articles/rama4.html">Comparing ODE, IBM and ABM</a>
     </li>
   </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/example1.html">NicolasPred model</a>
+    </li>
+    <li>
+      <a href="articles/example2.html">Predator-prey model</a>
+    </li>
+    <li>
+      <a href="articles/example3.html">SIR model</a>
+    </li>
+    <li>
+      <a href="articles/example4.html">Snub-nose monkeys</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="reference/index.html">Reference</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -102,7 +123,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="rama" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rama" class="anchor"></a><code>rama</code> <img src="reference/figures/logo.png" align="right" width="200/">
+<a href="#rama" class="anchor"></a><code>rama</code> <img src="logo.png" align="right" width="200/">
 </h1></div>
 
 <p><code>rama</code> is an R interface to the <a href="https://gama-platform.github.io">GAMA</a> <strong>agent-based</strong> simulation platform. It allows to</p>
@@ -115,7 +136,6 @@
 <strong>run</strong> the simulations defined in an experiment plan.</li>
 </ul>
 <p>An <strong>experiment</strong> is a group of simulations. A <strong>simulation</strong> is an execution of a given <strong>model</strong> with</p>
-<!-- [<img src="/Users/mac/Desktop/rama/man/figures/get_started.png" align="right" width=173/>](articles/rama.html) -->
 <ul>
 <li>a given set of <strong>parameters values</strong>,</li>
 <li>a given set of <strong>observed variables</strong>,</li>
@@ -193,15 +213,13 @@
 <li>
 <a href="https://www.researchgate.net/profile/Lucie_Contamin">Lucie Contamin</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0001-5797-1279" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>
-<a href="https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&amp;hl=en">Benoît Gaudou</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-9005-3004" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>
 <a href="https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952">Bich Hai Ho</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-6344-0180" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>
-<a href="https://quadram.ac.uk/people/thanh-le-viet">Viet Thanh Le</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-2106-8130" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>
 <a href="https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&amp;hl=en">Nicolas Marilleau</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-1004-4352" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>
 <a href="http://www-poleia.lip6.fr/~zucker">Jean-Daniel Zucker</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/https://orcid.org/0000-0002-5597-7922" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>
+<a href="http://www.ird.fr"><img src="reference/figures/ird.png" height="20"></a> <br><small class="roles"> Copyright holder, funder </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
@@ -221,7 +239,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://marcchoisy.free.fr">Marc Choisy</a>, <a href="https://www.researchgate.net/profile/Lucie_Contamin">Lucie Contamin</a>, <a href="https://scholar.google.com.vn/citations?user=-hv1aHYAAAAJ&amp;hl=en">Benoît Gaudou</a>, <a href="https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952">Bich Hai Ho</a>, <a href="https://quadram.ac.uk/people/thanh-le-viet">Viet Thanh Le</a>, <a href="https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&amp;hl=en">Nicolas Marilleau</a>, <a href="http://www-poleia.lip6.fr/~zucker">Jean-Daniel Zucker</a>.</p>
+  <p>Developed by <a href="http://marcchoisy.free.fr">Marc Choisy</a>, <a href="https://www.researchgate.net/profile/Lucie_Contamin">Lucie Contamin</a>, <a href="https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952">Bich Hai Ho</a>, <a href="https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&amp;hl=en">Nicolas Marilleau</a>, <a href="http://www-poleia.lip6.fr/~zucker">Jean-Daniel Zucker</a>, <a href="http://www.ird.fr"><img src="reference/figures/ird.png" height="20"></a>.</p>
 </div>
 
 <div class="pkgdown">

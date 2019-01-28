@@ -8,12 +8,7 @@
 #'
 #' @return A data frame that is a subset of the inputed \code{experiment} object.
 #'
-#' @examples
-#' exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-#'                                             package = "rama"), "sir")
-#' exp2 <- repl(exp1, 10)
-#' obs_rates(exp2)
-#'
+#' @example inst/examples/obs_rates.R
 #' @export
 obs_rates <- function(exp) UseMethod("obs_rates")
 

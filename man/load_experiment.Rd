@@ -2,34 +2,38 @@
 % Please edit documentation in R/load_experiment.R
 \name{load_experiment}
 \alias{load_experiment}
-\title{Load an experiment from a model}
+\title{Load an experiment from a GAML file}
 \usage{
 load_experiment(exp, model, dir = "")
 }
 \arguments{
 \item{exp}{The name of the experiment to load.}
 
-\item{model}{The name of the file from which to load the experiment.}
+\item{model}{The name of the GAML file from which to load the experiment.}
 
-\item{dir}{The name of the directory to save the output of the runs for each
-model. If not specified, name of the gaml file will be used}
+\item{dir}{The name of the directory in which to save the outputs of the
+experiment's simulations. If empty character string (default), the name of
+the GAML file will be used to name the simulations' output directory.}
 }
 \description{
-Loads an experiment from a model specified in a \code{.gaml} file and returns
-an object of class \code{experiment}.
+Loads an experiment from a \code{.gaml} file and returns an object of class
+\code{experiment}.
 }
 \details{
-The \code{rama} package contains a library of model in the \code{examples}
-directory of the \code{rama} package file hierarchy. These models can be
-accessed with the \code{system.file()} function as explained in the example.
+The \code{rama} package contains an internal collection of GAMA models. These
+models are specified, at minima, by a \code{.gaml}. Additional files such as
+shapefile can be used to specify a model, in which case they are in the same
+directory as the \code{.gaml} file. The internal collection of GAMA models is
+in the \code{examples} directory of the \code{rama} package file hierarchy.
+These models can be accessed with the \code{\link[base]{system.file}}
+function as explained in the example.
 }
 \examples{
-# Looking at the \\code{sir.gaml} file in the \\code{examples} directory of the
-# \\code{rama} library:
-# Loading an experiment:
-exp1 <- load_experiment("sir", system.file("examples", "sir.gaml", package = "rama"))
-
+# Listing the models available in the "examples" directory of the "rama" library:
+grep(".gaml", dir(system.file("models", package = "rama")), value = TRUE)
+# Loading experiment "sir" from the "sir.gaml" file:
+exp1 <- load_experiment("sir",
+                        system.file("models", "sir.gaml", package = "rama"))
 # Checking the class:
 class(exp1)
-
 }

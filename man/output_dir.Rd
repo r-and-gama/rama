@@ -24,8 +24,7 @@ These functions allow to get and set the path to the directory where the
 simulations outputs will be saved.
 }
 \examples{
-exp1 <- load_experiment("sir", system.file("examples", "sir.gaml",
-                        package = "rama"))
+exp1 <- load_experiment("sir",
+                        system.file("models", "sir.gaml", package = "rama"))
 output_dir(exp1)
-
 }

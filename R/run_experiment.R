@@ -10,60 +10,25 @@
 #' @param exp An object of class \code{experiment}.
 #'
 #' @return Returns a list of dataframes, one for each experiment.
-#'
-#' @examples
-#'df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
-#'                   I0 = c(100, 200, 500),
-#'                   R0 = 0,
-#'                   beta = 1.5,
-#'                   gamma = .15,
-#'                   S = c(1,2,3),
-#'                   I = c(2,4,6),
-#'                   R =c(10,20,30),
-#'                   nbiter = 1000,
-#'                   seed = "123456789")
-#'
-#'exp0 <- experiment(
-#'  df,
-#'  parameters = c("S0","I0","R0","beta","gamma"),
-#'  obsrates  = c("S", "I", "R"),
-#'  tmax = "nbiter",
-#'  seed = "seed",
-#'  experiment = "sir",
-#'  model = system.file("examples", "sir.gaml", package = "rama"),
-#'  dir = "testsir"
-#')
-#'
-#'
-#'exp0
-#'otp <- run_experiment(exp0)
-#'str(otp)
-#'newoutput <- realexp(otp,exp0)
-#'str(newoutput)
-#'@noRd
+#' @noRd
 realexp <- function(output, exp){
 
   newoutput <- list()
   for (j in 1:nrow(exp)) {
-
-    curexp <- exp
-    cursimulnum  <- j
     # In the current experiment object,
     # cursimul gives the line of the simulation
-    curoutput    <- output[cursimulnum][[1]]
+    curoutput <- output[j][[1]]
     # build the vector of observed variables
-    curobs <- attributes(curoutput)$names[-1]
+    curobs <- grep("Step", attributes(curoutput)$names,
+                   value = TRUE, invert = TRUE)
     # build the index of the variables whose rate is computed
-    curobsidx <- sapply(X = curobs, function(x) which(colnames(curoutput) == x))
-    # build the vector of text corresponding of the attributes of rates
-    observed <- paste("r_", curobs, sep = "")
+    curobsidx <- grep(paste(curobs, collapse = "|"), names(curoutput))
     # build the index of the variables whose rate is computed
-    ratesidx <- sapply(X = observed, function(x) which(colnames(curexp) == x))
+    ratesidx <- grep(paste(curobs, collapse = "|"), names(exp))
     # retrieve the value of the rates
-    ratesval <- (as.data.frame(curexp)[cursimulnum, ratesidx])
+    ratesval <- as.data.frame(exp)[j, ratesidx]
 
-    curoutput    <- output[cursimulnum][[1]]
-    for (i in 1:length(as.vector(curobsidx))) {
+    for (i in 1:length(curobsidx)) {
       freq <- as.integer(ratesval[i])
       curvalue <- curoutput[, curobsidx[i]]
       max <- length(curvalue)
@@ -114,7 +79,7 @@ retrieve_results <- function(outfile, exp) {
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
-  new_name <- as.vector(attr(exp, "dic_rev")[lst_name])
+  new_name <- as.vector(attr(exp, "dic_g2r")[lst_name])
   names(tmp) <- new_name
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
@@ -139,12 +104,7 @@ retrieve_results <- function(outfile, exp) {
 #'                           in the working directory of `exp`. If not
 #'                           specified, name of `exp` is used.
 #'
-#' @examples
-#' #load experiment
-#' gaml_file <- system.file("examples", "sir.gaml", package = "rama")
-#' exp1 <- load_experiment("sir", gaml_file, "sir")
-#' # run experiment
-#' out <- run_experiment(exp1)
+#' @example inst/examples/run_experiment.R
 #' @export
 run_experiment <- function(exp, hpc = 1, output_dir = "",
                            parameter_xml_file = "") {
@@ -165,7 +125,7 @@ run_experiment <- function(exp, hpc = 1, output_dir = "",
   # get variables names
   vars <- names(exp)[grep("r_", names(exp))]
   vars <- substring(vars, 3)
-  vars <- as.vector(attr(exp, "dic")[vars])
+  vars <- as.vector(attr(exp, "dic_g2r")[vars])
 
   # retrieve all the variables of all the experiments:
   out <- lapply(outfiles, retrieve_results, exp)

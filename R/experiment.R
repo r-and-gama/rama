@@ -1,313 +1,142 @@
-# Make working directory -------------------------------------------------------
-# Use full path dir if specified. If only name specified, use current directory.
-# If not specified, use default name.
-make_wkdir <- function(dir, model) {
+# constructor ------------------------------------------------------------------
+new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
+                           dir = "", dic_g2r = NULL) {
 
-  if (dir == "") {
-    # get model name from gaml file
-    dir <- gsub(".gaml", "", basename(model))
-    message(cat("Using default directory name \"", dir,
-                "\" in current directory \"", getwd(), "\".", sep = ""))
-  }
+  stopifnot(is.data.frame(parameters))
+  stopifnot(is.data.frame(obsrates))
+  stopifnot(nrow(parameters) == nrow(obsrates))
+  stopifnot(is.numeric(tmax))
+  stopifnot(is.character(experiment))
+  stopifnot(is.character(model))
+  stopifnot(is.character(dir))
+  stopifnot(is.character(dic_g2r) | is.null(dic_g2r))
 
-  if (dir.exists(dir)) {
-    i <- 0
-    repeat {
-      i <- i + 1
-      wk_dir <- paste0(dir, "_", i)
-      if (!file.exists(wk_dir)) break
-    }
+  names_param <- names(parameters)
+  names_obsrates <- names(obsrates)
+  oldparvarnames <- c(names_param, names_obsrates)
+  newparvarnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
+
+  if (is.null(dic_g2r)) {
+    dic_g2r <- setNames(newparvarnames, oldparvarnames)
   } else {
-    wk_dir <-  dir
+    stopifnot(all(dic_g2r %in% oldparvarnames))
+    dic_g2r <- c(setNames(paste0("p_",
+                                 dic_g2r[which(dic_g2r %in% names_param)]),
+                          names(dic_g2r[which(dic_g2r %in% names_param)])),
+                          #names_param),
+             setNames(paste0("r_",
+                             dic_g2r[which(dic_g2r %in% names_obsrates)]),
+                      names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
   }
 
-  dir.create(wk_dir, recursive = TRUE)
-  message(cat("Simulations results will be saved in \"", wk_dir,
-              "\".", sep = ""))
-
-  normalizePath(wk_dir)
+  obsrates[] <- lapply(obsrates, as.integer)
+  structure(setNames(cbind(parameters,
+                           obsrates,
+                           tmax = as.integer(tmax),
+                           seed = seed), c(newparvarnames, "tmax", "seed")),
+            class      = c("experiment", "tbl_df", "tbl", "data.frame"),
+            model      = model,
+            experiment = experiment,
+            wkdir      = make_wkdir(model, dir),
+            dic_g2r    = dic_g2r,
+            dic_r2g    = setNames(names(dic_g2r), dic_g2r))
 }
 
-# make_dictionary --------------------------------------------------------------
 
-#' @importFrom stats setNames
-make_dictionary <- function(x) {
-  dic <- gsub("[[:space:]]|[[:punct:]]", "_", x)
-  dic <- gsub("_+", "_", dic)
-  setNames(dic, x)
+
+# validator --------------------------------------------------------------------
+validate_experiment <- function(x) {
+  model <- model(x)
+  dic_g2r <- attr(x, "dic_g2r")
+  dic_r2g <- attr(x, "dic_r2g")
+  colnames <- lapply(c(parameters, obs_rates), function(f) names(f(x)))
+
+  check_experiment(name(x), model)
+  test_schar(names(dic_g2r))
+
+  if (any(obs_rates(x) < 0))
+    stop("The period of observation should be positive integers.")
+
+  if (any(x$tmax < 0))
+    stop("The end steps of simulations should be positive integers.")
+
+  if (length(setdiff(unlist(colnames), dic_g2r)) > 0)
+    stop("Some variables or parameters names are not in the dictionary.")
+
+  if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
+    stop("The dictionaries are inconsistent.")
+
+  diff <- setdiff(dic_r2g[colnames[[1]]], get_parameters_names(model))
+  if (length(diff) > 1) {
+    stop(paste0("The parameters names '", substitute(diff),
+               "' do not correspond to any parameter in the '", basename(model), "' file."))
+  } else if (length(diff) > 0) {
+    stop(paste0("The parameter name '", substitute(diff),
+               "' does not correspond to any parameter in the '", basename(model), "' file."))
+  }
+
+  diff <- setdiff(dic_r2g[colnames[[2]]], get_variables_names(model))
+  if (length(diff) > 1) {
+    stop(paste0("The variables names '", substitute(diff),
+               "' do not correspond to any variable in the '", basename(model), "' file."))
+  } else if (length(diff) > 0) {
+    stop(paste0("The variable name '", substitute(diff),
+               "' does not correspond to any variable in the '", basename(model), "' file."))
+  }
+
+  x
 }
 
-# experiment constructor -------------------------------------------------------
-#' Create an object of class \code{experiment}
-#'
-#' @param parameters Vector of column names or indexes in the \code{df} that
-#' will be used as parameters in the experiment.
-#' @param obsrates Vector of column names or indexes in the \code{df} that will
-#' be used as obs_rates rats in the experiment.
-#' @param tmax Name or index of the column in the \code{df} that will be
-#'             used as final step in the experiment.
-#' @param seed Name or index of the column in the \code{df} that will be
-#'             used as seed in the experiment.
-#' @param experiment name to the model linked to the experiment
-#' @param model path to the model linked to the experiment
-#' @param dir Either absolute path or name output of directory. In the latter
-#'            case, current directory will be used. If \code{dir} is not
-#'            specified, name of model will be used to create an output
-#'            directory in the current directory.
-#' @param df A data frame used to initialize an experiment object.
-#' @param ... Additional paramaters
-#'
-#' @importFrom dplyr case_when
-#' @examples
-#' # Experiment constructor with a dataframe and indexes/names of columns
-#' # indicating parameters, observation rates, tmax and seed
-#'
-#' df <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
-#'                 "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1),
-#'                 "S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5),
-#'                 "a" = rep(1000, 5), "b" = rep(1, 5))
-#' exp1 <- experiment(parameters = c("S0", "I0", "R0", "beta", "gama"),
-#'                   obsrates = c("S", "I", "R"),
-#'                   tmax = "a",
-#'                   seed = "b",
-#'                   experiment = "sir",
-#'                   model =
-#'                     system.file("examples", "sir.gaml", package = "rama"),
-#'                   df = df)
-#' exp2 <- experiment(parameters = c(1:5),
-#'                   obsrates = c(6:8),
-#'                   tmax = 9,
-#'                   seed = 10,
-#'                   experiment = "sir",
-#'                   model =
-#'                     system.file("examples", "sir.gaml", package = "rama"),
-#'                   dir = "my_sir_model",
-#'                   df = df)
-#'
-#' # Experiment constructor that uses for data frames (of paramaters,
-#' # observation rates, tmax and seed) as input.
-#'
-#' df1 <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),
-#'                  "beta" = rep(1.5, 5), "gama" = runif (5, 0, 1))
-#' df2 <- data.frame("S" = rep(1, 5), "I" = rep(1, 5), "R" = rep(1, 5))
-#' tmax <- rep(1000, 5)
-#' seed <- rep(1, 5)
-#' exp3 <- experiment(parameters = df1,
-#'                    obsrates = df2,
-#'                    tmax = tmax,
-#'                    seed = seed,
-#'                    experiment = "sir",
-#'                    model =
-#'                    system.file("examples", "sir.gaml", package = "rama"))
-#'
 
+
+# helper -----------------------------------------------------------------------
+#' Constructor of experiments
+#'
+#' Allows to build an object of class \code{experiment} from individual parts.
+#'
+#' The class \code{experiment} inherits from the class \code{tibble}
+#' (\code{tbl_df}). It contains parameters values as well as periods of
+#' observation of the observed variables and it connects to a \code{GAML} file
+#' that specifies the full model as well as to a directory that contains the
+#' outputs of simuations.
+#'
+#' TO DO: Explains how \code{dir} is made is not specified. Explains what
+#' \code{dic} is.
+#'
+#' @param parameters A data frame of numerical values giving the values of each
+#'                   parameter (in column), for each simulation (in row).
+#' @param obsrates A data frame of positive integer values giving the periods,
+#'                 in time steps, at which observed variables are observed.
+#'                 Should have the same number of rows as \code{parameters}.
+#' @param tmax A positive integer vector, the length of which is either 1 or
+#'             equal to the number of \code{parameters} and \code{obsrates}: it
+#'             gives the end of simulations, in numbers of time steps.
+#' @param seed A numerical vector, the length of which is either 1 or equal to
+#'             the number of \code{parameters} and \code{obsrates}: it gives the
+#'             seeds of the simulations.
+#' @param experiment The name of an experiment of the \code{GAML} file
+#'                   \code{model}.
+#' @param model The path to a \code{GAML} file.
+#' @param dir The path to a directory where the simulations output are saved. If
+#'            not specified (i.e. empty character string, default), then the
+#'            simulations are saved in a subdirectory of the working directory,
+#'            the name of which is made from the name of \code{model}. See
+#'            \code{Details} for more information.
+#' @param dic A named vector of character strings. The values and the names of
+#'            this vector should be consistent with the names of
+#'            \code{parameters}, \code{obsrates} as well as the variables and
+#'            parameters defined in the \code{model} \code{GAML} file. See
+#'            Details for more information.
+#'
+#' @return An object of class \code{experiment}.
+#'
 #' @export
-
-experiment <- function(parameters, obsrates, tmax, seed,
-                       experiment, model, dir, df)
-                      UseMethod("experiment")
-
-#' @rdname experiment
-#' @export
-experiment.default <- function(parameters, obsrates, tmax, seed,
-                               experiment, model, dir, df)
-                      "Unknown class"
-
-
-# experiment constructor from a dataframe and names of cols--------------------
-#' @rdname experiment
-#' @export
-experiment.character <- function(parameters = NULL,
-                                 obsrates = NULL,
-                                 tmax = NULL,
-                                 seed = NULL,
-                                 experiment = NULL,
-                                 model = NULL,
-                                 dir = "",
-                                 df = NULL) {
-  if (is.null(parameters) || is.null(obsrates) ||
-     is.null(tmax) || is.null(seed) ||
-     is.null(experiment) || is.null(model) || is.null(df))
-    stop(paste0("All parameters need to be set."))
-
-  if (length(tmax) > 1 || length(seed) > 1)
-    stop(paste0("tmax and seed take only one column"))
-
-  if (!file.exists(model))
-    stop(paste0("Model \"", model, "\" does not exist"))
-
-  if (sum(length(parameters) + length(obsrates) +
-         length(tmax) + length(seed)) > ncol(df))
-    stop(paste0("Column(s) selected is out of bound"))
-
-  # check if requested name is in df
-  if (is.character(parameters) && sum(parameters %in% names(df)) == 0)
-    stop(paste0("Requested column(s) for parameters not found."))
-  if (is.character(obsrates) && sum(obsrates %in% names(df)) == 0)
-    stop(paste0("Requested column(s) for obsrates not found."))
-  if (is.character(tmax) && !tmax %in% names(df))
-    stop(paste0("Requested column for tmax not found."))
-  if (is.character(seed) && !seed %in% names(df))
-    stop(paste0("Requested column(s) for seed not found."))
-  # check experiment and type
-  check_experiment(experiment, model)
-  # generate output dir
-  wk_dir <- make_wkdir(dir, model)
-  parameters_n <- dplyr::case_when(
-    is.character(parameters) ~ paste0("p_", parameters),
-    is.numeric(parameters) ~ paste0("p_", names(df)[parameters])
-  )
-  obsrates_n <- dplyr::case_when(
-    is.character(obsrates) ~ paste0("r_", obsrates),
-    is.numeric(obsrates) ~ paste0("r_", names(df)[obsrates])
-  )
-
-  if (is.character(tmax)) tmax_n <- tmax
-  if (is.numeric(tmax)) tmax_n <- names(df)[tmax]
-  if (is.character(seed)) seed_n <- seed
-  if (is.numeric(seed)) seed_n <- names(df)[seed]
-  if (is.numeric(parameters) & is.numeric(obsrates))
-    dic_n <- make_dictionary(c(names(df)[parameters], names(df)[obsrates]))
-  else
-    dic_n <- make_dictionary(c(parameters, obsrates))
-
-  df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
-                  "model" = model,
-                  "experiment" = experiment,
-                  "wkdir" = wk_dir,
-                  "dic" = dic_n,
-                  "dic_rev" = setNames(names(dic_n), dic_n),
-                  "class" = c("experiment", "data.frame"))
-  names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
-  return(df)
-}
-
-# experiment constructor from a dataframe and indexes of cols-----------------
-#' @rdname experiment
-#' @export
-experiment.numeric <- function(parameters = NULL,
-                               obsrates = NULL,
-                               tmax = NULL,
-                               seed = NULL,
-                               experiment = NULL,
-                               model = NULL,
-                               dir = "",
-                               df = NULL) {
-  if (is.null(parameters) || is.null(obsrates) ||
-      is.null(tmax) || is.null(seed) ||
-      is.null(experiment) || is.null(model) || is.null(df))
-    stop(paste0("All parameters need to be set."))
-
-  if (length(tmax) > 1 || length(seed) > 1)
-    stop(paste0("tmax and seed take only one column"))
-
-  if (!file.exists(model))
-    stop(paste0("Model \"", model, "\" does not exist"))
-
-  if (sum(length(parameters) + length(obsrates) +
-          length(tmax) + length(seed)) > ncol(df))
-    stop(paste0("Column(s) selected is out of bound"))
-
-  # check if requested name is in df
-  if (is.character(parameters) && sum(parameters %in% names(df)) == 0)
-    stop(paste0("Requested column(s) for parameters not found."))
-  if (is.character(obsrates) && sum(obsrates %in% names(df)) == 0)
-    stop(paste0("Requested column(s) for obsrates not found."))
-  if (is.character(tmax) && !tmax %in% names(df))
-    stop(paste0("Requested column for tmax not found."))
-  if (is.character(seed) && !seed %in% names(df))
-    stop(paste0("Requested column(s) for seed not found."))
-  # check experiment and type
-  check_experiment(experiment, model)
-  # generate output dir
-  wk_dir <- make_wkdir(dir, model)
-  parameters_n <- dplyr::case_when(
-    is.character(parameters) ~ paste0("p_", parameters),
-    is.numeric(parameters) ~ paste0("p_", names(df)[parameters])
-  )
-  obsrates_n <- dplyr::case_when(
-    is.character(obsrates) ~ paste0("r_", obsrates),
-    is.numeric(obsrates) ~ paste0("r_", names(df)[obsrates])
-  )
-
-  if (is.character(tmax)) tmax_n <- tmax
-  if (is.numeric(tmax)) tmax_n <- names(df)[tmax]
-  if (is.character(seed)) seed_n <- seed
-  if (is.numeric(seed)) seed_n <- names(df)[seed]
-  if (is.numeric(parameters) & is.numeric(obsrates))
-    dic_n <- make_dictionary(c(names(df)[parameters], names(df)[obsrates]))
-  else
-    dic_n <- make_dictionary(c(parameters, obsrates))
-
-  df <- structure(data.frame(df[parameters], df[obsrates], df[tmax], df[seed]),
-                  "model" = model,
-                  "experiment" = experiment,
-                  "wkdir" = wk_dir,
-                  "dic" = dic_n,
-                  "dic_rev" = setNames(names(dic_n), dic_n),
-                  "class" = c("experiment", "data.frame"))
-  names(df) <- c(parameters_n, obsrates_n, "tmax", "seed")
-  return(df)
-}
-
-# experment constructor from a group of data frame -----------------------------
-#' @rdname experiment
-#' @export
-experiment.data.frame <- function(parameters = NULL,
-                            obsrates = NULL,
-                            tmax = NULL,
-                            seed = NULL,
-                            experiment = NULL,
-                            model = NULL,
-                            dir = "",
-                            ...) {
-  df <- cbind(parameters, obsrates, tmax, seed)
-  exp <- experiment(names(parameters),
-                    names(obsrates),
-                    "tmax",
-                    "seed",
-                    experiment,
-                    model,
-                    dir,
-                    df)
-  return(exp)
-}
-# experiment constructor from a data frame and an experiment as template--------
-#' Create an experiment object using a data frame and an experiment object
-#' as template
 #'
-#' @param df A data frame used to initialize an experiment object.
-#' @param exp An experiment object used as template.
-#' @param dir Either absolute path or name output of directory. In the latter
-#'            case, current directory will be used. If \code{dir} is not
-#'            specified, name of model will be used to create an output
-#'            directory in the current directory.
+#' @example inst/examples/experiment.R
 #'
-#' @examples
-#' exp1 <- load_experiment("sir",
-#'     system.file("examples", "sir.gaml", package = "rama"))
-#' df <- data.frame(matrix(1, nrow=5, ncol=12))
-#' exp2 <- map_experiment(df, exp1)
 #'
-#' @importFrom stringr str_match
-#' @importFrom stats na.omit
-#' @importFrom utils capture.output
-#' @export
-map_experiment <- function(df, exp, dir = ""){
-  # check ncol(df) >= para + obsrates + tmax + seed
-  if (ncol(df) < ncol(exp))
-    stop(paste0("Number of columns in data frame is not valid
-                for the requested experiment."))
-  names(df) <- c(attr(exp, "dic"), "tmax", "seed",
-                 names(df)[(ncol(exp) + 1) : ncol(df)])
-  params <- na.omit(stringr::str_match(names(exp), "p_(.*)")[, 2])
-  obs <- na.omit(stringr::str_match(names(exp), "r_(.*)")[, 2])
-  experiment(parameters = params,
-             obsrates = obs,
-             tmax = "tmax",
-             seed = "seed",
-             experiment = name(exp),
-             model = model(exp),
-             dir = dir,
-             df = df)
+experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
+                       dir = "", dic = NULL) {
+  validate_experiment(new_experiment(parameters, obsrates, tmax, seed,
+                                     experiment, model, dir, dic))
 }

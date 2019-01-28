@@ -16,46 +16,21 @@
 #'
 #' @return Returns a vector of the variables with highest variances.
 #'
-#' @examples
-#' df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
-#'                   I0 = c(100, 200, 500),
-#'                   R0 = 0,
-#'                   beta = c(1.4,1.5,1.6),
-#'                   gamma = .15,
-#'                   S = c(1,2,3),
-#'                   I = c(2,4,6),
-#'                   R =c(10,20,30),
-#'                   nbiter = 1000,
-#'                   seed = "123456789")
-#'
-#' exp0 <- experiment(
-#'  parameters = c("S0","I0","R0","beta","gamma"),
-#'  obsrates  = c("S", "I", "R"),
-#'  tmax = "nbiter",
-#'  seed = "seed",
-#'  experiment = "sir",
-#'  model = system.file("examples", "sir.gaml", package = "rama"),
-#'  dir = "testsir",
-#'  df
-#' )
-#'
-#' plot_params(exp0)
-#'
+#' @example inst/examples/plot_params.R
 #' @importFrom plot3D scatter3D scatter2D
 #'
 #' @export
 #'
 plot_params <- function(exp) {
-  if (nrow(exp) == 0) return("There is no simulation in this experiment")
-  if (nrow(exp) == 1) return(
+  if (nrow(exp) == 0) stop("There is no simulation in this experiment")
+  if (nrow(exp) == 1) stop(
     "There is only one simulation in this experiment so no ")
 
   allvar <- sapply(parameters(exp), var)
   allvar <- sort(allvar[ allvar != 0], decreasing = TRUE)
   if (length(allvar) == 0) return(paste(
     "There is only one set of parameters for these", nrow(exp), "experiments"))
-
-  worthidx <- sapply(X = names(allvar), function(x) which(colnames(exp) == x))
+  worthidx <- grep(paste(names(allvar), collapse = "|"), names(exp))
   topidx <- if (length(worthidx) != 0) {
     worthidx[1:min(3, length(worthidx))]
     } else {
@@ -64,8 +39,9 @@ plot_params <- function(exp) {
   n <- length(topidx)
 
   # check n the number of parameters to be plotted
+  exp <- as.data.frame(exp)
   # if n is equal to 0
-  if (n == 0) stop(paste0("There is no parameters to plot in this experiment"))
+  if (n == 0) stop("There is no parameters to plot in this experiment")
   if (n == 1) stripchart(exp[, topidx[1]], xlab = colnames(exp)[topidx[1]])
   if (n == 2) scatter2D(exp[, topidx[1]], exp[, topidx[2]],
                       xlab = colnames(exp)[topidx[1]],

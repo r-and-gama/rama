@@ -10,11 +10,11 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "man/figures/"
 )
 ```
 
-# `rama` <img src="man/figures/logo.png" align="right" width=200/>
+# `rama` <img src="logo.png" align="right" width=200/>
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
@@ -30,8 +30,6 @@ knitr::opts_chunk$set(
 
 An **experiment** is a group of simulations. A **simulation** is an execution of
 a given **model** with
-
-<!-- [<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama.html) -->
 
 * a given set of **parameters values**,
 * a given set of **observed variables**,
