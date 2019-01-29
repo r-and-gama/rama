@@ -137,6 +137,4 @@ sir4$p_beta <- c(1.3, 1.7)
 sir4
 # which is equivalent to
 fullfact(sir1, p_S0 = c(1, 10, 100), p_beta = c(1.3, 1.7))
-
-
 }
