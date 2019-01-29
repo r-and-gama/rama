@@ -32,7 +32,7 @@ exp$p_security_factor_habitat_5 <- 0
 exp$r_number_of_dispersers <- 24
 exp$r_map <- 30 * 24 ## save the corresponding bit map every 30 days
 # replace NA by id number
-exp[,"p_simulation_id"] <-  seq(n_sim) # method to avoid duplication of rows
+exp[, "p_simulation_id"] <-  seq(n_sim) # method to avoid duplication of rows
 
 ## Run the experiments
 out <- run_experiment(exp)

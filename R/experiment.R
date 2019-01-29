@@ -69,19 +69,23 @@ validate_experiment <- function(x) {
   diff <- setdiff(dic_r2g[colnames[[1]]], get_parameters_names(model))
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
-               "' do not correspond to any parameter in the '", basename(model), "' file."))
+               "' do not correspond to any parameter in the '",
+               basename(model), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The parameter name '", substitute(diff),
-               "' does not correspond to any parameter in the '", basename(model), "' file."))
+               "' does not correspond to any parameter in the '",
+               basename(model), "' file."))
   }
 
   diff <- setdiff(dic_r2g[colnames[[2]]], get_variables_names(model))
   if (length(diff) > 1) {
     stop(paste0("The variables names '", substitute(diff),
-               "' do not correspond to any variable in the '", basename(model), "' file."))
+               "' do not correspond to any variable in the '",
+               basename(model), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The variable name '", substitute(diff),
-               "' does not correspond to any variable in the '", basename(model), "' file."))
+               "' does not correspond to any variable in the '",
+               basename(model), "' file."))
   }
 
   x
