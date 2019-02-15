@@ -123,9 +123,6 @@ is_gama_installed <- function(path = unlist(options("rama.gama.path"))) {
   }
 }
 
-
-
-
 # On detach --------------------------------------------------------------------
 
 .onDetach <- function(...) {
