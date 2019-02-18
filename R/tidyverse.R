@@ -6,13 +6,13 @@
 #' @param y data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-anti_join.experiment <- function (x, y, by = NULL, copy = FALSE, ...) { 
+anti_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
- 	old_attr <- unique(old_attr) 
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+ 	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
-	.data <- dplyr::anti_join(x, y, by = by, copy = copy, ...)
+	.data <- dplyr::anti_join(x, y, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -24,7 +24,7 @@ anti_join.experiment <- function (x, y, by = NULL, copy = FALSE, ...) {
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-arrange.experiment <- function (.data, ...) { 
+arrange.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::arrange(.data, ...)
@@ -38,12 +38,11 @@ arrange.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-arrange_.experiment <- function (.data, ..., .dots = list()) { 
+arrange_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::arrange_(.data, ..., .dots = .dots )
+	.data <- dplyr::arrange_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -53,13 +52,12 @@ arrange_.experiment <- function (.data, ..., .dots = list()) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-arrange_all.experiment <- function (.tbl, .funs = list(), ...) { 
+arrange_all.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::arrange_all(.tbl, .funs = .funs, ...)
+	.data <- dplyr::arrange_all(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -69,14 +67,12 @@ arrange_all.experiment <- function (.tbl, .funs = list(), ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-arrange_at.experiment <- function (.tbl, .vars, .funs = list(), ...) { 
+arrange_at.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::arrange_at(.tbl, .vars, .funs = .funs, ...)
+	.data <- dplyr::arrange_at(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -86,47 +82,12 @@ arrange_at.experiment <- function (.tbl, .vars, .funs = list(), ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .predicate see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-arrange_if.experiment <- function (.tbl, .predicate, .funs = list(), ...) { 
+arrange_if.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::arrange_if(.tbl, .predicate, .funs = .funs, ...)
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param .data data object of class \link{experiment} 
-#' @param ... other arguments 
-#' @param .keep_all see corresponding function in package \code{dplyr} 
-#' @name tidyverse 
-distinct.experiment <- function (.data, ..., .keep_all = FALSE) { 
-	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	.data <- as.data.frame(.data) 
-	.data <- dplyr::distinct(.data, ..., .keep_all = .keep_all )
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param .data data object of class \link{experiment} 
-#' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
-#' @param .keep_all see corresponding function in package \code{dplyr} 
-#' @name tidyverse 
-distinct_.experiment <- function (.data, ..., .dots, .keep_all = FALSE) { 
-	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	.data <- as.data.frame(.data) 
-	.data <- dplyr::distinct_(.data, ..., .dots, .keep_all = .keep_all )
+	.data <- dplyr::arrange_if(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -138,7 +99,97 @@ distinct_.experiment <- function (.data, ..., .dots, .keep_all = FALSE) {
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-filter.experiment <- function (.data, ...) { 
+distinct.experiment <- function(.data, ...) { 
+	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.data <- as.data.frame(.data) 
+	.data <- dplyr::distinct(.data, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .data data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+distinct_.experiment <- function(.data, ...) { 
+	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.data <- as.data.frame(.data) 
+	.data <- dplyr::distinct_(.data, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .tbl data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+distinct_all.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::distinct_all(.tbl, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .tbl data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+distinct_at.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::distinct_at(.tbl, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .tbl data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+distinct_if.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::distinct_if(.tbl, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .data data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+distinct_prepare.experiment <- function(.data, ...) { 
+	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.data <- as.data.frame(.data) 
+	.data <- dplyr::distinct_prepare(.data, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .data data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+filter.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::filter(.data, ...)
@@ -152,12 +203,11 @@ filter.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-filter_.experiment <- function (.data, ..., .dots = list()) { 
+filter_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::filter_(.data, ..., .dots = .dots )
+	.data <- dplyr::filter_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -167,12 +217,12 @@ filter_.experiment <- function (.data, ..., .dots = list()) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars_predicate see corresponding function in package \code{dplyr} 
+#' @param ... other arguments 
 #' @name tidyverse 
-filter_all.experiment <- function (.tbl, .vars_predicate) { 
+filter_all.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::filter_all(.tbl, .vars_predicate)
+	.data <- dplyr::filter_all(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -182,13 +232,12 @@ filter_all.experiment <- function (.tbl, .vars_predicate) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars see corresponding function in package \code{dplyr} 
-#' @param .vars_predicate see corresponding function in package \code{dplyr} 
+#' @param ... other arguments 
 #' @name tidyverse 
-filter_at.experiment <- function (.tbl, .vars, .vars_predicate) { 
+filter_at.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::filter_at(.tbl, .vars, .vars_predicate)
+	.data <- dplyr::filter_at(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -198,13 +247,12 @@ filter_at.experiment <- function (.tbl, .vars, .vars_predicate) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .predicate see corresponding function in package \code{dplyr} 
-#' @param .vars_predicate see corresponding function in package \code{dplyr} 
+#' @param ... other arguments 
 #' @name tidyverse 
-filter_if.experiment <- function (.tbl, .predicate, .vars_predicate) { 
+filter_if.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::filter_if(.tbl, .predicate, .vars_predicate)
+	.data <- dplyr::filter_if(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -217,13 +265,13 @@ filter_if.experiment <- function (.tbl, .predicate, .vars_predicate) {
 #' @param y data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-full_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"),     ...) { 
+full_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
- 	old_attr <- unique(old_attr) 
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+ 	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
-	.data <- dplyr::full_join(x, y, by = by, copy = copy, suffix = suffix,     ...)
+	.data <- dplyr::full_join(x, y, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -234,12 +282,11 @@ full_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x"
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param add see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-group_by.experiment <- function (.data, ..., add = FALSE) { 
+group_by.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::group_by(.data, ..., add = add )
+	.data <- dplyr::group_by(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -250,13 +297,11 @@ group_by.experiment <- function (.data, ..., add = FALSE) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
-#' @param add see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-group_by_.experiment <- function (.data, ..., .dots = list(), add = FALSE) { 
+group_by_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::group_by_(.data, ..., .dots = .dots, add = add )
+	.data <- dplyr::group_by_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -266,13 +311,12 @@ group_by_.experiment <- function (.data, ..., .dots = list(), add = FALSE) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-group_by_all.experiment <- function (.tbl, .funs = list(), ...) { 
+group_by_all.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::group_by_all(.tbl, .funs = .funs, ...)
+	.data <- dplyr::group_by_all(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -282,15 +326,12 @@ group_by_all.experiment <- function (.tbl, .funs = list(), ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
-#' @param .add see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-group_by_at.experiment <- function (.tbl, .vars, .funs = list(), ..., .add = FALSE) { 
+group_by_at.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::group_by_at(.tbl, .vars, .funs = .funs, ..., .add = .add )
+	.data <- dplyr::group_by_at(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -300,15 +341,12 @@ group_by_at.experiment <- function (.tbl, .vars, .funs = list(), ..., .add = FAL
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .predicate see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
-#' @param .add see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-group_by_if.experiment <- function (.tbl, .predicate, .funs = list(), ..., .add = FALSE) { 
+group_by_if.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::group_by_if(.tbl, .predicate, .funs = .funs, ..., .add = .add )
+	.data <- dplyr::group_by_if(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -319,13 +357,11 @@ group_by_if.experiment <- function (.tbl, .predicate, .funs = list(), ..., .add 
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
-#' @param add see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-group_by_prepare.experiment <- function (.data, ..., .dots = list(), add = FALSE) { 
+group_by_prepare.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::group_by_prepare(.data, ..., .dots = .dots, add = add )
+	.data <- dplyr::group_by_prepare(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -337,7 +373,22 @@ group_by_prepare.experiment <- function (.data, ..., .dots = list(), add = FALSE
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-group_indices.experiment <- function (.data, ...) { 
+group_data.experiment <- function(.data, ...) { 
+	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.data <- as.data.frame(.data) 
+	.data <- dplyr::group_data(.data, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .data data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+group_indices.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::group_indices(.data, ...)
@@ -351,12 +402,11 @@ group_indices.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-group_indices_.experiment <- function (.data, ..., .dots = list()) { 
+group_indices_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::group_indices_(.data, ..., .dots = .dots )
+	.data <- dplyr::group_indices_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -365,75 +415,13 @@ group_indices_.experiment <- function (.data, ..., .dots = list()) {
 #' 
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
-#' @param x data object of class \link{experiment} 
-#' @name tidyverse 
-group_size.experiment <- function (x) { 
-	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	x <- as.data.frame(x) 
-	.data <- dplyr::group_size(x)
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param x data object of class \link{experiment} 
-#' @name tidyverse 
-group_vars.experiment <- function (x) { 
-	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	x <- as.data.frame(x) 
-	.data <- dplyr::group_vars(x)
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param data data object of class \link{experiment} 
-#' @param vars see corresponding function in package \code{dplyr} 
-#' @param drop see corresponding function in package \code{dplyr} 
-#' @name tidyverse 
-grouped_df.experiment <- function (data, vars, drop = TRUE) { 
-	old_attr <- purrr::keep(attributes(data), names(attributes(data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	data <- as.data.frame(data) 
-	.data <- dplyr::grouped_df(data, vars, drop = drop )
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param x data object of class \link{experiment} 
-#' @name tidyverse 
-groups.experiment <- function (x) { 
-	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	x <- as.data.frame(x) 
-	.data <- dplyr::groups(x)
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param x data object of class \link{experiment} 
-#' @param y data object of class \link{experiment} 
+#' @param .tbl data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-inner_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"),     ...) { 
-	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
- 	old_attr <- unique(old_attr) 
-	y <- as.data.frame(y) 
-	.data <- dplyr::inner_join(x, y, by = by, copy = copy, suffix = suffix,     ...)
+group_keys.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::group_keys(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -442,45 +430,28 @@ inner_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x
 #' 
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
-#' @param x data object of class \link{experiment} 
-#' @name tidyverse 
-is_grouped_df.experiment <- function (x) { 
-	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	x <- as.data.frame(x) 
-	.data <- dplyr::is_grouped_df(x)
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param x data object of class \link{experiment} 
-#' @name tidyverse 
-is.grouped_df.experiment <- function (x) { 
-	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	x <- as.data.frame(x) 
-	.data <- dplyr::is.grouped_df(x)
- 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
- 	.data
- }
-
-#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
-#' 
-#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
-#' 
-#' @param x data object of class \link{experiment} 
-#' @param y data object of class \link{experiment} 
+#' @param .tbl data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-left_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"),     ...) { 
-	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
- 	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
- 	old_attr <- unique(old_attr) 
-	y <- as.data.frame(y) 
-	.data <- dplyr::left_join(x, y, by = by, copy = copy, suffix = suffix,     ...)
+group_map.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::group_map(.tbl, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .tbl data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+group_nest.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::group_nest(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -492,7 +463,195 @@ left_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x"
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-mutate.experiment <- function (.data, ...) { 
+group_rows.experiment <- function(.data, ...) { 
+	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.data <- as.data.frame(.data) 
+	.data <- dplyr::group_rows(.data, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+group_size.experiment <- function(x, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	.data <- dplyr::group_size(x, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .tbl data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+group_split.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::group_split(.tbl, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .tbl data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+group_trim.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::group_trim(.tbl, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+group_vars.experiment <- function(x, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	.data <- dplyr::group_vars(x, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .tbl data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+group_walk.experiment <- function(.tbl, ...) { 
+	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	.tbl <- as.data.frame(.tbl) 
+	.data <- dplyr::group_walk(.tbl, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param data data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+grouped_df.experiment <- function(data, ...) { 
+	old_attr <- purrr::keep(attributes(data), names(attributes(data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	data <- as.data.frame(data) 
+	.data <- dplyr::grouped_df(data, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+groups.experiment <- function(x, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	.data <- dplyr::groups(x, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param y data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+inner_join.experiment <- function(x, y, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+ 	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
+	y <- as.data.frame(y) 
+	.data <- dplyr::inner_join(x, y, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+is_grouped_df.experiment <- function(x, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	.data <- dplyr::is_grouped_df(x, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+is.grouped_df.experiment <- function(x, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	.data <- dplyr::is.grouped_df(x, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param y data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+left_join.experiment <- function(x, y, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+ 	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
+	y <- as.data.frame(y) 
+	.data <- dplyr::left_join(x, y, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param .data data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+mutate.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::mutate(.data, ...)
@@ -506,12 +665,11 @@ mutate.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-mutate_.experiment <- function (.data, ..., .dots = list()) { 
+mutate_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::mutate_(.data, ..., .dots = .dots )
+	.data <- dplyr::mutate_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -521,13 +679,12 @@ mutate_.experiment <- function (.data, ..., .dots = list()) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-mutate_all.experiment <- function (.tbl, .funs, ...) { 
+mutate_all.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::mutate_all(.tbl, .funs, ...)
+	.data <- dplyr::mutate_all(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -537,15 +694,12 @@ mutate_all.experiment <- function (.tbl, .funs, ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
-#' @param .cols see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-mutate_at.experiment <- function (.tbl, .vars, .funs, ..., .cols = NULL) { 
+mutate_at.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::mutate_at(.tbl, .vars, .funs, ..., .cols = .cols )
+	.data <- dplyr::mutate_at(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -555,13 +709,12 @@ mutate_at.experiment <- function (.tbl, .vars, .funs, ..., .cols = NULL) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param tbl data object of class \link{experiment} 
-#' @param funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-mutate_each.experiment <- function (tbl, funs, ...) { 
+mutate_each.experiment <- function(tbl, ...) { 
 	old_attr <- purrr::keep(attributes(tbl), names(attributes(tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	tbl <- as.data.frame(tbl) 
-	.data <- dplyr::mutate_each(tbl, funs, ...)
+	.data <- dplyr::mutate_each(tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -571,13 +724,12 @@ mutate_each.experiment <- function (tbl, funs, ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param tbl data object of class \link{experiment} 
-#' @param funs see corresponding function in package \code{dplyr} 
-#' @param vars see corresponding function in package \code{dplyr} 
+#' @param ... other arguments 
 #' @name tidyverse 
-mutate_each_.experiment <- function (tbl, funs, vars) { 
+mutate_each_.experiment <- function(tbl, ...) { 
 	old_attr <- purrr::keep(attributes(tbl), names(attributes(tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	tbl <- as.data.frame(tbl) 
-	.data <- dplyr::mutate_each_(tbl, funs, vars)
+	.data <- dplyr::mutate_each_(tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -587,14 +739,12 @@ mutate_each_.experiment <- function (tbl, funs, vars) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .predicate see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-mutate_if.experiment <- function (.tbl, .predicate, .funs, ...) { 
+mutate_if.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::mutate_if(.tbl, .predicate, .funs, ...)
+	.data <- dplyr::mutate_if(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -604,11 +754,12 @@ mutate_if.experiment <- function (.tbl, .predicate, .funs, ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
 #' @name tidyverse 
-n_groups.experiment <- function (x) { 
+n_groups.experiment <- function(x, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	.data <- dplyr::n_groups(x)
+	.data <- dplyr::n_groups(x, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -621,13 +772,47 @@ n_groups.experiment <- function (x) {
 #' @param y data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-right_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"),     ...) { 
+nest_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
- 	old_attr <- unique(old_attr) 
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+ 	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
-	.data <- dplyr::right_join(x, y, by = by, copy = copy, suffix = suffix,     ...)
+	.data <- dplyr::nest_join(x, y, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+new_grouped_df.experiment <- function(x, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	.data <- dplyr::new_grouped_df(x, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param y data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+right_join.experiment <- function(x, y, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+ 	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
+	y <- as.data.frame(y) 
+	.data <- dplyr::right_join(x, y, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -637,15 +822,12 @@ right_join.experiment <- function (x, y, by = NULL, copy = FALSE, suffix = c(".x
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param tbl data object of class \link{experiment} 
-#' @param size see corresponding function in package \code{dplyr} 
-#' @param replace see corresponding function in package \code{dplyr} 
-#' @param weight see corresponding function in package \code{dplyr} 
-#' @param .env see corresponding function in package \code{dplyr} 
+#' @param ... other arguments 
 #' @name tidyverse 
-sample_frac.experiment <- function (tbl, size = 1, replace = FALSE, weight = NULL, .env = NULL) { 
+sample_frac.experiment <- function(tbl, ...) { 
 	old_attr <- purrr::keep(attributes(tbl), names(attributes(tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	tbl <- as.data.frame(tbl) 
-	.data <- dplyr::sample_frac(tbl, size = size, replace = replace, weight = weight, .env = .env )
+	.data <- dplyr::sample_frac(tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -655,15 +837,12 @@ sample_frac.experiment <- function (tbl, size = 1, replace = FALSE, weight = NUL
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param tbl data object of class \link{experiment} 
-#' @param size see corresponding function in package \code{dplyr} 
-#' @param replace see corresponding function in package \code{dplyr} 
-#' @param weight see corresponding function in package \code{dplyr} 
-#' @param .env see corresponding function in package \code{dplyr} 
+#' @param ... other arguments 
 #' @name tidyverse 
-sample_n.experiment <- function (tbl, size, replace = FALSE, weight = NULL, .env = NULL) { 
+sample_n.experiment <- function(tbl, ...) { 
 	old_attr <- purrr::keep(attributes(tbl), names(attributes(tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	tbl <- as.data.frame(tbl) 
-	.data <- dplyr::sample_n(tbl, size, replace = replace, weight = weight, .env = .env )
+	.data <- dplyr::sample_n(tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -675,7 +854,7 @@ sample_n.experiment <- function (tbl, size, replace = FALSE, weight = NULL, .env
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-select.experiment <- function (.data, ...) { 
+select.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::select(.data, ...)
@@ -689,12 +868,11 @@ select.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-select_.experiment <- function (.data, ..., .dots = list()) { 
+select_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::select_(.data, ..., .dots = .dots )
+	.data <- dplyr::select_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -704,13 +882,12 @@ select_.experiment <- function (.data, ..., .dots = list()) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-select_all.experiment <- function (.tbl, .funs = list(), ...) { 
+select_all.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::select_all(.tbl, .funs = .funs, ...)
+	.data <- dplyr::select_all(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -720,14 +897,12 @@ select_all.experiment <- function (.tbl, .funs = list(), ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-select_at.experiment <- function (.tbl, .vars, .funs = list(), ...) { 
+select_at.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::select_at(.tbl, .vars, .funs = .funs, ...)
+	.data <- dplyr::select_at(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -737,14 +912,12 @@ select_at.experiment <- function (.tbl, .vars, .funs = list(), ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .predicate see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-select_if.experiment <- function (.tbl, .predicate, .funs = list(), ...) { 
+select_if.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::select_if(.tbl, .predicate, .funs = .funs, ...)
+	.data <- dplyr::select_if(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -757,13 +930,13 @@ select_if.experiment <- function (.tbl, .predicate, .funs = list(), ...) {
 #' @param y data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-semi_join.experiment <- function (x, y, by = NULL, copy = FALSE, ...) { 
+semi_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
- 	old_attr <- unique(old_attr) 
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+ 	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
-	.data <- dplyr::semi_join(x, y, by = by, copy = copy, ...)
+	.data <- dplyr::semi_join(x, y, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -775,7 +948,7 @@ semi_join.experiment <- function (x, y, by = NULL, copy = FALSE, ...) {
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-slice.experiment <- function (.data, ...) { 
+slice.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::slice(.data, ...)
@@ -789,12 +962,11 @@ slice.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-slice_.experiment <- function (.data, ..., .dots = list()) { 
+slice_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::slice_(.data, ..., .dots = .dots )
+	.data <- dplyr::slice_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -806,7 +978,7 @@ slice_.experiment <- function (.data, ..., .dots = list()) {
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-summarise.experiment <- function (.data, ...) { 
+summarise.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::summarise(.data, ...)
@@ -820,12 +992,11 @@ summarise.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-summarise_.experiment <- function (.data, ..., .dots = list()) { 
+summarise_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::summarise_(.data, ..., .dots = .dots )
+	.data <- dplyr::summarise_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -835,13 +1006,12 @@ summarise_.experiment <- function (.data, ..., .dots = list()) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-summarise_all.experiment <- function (.tbl, .funs, ...) { 
+summarise_all.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::summarise_all(.tbl, .funs, ...)
+	.data <- dplyr::summarise_all(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -851,15 +1021,12 @@ summarise_all.experiment <- function (.tbl, .funs, ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
-#' @param .cols see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-summarise_at.experiment <- function (.tbl, .vars, .funs, ..., .cols = NULL) { 
+summarise_at.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::summarise_at(.tbl, .vars, .funs, ..., .cols = .cols )
+	.data <- dplyr::summarise_at(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -869,13 +1036,12 @@ summarise_at.experiment <- function (.tbl, .vars, .funs, ..., .cols = NULL) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param tbl data object of class \link{experiment} 
-#' @param funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-summarise_each.experiment <- function (tbl, funs, ...) { 
+summarise_each.experiment <- function(tbl, ...) { 
 	old_attr <- purrr::keep(attributes(tbl), names(attributes(tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	tbl <- as.data.frame(tbl) 
-	.data <- dplyr::summarise_each(tbl, funs, ...)
+	.data <- dplyr::summarise_each(tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -885,13 +1051,12 @@ summarise_each.experiment <- function (tbl, funs, ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param tbl data object of class \link{experiment} 
-#' @param funs see corresponding function in package \code{dplyr} 
-#' @param vars see corresponding function in package \code{dplyr} 
+#' @param ... other arguments 
 #' @name tidyverse 
-summarise_each_.experiment <- function (tbl, funs, vars) { 
+summarise_each_.experiment <- function(tbl, ...) { 
 	old_attr <- purrr::keep(attributes(tbl), names(attributes(tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	tbl <- as.data.frame(tbl) 
-	.data <- dplyr::summarise_each_(tbl, funs, vars)
+	.data <- dplyr::summarise_each_(tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -901,14 +1066,12 @@ summarise_each_.experiment <- function (tbl, funs, vars) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .predicate see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-summarise_if.experiment <- function (.tbl, .predicate, .funs, ...) { 
+summarise_if.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::summarise_if(.tbl, .predicate, .funs, ...)
+	.data <- dplyr::summarise_if(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -918,11 +1081,12 @@ summarise_if.experiment <- function (.tbl, .predicate, .funs, ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
 #' @name tidyverse 
-tbl_nongroup_vars.experiment <- function (x) { 
+tbl_nongroup_vars.experiment <- function(x, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	.data <- dplyr::tbl_nongroup_vars(x)
+	.data <- dplyr::tbl_nongroup_vars(x, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -934,7 +1098,7 @@ tbl_nongroup_vars.experiment <- function (x) {
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-transmute.experiment <- function (.data, ...) { 
+transmute.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
 	.data <- dplyr::transmute(.data, ...)
@@ -948,12 +1112,11 @@ transmute.experiment <- function (.data, ...) {
 #' 
 #' @param .data data object of class \link{experiment} 
 #' @param ... other arguments 
-#' @param .dots see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-transmute_.experiment <- function (.data, ..., .dots = list()) { 
+transmute_.experiment <- function(.data, ...) { 
 	old_attr <- purrr::keep(attributes(.data), names(attributes(.data)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.data <- as.data.frame(.data) 
-	.data <- dplyr::transmute_(.data, ..., .dots = .dots )
+	.data <- dplyr::transmute_(.data, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -963,13 +1126,12 @@ transmute_.experiment <- function (.data, ..., .dots = list()) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-transmute_all.experiment <- function (.tbl, .funs, ...) { 
+transmute_all.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::transmute_all(.tbl, .funs, ...)
+	.data <- dplyr::transmute_all(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -979,15 +1141,12 @@ transmute_all.experiment <- function (.tbl, .funs, ...) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .vars see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
-#' @param .cols see corresponding function in package \code{dplyr} 
 #' @name tidyverse 
-transmute_at.experiment <- function (.tbl, .vars, .funs, ..., .cols = NULL) { 
+transmute_at.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::transmute_at(.tbl, .vars, .funs, ..., .cols = .cols )
+	.data <- dplyr::transmute_at(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -997,14 +1156,12 @@ transmute_at.experiment <- function (.tbl, .vars, .funs, ..., .cols = NULL) {
 #' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
 #' 
 #' @param .tbl data object of class \link{experiment} 
-#' @param .predicate see corresponding function in package \code{dplyr} 
-#' @param .funs see corresponding function in package \code{dplyr} 
 #' @param ... other arguments 
 #' @name tidyverse 
-transmute_if.experiment <- function (.tbl, .predicate, .funs, ...) { 
+transmute_if.experiment <- function(.tbl, ...) { 
 	old_attr <- purrr::keep(attributes(.tbl), names(attributes(.tbl)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	.tbl <- as.data.frame(.tbl) 
-	.data <- dplyr::transmute_if(.tbl, .predicate, .funs, ...)
+	.data <- dplyr::transmute_if(.tbl, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -1016,10 +1173,25 @@ transmute_if.experiment <- function (.tbl, .predicate, .funs, ...) {
 #' @param x data object of class \link{experiment} 
 #' @param ... other arguments 
 #' @name tidyverse 
-ungroup.experiment <- function (x, ...) { 
+ungroup.experiment <- function(x, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
 	.data <- dplyr::ungroup(x, ...)
+ 	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
+ 	.data
+ }
+
+#' Tidyverse methods for experiment objects (remove .experiment suffix!) 
+#' 
+#' Tidyverse methods for experiment objects. Use these methods without the .experiment suffix and after loading the tidyverse package with the generic (or after loading package tidyverse). 
+#' 
+#' @param x data object of class \link{experiment} 
+#' @param ... other arguments 
+#' @name tidyverse 
+validate_grouped_df.experiment <- function(x, ...) { 
+	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
+ 	x <- as.data.frame(x) 
+	.data <- dplyr::validate_grouped_df(x, ...)
  	attributes(.data) <- append( purrr::discard(attributes(.data), names(attributes(.data)) == "class"), old_attr) 
  	.data
  }
@@ -1033,6 +1205,10 @@ register_all_s3_methods <-  function() {
 	 register_s3_method("dplyr", "arrange_if", "experiment")
 	 register_s3_method("dplyr", "distinct", "experiment")
 	 register_s3_method("dplyr", "distinct_", "experiment")
+	 register_s3_method("dplyr", "distinct_all", "experiment")
+	 register_s3_method("dplyr", "distinct_at", "experiment")
+	 register_s3_method("dplyr", "distinct_if", "experiment")
+	 register_s3_method("dplyr", "distinct_prepare", "experiment")
 	 register_s3_method("dplyr", "filter", "experiment")
 	 register_s3_method("dplyr", "filter_", "experiment")
 	 register_s3_method("dplyr", "filter_all", "experiment")
@@ -1045,10 +1221,18 @@ register_all_s3_methods <-  function() {
 	 register_s3_method("dplyr", "group_by_at", "experiment")
 	 register_s3_method("dplyr", "group_by_if", "experiment")
 	 register_s3_method("dplyr", "group_by_prepare", "experiment")
+	 register_s3_method("dplyr", "group_data", "experiment")
 	 register_s3_method("dplyr", "group_indices", "experiment")
 	 register_s3_method("dplyr", "group_indices_", "experiment")
+	 register_s3_method("dplyr", "group_keys", "experiment")
+	 register_s3_method("dplyr", "group_map", "experiment")
+	 register_s3_method("dplyr", "group_nest", "experiment")
+	 register_s3_method("dplyr", "group_rows", "experiment")
 	 register_s3_method("dplyr", "group_size", "experiment")
+	 register_s3_method("dplyr", "group_split", "experiment")
+	 register_s3_method("dplyr", "group_trim", "experiment")
 	 register_s3_method("dplyr", "group_vars", "experiment")
+	 register_s3_method("dplyr", "group_walk", "experiment")
 	 register_s3_method("dplyr", "grouped_df", "experiment")
 	 register_s3_method("dplyr", "groups", "experiment")
 	 register_s3_method("dplyr", "inner_join", "experiment")
@@ -1063,6 +1247,8 @@ register_all_s3_methods <-  function() {
 	 register_s3_method("dplyr", "mutate_each_", "experiment")
 	 register_s3_method("dplyr", "mutate_if", "experiment")
 	 register_s3_method("dplyr", "n_groups", "experiment")
+	 register_s3_method("dplyr", "nest_join", "experiment")
+	 register_s3_method("dplyr", "new_grouped_df", "experiment")
 	 register_s3_method("dplyr", "right_join", "experiment")
 	 register_s3_method("dplyr", "sample_frac", "experiment")
 	 register_s3_method("dplyr", "sample_n", "experiment")
@@ -1088,6 +1274,7 @@ register_all_s3_methods <-  function() {
 	 register_s3_method("dplyr", "transmute_at", "experiment")
 	 register_s3_method("dplyr", "transmute_if", "experiment")
 	 register_s3_method("dplyr", "ungroup", "experiment")
+	 register_s3_method("dplyr", "validate_grouped_df", "experiment")
 }
 
 

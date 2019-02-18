@@ -2,14 +2,7 @@ library(dplyr)
 # ------------------------------------------------------------------------------
 body_function <- function(fct, argument, args1) {
 
-  body_arg <- gsub("function ", "", argument) %>% strsplit(", ") %>% unlist %>%
-    gsub("([[:graph:]]*)( = )([[:graph:]]*)", "\\1\\2\\1", .) %>%
-    grep('"', ., value = TRUE, invert = TRUE) %>%
-    stringr::str_c(collapse = ", ") %>% trimws()
-  if (substr(body_arg, nchar(body_arg), nchar(body_arg)) != ")") {
-    body_arg <- paste(body_arg, ")")
-  }
-
+  body_arg <- paste0("(", paste(args1, collapse = ", "), ", ...)")
   body_f <- NULL
 
   if (length(args1) > 0) {
@@ -19,8 +12,8 @@ body_function <- function(fct, argument, args1) {
           body_f,
           '\told_attr <- c(old_attr, purrr::keep(attributes(', args1[i],
          '), names(attributes(', args1[i], ')) %in% ',
-         'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) \n ',
-         '\told_attr <- unique(old_attr) \n',
+         'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))\n ',
+         '\told_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)\n',
          '\t', args1[i], ' <- as.data.frame(', args1[i], ') \n')
 
       } else {
@@ -61,19 +54,7 @@ doc_function <- function(args1, args2) {
                         " data object of class \\link{experiment} \n")
     }
   }
-  fct_doc
-
-  if (length(args2) > 0) {
-    for (i in  1:length(args2)) {
-      if (args2[i] == "...") {
-        fct_doc <- paste0(fct_doc, "#' @param ... other arguments \n")
-      } else {
-        fct_doc <- paste0(fct_doc, "#' @param ", args2[i],
-                          " see corresponding function in package \\code{dplyr} \n")
-      }
-    }
-    fct_doc
-  }
+  fct_doc <- paste0(fct_doc, "#' @param ... other arguments \n")
   fct_doc <- paste0(fct_doc, "#' @name tidyverse \n")
 }
 
@@ -88,7 +69,9 @@ tidy_fct <- function(name) {
                 invert = TRUE)
 
   # function
-  fct_name <- paste0(name, ".experiment <- ", argument)
+  fct_name <- paste0(name, ".experiment <- ",
+                     paste0("function(", paste(args1, collapse = ", "),
+                            ", ...) "))
   body_f <- body_function(name, argument, args1)
 
   # function documentation
@@ -137,7 +120,7 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
 # function exported by the package `dplyr`. In this list I only select the
 # function that concern data frame and that the user may use to adapt for an
 # object of class 'experiment'.
-# I did not choose the function having a direct impact on the name of the column
+# I did not choose the functions having a direct impact on the name of the column
 # like the function 'rename' for example.
 # I also choose the function based on the list of function that the package `sf`
 # use.
@@ -145,8 +128,9 @@ fct <- ls(getNamespaceInfo("dplyr", "exports")) %>%
   grep(
     "sample|distinct|summarise|slice|transmute|group|arrange|filter|select|mutate|join",
     ., value = TRUE) %>%
-  grep("sql|select_var|n_distinct", ., invert = TRUE, value = TRUE)
+  grep("sql|select_var|n_distinct|group_cols", ., invert = TRUE, value = TRUE)
 
+# Make tidyverse.R
 dplyr_fct <- lapply(fct, function(x) tidy_fct(x))
 dplyr_fct <- append(dplyr_fct, add_register_method(fct))
 dplyr_fct <- append(dplyr_fct,
@@ -160,3 +144,6 @@ dplyr_fct <- append(dplyr_fct,
 writeLines(capture.output(cat(paste(dplyr_fct, collapse = "\n\n"))),
            con = paste0(getwd(), "/R/tidyverse.R"))
 
+
+
+rm(list = ls())
