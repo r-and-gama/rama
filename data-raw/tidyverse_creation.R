@@ -2,8 +2,12 @@
 body_function <- function(fct, argument, args1) {
 
   body_arg <- gsub("function ", "", argument) %>% strsplit(", ") %>% unlist %>%
-    gsub("([[:alnum:]]*)( = )([[:alnum:]]*)", "\\1\\2\\1", .) %>%
-    stringr::str_c(collapse = ", ")
+    gsub("([[:graph:]]*)( = )([[:graph:]]*)", "\\1\\2\\1", .) %>%
+    grep('"', ., value = TRUE, invert = TRUE) %>%
+    stringr::str_c(collapse = ", ") %>% trimws()
+  if (substr(body_arg, nchar(body_arg), nchar(body_arg)) != ")") {
+    body_arg <- paste(body_arg, ")")
+  }
 
   body_f <- NULL
 
