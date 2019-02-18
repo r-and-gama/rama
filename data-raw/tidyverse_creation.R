@@ -115,6 +115,21 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   register_all_s3_methods()
 }
 
+# Tests ------------------------------------------------------------------------
+
+make_test <- function(name) {
+  argument_name <- names(formals(eval(sym(name))))
+  args1 <- grep("\\.data|\\.tbl|^x$|^y$|^data$|^tbl$", argument_name,
+                value = TRUE)
+
+  if (length(args1) == 1) {
+    test <- paste0(name, "(exp)")
+  } else {
+    test <- paste0(name, "(exp, exp)")
+  }
+  paste0('\ttestthat::expect_s3_class(', test, ', "experiment")')
+}
+
 # ------------------------------------------------------------------------------
 # The function `ls(getNamespaceInfo("dplyr", "exports"))` returns all the
 # function exported by the package `dplyr`. In this list I only select the
@@ -144,6 +159,19 @@ dplyr_fct <- append(dplyr_fct,
 writeLines(capture.output(cat(paste(dplyr_fct, collapse = "\n\n"))),
            con = paste0(getwd(), "/R/tidyverse.R"))
 
+# Make tests/testthat/test_tydiverse.R
+dplyr_test <- lapply(fct %>% grep("_", ., value = TRUE, invert = TRUE),
+                     function(x) make_test(x))
+dplyr_test <- append(paste0('library(dplyr)\n\ntest_that("Tests tidyverse", {',
+'\n\tdf <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),',
+'"beta" = rep(1.5, 5), "gamma" = runif (5, 0, 1), "S" = rep(1, 5), ',
+'"I" = rep(1, 5), "R" = c(1: 5), "a" = rep(1000, 5), "b" = rep(1, 5)) \n',
+'\texp <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),',
+'obsrates = c("S", "I", "R"), tmax = "a", seed = "b", experiment = "sir", ',
+' model = system.file("models", "sir.gaml", package = "rama"))'), dplyr_test)
+dplyr_test <- append(dplyr_test, "})")
 
+writeLines(capture.output(cat(paste(dplyr_test, collapse = "\n"))),
+           con = paste0(getwd(), "/tests/testthat/test_tidyverse.R"))
 
 rm(list = ls())
