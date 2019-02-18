@@ -1105,12 +1105,8 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   if (pkg %in% loadedNamespaces()) {
     registerS3method(generic, class, fun, envir = asNamespace(pkg))
   }
+}
 
-  # Always register hook in case package is later unloaded & reloaded
-  setHook(
-    packageEvent(pkg, "onAttach"),
-    function(...) {
-      registerS3method(generic, class, fun, envir = asNamespace(pkg))
-    }
-  )
+.onLoad <- function(libname, pkgname) {
+  register_all_s3_methods()
 }

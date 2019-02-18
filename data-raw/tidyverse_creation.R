@@ -1,3 +1,4 @@
+library(dplyr)
 # ------------------------------------------------------------------------------
 body_function <- function(fct, argument, args1) {
 
@@ -124,14 +125,11 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   if (pkg %in% loadedNamespaces()) {
     registerS3method(generic, class, fun, envir = asNamespace(pkg))
   }
+}
 
-  # Always register hook in case package is later unloaded & reloaded
-  setHook(
-    packageEvent(pkg, "onAttach"),
-    function(...) {
-      registerS3method(generic, class, fun, envir = asNamespace(pkg))
-    }
-  )
+# On load ----------------------------------------------------------------------
+.onLoad <- function(libname, pkgname) {
+  register_all_s3_methods()
 }
 
 # ------------------------------------------------------------------------------
@@ -154,6 +152,9 @@ dplyr_fct <- append(dplyr_fct, add_register_method(fct))
 dplyr_fct <- append(dplyr_fct,
                     paste0("register_s3_method <- ",
                       capture.output(eval(sym("register_s3_method"))) %>%
+                        paste(collapse = "\n"), "\n\n",
+                      ".onLoad <- ",
+                      capture.output(eval(sym(".onLoad"))) %>%
                         paste(collapse = "\n")))
 
 writeLines(capture.output(cat(paste(dplyr_fct, collapse = "\n\n"))),
