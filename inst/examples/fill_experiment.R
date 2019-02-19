@@ -14,4 +14,4 @@ exp0 <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),
                       model =
                        system.file("models", "sir.gaml", package = "rama"))
 otp <- run_experiment(exp0)
-# new_output <- fill_experiment(otp, exp0)
+new_output <- fill_experiment(otp, exp0)
