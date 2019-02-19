@@ -147,13 +147,12 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #' original number of rows of the experiment, there is duplication of the
 #' shortest element.
 #'
-#' @param exp An object of class \code{experiment}.
 #' @param i A column index.
 #' @param value A vector used to replace the values of the indexed column.
 #'
 #' @return An object of class \code{experiment}.
 #'
-#' @example /inst/examples/cash-set-.experiment.R
+#' @rdname experiment
 #' @export
 `$<-.experiment` <- function(exp, i, value) {
   if (is.null(value)) NextMethod()

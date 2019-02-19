@@ -19,9 +19,13 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   if (is.null(dic_g2r)) {
     dic_g2r <- setNames(newparvarnames, oldparvarnames)
   } else {
-    stopifnot(all(names(dic_g2r) %in% oldparvarnames))
-    dic_g2r <- c(setNames(paste0("p_", dic_g2r[names_param]), names_param),
-             setNames(paste0("r_", dic_g2r[names_obsrates]), names_obsrates))
+    stopifnot(all(dic_g2r %in% oldparvarnames))
+    dic_g2r <- c(setNames(paste0("p_",
+                                 dic_g2r[which(dic_g2r %in% names_param)]),
+                          names(dic_g2r[which(dic_g2r %in% names_param)])),
+             setNames(paste0("r_",
+                             dic_g2r[which(dic_g2r %in% names_obsrates)]),
+                      names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
   }
 
   obsrates[] <- lapply(obsrates, as.integer)
@@ -61,22 +65,26 @@ validate_experiment <- function(x) {
   if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
     stop("The dictionaries are inconsistent.")
 
-  diff <- setdiff(sub("^[p]_", "", colnames[[1]]), get_parameters_names(model))
+  diff <- setdiff(dic_r2g[colnames[[1]]], get_parameters_names(model))
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
-               "' do not correspond to any parameter in the '", basename(model), "' file."))
+               "' do not correspond to any parameter in the '",
+               basename(model), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The parameter name '", substitute(diff),
-               "' does not correspond to any parameter in the '", basename(model), "' file."))
+               "' does not correspond to any parameter in the '",
+               basename(model), "' file."))
   }
 
-  diff <- setdiff(sub("^[r]_", "", colnames[[2]]), get_variables_names(model))
+  diff <- setdiff(dic_r2g[colnames[[2]]], get_variables_names(model))
   if (length(diff) > 1) {
     stop(paste0("The variables names '", substitute(diff),
-               "' do not correspond to any variable in the '", basename(model), "' file."))
+               "' do not correspond to any variable in the '",
+               basename(model), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The variable name '", substitute(diff),
-               "' does not correspond to any variable in the '", basename(model), "' file."))
+               "' does not correspond to any variable in the '",
+               basename(model), "' file."))
   }
 
   x

@@ -13,11 +13,13 @@ plot_params(exp)
 Returns a vector of the variables with highest variances.
 }
 \description{
-Plot the parameters that have the greatest variance in the experiments of a model.
+Plot the parameters that have the greatest variance in the experiments of a
+model.
 }
 \details{
 From the list of all parameters of the experiments that do vary (i.e. not
-null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
+null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and
+1D.
 }
 \examples{
 df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines

@@ -89,8 +89,8 @@ load_experiment <- function(exp, model, dir = "") {
     names(x) <- dic_g2r
     list(out = x, dic_g2r = dic_g2r)
   }
-  variables <- make_df_dic(get_variables(out))
-  parameters <- make_df_dic(get_parameters(out))
+  variables <- make_df_dic(get_variables(out)[get_variables_names(model)])
+  parameters <- make_df_dic(get_parameters(out)[get_parameters_names(model)])
   out_attr <- get_attributes(out)
 
   # Returning experiment object:

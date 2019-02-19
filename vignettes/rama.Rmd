@@ -169,6 +169,11 @@ exp5 <- as_experiment(df, parameters = c("S0", "R0", "beta", "gamma"),
            experiment = "sir", model = gaml_file)
 ```
 
+Which gives:
+
+```{r}
+exp5
+```
 
 ## 1.2 Manipulating experiments
 

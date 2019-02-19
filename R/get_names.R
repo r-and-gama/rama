@@ -1,7 +1,15 @@
 # get names according to a pattern. Basically a wrapper around grep ------------
 get_names <- function(pattern, text) {
-  unname(sapply(grep(pattern, text, value = TRUE),
-                function(x) sub("^.*\\\"(.*)\\\".*$", "\\1", x)))
+ # unname(sapply(grep(pattern, text, value = TRUE),
+  #              function(x) sub("^.*\\\"(.*)\\\".*$", "\\1", x)))
+  str <- grep(pattern, text, value = TRUE)
+  lst_str <- lapply(seq_along(str), function(x) {
+    vect <- strsplit(str[x], " var|value")
+    vect <- unlist(vect)[1]
+    vect <- sub("^.*\\\"(.*)\\\".*$", "\\1", vect)
+    vect
+  })
+  unlist(lst_str)
 }
 
 
