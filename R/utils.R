@@ -149,12 +149,7 @@ download_gama <- function() {
                         options("rama.default.gama.osx.zip.appdir"))
   }
   download(distrib, distrib_file,  mode = "wb")
-  untar(distrib_file, exdir = path )
-
-  zipP <- paste0(path, "GAMA.zip")
-  print(zipP)
-
-  unzip(zipP, exdir = path_test,  overwrite = TRUE)
+  untar(distrib_file, exdir = path_test, compressed = "gzip" )
   gama_app <- switch(get_os(),
                      "Darwin" = options("rama.default.gama.osx.appdir"),
                      "Window" = options("rama.default.gama.win.appdir"),

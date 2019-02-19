@@ -9,8 +9,7 @@ set_environment_variables <- function() {
             "/GAMA1.8_RC2_EmbeddedJDK_Win_64bits.zip",
           rama.default.gama.win.appdir       = "C:/programmes/Gama",
           rama.default.gama.win.zip.appdir   = "Gama",
-          rama.default.gama.osx              =
-            "/GAMA1.8_RC2_EmbeddedJDK_MacOS_zp.tgz",
+          rama.default.gama.osx              = "/gama1_8_RC2_MacOS.tgz",
           rama.default.gama.osx.appdir       = "/Applications/Gama.app",
           rama.default.gama.osx.zip.appdir   = "",
           rama.default.gama.linux            =
