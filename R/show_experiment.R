@@ -21,7 +21,7 @@ show_experiment <- function(file){
   if (length(exps) < 1)
     stop(paste0("File \"", file, "\" does not contain any experiment."))
   exps <- trimws(gsub("\\n+$", "", exps))
-  exp_info <- purrr::map(exps, function(x){
+  exp_info <- purrr::map(exps, function(x) {
     if (str_detect(x, "type")) {
       tmp <- cbind(str_match(x, ".*?(?=\\s+type?)"),
                    trimws(str_match(x, "type\\:(.*)"))[, 2])
