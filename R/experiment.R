@@ -23,7 +23,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
     dic_g2r <- c(setNames(paste0("p_",
                                  dic_g2r[which(dic_g2r %in% names_param)]),
                           names(dic_g2r[which(dic_g2r %in% names_param)])),
-                          #names_param),
              setNames(paste0("r_",
                              dic_g2r[which(dic_g2r %in% names_obsrates)]),
                       names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
