@@ -412,11 +412,11 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <pre class="sourceCode r" id="cb14"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">df<span class="op">$</span>I0 &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="op">-</span><span class="st"> </span>df<span class="op">$</span>S0</a></code></pre>
 <pre class="sourceCode r" id="cb15"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">df</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt;    S0 R0 beta gamma S I tmax seed  I0</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; 1 700  0  1.5  0.15 1 1 2500    2 300</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; 2 800  0  1.5  0.15 1 1 2500    1 200</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; 3 900  0  1.5  0.15 1 1 2500    5 100</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; 4 950  0  1.5  0.15 1 1 2500    3  50</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt; 5 999  0  1.5  0.15 1 1 2500    4   1</span></a></code></pre>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; 1 700  0  1.5  0.15 1 1 2500    3 300</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; 2 800  0  1.5  0.15 1 1 2500    4 200</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; 3 900  0  1.5  0.15 1 1 2500    2 100</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; 4 950  0  1.5  0.15 1 1 2500    1  50</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt; 5 999  0  1.5  0.15 1 1 2500    5   1</span></a></code></pre>
 <p>Let’s now transform this data frame into an <code>experiment</code>:</p>
 <pre class="sourceCode r" id="cb16"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">exp5 &lt;-<span class="st"> </span><span class="kw">as_experiment</span>(df, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;S0&quot;</span>, <span class="st">&quot;R0&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;gamma&quot;</span>), </a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">           <span class="dt">obsrates =</span> <span class="kw">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>), <span class="dt">tmax =</span> <span class="st">&quot;tmax&quot;</span>, <span class="dt">seed =</span> <span class="st">&quot;seed&quot;</span>,</a>
@@ -425,130 +425,122 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt; Simulations results will be saved in &quot; sir_4 &quot;.</span></a>
 <a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt; </span></a></code></pre>
+<p>Which gives:</p>
+<pre class="sourceCode r" id="cb17"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">exp5</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; Experiment with 5 simulations of 4 parameters and 2 observed variables</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir_4 </span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I </span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt;   p_S0 p_R0 p_beta p_gamma r_S r_I tmax seed</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; 1  700    0    1.5    0.15   1   1 2500    3</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; 2  800    0    1.5    0.15   1   1 2500    4</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; 3  900    0    1.5    0.15   1   1 2500    2</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#&gt; 4  950    0    1.5    0.15   1   1 2500    1</span></a>
+<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co">#&gt; 5  999    0    1.5    0.15   1   1 2500    5</span></a></code></pre>
 </div>
 </div>
 <div id="manipulating-experiments" class="section level2">
 <h2>1.2 Manipulating experiments</h2>
 <p>As mentioned above, since <code>experiment</code> objects are data frames, all the data frame methods can be used to manipulate them, such as <code>nrow()</code> to know the number of simulations in an experiment:</p>
-<pre class="sourceCode r" id="cb17"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">nrow</span>(exp4)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; [1] 9</span></a></code></pre>
+<pre class="sourceCode r" id="cb18"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">nrow</span>(exp4)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">#&gt; [1] 9</span></a></code></pre>
 <div id="replicating-experiments" class="section level3">
 <h3>1.2.1 Replicating experiments</h3>
 <p>From the following experiment</p>
-<pre class="sourceCode r" id="cb18"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">exp1</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span></a></code></pre>
+<pre class="sourceCode r" id="cb19"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">exp1</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</span></a></code></pre>
 <p>We can replicate:</p>
-<pre class="sourceCode r" id="cb19"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">exp5 &lt;-<span class="st"> </span><span class="kw">repl</span>(exp1, <span class="dv">10</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb20"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">exp5 &lt;-<span class="st"> </span><span class="kw">repl</span>(exp1, <span class="dv">10</span>)</a></code></pre>
 <p>Which gives:</p>
-<pre class="sourceCode r" id="cb20"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">exp5</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
-<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
-<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb20-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    1</span></a></code></pre>
+<pre class="sourceCode r" id="cb21"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">exp5</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb21-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    1</span></a></code></pre>
 <p>On which we could use different seeds for each simulation:</p>
-<pre class="sourceCode r" id="cb21"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">exp5<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">10</span>)</a></code></pre>
+<pre class="sourceCode r" id="cb22"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">exp5<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">10</span>)</a></code></pre>
 <p>Which gives:</p>
-<pre class="sourceCode r" id="cb22"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">exp5</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    3</span></a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
-<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000   10</span></a>
-<a class="sourceLine" id="cb22-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
-<a class="sourceLine" id="cb22-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb22-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
-<a class="sourceLine" id="cb22-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    5</span></a>
-<a class="sourceLine" id="cb22-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    2</span></a>
-<a class="sourceLine" id="cb22-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
-<a class="sourceLine" id="cb22-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    6</span></a></code></pre>
+<pre class="sourceCode r" id="cb23"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">exp5</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    2</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    6</span></a>
+<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
+<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    5</span></a>
+<a class="sourceLine" id="cb23-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
+<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000   10</span></a>
+<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
+<a class="sourceLine" id="cb23-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    3</span></a>
+<a class="sourceLine" id="cb23-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    1</span></a></code></pre>
 </div>
 <div id="extracting-parameters-values" class="section level3">
 <h3>1.2.2 Extracting parameters values</h3>
-<pre class="sourceCode r" id="cb23"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">parameters</span>(exp5)</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma</span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt; 1   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt; 2   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt; 3   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt; 4   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; 5   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt; 6   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt; 7   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 8   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 9   999    1    0    1.5    0.15</span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 10  999    1    0    1.5    0.15</span></a></code></pre>
+<pre class="sourceCode r" id="cb24"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">parameters</span>(exp5)</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt; 1   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co">#&gt; 2   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">#&gt; 3   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt; 4   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; 5   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt; 6   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="co">#&gt; 7   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">#&gt; 8   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#&gt; 9   999    1    0    1.5    0.15</span></a>
+<a class="sourceLine" id="cb24-12" data-line-number="12"><span class="co">#&gt; 10  999    1    0    1.5    0.15</span></a></code></pre>
 </div>
 <div id="extracting-observation-rates" class="section level3">
 <h3>1.2.3 Extracting observation rates</h3>
-<pre class="sourceCode r" id="cb24"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">obs_rates</span>(exp5)</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt;    r_S r_I r_R</span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt; 1    1   1   1</span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co">#&gt; 2    1   1   1</span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">#&gt; 3    1   1   1</span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt; 4    1   1   1</span></a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; 5    1   1   1</span></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt; 6    1   1   1</span></a>
-<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="co">#&gt; 7    1   1   1</span></a>
-<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">#&gt; 8    1   1   1</span></a>
-<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#&gt; 9    1   1   1</span></a>
-<a class="sourceLine" id="cb24-12" data-line-number="12"><span class="co">#&gt; 10   1   1   1</span></a></code></pre>
+<pre class="sourceCode r" id="cb25"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">obs_rates</span>(exp5)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt;    r_S r_I r_R</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt; 1    1   1   1</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt; 2    1   1   1</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt; 3    1   1   1</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt; 4    1   1   1</span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">#&gt; 5    1   1   1</span></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="co">#&gt; 6    1   1   1</span></a>
+<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co">#&gt; 7    1   1   1</span></a>
+<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="co">#&gt; 8    1   1   1</span></a>
+<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="co">#&gt; 9    1   1   1</span></a>
+<a class="sourceLine" id="cb25-12" data-line-number="12"><span class="co">#&gt; 10   1   1   1</span></a></code></pre>
 </div>
 <div id="tmax-and-seed" class="section level3">
 <h3>1.2.4 <code>tmax</code> and <code>seed</code></h3>
 <p>As seen above, <code>seed</code> can be extracted and changed with regular data frame methods:</p>
-<pre class="sourceCode r" id="cb25"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">exp5<span class="op">$</span>seed</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt;  [1]  3  8 10  9  1  7  5  2  4  6</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">exp5<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">exp5</a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt; experiment name:     sir </span></a>
-<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
-<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
-<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="co">#&gt; Experiment overview:</span></a>
-<a class="sourceLine" id="cb25-12" data-line-number="12"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb25-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    6</span></a>
-<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    2</span></a>
-<a class="sourceLine" id="cb25-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    3</span></a>
-<a class="sourceLine" id="cb25-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
-<a class="sourceLine" id="cb25-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
-<a class="sourceLine" id="cb25-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
-<a class="sourceLine" id="cb25-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
-<a class="sourceLine" id="cb25-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    5</span></a>
-<a class="sourceLine" id="cb25-21" data-line-number="21"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb25-22" data-line-number="22"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000   10</span></a></code></pre>
-<p>Same for <code>tmax</code>:</p>
-<pre class="sourceCode r" id="cb26"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">exp5<span class="op">$</span>tmax</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt;  [1] 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">exp5<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">3543</span></a>
+<pre class="sourceCode r" id="cb26"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">exp5<span class="op">$</span>seed</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt;  [1]  2  4  6  9  5  8 10  7  3  1</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">exp5<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb26-4" data-line-number="4">exp5</a>
 <a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
 <a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt; experiment name:     sir </span></a>
@@ -558,46 +550,69 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
 <a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; Experiment overview:</span></a>
 <a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 3543    6</span></a>
-<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 3543    2</span></a>
-<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 3543    3</span></a>
-<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 3543    8</span></a>
-<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 3543    7</span></a>
-<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 3543    4</span></a>
-<a class="sourceLine" id="cb26-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 3543    9</span></a>
-<a class="sourceLine" id="cb26-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 3543    5</span></a>
-<a class="sourceLine" id="cb26-21" data-line-number="21"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 3543    1</span></a>
-<a class="sourceLine" id="cb26-22" data-line-number="22"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 3543   10</span></a></code></pre>
+<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    2</span></a>
+<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
+<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
+<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
+<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
+<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    5</span></a>
+<a class="sourceLine" id="cb26-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    3</span></a>
+<a class="sourceLine" id="cb26-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb26-21" data-line-number="21"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    6</span></a>
+<a class="sourceLine" id="cb26-22" data-line-number="22"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000   10</span></a></code></pre>
+<p>Same for <code>tmax</code>:</p>
+<pre class="sourceCode r" id="cb27"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">exp5<span class="op">$</span>tmax</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt;  [1] 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000</span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">exp5<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">3543</span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">exp5</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
+<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt; experiment name:     sir </span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
+<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb27-12" data-line-number="12"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 3543    2</span></a>
+<a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 3543    7</span></a>
+<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 3543    8</span></a>
+<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 3543    4</span></a>
+<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 3543    9</span></a>
+<a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 3543    5</span></a>
+<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 3543    3</span></a>
+<a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 3543    1</span></a>
+<a class="sourceLine" id="cb27-21" data-line-number="21"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 3543    6</span></a>
+<a class="sourceLine" id="cb27-22" data-line-number="22"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 3543   10</span></a></code></pre>
 <p>If you want to stop observing the variable R and observe the variable I every 2 steps, you’d do:</p>
-<pre class="sourceCode r" id="cb27"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">exp5<span class="op">$</span>r_R &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">exp5<span class="op">$</span>r_I &lt;-<span class="st"> </span><span class="dv">2</span></a></code></pre>
+<pre class="sourceCode r" id="cb28"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">exp5<span class="op">$</span>r_R &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">exp5<span class="op">$</span>r_I &lt;-<span class="st"> </span><span class="dv">2</span></a></code></pre>
 <p>Which gives:</p>
-<pre class="sourceCode r" id="cb28"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">exp5</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 2 observed variables</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
-<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
-<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I </span></a>
-<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
-<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I tmax seed</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   2 3543    6</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   2 3543    2</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   2 3543    3</span></a>
-<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   2 3543    8</span></a>
-<a class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   2 3543    7</span></a>
-<a class="sourceLine" id="cb28-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   2 3543    4</span></a>
-<a class="sourceLine" id="cb28-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   2 3543    9</span></a>
-<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   2 3543    5</span></a>
-<a class="sourceLine" id="cb28-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   2 3543    1</span></a>
-<a class="sourceLine" id="cb28-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   2 3543   10</span></a></code></pre>
+<pre class="sourceCode r" id="cb29"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">exp5</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 2 observed variables</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co">#&gt; experiment name:     sir </span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; input gaml file:     /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt; output directory:    /Users/mac/Desktop/rama/vignettes/sir </span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I </span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I tmax seed</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   2 3543    2</span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   2 3543    7</span></a>
+<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   2 3543    8</span></a>
+<a class="sourceLine" id="cb29-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   2 3543    4</span></a>
+<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   2 3543    9</span></a>
+<a class="sourceLine" id="cb29-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   2 3543    5</span></a>
+<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   2 3543    3</span></a>
+<a class="sourceLine" id="cb29-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   2 3543    1</span></a>
+<a class="sourceLine" id="cb29-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   2 3543    6</span></a>
+<a class="sourceLine" id="cb29-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   2 3543   10</span></a></code></pre>
 </div>
 </div>
 <div id="running-experiments" class="section level2">
 <h2>1.3 Running experiments</h2>
 <p>Then, we run the experiment by one command <code>run_experiment</code>, in which we specify the experiment and optionally number of cores, output folder for the results of this experiment, parameters file in xml format.</p>
-<pre class="sourceCode r" id="cb29"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">output &lt;-<span class="st"> </span><span class="kw">run_experiment</span>(exp1)</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt; Running experiment plan ...</span></a></code></pre>
+<pre class="sourceCode r" id="cb30"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">output &lt;-<span class="st"> </span><span class="kw">run_experiment</span>(exp1)</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co">#&gt; Running experiment plan ...</span></a></code></pre>
 </div>
 
 

@@ -2,10 +2,12 @@
 
 #' Visualize values of parameters
 #'
-#' Plot the parameters that have the greatest variance in the experiments of a model.
+#' Plot the parameters that have the greatest variance in the experiments of a
+#' model.
 #'
 #' From the list of all parameters of the experiments that do vary (i.e. not
-#' null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and 1D.
+#' null) the one (up to 3) with the biggest variance are ploted in 3D, 2D and
+#' 1D.
 #'
 #' @param exp An object of class \code{experiment}.
 #'

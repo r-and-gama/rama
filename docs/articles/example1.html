@@ -127,54 +127,38 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">#install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">#devtools::install_github("choisy/gamar")</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gamar)</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/defpath.html">defpath</a></span>(<span class="st">"/Applications/Gama.app"</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">myModelPath &lt;-<span class="st"> "/Users/jdz/git/gamar/inst/models"</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co">#(myModelFile &lt;- paste0(system.file("models",package="gamar"),"/cluster_ind.gaml"))</span></a>
-<a class="sourceLine" id="cb2-4" title="4">(myModelFile &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(myModelPath,<span class="st">"/NicolasPred.gaml"</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">(experimentPREY &lt;-<span class="st"> </span><span class="kw">getmodelparameter</span>(<span class="dt">modelfile =</span> myModelFile,<span class="dt">experimentname =</span> <span class="st">"prey_predator"</span>))</a>
-<a class="sourceLine" id="cb3-2" title="2">(<span class="kw">getparameternames</span>(experimentPREY))</a>
-<a class="sourceLine" id="cb3-3" title="3"></a>
-<a class="sourceLine" id="cb3-4" title="4">action_distance &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="st">"action_distance"</span>=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">100</span>,<span class="dv">200</span>,<span class="dv">300</span>,<span class="dv">400</span>,<span class="dv">500</span>,<span class="dv">600</span>,<span class="dv">700</span>,<span class="dv">800</span>,<span class="dv">900</span>,<span class="dv">1000</span>,<span class="dv">1500</span>,<span class="dv">2000</span>,<span class="dv">2500</span>,<span class="dv">3000</span>,<span class="dv">3500</span>,<span class="dv">4000</span>,<span class="dv">5500</span>,<span class="dv">6000</span>,<span class="dv">7000</span>,<span class="dv">8000</span>,<span class="dv">9000</span>,<span class="dv">10000</span>,<span class="dv">12000</span>,<span class="dv">14000</span>,<span class="dv">16000</span>,<span class="dv">20000</span>,<span class="dv">25000</span>,<span class="dv">30000</span>,<span class="dv">40000</span>,<span class="dv">50000</span>))</a>
-<a class="sourceLine" id="cb3-5" title="5">environment_size &lt;-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="st">"environment_size"</span>=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">500</span>,<span class="dv">10000</span>,<span class="dv">15000</span>,<span class="dv">20000</span>,<span class="dv">30000</span>,<span class="dv">40000</span>,<span class="dv">50000</span>))</a>
-<a class="sourceLine" id="cb3-6" title="6">all_seed &lt;-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="st">"mseed"</span>=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">1</span>,<span class="dv">30</span>,<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb3-7" title="7"></a>
-<a class="sourceLine" id="cb3-8" title="8"></a>
-<a class="sourceLine" id="cb3-9" title="9">simulation_duration &lt;-<span class="st"> </span><span class="dv">5000</span>;</a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co"># To test we set a shorter duration...</span></a>
-<a class="sourceLine" id="cb3-11" title="11">simulation_duration &lt;-<span class="st"> </span><span class="dv">3</span>;</a>
-<a class="sourceLine" id="cb3-12" title="12"></a>
-<a class="sourceLine" id="cb3-13" title="13">simulations &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/merge">merge</a></span>(action_distance,environment_size,<span class="dt">by=</span><span class="ot">NULL</span>)</a>
-<a class="sourceLine" id="cb3-14" title="14">simulations &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/merge">merge</a></span>(simulations,all_seed,<span class="dt">by=</span><span class="ot">NULL</span> )</a>
-<a class="sourceLine" id="cb3-15" title="15">sim2 &lt;-<span class="st"> </span>simulations</a>
-<a class="sourceLine" id="cb3-16" title="16"></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#sim2 &lt;- simulations[!simulations$min_distance_crasy&gt;simulations$max_distance_crasy,]</span></a>
-<a class="sourceLine" id="cb3-18" title="18">experiment1 &lt;-<span class="st"> </span>experimentPREY</a>
-<a class="sourceLine" id="cb3-19" title="19">experimentplan &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(sim2))</a>
-<a class="sourceLine" id="cb4-2" title="2">{</a>
-<a class="sourceLine" id="cb4-3" title="3">  local_experiment &lt;-<span class="st">  </span><span class="kw">setparametervalue</span>(experiment1,<span class="st">"danger_distance"</span>,sim2[i,<span class="st">"action_distance"</span>])</a>
-<a class="sourceLine" id="cb4-4" title="4">  local_experiment &lt;-<span class="st">  </span><span class="kw">setparametervalue</span>(local_experiment,<span class="st">"environment_size"</span>,sim2[i,<span class="st">"environment_size"</span>])</a>
-<a class="sourceLine" id="cb4-5" title="5">  local_experiment &lt;-<span class="st">  </span><span class="kw">setparametervalue</span>(local_experiment,<span class="st">"currentSeed"</span>,sim2[i,<span class="st">"mseed"</span>])</a>
-<a class="sourceLine" id="cb4-6" title="6">  local_experiment &lt;-<span class="st">  </span><span class="kw">setparametervalue</span>(local_experiment,<span class="st">"simulation_id"</span>,i)</a>
-<a class="sourceLine" id="cb4-7" title="7">  local_experiment &lt;-<span class="st"> </span><span class="kw">setfinalstep</span>(local_experiment,simulation_duration)</a>
-<a class="sourceLine" id="cb4-8" title="8"></a>
-<a class="sourceLine" id="cb4-9" title="9">  local_experiment &lt;-<span class="st"> </span><span class="kw">setoutputframerate</span>(local_experiment,<span class="st">"nb_predators"</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-10" title="10">  local_experiment &lt;-<span class="st"> </span><span class="kw">setoutputframerate</span>(local_experiment,<span class="st">"nb_preys"</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-11" title="11">  local_experiment &lt;-<span class="st"> </span><span class="kw">setoutputframerate</span>(local_experiment,<span class="st">"micro_b"</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-12" title="12">  local_experiment &lt;-<span class="st"> </span><span class="kw">setoutputframerate</span>(local_experiment,<span class="st">"mean_pop"</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-13" title="13">  local_experiment &lt;-<span class="st"> </span><span class="kw">setmodelpath</span>(local_experiment,<span class="st">"../models/cluster_ind.gaml"</span>)</a>
-<a class="sourceLine" id="cb4-14" title="14">  local_experiment &lt;-<span class="st"> </span><span class="kw">setsimulationid</span>(local_experiment,i)</a>
-<a class="sourceLine" id="cb4-15" title="15">  local_experiment &lt;-<span class="st"> </span><span class="kw">setseed</span>(local_experiment,sim2[i,<span class="st">"mseed"</span>])</a>
-<a class="sourceLine" id="cb4-16" title="16"></a>
-<a class="sourceLine" id="cb4-17" title="17">  experimentPlan  &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>()</a>
-<a class="sourceLine" id="cb4-18" title="18">  experimentPlan &lt;-<span class="st"> </span><span class="kw">addtoexperimentplan</span>(<span class="dt">simulation =</span> local_experiment,<span class="dt">experimentplan =</span> experimentPlan)</a>
-<a class="sourceLine" id="cb4-19" title="19">  experimentPlan<span class="op">$</span>Simulation<span class="op">$</span>.attrs[<span class="st">'id'</span>] &lt;-<span class="st"> </span>i</a>
-<a class="sourceLine" id="cb4-20" title="20">  outFile &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"/tmp/experiment/input_"</span>,i,<span class="st">".xml"</span>)</a>
-<a class="sourceLine" id="cb4-21" title="21">  <span class="kw">writemodelparameterfile</span>(experimentPlan,outFile)</a>
-<a class="sourceLine" id="cb4-22" title="22">}</a></code></pre></div>
+<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install and load the package</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#devtools::install_github("r-and-gama/rama")</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># if necessary to configure GAMA path</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># defpath("/Applications/Gama.app")</span></a></code></pre>
+<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># to load the experiment</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"prey_predator"</span>,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models"</span>, <span class="st">"NicolasPred.gaml"</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                                   <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">exp</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># to set the experiment</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">exp<span class="op">$</span>p_danger_distance &lt;-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">15</span>, <span class="dv">60</span>, <span class="dv">5</span>)),</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">                            <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">7</span><span class="op">:</span><span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">2</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">5</span>)),</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">                            <span class="dv">10000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">exp<span class="op">$</span>p_environment_size &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="dv">10000</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">exp<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">5000</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># To test we set a shorter duration...</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">exp<span class="op">$</span>r_mean_pop &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">exp<span class="op">$</span>r_micro_b &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">exp<span class="op">$</span>r_nb_predators &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">exp<span class="op">$</span>r_nb_preys &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co"># to run the experiment (do not run)</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#out &lt;- run_experiment(exp)</span></a></code></pre>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -2,11 +2,11 @@
 <Experiment_plan>
  <Simulation id="1" seed="1" finalStep="1" sourcePath="/Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml" experiment="sir">
   <Parameters>
-   <Parameter name="S0" type="FLOAT" value="1"/>
+   <Parameter name="S0" type="FLOAT" value="999"/>
    <Parameter name="I0" type="FLOAT" value="1"/>
-   <Parameter name="R0" type="FLOAT" value="1"/>
-   <Parameter name="beta" type="FLOAT" value="1"/>
-   <Parameter name="gamma" type="FLOAT" value="1"/>
+   <Parameter name="R0" type="FLOAT" value="0"/>
+   <Parameter name="beta" type="FLOAT" value="1.5"/>
+   <Parameter name="gamma" type="FLOAT" value="0.15"/>
   </Parameters>
   <Outputs>
    <Output id="0" name="S" framerate="1"/>
@@ -63,6 +63,7 @@
    <Parameter name="R0" type="FLOAT" value="1"/>
    <Parameter name="beta" type="FLOAT" value="1"/>
    <Parameter name="gamma" type="FLOAT" value="1"/>
+>>>>>>> master:inst/models/sir.xml
   </Parameters>
   <Outputs>
    <Output id="0" name="S" framerate="1"/>

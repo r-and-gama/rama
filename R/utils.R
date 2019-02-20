@@ -90,14 +90,10 @@ gama_repo <- function(repo = NULL) {
   if (! is.null(repo)) options(rama.repo = repo)
 }
 
-
-
 # Test if operating system is Windows ------------------------------------------
 isWindows <- function() {
   return (Sys.info()["sysname"] == "Windows")
 }
-
-
 
 # Returns the OS ---------------------------------------------------------------
 get_os <- function(){
@@ -110,8 +106,6 @@ get_os <- function(){
   }
   os
 }
-
-
 
 # Gives distrib as a function of the OS ----------------------------------------
 #' In function of remote distribution of the OS returns the path
@@ -127,8 +121,6 @@ gama_remote_distrib <- function() {
                              options("rama.default.gama.linux")))
   # to complete
 }
-
-
 
 # Downloads gama ---------------------------------------------------------------
 #' @importFrom utils download.file unzip untar
@@ -149,20 +141,13 @@ download_gama <- function() {
                         options("rama.default.gama.osx.zip.appdir"))
   }
   download(distrib, distrib_file,  mode = "wb")
-  untar(distrib_file, exdir = path )
-
-  zipP <- paste0(path, "GAMA.zip")
-  print(zipP)
-
-  unzip(zipP, exdir = path_test,  overwrite = TRUE)
+  untar(distrib_file, exdir = path_test, compressed = "gzip" )
   gama_app <- switch(get_os(),
                      "Darwin" = options("rama.default.gama.osx.appdir"),
                      "Window" = options("rama.default.gama.win.appdir"),
                      "linux" = options("rama.default.gama.linux.appdir"))
   expDir
 }
-
-
 
 # Setup GAMA UI ----------------------------------------------------------------
 setup_gama_ui <- function() {

@@ -5,7 +5,6 @@
 #' @return The function returns `TRUE` or `FALSE` depending on whether its
 #' argument is of chatacter type or not
 #'
-#' @example inst/examples/is.experiment.R
 #' @rdname experiment
 #' @export
 is.experiment <- function(exp) {
