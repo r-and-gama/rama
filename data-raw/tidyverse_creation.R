@@ -1,46 +1,39 @@
 library(dplyr)
 # ------------------------------------------------------------------------------
-body_function <- function(fct, argument, args1) {
+body_function <- function(fct, args1) {
 
   body_arg <- paste0("(", paste(args1, collapse = ", "), ", ...)")
-  body_f <- NULL
 
-  if (length(args1) > 0) {
-    for (i in  1:length(args1)) {
-      if (i > 1) {
-        body_f <- paste0(
-          body_f,
-          '\told_attr <- c(old_attr, purrr::keep(attributes(', args1[i],
-         '), names(attributes(', args1[i], ')) %in% ',
-         'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))\n ',
-         '\told_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)\n',
-         '\t', args1[i], ' <- as.data.frame(', args1[i], ') \n')
-
-      } else {
-        body_f <- paste0(
-          body_f,
-          '\told_attr <- purrr::keep(attributes(', args1[i],
-          '), names(attributes(', args1[i], ')) %in% ',
-          'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) \n ',
-          '\t', args1[i], ' <- as.data.frame(', args1[i], ') \n')
+  lgth <- length(args1)
+  if (lgth > 0) {
+    body_f <- paste0(
+      '\told_attr <- purrr::keep(attributes(', args1[1],
+      '), names(attributes(', args1[1], ')) %in% ',
+      'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) \n ',
+      '\t', args1[1], ' <- as.data.frame(', args1[1], ') \n')
+    if (lgth > 1) {
+      f <- function(x) {
+        paste0(
+          '\told_attr <- c(old_attr, purrr::keep(attributes(', x,
+          '), names(attributes(', x, ')) %in% ',
+          'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) \n ',
+          '\told_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)\n',
+          '\t', x, ' <- as.data.frame(', x, ') \n')
       }
+      body_f <- paste0(c(body_f, lapply(args1[-1], f)), collapse = "")
     }
-    body_f
   }
 
   body_f <- paste0(body_f, '\t.data <- dplyr::', fct, body_arg, "\n \t")
-
-  if (length(args1) > 0) {
-    body_f <- paste0(
+  body_f <- paste0(
       body_f,
       'attributes(.data) <- append( purrr::discard(attributes(.data), ',
       'names(attributes(.data)) == "class"), old_attr) \n \t',".data")
-    }
 }
 
 # ------------------------------------------------------------------------------
 # arg1 : argument(s) of class experiment
-doc_function <- function(args1, args2) {
+doc_function <- function(args1) {
 
   fct_doc <- paste0(
     "#' Tidyverse methods for experiment objects (remove .experiment suffix!) \n",
@@ -49,20 +42,17 @@ doc_function <- function(args1, args2) {
     ".experiment suffix and after loading the tidyverse package with the generic ",
     "(or after loading package tidyverse). \n#' \n")
   if (length(args1) > 0) {
-    for (i in  1:length(args1)) {
-      fct_doc <- paste0(fct_doc, "#' @param ", args1[i],
-                        " data object of class \\link{experiment} \n")
+    f <- function(x) {
+      paste0("#' @param ", x, " data object of class \\link{experiment} \n")}
+    fct_doc <- paste0(c(fct_doc, sapply(args1, f)), collapse = "")
     }
-  }
-  fct_doc <- paste0(fct_doc, "#' @param ... other arguments \n")
-  fct_doc <- paste0(fct_doc, "#' @name tidyverse \n")
+  paste0(c(fct_doc, "#' @param ... other arguments \n",
+           "#' @name tidyverse \n"), collapse = "")
 }
 
 # ------------------------------------------------------------------------------
 tidy_fct <- function(name) {
   # function argument
-  argument <- capture.output(args(eval(sym(name))))
-  argument <- gsub("NULL$", "", paste(argument, collapse = ""))
   argument_name <- names(formals(eval(sym(name))))
   args1 <- grep("\\.data|\\.tbl|^x$|^y$|^data$|^tbl$", argument_name, value = TRUE)
   args2 <- grep(".data|.tbl|x|y|data|tbl", argument_name, value = TRUE,
@@ -72,15 +62,16 @@ tidy_fct <- function(name) {
   fct_name <- paste0(name, ".experiment <- ",
                      paste0("function(", paste(args1, collapse = ", "),
                             ", ...) "))
-  body_f <- body_function(name, argument, args1)
+  body_f <- body_function(name, args1)
 
   # function documentation
-  doc_f <- doc_function(args1, args2)
+  doc_f <- doc_function(args1)
 
   # total
   function_tot <- paste0(doc_f, fct_name, "{ \n", body_f, "\n }")
 }
 
+# ------------------------------------------------------------------------------
 add_register_method <- function(lst_name) {
   lst <- lapply(lst_name, function(x) {
     paste0('\t register_s3_method("dplyr", "', x, '", "experiment")')
@@ -90,10 +81,8 @@ add_register_method <- function(lst_name) {
 }
 
 # ------------------------------------------------------------------------------
-
 # from: https://github.com/tidyverse/hms/blob/master/R/zzz.R
-# Thu Apr 19 10:53:24 CEST 2018
-#nocov start
+# Thu Apr 19 10:53:24 CEST 2018 (adapted)
 register_s3_method <- function(pkg, generic, class, fun = NULL) {
   stopifnot(is.character(pkg), length(pkg) == 1)
   stopifnot(is.character(generic), length(generic) == 1)
@@ -146,30 +135,31 @@ fct <- ls(getNamespaceInfo("dplyr", "exports")) %>%
   grep("sql|select_var|n_distinct|group_cols", ., invert = TRUE, value = TRUE)
 
 # Make tidyverse.R
-dplyr_fct <- lapply(fct, function(x) tidy_fct(x))
-dplyr_fct <- append(dplyr_fct, add_register_method(fct))
-dplyr_fct <- append(dplyr_fct,
-                    paste0("register_s3_method <- ",
-                      capture.output(eval(sym("register_s3_method"))) %>%
-                        paste(collapse = "\n"), "\n\n",
-                      ".onLoad <- ",
-                      capture.output(eval(sym(".onLoad"))) %>%
-                        paste(collapse = "\n")))
-
+dplyr_fct <- c(
+  lapply(fct, function(x) tidy_fct(x)),
+  add_register_method(fct),
+  paste0("register_s3_method <- ",
+         capture.output(eval(sym("register_s3_method"))) %>%
+           paste(collapse = "\n"), "\n\n",
+         ".onLoad <- ",
+         capture.output(eval(sym(".onLoad"))) %>%
+           paste(collapse = "\n"))
+)
 writeLines(capture.output(cat(paste(dplyr_fct, collapse = "\n\n"))),
            con = paste0(getwd(), "/R/tidyverse.R"))
 
 # Make tests/testthat/test_tydiverse.R
-dplyr_test <- lapply(fct %>% grep("_", ., value = TRUE, invert = TRUE),
-                     function(x) make_test(x))
-dplyr_test <- append(paste0('library(dplyr)\n\ntest_that("Tests tidyverse", {',
-'\n\tdf <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),',
-'"beta" = rep(1.5, 5), "gamma" = runif (5, 0, 1), "S" = rep(1, 5), ',
-'"I" = rep(1, 5), "R" = c(1: 5), "a" = rep(1000, 5), "b" = rep(1, 5)) \n',
-'\texp <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),',
-'obsrates = c("S", "I", "R"), tmax = "a", seed = "b", experiment = "sir", ',
-' model = system.file("models", "sir.gaml", package = "rama"))'), dplyr_test)
-dplyr_test <- append(dplyr_test, "})")
+dplyr_test <- c(
+  paste0('library(dplyr)\n\ntest_that("Tests tidyverse", {',
+         '\n\tdf <- data.frame("S0" = rep(999, 5), "I0" = rep(1, 5), "R0" = rep(0, 5),',
+         '"beta" = rep(1.5, 5), "gamma" = runif (5, 0, 1), "S" = rep(1, 5), ',
+         '"I" = rep(1, 5), "R" = c(1: 5), "a" = rep(1000, 5), "b" = rep(1, 5)) \n',
+         '\texp <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),',
+         'obsrates = c("S", "I", "R"), tmax = "a", seed = "b", experiment = "sir", ',
+         ' model = system.file("models", "sir.gaml", package = "rama"))'),
+  lapply(fct %>% grep("_", ., value = TRUE, invert = TRUE), function(x) make_test(x)),
+  "})"
+)
 
 writeLines(capture.output(cat(paste(dplyr_test, collapse = "\n"))),
            con = paste0(getwd(), "/tests/testthat/test_tidyverse.R"))
