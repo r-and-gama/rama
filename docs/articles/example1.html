@@ -127,38 +127,38 @@
 
     
     
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install and load the package</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#devtools::install_github("r-and-gama/rama")</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># if necessary to configure GAMA path</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># defpath("/Applications/Gama.app")</span></a></code></pre>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># to load the experiment</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"prey_predator"</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models"</span>, <span class="st">"NicolasPred.gaml"</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">                                   <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">exp</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># to set the experiment</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">exp<span class="op">$</span>p_danger_distance &lt;-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">15</span>, <span class="dv">60</span>, <span class="dv">5</span>)),</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">                            <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">7</span><span class="op">:</span><span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">2</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">5</span>)),</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">                            <span class="dv">10000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span><span class="op">:</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">exp<span class="op">$</span>p_environment_size &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="dv">10000</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">exp<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">5000</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># To test we set a shorter duration...</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">exp<span class="op">$</span>r_mean_pop &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">exp<span class="op">$</span>r_micro_b &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">exp<span class="op">$</span>r_nb_predators &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">exp<span class="op">$</span>r_nb_preys &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co"># to run the experiment (do not run)</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#out &lt;- run_experiment(exp)</span></a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># install and load the package</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">#install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co">#devtools::install_github("r-and-gama/rama")</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># if necessary to configure GAMA path</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co"># defpath("/Applications/Gama.app")</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># to load the experiment</span></a>
+<a class="sourceLine" id="cb2-2" title="2">exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"prey_predator"</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models"</span>, <span class="st">"NicolasPred.gaml"</span>,</a>
+<a class="sourceLine" id="cb2-4" title="4">                                   <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6">exp</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co"># to set the experiment</span></a>
+<a class="sourceLine" id="cb2-9" title="9">exp<span class="op">$</span>p_danger_distance &lt;-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">15</span>, <span class="dv">60</span>, <span class="dv">5</span>)),</a>
+<a class="sourceLine" id="cb2-10" title="10">                            <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">7</span><span class="op">:</span><span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">2</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">5</span>)),</a>
+<a class="sourceLine" id="cb2-11" title="11">                            <span class="dv">10000</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-12" title="12">exp<span class="op">$</span>p_environment_size &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="dv">10000</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-13" title="13"></a>
+<a class="sourceLine" id="cb2-14" title="14">exp<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb2-15" title="15">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">5000</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co"># To test we set a shorter duration...</span></a>
+<a class="sourceLine" id="cb2-17" title="17">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb2-18" title="18"></a>
+<a class="sourceLine" id="cb2-19" title="19">exp<span class="op">$</span>r_mean_pop &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-20" title="20">exp<span class="op">$</span>r_micro_b &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-21" title="21">exp<span class="op">$</span>r_nb_predators &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-22" title="22">exp<span class="op">$</span>r_nb_preys &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-23" title="23"></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co"># to run the experiment (do not run)</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#out &lt;- run_experiment(exp)</span></a></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
