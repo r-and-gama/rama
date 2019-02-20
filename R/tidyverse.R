@@ -9,7 +9,7 @@
 anti_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
  	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
 	.data <- dplyr::anti_join(x, y, ...)
@@ -268,7 +268,7 @@ filter_if.experiment <- function(.tbl, ...) {
 full_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
  	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
 	.data <- dplyr::full_join(x, y, ...)
@@ -587,7 +587,7 @@ groups.experiment <- function(x, ...) {
 inner_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
  	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
 	.data <- dplyr::inner_join(x, y, ...)
@@ -636,7 +636,7 @@ is.grouped_df.experiment <- function(x, ...) {
 left_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
  	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
 	.data <- dplyr::left_join(x, y, ...)
@@ -775,7 +775,7 @@ n_groups.experiment <- function(x, ...) {
 nest_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
  	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
 	.data <- dplyr::nest_join(x, y, ...)
@@ -809,7 +809,7 @@ new_grouped_df.experiment <- function(x, ...) {
 right_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
  	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
 	.data <- dplyr::right_join(x, y, ...)
@@ -933,7 +933,7 @@ select_if.experiment <- function(.tbl, ...) {
 semi_join.experiment <- function(x, y, ...) { 
 	old_attr <- purrr::keep(attributes(x), names(attributes(x)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) 
  	x <- as.data.frame(x) 
-	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")))
+	old_attr <- c(old_attr, purrr::keep(attributes(y), names(attributes(y)) %in% c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) 
  	old_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)
 	y <- as.data.frame(y) 
 	.data <- dplyr::semi_join(x, y, ...)
