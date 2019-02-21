@@ -38,13 +38,19 @@ get_attributes <- function(x) {
 }
 
 
-
 # Check the consistency between gaml and experiment object `exp` created in rama
 check_param_type <- function(exp, model) {
 # pending
 }
 
-
+# make dictionary --------------------------------------------------------------
+make_df_dic <- function(x) {
+  if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
+  the_names <- names(x)
+  dic_g2r <- make_dictionary(the_names)
+  names(x) <- dic_g2r
+  list(out = x, dic_g2r = dic_g2r)
+}
 
 # load_experiment --------------------------------------------------------------
 #' Load an experiment from a GAML file
@@ -82,13 +88,6 @@ load_experiment <- function(exp, model, dir = "") {
   out <- read_gaml_experiment(exp, model)
 
   # Retrieving information:
-  make_df_dic <- function(x) {
-    if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
-    the_names <- names(x)
-    dic_g2r <- make_dictionary(the_names)
-    names(x) <- dic_g2r
-    list(out = x, dic_g2r = dic_g2r)
-  }
   variables <- make_df_dic(get_variables(out)[get_variables_names(model)])
   parameters <- make_df_dic(get_parameters(out)[get_parameters_names(model)])
   out_attr <- get_attributes(out)
