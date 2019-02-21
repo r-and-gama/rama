@@ -80,15 +80,15 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
   attrs <- attributes(x)
 
   print_info <- function() {
-    cat(  "experiment name:    ", attrs$experiment,
-          "\ninput gaml file:    ", attrs$model,
-          "\noutput directory:   ", attrs$wkdir, "\n")
+    cat(  "experiment name: ", attrs$experiment,
+          "\ninput gaml file: ", attrs$model,
+          "\noutput directory:", attrs$wkdir, "\n")
   }
 
   if (ncol(x) < 1) {
 
     cat(
-      "Experiment without any simulation, ",
+      "Experiment without any simulation,",
       "tunable parameter or observed variable\n")
     print_info()
 

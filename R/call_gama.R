@@ -42,7 +42,7 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
   if (!dir.exists(output_dir))
     dir.create(output_dir, recursive = TRUE)
 
-  cat(paste0("Running experiment plan ... \n"))
+  cat("Running experiment plan... \n")
 
   output_display <- ""
   if (isWindows() == FALSE) {
