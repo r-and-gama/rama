@@ -265,10 +265,10 @@ outputs of simuations.</p>
 <span class='no'>exp0</span> <span class='kw'>&lt;-</span> <span class='fu'>experiment</span>(
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S0</span> <span class='kw'>=</span> <span class='fl'>999</span>, <span class='kw'>I0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>.15</span>),
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using default directory name " sir " in current directory " /Users/haihb/Documents/Work/rama/docs/reference ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_6 ".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
-#&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/haihb/Documents/Work/rama/inst/models/sir.gaml 
-#&gt; output directory:    /Users/haihb/Documents/Work/rama/docs/reference/sir_6 
+  <span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_6".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_6 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -286,17 +286,17 @@ outputs of simuations.</p>
                      <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"b"</span>,
                      <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
                      <span class='kw'>model</span> <span class='kw'>=</span>
-                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using default directory name " sir " in current directory " /Users/haihb/Documents/Work/rama/docs/reference ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_7 ".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_7".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 
 
 <span class='co'>## `$&lt;-` ##</span>
 <span class='co'># Here is an experiment with 1 simulation:</span>
 <span class='no'>sir1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>,
                         <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>),
-                        <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Loading experiment " sir " from file " sir.gaml "...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in " sir_8 ".</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>sir1</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
-#&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/haihb/Documents/Work/rama/inst/models/sir.gaml 
-#&gt; output directory:    /Users/haihb/Documents/Work/rama/docs/reference/sir_8 
+                        <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_8".</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>sir1</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -306,62 +306,92 @@ outputs of simuations.</p>
 <span class='no'>sir2</span> <span class='kw'>&lt;-</span> <span class='no'>sir1</span>
 <span class='no'>sir2</span>$<span class='no'>p_S0</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>3</span>
 <span class='co'># We can check that it automatically expands the number of simulations:</span>
-<span class='no'>sir2</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 10</span><span>
-#&gt;    p_S0  p_I0  p_R0 p_beta p_gamma   r_S   r_I   r_R  tmax  seed
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>2</span><span>     2     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>3</span><span>     3     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1</div><div class='input'>
+<span class='no'>sir2</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    1    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2    2    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3    3    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'>
 <span class='co'># If, on the contrary, we now replace the values of "p_S0" of "sir2" by a</span>
 <span class='co'># single value:</span>
 <span class='no'>sir3</span> <span class='kw'>&lt;-</span> <span class='no'>sir2</span>
 <span class='no'>sir3</span>$<span class='no'>p_S0</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
 <span class='co'># We can check that it automatically reduces the number of simulations (if</span>
 <span class='co'># the replacement leads to an experiment with exactly identical simulations):</span>
-<span class='no'>sir3</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 10</span><span>
-#&gt;    p_S0  p_I0  p_R0 p_beta p_gamma   r_S   r_I   r_R  tmax  seed
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     2     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>2</span><span>     2     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>3</span><span>     2     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1</div><div class='input'><span class='co'># If you wish to delete one column:</span>
+<span class='no'>sir3</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    2    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># If you wish to delete one column:</span>
 <span class='no'>sir3</span>$<span class='no'>r_R</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='no'>sir3</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 9</span><span>
-#&gt;    p_S0  p_I0  p_R0 p_beta p_gamma   r_S   r_I  tmax  seed
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     2     1     0    1.5    0.15     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>2</span><span>     2     1     0    1.5    0.15     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>3</span><span>     2     1     0    1.5    0.15     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1</div><div class='input'>
+<span class='no'>sir3</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 2 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I tmax seed
+#&gt; 1    2    1    0    1.5    0.15   1   1 1000    1</div><div class='input'>
 <span class='co'># You can do the operation successively for 2 columns:</span>
 <span class='no'>sir4</span> <span class='kw'>&lt;-</span> <span class='no'>sir1</span>
 <span class='no'>sir4</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
-#&gt; experiment name:     sir 
-#&gt; input gaml file:     /Users/haihb/Documents/Work/rama/inst/models/sir.gaml 
-#&gt; output directory:    /Users/haihb/Documents/Work/rama/docs/reference/sir_8 
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
 #&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
 #&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='no'>sir4</span>$<span class='no'>p_S0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>100</span>)
-<span class='no'>sir4</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 10</span><span>
-#&gt;    p_S0  p_I0  p_R0 p_beta p_gamma   r_S   r_I   r_R  tmax  seed
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>2</span><span>    10     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>3</span><span>   100     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1</div><div class='input'><span class='no'>sir4</span>$<span class='no'>p_beta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.7</span>)</div><div class='output co'>#&gt; <span class='error'>Error in `$&lt;-.data.frame`(`*tmp*`, p_beta, value = c(1.3, 1.7)): replacement has 2 rows, data has 3</span></div><div class='input'><span class='no'>sir4</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 10</span><span>
-#&gt;    p_S0  p_I0  p_R0 p_beta p_gamma   r_S   r_I   r_R  tmax  seed
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>2</span><span>    10     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>3</span><span>   100     1     0    1.5    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1</div><div class='input'><span class='co'># which is equivalent to</span>
-<span class='fu'><a href='fullfact.html'>fullfact</a></span>(<span class='no'>sir1</span>, <span class='kw'>p_S0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>100</span>), <span class='kw'>p_beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.7</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 10</span><span>
-#&gt;    p_S0  p_I0  p_R0 p_beta p_gamma   r_S   r_I   r_R  tmax  seed
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1     1     0    1.3    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>2</span><span>    10     1     0    1.3    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>3</span><span>   100     1     0    1.3    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>4</span><span>     1     1     0    1.7    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>5</span><span>    10     1     0    1.7    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1
-#&gt; </span><span style='color: #555555;'>6</span><span>   100     1     0    1.7    0.15     1     1     1  </span><span style='text-decoration: underline;'>1</span><span>000     1</div></span></pre>
+<span class='no'>sir4</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    1    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2   10    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3  100    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='no'>sir4</span>$<span class='no'>p_beta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.7</span>)
+<span class='no'>sir4</span></div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    1    1    0    1.3    0.15   1   1   1 1000    1
+#&gt; 2   10    1    0    1.3    0.15   1   1   1 1000    1
+#&gt; 3  100    1    0    1.3    0.15   1   1   1 1000    1
+#&gt; 4    1    1    0    1.7    0.15   1   1   1 1000    1
+#&gt; 5   10    1    0    1.7    0.15   1   1   1 1000    1
+#&gt; 6  100    1    0    1.7    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># which is equivalent to</span>
+<span class='fu'><a href='fullfact.html'>fullfact</a></span>(<span class='no'>sir1</span>, <span class='kw'>p_S0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>100</span>), <span class='kw'>p_beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.7</span>))</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_8 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
+#&gt; 1    1    1    0    1.3    0.15   1   1   1 1000    1
+#&gt; 2   10    1    0    1.3    0.15   1   1   1 1000    1
+#&gt; 3  100    1    0    1.3    0.15   1   1   1 1000    1
+#&gt; 4    1    1    0    1.7    0.15   1   1   1 1000    1
+#&gt; 5   10    1    0    1.7    0.15   1   1   1 1000    1
+#&gt; 6  100    1    0    1.7    0.15   1   1   1 1000    1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

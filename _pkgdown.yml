@@ -39,7 +39,7 @@ reference:
     - get_parameters_names
     - load_experiment
     - save_to_gama
-    - show_experiment
+    - list_experiments
   - title: Manipulating experiment objects
     contents:
     - create_output_dir

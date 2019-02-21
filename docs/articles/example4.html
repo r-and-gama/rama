@@ -128,48 +128,48 @@
     
     
 <p>see <a href="https://github.com/gnoubi/snubbies/blob/master/Documentation/00-MAS_practical_training.pdf">here</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># install and load the package</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">#install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">#devtools::install_github("r-and-gama/rama")</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)</a>
-<a class="sourceLine" id="cb1-5" title="5"></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co"># if necessary to configure GAMA path</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co"># defpath("/Applications/Gama.app")</span></a>
-<a class="sourceLine" id="cb1-8" title="8"></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co"># Load an experiment</span></a>
-<a class="sourceLine" id="cb1-10" title="10">exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"run"</span>,</a>
-<a class="sourceLine" id="cb1-11" title="11">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models"</span>, <span class="st">"snubbies.gaml"</span>,</a>
-<a class="sourceLine" id="cb1-12" title="12">                                   <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
-<a class="sourceLine" id="cb1-13" title="13"></a>
-<a class="sourceLine" id="cb1-14" title="14"></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co">## Preparing the experiment</span></a>
-<a class="sourceLine" id="cb1-16" title="16">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">365</span> <span class="op">*</span><span class="st"> </span><span class="dv">24</span> <span class="co"># two years ( step is one hour)</span></a>
-<a class="sourceLine" id="cb1-17" title="17">n_sim &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># number of simulations</span></a>
-<a class="sourceLine" id="cb1-18" title="18"></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co"># preparing the parameters</span></a>
-<a class="sourceLine" id="cb1-20" title="20">exp<span class="op">$</span>p_v_max &lt;-<span class="st"> </span><span class="fl">0.3472222</span></a>
-<a class="sourceLine" id="cb1-21" title="21">exp<span class="op">$</span>p_s_max &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb1-22" title="22">exp<span class="op">$</span>p_explorer_snubbies &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(n_sim, <span class="fl">0.1</span>, <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb1-23" title="23">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-24" title="24">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="fl">0.9</span></a>
-<a class="sourceLine" id="cb1-25" title="25">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb1-26" title="26">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
-<a class="sourceLine" id="cb1-27" title="27">exp<span class="op">$</span>p_viscosit_factor_habitat_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-28" title="28">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-29" title="29">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="fl">0.9</span></a>
-<a class="sourceLine" id="cb1-30" title="30">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb1-31" title="31">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
-<a class="sourceLine" id="cb1-32" title="32">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-33" title="33"></a>
-<a class="sourceLine" id="cb1-34" title="34"><span class="co"># preparing the monitoring rates variables</span></a>
-<a class="sourceLine" id="cb1-35" title="35">exp<span class="op">$</span>r_number_of_dispersers &lt;-<span class="st"> </span><span class="dv">24</span></a>
-<a class="sourceLine" id="cb1-36" title="36">exp<span class="op">$</span>r_map &lt;-<span class="st"> </span><span class="dv">30</span> <span class="op">*</span><span class="st"> </span><span class="dv">24</span> <span class="co">## save the corresponding bit map every 30 days</span></a>
-<a class="sourceLine" id="cb1-37" title="37"></a>
-<a class="sourceLine" id="cb1-38" title="38"><span class="co"># replace NA by id number</span></a>
-<a class="sourceLine" id="cb1-39" title="39">exp[,<span class="st">"p_simulation_id"</span>] &lt;-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(n_sim) <span class="co"># method to avoid duplication of rows</span></a>
-<a class="sourceLine" id="cb1-40" title="40"></a>
-<a class="sourceLine" id="cb1-41" title="41"><span class="co">## Run the experiments</span></a>
-<a class="sourceLine" id="cb1-42" title="42">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_experiment.html">run_experiment</a></span>(exp)</a></code></pre></div>
+<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install and load the package</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#devtools::install_github("r-and-gama/rama")</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># if necessary to configure GAMA path</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># defpath("/Applications/Gama.app")</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># Load an experiment</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"run"</span>,</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models"</span>, <span class="st">"snubbies.gaml"</span>,</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">                                   <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## Preparing the experiment</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">365</span> <span class="op">*</span><span class="st"> </span><span class="dv">24</span> <span class="co"># two years ( step is one hour)</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">n_sim &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># number of simulations</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co"># preparing the parameters</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">exp<span class="op">$</span>p_v_max &lt;-<span class="st"> </span><span class="fl">0.3472222</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">exp<span class="op">$</span>p_s_max &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">exp<span class="op">$</span>p_explorer_snubbies &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(n_sim, <span class="fl">0.1</span>, <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="fl">0.9</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">exp<span class="op">$</span>p_viscosity_factor_habitat_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">exp<span class="op">$</span>p_viscosit_factor_habitat_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="fl">0.9</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">exp<span class="op">$</span>p_security_factor_habitat_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34"><span class="co"># preparing the monitoring rates variables</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">exp<span class="op">$</span>r_number_of_dispersers &lt;-<span class="st"> </span><span class="dv">24</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">exp<span class="op">$</span>r_map &lt;-<span class="st"> </span><span class="dv">30</span> <span class="op">*</span><span class="st"> </span><span class="dv">24</span> ## save the corresponding bit map every 30 days</a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38"><span class="co"># replace NA by id number</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">exp[,<span class="st">"p_simulation_id"</span>] &lt;-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(n_sim) <span class="co"># method to avoid duplication of rows</span></a>
+<a class="sourceLine" id="cb1-40" data-line-number="40"></a>
+<a class="sourceLine" id="cb1-41" data-line-number="41">## Run the experiments</a>
+<a class="sourceLine" id="cb1-42" data-line-number="42">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_experiment.html">run_experiment</a></span>(exp)</a></code></pre>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
