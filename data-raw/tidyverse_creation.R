@@ -157,7 +157,7 @@ dplyr_test <- c(
          '\texp <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),',
          'obsrates = c("S", "I", "R"), tmax = "a", seed = "b", experiment = "sir", ',
          ' model = system.file("models", "sir.gaml", package = "rama"))'),
-  lapply(fct %>% grep("_", ., value = TRUE, invert = TRUE), function(x) make_test(x)),
+  lapply(fct %>% grep("_.", ., value = TRUE, invert = TRUE), function(x) make_test(x)),
   "})"
 )
 
