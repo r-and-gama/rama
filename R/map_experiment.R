@@ -38,9 +38,9 @@ map_experiment <- function(df, exp) {
       return(validate_experiment(exp))
   }
 
-  stop(cat("A data frame 'df' can be mapped on an experiment 'exp' only\n",
+  stop(paste0("A data frame 'df' can be mapped on an experiment 'exp' only\n",
            "if one of the following conditions is met:\n",
-           "  - the sets of names of 'df' and 'exp' are identical;",
+           "  - the sets of names of 'df' and 'exp' are identical;\n",
            "  - the names of 'df' are included in the names of 'exp'",
-           "    AND the numbers of rows of 'df' and 'exp' are identical."))
+           " AND the numbers of rows of 'df' and 'exp' are identical."))
 }

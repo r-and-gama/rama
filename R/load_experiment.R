@@ -78,7 +78,7 @@ load_experiment <- function(exp, model, dir = "") {
 
   # Reading GAML file:
   message(cat("Loading experiment \"", exp,
-                 "\" from file \"", basename(model), "\"..."))
+                 "\" from file \"", basename(model), "\"...", sep = ""))
   out <- read_gaml_experiment(exp, model)
 
   # Retrieving information:
