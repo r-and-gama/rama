@@ -273,10 +273,10 @@
 <pre class="sourceCode r" id="cb14"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">df<span class="op">$</span>I0 &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="op">-</span><span class="st"> </span>df<span class="op">$</span>S0</a></code></pre>
 <pre class="sourceCode r" id="cb15"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">df</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt;    S0 R0 beta gamma S I tmax seed  I0</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; 1 700  0  1.5  0.15 1 1 2500    3 300</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; 2 800  0  1.5  0.15 1 1 2500    1 200</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; 3 900  0  1.5  0.15 1 1 2500    5 100</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; 4 950  0  1.5  0.15 1 1 2500    4  50</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; 1 700  0  1.5  0.15 1 1 2500    4 300</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; 2 800  0  1.5  0.15 1 1 2500    5 200</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; 3 900  0  1.5  0.15 1 1 2500    3 100</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; 4 950  0  1.5  0.15 1 1 2500    1  50</span></a>
 <a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt; 5 999  0  1.5  0.15 1 1 2500    2   1</span></a></code></pre>
 <p>Let’s now transform this data frame into an <code>experiment</code>:</p>
 <pre class="sourceCode r" id="cb16"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">exp5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_experiment.html">as_experiment</a></span>(df, <span class="dt">parameters =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S0"</span>, <span class="st">"R0"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span>), </a>
@@ -296,10 +296,10 @@
 <a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I </span></a>
 <a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
 <a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt;   p_S0 p_R0 p_beta p_gamma r_S r_I tmax seed</span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; 1  700    0    1.5    0.15   1   1 2500    3</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; 2  800    0    1.5    0.15   1   1 2500    1</span></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; 3  900    0    1.5    0.15   1   1 2500    5</span></a>
-<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#&gt; 4  950    0    1.5    0.15   1   1 2500    4</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; 1  700    0    1.5    0.15   1   1 2500    4</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; 2  800    0    1.5    0.15   1   1 2500    5</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; 3  900    0    1.5    0.15   1   1 2500    3</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#&gt; 4  950    0    1.5    0.15   1   1 2500    1</span></a>
 <a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co">#&gt; 5  999    0    1.5    0.15   1   1 2500    2</span></a></code></pre>
 </div>
 </div>
@@ -357,16 +357,16 @@
 <a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
 <a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
 <a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    2</span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
-<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    5</span></a>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000   10</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    2</span></a>
+<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    3</span></a>
+<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
 <a class="sourceLine" id="cb23-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    6</span></a>
-<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
-<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000   10</span></a>
-<a class="sourceLine" id="cb23-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
-<a class="sourceLine" id="cb23-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    3</span></a></code></pre>
+<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
+<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
+<a class="sourceLine" id="cb23-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
+<a class="sourceLine" id="cb23-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    5</span></a></code></pre>
 </div>
 <div id="extracting-parameters-values" class="section level3">
 <h3 class="hasAnchor">
@@ -406,7 +406,7 @@
 </h3>
 <p>As seen above, <code>seed</code> can be extracted and changed with regular data frame methods:</p>
 <pre class="sourceCode r" id="cb26"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">exp5<span class="op">$</span>seed</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt;  [1]  2  4  1  8  5  6  7 10  9  3</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt;  [1] 10  1  2  3  4  6  9  7  8  5</span></a>
 <a class="sourceLine" id="cb26-3" data-line-number="3">exp5<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb26-4" data-line-number="4">exp5</a>
 <a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; Experiment with 10 simulations of 5 parameters and 3 observed variables</span></a>
@@ -417,14 +417,14 @@
 <a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
 <a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; Experiment overview:</span></a>
 <a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000    5</span></a>
-<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
-<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
-<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
-<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000   10</span></a>
-<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    6</span></a>
-<a class="sourceLine" id="cb26-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
-<a class="sourceLine" id="cb26-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
+<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 1000   10</span></a>
+<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 1000    6</span></a>
+<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 1000    8</span></a>
+<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 1000    9</span></a>
+<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 1000    4</span></a>
+<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 1000    7</span></a>
+<a class="sourceLine" id="cb26-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 1000    1</span></a>
+<a class="sourceLine" id="cb26-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 1000    5</span></a>
 <a class="sourceLine" id="cb26-21" data-line-number="21"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 1000    3</span></a>
 <a class="sourceLine" id="cb26-22" data-line-number="22"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 1000    2</span></a></code></pre>
 <p>Same for <code>tmax</code>:</p>
@@ -440,14 +440,14 @@
 <a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
 <a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt; Experiment overview:</span></a>
 <a class="sourceLine" id="cb27-12" data-line-number="12"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed</span></a>
-<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 3543    5</span></a>
-<a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 3543    9</span></a>
-<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 3543    7</span></a>
-<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 3543    1</span></a>
-<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 3543   10</span></a>
-<a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 3543    6</span></a>
-<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 3543    8</span></a>
-<a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 3543    4</span></a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   1   1 3543   10</span></a>
+<a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   1   1 3543    6</span></a>
+<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   1   1 3543    8</span></a>
+<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   1   1 3543    9</span></a>
+<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   1   1 3543    4</span></a>
+<a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   1   1 3543    7</span></a>
+<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   1   1 3543    1</span></a>
+<a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   1   1 3543    5</span></a>
 <a class="sourceLine" id="cb27-21" data-line-number="21"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   1   1 3543    3</span></a>
 <a class="sourceLine" id="cb27-22" data-line-number="22"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   1   1 3543    2</span></a></code></pre>
 <p>If you want to stop observing the variable R and observe the variable I every 2 steps, you’d do:</p>
@@ -463,14 +463,14 @@
 <a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt; observed variables:  r_S, r_I </span></a>
 <a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt; Experiment overview:</span></a>
 <a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt;    p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I tmax seed</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   2 3543    5</span></a>
-<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   2 3543    9</span></a>
-<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   2 3543    7</span></a>
-<a class="sourceLine" id="cb29-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   2 3543    1</span></a>
-<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   2 3543   10</span></a>
-<a class="sourceLine" id="cb29-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   2 3543    6</span></a>
-<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   2 3543    8</span></a>
-<a class="sourceLine" id="cb29-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   2 3543    4</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt; 1   999    1    0    1.5    0.15   1   2 3543   10</span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt; 2   999    1    0    1.5    0.15   1   2 3543    6</span></a>
+<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co">#&gt; 3   999    1    0    1.5    0.15   1   2 3543    8</span></a>
+<a class="sourceLine" id="cb29-13" data-line-number="13"><span class="co">#&gt; 4   999    1    0    1.5    0.15   1   2 3543    9</span></a>
+<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="co">#&gt; 5   999    1    0    1.5    0.15   1   2 3543    4</span></a>
+<a class="sourceLine" id="cb29-15" data-line-number="15"><span class="co">#&gt; 6   999    1    0    1.5    0.15   1   2 3543    7</span></a>
+<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co">#&gt; 7   999    1    0    1.5    0.15   1   2 3543    1</span></a>
+<a class="sourceLine" id="cb29-17" data-line-number="17"><span class="co">#&gt; 8   999    1    0    1.5    0.15   1   2 3543    5</span></a>
 <a class="sourceLine" id="cb29-18" data-line-number="18"><span class="co">#&gt; 9   999    1    0    1.5    0.15   1   2 3543    3</span></a>
 <a class="sourceLine" id="cb29-19" data-line-number="19"><span class="co">#&gt; 10  999    1    0    1.5    0.15   1   2 3543    2</span></a></code></pre>
 </div>
@@ -480,7 +480,7 @@
 <a href="#running-experiments" class="anchor"></a>1.3 Running experiments</h2>
 <p>Then, we run the experiment by one command <code>run_experiment</code>, in which we specify the experiment and optionally number of cores, output folder for the results of this experiment, parameters file in xml format.</p>
 <pre class="sourceCode r" id="cb30"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">output &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_experiment.html">run_experiment</a></span>(exp1)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co">#&gt; Running experiment plan ...</span></a></code></pre>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co">#&gt; Running experiment plan...</span></a></code></pre>
 </div>
   </div>
 
