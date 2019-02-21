@@ -7,9 +7,9 @@
 #' @importFrom stringr str_match_all str_match regex str_detect
 #' @importFrom purrr map
 #'
-#' @example inst/examples/show_experiment.R
+#' @example inst/examples/list_experiments.R
 #' @export
-show_experiment <- function(file){
+list_experiments <- function(file){
   if (!file.exists(file)) {
     stop(paste0("File \"", file, "\" does not exist."))
   }

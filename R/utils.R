@@ -30,7 +30,7 @@ test_schar <- function(x) {
 # * the name to exist in the file;
 # * the experiment to be of type "GUI".
 check_experiment <- function(exp, model) {
-  exp_info <- show_experiment(model)
+  exp_info <- list_experiments(model)
   # check if the requested experiment is present in the file:
   if (!exp %in% exp_info$experiment)
     stop(paste0("There is no experiment named \"", exp, "\" in ",
