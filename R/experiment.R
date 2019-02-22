@@ -1,6 +1,6 @@
 # constructor ------------------------------------------------------------------
-new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
-                           dir = "", dic_g2r = NULL) {
+new_experiment <- function(parameters, obsrates, tmax, seed, output = NA,
+                           experiment, model, dir = "", dic_g2r = NULL) {
 
 # Automatically adds "p_" and "r_" prefixes to the parameteres and observation
 # rates. It also does so to the dictionary if provided.
@@ -8,45 +8,53 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
 # Automatically converts periods of obsrates and tmax into integer if there are
 # not.
 
+# dic_g2r: contains the new names of the parameters and variables and the names
+# of this vector contains the old names. It is the opposite for dic_r2g.
+
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
-  stopifnot(nrow(parameters) == nrow(obsrates)) # has to be an integer
-  stopifnot(is.numeric(tmax)) # has to be an integer
+  stopifnot(nrow(parameters) == nrow(obsrates))
+  stopifnot(is.numeric(tmax))
   stopifnot(is.character(experiment))
   stopifnot(is.character(model))
   stopifnot(is.character(dir))
   stopifnot(is.character(dic_g2r))
   stopifnot(is.character(names(dic_g2r)))
 
+# Generating new names:
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
   oldnames <- c(names_param, names_obsrates)
   newnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
 
+# Dealing with dictionaries:
   if (is.null(dic_g2r)) {
     dic_g2r <- setNames(newnames, oldnames)
   } else {
-    stopifnot(all(dic_g2r %in% oldnames))
+    stopifnot(all(names(dic_g2r) %in% oldnames))
+    stopifnot(all())
     dic_g2r <- c(setNames(paste0("p_", dic_g2r[which(dic_g2r %in% names_param)]),
                           names(dic_g2r[which(dic_g2r %in% names_param)])),
                  setNames(paste0("r_", dic_g2r[which(dic_g2r %in% names_obsrates)]),
                           names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
   }
 
+# Dealing with obsrates and tmax, converting them into integers if needed:
   if (any(!sapply(obsrates, is.integer))) {
     message(cat("Periods of observation (\"obsrates\") are rounded and converted into integers."))
     obsrates[] <- lapply(obsrates, function(x) as.integer(round(x)))
   }
-
   if (!is.integer(tmax)) {
     message(cat("Final time step (\"tmax\") is rounded and converted into integer."))
     tmax <- as.integer(tmax)
   }
 
+# returning the object:
   structure(setNames(cbind(parameters,
                            obsrates,
                            tmax = as.integer(tmax),
-                           seed = seed), c(newnames, "tmax", "seed")),
+                           seed = seed,
+                           output = output), c(newnames, "tmax", "seed", "output")),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model,
             experiment = experiment,
