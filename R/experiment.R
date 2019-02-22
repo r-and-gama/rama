@@ -2,14 +2,18 @@
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            dir = "", dic_g2r = NULL) {
 
+# This function automatically adds "p_" and "r_" prefixes to the parameteres and
+# observation rates. It also does so to the dictionary if provided.
+
+
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
   stopifnot(nrow(parameters) == nrow(obsrates))
-  stopifnot(is.numeric(tmax))
+  stopifnot(is.numeric(tmax)) # has to be an integer
   stopifnot(is.character(experiment))
   stopifnot(is.character(model))
   stopifnot(is.character(dir))
-  stopifnot(is.character(dic_g2r) | is.null(dic_g2r))
+  stopifnot(is.character(dic_g2r))
 
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
@@ -20,12 +24,10 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
     dic_g2r <- setNames(newparvarnames, oldparvarnames)
   } else {
     stopifnot(all(dic_g2r %in% oldparvarnames))
-    dic_g2r <- c(setNames(paste0("p_",
-                                 dic_g2r[which(dic_g2r %in% names_param)]),
+    dic_g2r <- c(setNames(paste0("p_", dic_g2r[which(dic_g2r %in% names_param)]),
                           names(dic_g2r[which(dic_g2r %in% names_param)])),
-             setNames(paste0("r_",
-                             dic_g2r[which(dic_g2r %in% names_obsrates)]),
-                      names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
+                 setNames(paste0("r_", dic_g2r[which(dic_g2r %in% names_obsrates)]),
+                          names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
   }
 
   obsrates[] <- lapply(obsrates, as.integer)
