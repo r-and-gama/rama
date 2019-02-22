@@ -75,7 +75,7 @@ make_wkdir <- function(model, dir = "") {
       if (!file.exists(wk_dir)) break
     }
     message(cat("Directory \"", dir, "\" already exists. Directory \"", wk_dir,
-                "\" was created instead."))
+                "\" was created instead.", sep = ""))
   } else {
     wk_dir <-  dir
   }
