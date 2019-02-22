@@ -18,13 +18,13 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
 
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
-  oldparvarnames <- c(names_param, names_obsrates)
-  newparvarnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
+  oldnames <- c(names_param, names_obsrates)
+  newnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
 
   if (is.null(dic_g2r)) {
-    dic_g2r <- setNames(newparvarnames, oldparvarnames)
+    dic_g2r <- setNames(newnames, oldnames)
   } else {
-    stopifnot(all(dic_g2r %in% oldparvarnames))
+    stopifnot(all(dic_g2r %in% oldnames))
     dic_g2r <- c(setNames(paste0("p_", dic_g2r[which(dic_g2r %in% names_param)]),
                           names(dic_g2r[which(dic_g2r %in% names_param)])),
                  setNames(paste0("r_", dic_g2r[which(dic_g2r %in% names_obsrates)]),
@@ -35,7 +35,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   structure(setNames(cbind(parameters,
                            obsrates,
                            tmax = as.integer(tmax),
-                           seed = seed), c(newparvarnames, "tmax", "seed")),
+                           seed = seed), c(newnames, "tmax", "seed")),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model,
             experiment = experiment,
