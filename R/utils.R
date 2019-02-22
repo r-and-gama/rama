@@ -60,11 +60,11 @@ make_dictionary <- function(x) {
 # "/"), use current directory. If not specified, use default name.
 make_wkdir <- function(model, dir = "") {
 
+  flag <- FALSE
   if (dir == "") {
     # get model name from gaml file
     dir <- gsub(".gaml", "", basename(model))
-    message(cat("Using default directory name \"", dir,
-                   "\" in current directory \"", getwd(), "\".", sep = ""))
+    flag <- TRUE
   }
 
   if (dir.exists(dir)) {
@@ -74,11 +74,17 @@ make_wkdir <- function(model, dir = "") {
       wk_dir <- paste0(dir, "_", i)
       if (!file.exists(wk_dir)) break
     }
-    message(cat("Directory \"", dir, "\" already exists. Directory \"", wk_dir,
-                "\" was created instead.", sep = ""))
+    if (!flag) {
+      message(cat("Directory \"", dir, "\" already exists. Directory \"", wk_dir,
+                  "\" was created instead.", sep = ""))
+    }
   } else {
     wk_dir <-  dir
   }
+
+  if (flag) message(cat("The directory \"", dir,
+                        "\" is created in the current working directory \"",
+                        getwd(), "\".", sep = ""))
 
   dir.create(wk_dir, recursive = TRUE)
   message(cat("Simulations results will be saved in \"", wk_dir, "\".",
