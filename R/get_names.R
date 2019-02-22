@@ -53,3 +53,23 @@ get_variables_names <- get_names_template("monitor")
 get_all_names <- function(file) {
   unlist(lapply(c("parameter", "monitor"), get_names, readLines(file)))
 }
+# get_info ----------------------------------------------------------------
+#' @rdname get_info
+#' @export
+get_info <- function(exp, pattern, type){
+  model <- model(exp)
+  query <- model[["info"]][[pattern]]
+  out <- unlist(lapply(query, function(x) x[[type]]))
+
+  if(pattern == "Parameters")
+    names <- paste0("p_", unlist(lapply(query, function(x) x[["name"]])) )
+  if(pattern == "Outputs")
+    names <- paste0("r_", unlist(lapply(query, function(x) x[["name"]])) )
+  names(out) <- names
+  out
+}
+
+map_type <- function(x){
+  types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
+  unlist(lapply(x, function(y) types[[y]]))
+}

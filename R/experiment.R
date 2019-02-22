@@ -1,4 +1,7 @@
 # constructor ------------------------------------------------------------------
+#' @import dplyr
+#' @importFrom purrr map2
+
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            dir = "", dic_g2r = NULL) {
 
@@ -29,18 +32,35 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   }
 
   obsrates[] <- lapply(obsrates, as.integer)
-  structure(setNames(cbind(parameters,
+  wkdir <- make_wkdir(model, dir)
+  file.copy(model, wkdir)
+  model_info <- list("model" = list.files(wkdir, ".gaml", full.names = TRUE),
+                     "info" = read_gaml_experiment(experiment, model),
+                     "snapshot" = fileSnapshot(wkdir,
+                                               md5sum = TRUE,
+                                               full.names = TRUE))
+  out <- structure(setNames(cbind(parameters,
                            obsrates,
                            tmax = as.integer(tmax),
                            seed = seed), c(newparvarnames, "tmax", "seed")),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
-            model      = model,
+            model      = model_info,
             experiment = experiment,
-            wkdir      = make_wkdir(model, dir),
+            wkdir      = wkdir,
             dic_g2r    = dic_g2r,
             dic_r2g    = setNames(names(dic_g2r), dic_g2r))
-}
 
+  # cast parameter types
+  types <- rama:::map_type(get_info(out, "Parameters", "type"))
+  functions <- lapply(paste0("as.", types), function(x) match.fun(x))
+  map2(names(types), functions, function(n, f){
+    out[, n] <<- f(out[, n][[1]])
+    invisible()
+  })
+  # cast observation rate types
+  out <- out %>%  mutate_at(vars(starts_with("r_")), as.integer)
+  out
+}
 
 
 # validator --------------------------------------------------------------------
@@ -65,18 +85,18 @@ validate_experiment <- function(x) {
   if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
     stop("The dictionaries are inconsistent.")
 
-  diff <- setdiff(dic_r2g[colnames[[1]]], get_parameters_names(model))
+  diff <- setdiff(dic_r2g[colnames[[1]]], get_info(x, "Parameters", "name"))
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
                "' do not correspond to any parameter in the '",
-               basename(model), "' file."))
+               basename(model$model), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The parameter name '", substitute(diff),
                "' does not correspond to any parameter in the '",
-               basename(model), "' file."))
+               basename(model$model), "' file."))
   }
 
-  diff <- setdiff(dic_r2g[colnames[[2]]], get_variables_names(model))
+  diff <- setdiff(dic_r2g[colnames[[2]]], get_info(x, "Outputs", "name"))
   if (length(diff) > 1) {
     stop(paste0("The variables names '", substitute(diff),
                "' do not correspond to any variable in the '",
@@ -84,8 +104,36 @@ validate_experiment <- function(x) {
   } else if (length(diff) > 0) {
     stop(paste0("The variable name '", substitute(diff),
                "' does not correspond to any variable in the '",
-               basename(model), "' file."))
+               basename(model$model), "' file."))
   }
+  # check parameter types
+  type_r <- sapply(parameters(x), class)
+  type_g <- map_type(get_info(x, "Parameters", "type"))
+  diff <- type_r == type_g[names(type_g)]
+  if (any(diff == FALSE)) {
+    stop(paste0("The data type(s) of '",
+                names(type_g)[diff],
+                "' do not correspond to parameter type(s) declared in the '",
+                basename(model$model), "' file."))
+  }
+  # check obs_rates
+
+  if (!all(sapply(obs_rates(x), class) == "integer")) {
+    stop(paste0("The observation rates must be interger as declared in '",
+                basename(model$model), "' file."))
+  }
+
+  # valid snapshot
+  current_snapshot <- fileSnapshot(output_dir(x),
+                                   md5sum = TRUE,
+                                   full.names = TRUE)
+  changes <- changedFiles(model$snapshot, current_snapshot)$changes
+  changes <- as.data.frame(changes)
+  flag <- changes$md5sum[which(rownames(changes) == model$model)]
+  if(flag)
+    stop(paste0("Gaml file '", model$model, "' has been changed.
+                Please use function 'model<-' to add this gaml file
+                to the experiment"))
 
   x
 }
@@ -136,7 +184,6 @@ validate_experiment <- function(x) {
 #' @export
 #'
 #' @example inst/examples/experiment.R
-#'
 #'
 experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                        dir = "", dic = NULL) {

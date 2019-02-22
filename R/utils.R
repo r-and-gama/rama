@@ -30,16 +30,11 @@ test_schar <- function(x) {
 # * the name to exist in the file;
 # * the experiment to be of type "GUI".
 check_experiment <- function(exp, model) {
-  exp_info <- list_experiments(model)
-  # check if the requested experiment is present in the file:
-  if (!exp %in% exp_info$experiment)
+  model_info <- model$info
+    # check if the requested experiment is present in the file:
+  if (!exp %in% model_info$.attr["experiment"])
     stop(paste0("There is no experiment named \"", exp, "\" in ",
-                basename(model)))
-  # check if the requested experiment has a valid (i.e. "GUI") type:
-  type <- exp_info$type[exp_info$experiment == exp]
-  if (type != "gui")
-    stop(paste0("Experiments of type \"", type,
-                "\" are not supported by rama."))
+                basename(model_info$.attr["sourcePath"])))
   invisible(0)
 }
 

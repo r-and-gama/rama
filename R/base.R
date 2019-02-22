@@ -81,7 +81,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 
   print_info <- function() {
     cat(  "experiment name: ", attrs$experiment,
-          "\ninput gaml file: ", attrs$model,
+          "\ninput gaml file: ", attrs$model$model,
           "\noutput directory:", attrs$wkdir, "\n")
   }
 

@@ -39,21 +39,9 @@ model.experiment <- function(exp) attributes(exp)$model
 #' @importFrom utils capture.output
 #' @export
 `model<-.experiment` <- function(exp, value){
-  # check if experiment name and type are valid in the requested model
-  check_experiment(name(exp), value)
-  # check if model parameters and observed parameters correspond
-  invisible(capture.output(tmp <- load_experiment(name(exp),
-                                                  value,
-                                                  dir = tempfile(c("abcd")))))
-
-  if (all(parameters(exp) == parameters(tmp)) &
-     all(obs_rates(exp) == obs_rates(tmp)) &
-     any(names(exp) == "tmax") &
-     any(names(exp) == "seed"))
-    attr(exp, "model") <- value
-  else
-    stop(paste0("Either Parameters or observation rates or tmax or seed in \"",
-                exp, "\" doesn't match with the requested model \"",
-                value, "\""))
+  model_info <- list("model" = value,
+                     "info" = read_gaml_experiment(name(exp), value),
+                     "snapshot" = fileSnapshot(output_dir(exp)))
+  attr(exp, "model") <- model_info
   return(exp)
 }

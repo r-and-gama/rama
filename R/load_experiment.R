@@ -73,13 +73,13 @@ check_param_type <- function(exp, model) {
 #' @export
 load_experiment <- function(exp, model, dir = "") {
 
-  # Check if experiment and type requested are valid:
-  check_experiment(exp, model)
-
   # Reading GAML file:
   message(cat("Loading experiment \"", exp,
                  "\" from file \"", basename(model), "\"...", sep = ""))
   out <- read_gaml_experiment(exp, model)
+
+  # Check if experiment and type requested are valid:
+  check_experiment(exp, list("info" = out))
 
   # Retrieving information:
   make_df_dic <- function(x) {
