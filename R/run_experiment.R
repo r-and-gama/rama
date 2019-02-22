@@ -11,40 +11,17 @@
 #'
 #' @return Returns a list of dataframes, one for each experiment.
 #' @noRd
-realexp <- function(output, exp){
-
-  newoutput <- list()
-  for (j in 1:nrow(exp)) {
-    # In the current experiment object,
-    # cursimul gives the line of the simulation
-    curoutput <- output[j][[1]]
-    # build the vector of observed variables
-    curobs <- grep("Step", attributes(curoutput)$names,
-                   value = TRUE, invert = TRUE)
-    # build the index of the variables whose rate is computed
-    curobsidx <- grep(paste(curobs, collapse = "|"), names(curoutput))
-    # build the index of the variables whose rate is computed
-    ratesidx <- grep(paste(curobs, collapse = "|"), names(exp))
-    # retrieve the value of the rates
-    ratesval <- as.data.frame(exp)[j, ratesidx]
-
-    for (i in 1:length(curobsidx)) {
-      freq <- as.integer(ratesval[i])
-      curvalue <- curoutput[, curobsidx[i]]
-      max <- length(curvalue)
-      if (freq != 1) {
-        curvalue[sapply(X = 1:max, function(x) (x %% freq != 1))] <- NA
-        curoutput[, curobsidx[i]] <- curvalue
-      }
-    }
-    if (length(newoutput) == 0) {
-      newoutput <- list(curoutput)
-    }
-    else {
-      newoutput <- c(newoutput, list(curoutput))
-    }
-  }
-  return(newoutput)
+realexp <- function(output, exp) {
+  op <- obs_rates(exp)
+  mapply(function(nbrow, obsper, df) {
+           xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
+           ys <- sapply(names(xs), grep, names(df))
+           df[, ys] <- mapply(replace, df[, ys], xs, NA)
+           return(df)
+         },
+         lapply(output, nrow),
+         lapply(as.data.frame(t(op)), setNames, names(op)),
+         output, SIMPLIFY = FALSE)
 }
 
 # Retrieve_results  ------------------------------------------------------------
