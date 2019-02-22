@@ -2,13 +2,15 @@
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            dir = "", dic_g2r = NULL) {
 
-# This function automatically adds "p_" and "r_" prefixes to the parameteres and
-# observation rates. It also does so to the dictionary if provided.
+# Automatically adds "p_" and "r_" prefixes to the parameteres and observation
+# rates. It also does so to the dictionary if provided.
 
+# Automatically converts periods of obsrates and tmax into integer if there are
+# not.
 
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
-  stopifnot(nrow(parameters) == nrow(obsrates))
+  stopifnot(nrow(parameters) == nrow(obsrates)) # has to be an integer
   stopifnot(is.numeric(tmax)) # has to be an integer
   stopifnot(is.character(experiment))
   stopifnot(is.character(model))
@@ -31,7 +33,16 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                           names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
   }
 
-  obsrates[] <- lapply(obsrates, as.integer)
+  if (any(!sapply(obsrates, is.integer))) {
+    message(cat("Periods of observation (\"obsrates\") are rounded and converted into integers."))
+    obsrates[] <- lapply(obsrates, function(x) as.integer(round(x)))
+  }
+
+  if (!is.integer(tmax)) {
+    message(cat("Final time step (\"tmax\") is rounded and converted into integer."))
+    tmax <- as.integer(tmax)
+  }
+
   structure(setNames(cbind(parameters,
                            obsrates,
                            tmax = as.integer(tmax),
