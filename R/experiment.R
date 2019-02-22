@@ -15,11 +15,26 @@ new_experiment <- function(parameters, obsrates, tmax, seed, output = NA,
   stopifnot(is.data.frame(obsrates))
   stopifnot(nrow(parameters) == nrow(obsrates))
   stopifnot(is.numeric(tmax))
+  stopifnot(is.null(dim(seed)))
   stopifnot(is.character(experiment))
+  stopifnot(length(experiment) == 1)
   stopifnot(is.character(model))
+  stopifnot(length(model) == 1)
   stopifnot(is.character(dir))
-  stopifnot(is.character(dic_g2r))
-  stopifnot(is.character(names(dic_g2r)))
+  stopifnot(length(dir) == 1)
+  if (!is.null(dic_g2r)) {
+    stopifnot(is.character(dic_g2r))
+    stopifnot(is.character(names(dic_g2r)))
+  }
+  if (!is.na(output)) {
+    if (nrow(parameters) > 1) {
+      stopifnot(is.list(output) &
+                length(output) > 1 &
+                all(sapply(output, is.data.frame)))
+    } else {
+      stopifnot(is.data.frame(output))
+    }
+  }
 
 # Generating new names:
   names_param <- names(parameters)
@@ -31,12 +46,11 @@ new_experiment <- function(parameters, obsrates, tmax, seed, output = NA,
   if (is.null(dic_g2r)) {
     dic_g2r <- setNames(newnames, oldnames)
   } else {
-    stopifnot(all(names(dic_g2r) %in% oldnames))
-    stopifnot(all())
-    dic_g2r <- c(setNames(paste0("p_", dic_g2r[which(dic_g2r %in% names_param)]),
-                          names(dic_g2r[which(dic_g2r %in% names_param)])),
-                 setNames(paste0("r_", dic_g2r[which(dic_g2r %in% names_obsrates)]),
-                          names(dic_g2r[which(dic_g2r %in% names_obsrates)])))
+    stopifnot(all(dic_g2r %in% oldnames))
+    sel1 <- which(dic_g2r %in% names_param)
+    sel2 <- which(dic_g2r %in% names_obsrates)
+    dic_g2r <- c(setNames(paste0("p_", dic_g2r[sel1]), names(dic_g2r[sel1])),
+                 setNames(paste0("r_", dic_g2r[sel2]), names(dic_g2r[sel2])))
   }
 
 # Dealing with obsrates and tmax, converting them into integers if needed:
