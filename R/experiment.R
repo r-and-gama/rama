@@ -11,7 +11,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
 # dic_g2r: contains the new names of the parameters and variables and the names
 # of this vector contains the old names. It is the opposite for dic_r2g.
 
-# exp0 <- new_experiment(
+# exp0 <- rama:::new_experiment(
 #   data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
 #   data.frame(S = 1, I = 1, R = 1),
 #   1000, 1, "sir", system.file("models", "sir.gaml", package = "rama"))
