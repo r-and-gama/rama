@@ -14,6 +14,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   stopifnot(is.character(model))
   stopifnot(is.character(dir))
   stopifnot(is.character(dic_g2r))
+  stopifnot(is.character(names(dic_g2r)))
 
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
