@@ -1,6 +1,6 @@
 # constructor ------------------------------------------------------------------
-new_experiment <- function(parameters, obsrates, tmax, seed, output = NA,
-                           experiment, model, dir = "", dic_g2r = NULL) {
+new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
+                           dir = "", dic_g2r = NULL, output = NA) {
 
 # Automatically adds "p_" and "r_" prefixes to the parameteres and observation
 # rates. It also does so to the dictionary if provided.
