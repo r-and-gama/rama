@@ -21,3 +21,4 @@ is.experiment <- function(exp) {
   class <- setdiff(class(exp), c("data.frame", "tbl_df", "tbl", "experiment"))
   length(c(attr, class)) == 0
 }
+
