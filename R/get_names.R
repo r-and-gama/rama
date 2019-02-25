@@ -68,9 +68,6 @@ get_all_names <- function(file) {
 #' @export
 #'
 #' @example inst/examples/get_info.R
-
-
-# get_info ----------------------------------------------------------------
 #' @rdname get_info
 #' @export
 get_info <- function(exp, pattern, type){
