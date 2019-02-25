@@ -48,11 +48,7 @@ retrieve_results <- function(outfile, exp) {
 
   # Tidy the output
   tmp2 <- lapply(seq_len(dim(tmp)[2]), function(x) {
-    suppressWarnings(if (is.numeric(as.numeric(tmp[, x]))) {
-      tmp[, x] <- as.numeric(tmp[, x])
-      } else {
-        tmp[, x]
-        })
+    suppressWarnings( tmp[, x] <- as.numeric(tmp[, x]))
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
