@@ -4,12 +4,26 @@
 \alias{run_experiment}
 \title{Run an experiment}
 \usage{
-run_experiment(exp, hpc = 1)
+run_experiment(exp, hpc = 1, save = FALSE, path = NULL,
+  force = FALSE, display = FALSE, append = TRUE)
 }
 \arguments{
-\item{exp}{an XML file containing the experiment}
+\item{exp}{an XML file containing the experiment.}
 
-\item{hpc}{numeric}
+\item{hpc}{number of threads used by GAMA to run the experiment.}
+
+\item{save}{save the outputs to disk or not, default = FALSE.}
+
+\item{path}{directory to save the outputs, default = NULL.
+If `save = TRUE` and `path` is not
+specified, current working directory is used to save the outputs.}
+
+\item{force}{overwrite the specified `path` or not, default = FALSE.}
+
+\item{display}{output images are saved or not, default = FALSE.}
+
+\item{append}{append outputs to experiment, default = TRUE. It is not possible
+to set both `add_exp` and `save` as `FALSE`.}
 }
 \description{
 From a `experiment` object, run an experiment by creating an XML file of the
