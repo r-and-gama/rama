@@ -164,7 +164,8 @@ df
 Let's now transform this data frame into an `experiment`:
 
 ```{r}
-exp5 <- as_experiment(df, parameters = c("S0", "R0", "beta", "gamma"), 
+exp5 <- as_experiment(df = df,
+           parameters = c("S0", "R0", "I0", "beta", "gamma"),
            obsrates = c("S", "I"), tmax = "tmax", seed = "seed",
            experiment = "sir", model = gaml_file)
 ```

@@ -50,26 +50,41 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
             dic_g2r    = dic_g2r,
             dic_r2g    = setNames(names(dic_g2r), dic_g2r))
 
+  print(attr(out, "model"))
+  print("wouhou1")
   # cast parameter types
-  types <- rama:::map_type(get_info(out, "Parameters", "type"))
+  types <- map_type(get_info(out, "Parameters", "type"))
   functions <- lapply(paste0("as.", types), function(x) match.fun(x))
   map2(names(types), functions, function(n, f){
     out[, n] <<- f(out[, n][[1]])
     invisible()
   })
   # cast observation rate types
+  print(attr(out, "model"))
+  print("wouhou2")
+  old_attr <- purrr::keep(attributes(out),
+                          names(attributes(out)) %in%
+                            c("dic_r2g", "dic_g2r", "wkdir",
+                              "experiment", "model", "class"))
+  out <- as.data.frame(out)
   out <- out %>%  mutate_at(vars(starts_with("r_")), as.integer)
+  attributes(out) <- append(purrr::discard(attributes(out),
+                                            names(attributes(out)) == "class"),
+                             old_attr)
+  print(attr(out, "model"))
   out
 }
 
 
 # validator --------------------------------------------------------------------
 validate_experiment <- function(x) {
+  print(attr(x, "model"))
   model <- model(x)
   dic_g2r <- attr(x, "dic_g2r")
   dic_r2g <- attr(x, "dic_r2g")
   colnames <- lapply(c(parameters, obs_rates), function(f) names(f(x)))
 
+  print(c(name(x), model))
   check_experiment(name(x), model)
   test_schar(names(dic_g2r))
 
@@ -187,6 +202,7 @@ validate_experiment <- function(x) {
 #'
 experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                        dir = "", dic = NULL) {
-  validate_experiment(new_experiment(parameters, obsrates, tmax, seed,
-                                     experiment, model, dir, dic))
+  exp <- new_experiment(parameters, obsrates, tmax, seed,
+                        experiment, model, dir, dic)
+  validate_experiment(exp)
 }

@@ -53,6 +53,24 @@ get_variables_names <- get_names_template("monitor")
 get_all_names <- function(file) {
   unlist(lapply(c("parameter", "monitor"), get_names, readLines(file)))
 }
+
+
+# get_info ---------------------------------------------------------
+#' Get information on the model
+#'
+#' @param exp Experiment object
+#' @param pattern can be either 'Parameters' or 'Outputs' for parameters and
+#'        observation rates, respectively.
+#' @param type can be 'name' for parameter and observation rate names, '
+#'        type' for parameter types.
+#'
+#' @return A vector of parameter or variable names,
+#'
+#' @export
+#'
+#' @example inst/examples/get_info.R
+
+
 # get_info ----------------------------------------------------------------
 #' @rdname get_info
 #' @export
@@ -69,6 +87,7 @@ get_info <- function(exp, pattern, type){
   out
 }
 
+# map gama and R data types
 map_type <- function(x){
   types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
   unlist(lapply(x, function(y) types[[y]]))

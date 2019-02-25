@@ -94,7 +94,9 @@ run_experiment <- function(exp, hpc = 1, output_dir = "",
     output_dir <- create_output_dir(exp, output_dir)
 
   # generate xml file from exp
-    parameter_xml_file <- save_to_gama(exp, parameter_xml_file)
+
+    parameter_xml_file <- save_to_gama(validate_experiment(exp),
+                                       parameter_xml_file)
 
   # run all the experiments
     outfiles <- call_gama(parameter_xml_file, hpc, output_dir)

@@ -41,7 +41,9 @@ model.experiment <- function(exp) attributes(exp)$model
 `model<-.experiment` <- function(exp, value){
   model_info <- list("model" = value,
                      "info" = read_gaml_experiment(name(exp), value),
-                     "snapshot" = fileSnapshot(output_dir(exp)))
+                     "snapshot" = fileSnapshot(output_dir(exp),
+                                               md5sum = TRUE,
+                                               full.names = TRUE))
   attr(exp, "model") <- model_info
   return(exp)
 }

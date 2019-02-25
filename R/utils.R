@@ -32,9 +32,9 @@ test_schar <- function(x) {
 check_experiment <- function(exp, model) {
   model_info <- model$info
     # check if the requested experiment is present in the file:
-  if (!exp %in% model_info$.attr["experiment"])
+  if (!exp %in% model_info$.attrs["experiment"])
     stop(paste0("There is no experiment named \"", exp, "\" in ",
-                basename(model_info$.attr["sourcePath"])))
+                basename(model_info$.attrs["sourcePath"])))
   invisible(0)
 }
 

@@ -72,7 +72,7 @@ save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
   simulations <- as.list(as.data.frame(rbind(id = row.names(exp),
                        seed = exp$seed,
                        finalStep = exp$tmax,
-                       sourcePath = model(exp),
+                       sourcePath = model(exp)$model,
                        experiment = name(exp)),
                        stringsAsFactors = FALSE))
   names(simulations) <- row.names(exp)

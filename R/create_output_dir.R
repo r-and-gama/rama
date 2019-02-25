@@ -21,7 +21,7 @@ create_output_dir <-  function(exp, dir = "") {
     i <- 0
     repeat {
       i <- i + 1
-      out_dir <- paste0(out_dir, "_", i)
+      out_dir <- paste0(wkdir, "/", dir, "_", i)
       if (!file.exists(out_dir)) break
     }
   }
