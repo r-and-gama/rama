@@ -42,8 +42,7 @@
 <meta property="og:description" content="From a `experiment` object, run an experiment by creating an XML file of the
 experiment (save_to_gama) and by calling gama
 (call_gama) and returns a list of data frame, one by
-simulation and also the simulation output of Gama in XML file stored in
-`output_dir` (created by create_output_dir)" />
+simulation." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -167,13 +166,11 @@ simulation and also the simulation output of Gama in XML file stored in
     <p>From a `experiment` object, run an experiment by creating an XML file of the
 experiment (<code><a href='save_to_gama.html'>save_to_gama</a></code>) and by calling gama
 (<code><a href='call_gama.html'>call_gama</a></code>) and returns a list of data frame, one by
-simulation and also the simulation output of Gama in XML file stored in
-`output_dir` (created by <code><a href='create_output_dir.html'>create_output_dir</a></code>)</p>
+simulation.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>run_experiment</span>(<span class='no'>exp</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>parameter_xml_file</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>run_experiment</span>(<span class='no'>exp</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,24 +183,30 @@ simulation and also the simulation output of Gama in XML file stored in
       <th>hpc</th>
       <td><p>numeric</p></td>
     </tr>
-    <tr>
-      <th>output_dir</th>
-      <td><p>path to saved the output of gama</p></td>
-    </tr>
-    <tr>
-      <th>parameter_xml_file</th>
-      <td><p>name of XML parameter file. This file is created
-in the working directory of `exp`. If not
-specified, name of `exp` is used.</p></td>
-    </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#load experiment</span>
 <span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
-<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>, <span class='st'>"sir"</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_19".</div><div class='output co'>#&gt; </div><div class='input'><span class='co'># run experiment</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; Running experiment plan... </div></pre>
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='co'># run experiment</span>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'>
+<span class='co'># for a more complexe example</span>
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>exp1</span>, <span class='fl'>2</span>)
+<span class='no'>exp1</span>$<span class='no'>r_R</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>:<span class='fl'>3</span>
+<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>output</span>)</div><div class='output co'>#&gt; List of 2
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ r_S : num [1:1000] 999 999 999 999 999 999 999 999 999 999 ...
+#&gt;   ..$ r_I : num [1:1000] 1 0 0 0 0 0 0 0 0 0 ...
+#&gt;   ..$ r_R : num [1:1000] 0 NA 1 NA 1 NA 1 NA 1 NA ...
+#&gt;   ..- attr(*, "path")= chr "/private/var/folders/r8/38fxtt4j3rg2kygj6s2cx1680000gn/T/RtmpzP0l8h/file122da56b71e54/simulation-outputs1.xml"
+#&gt;  $ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   ..$ Step: int [1:1000] 0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   ..$ r_S : num [1:1000] 999 999 999 999 999 999 999 999 999 999 ...
+#&gt;   ..$ r_I : num [1:1000] 1 0 0 0 0 0 0 0 0 0 ...
+#&gt;   ..$ r_R : num [1:1000] 0 NA NA 1 NA NA 1 NA NA 1 ...
+#&gt;   ..- attr(*, "path")= chr "/private/var/folders/r8/38fxtt4j3rg2kygj6s2cx1680000gn/T/RtmpzP0l8h/file122da56b71e54/simulation-outputs2.xml"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

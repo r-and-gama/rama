@@ -4,31 +4,23 @@
 \alias{run_experiment}
 \title{Run an experiment}
 \usage{
-run_experiment(exp, hpc = 1, output_dir = "",
-  parameter_xml_file = "")
+run_experiment(exp, hpc = 1)
 }
 \arguments{
 \item{exp}{an XML file containing the experiment}
 
 \item{hpc}{numeric}
-
-\item{output_dir}{path to saved the output of gama}
-
-\item{parameter_xml_file}{name of XML parameter file. This file is created
-in the working directory of `exp`. If not
-specified, name of `exp` is used.}
 }
 \description{
 From a `experiment` object, run an experiment by creating an XML file of the
 experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 (\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
-simulation and also the simulation output of Gama in XML file stored in
-`output_dir` (created by \code{\link[rama]{create_output_dir}})
+simulation.
 }
 \examples{
 #load experiment
 gaml_file <- system.file("models", "sir.gaml", package = "rama")
-exp1 <- load_experiment("sir", gaml_file, "sir")
+exp1 <- load_experiment("sir", gaml_file)
 # run experiment
 out <- run_experiment(exp1)
 

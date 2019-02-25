@@ -71,33 +71,27 @@ retrieve_results <- function(outfile, exp) {
 #' From a `experiment` object, run an experiment by creating an XML file of the
 #' experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 #' (\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
-#' simulation and also the simulation output of Gama in XML file stored in
-#' `output_dir` (created by \code{\link[rama]{create_output_dir}})
+#' simulation.
 #'
 #' @param exp an XML file containing the experiment
 #' @param hpc numeric
-#' @param output_dir path to saved the output of gama
-#' @param parameter_xml_file name of XML parameter file. This file is created
-#'                           in the working directory of `exp`. If not
-#'                           specified, name of `exp` is used.
 #'
 #' @example inst/examples/run_experiment.R
 #' @export
-run_experiment <- function(exp, hpc = 1, output_dir = "",
-                           parameter_xml_file = "") {
+run_experiment <- function(exp, hpc = 1) {
 
   if (!is.experiment(exp)) {
     stop("The argument `exp` is not an `experiment` object.")
   }
 
   # make output directory
-    output_dir <- create_output_dir(exp, output_dir)
-
+    output_dir <- tempfile(tmpdir = tempdir())
+    dir.create(output_dir)
   # generate xml file from exp
 
     parameter_xml_file <- save_to_gama(validate_experiment(exp),
-                                       parameter_xml_file)
-
+                                       filename = NULL,
+                                       path = output_dir)
   # run all the experiments
     outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
 

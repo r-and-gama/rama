@@ -39,16 +39,14 @@ reference:
     - get_parameters_names
     - load_experiment
     - save_to_gama
-    - list_experiments
   - title: Manipulating experiment objects
     contents:
-    - create_output_dir
     - fullfact
     - get_parameters_names
+    - get_info
     - model
     - name
     - obs_rates
-    - output_dir
     - parameters
     - plot_params
     - repl

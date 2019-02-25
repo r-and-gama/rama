@@ -14,7 +14,7 @@ is.experiment <- function(exp) {
   if (any(is.null(exp)))
     stop("An object `experiment` cannot contain NULL value.")
 
-  attr <- setdiff(c("class", "model", "experiment", "wkdir", "dic_g2r",
+  attr <- setdiff(c("class", "model", "experiment", "dic_g2r",
                     "dic_r2g"),
                   names(attributes(exp)))
   class <- setdiff(class(exp), c("data.frame", "tbl_df", "tbl", "experiment"))

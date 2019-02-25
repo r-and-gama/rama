@@ -28,7 +28,7 @@
 #'
 #' @example inst/examples/as_experiment.R
 as_experiment <- function(df, parameters = NULL, obsrates = NULL, tmax = "tmax",
-                          seed = "seed", experiment, model, dir = "",
+                          seed = "seed", experiment, model,
                           dic = NULL) {
 
   if (missing(experiment))
@@ -52,5 +52,5 @@ as_experiment <- function(df, parameters = NULL, obsrates = NULL, tmax = "tmax",
   names(obsrates) <- sub("^r_", "", names(obsrates))
 
   experiment(parameters, obsrates, df[, tmax], df[, seed],
-             experiment, model, dir, dic)
+             experiment, model, dic)
 }

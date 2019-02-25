@@ -1,6 +1,6 @@
 # get names according to a pattern. Basically a wrapper around grep ------------
 get_names <- function(pattern, text) {
- # unname(sapply(grep(pattern, text, value = TRUE),
+  # unname(sapply(grep(pattern, text, value = TRUE),
   #              function(x) sub("^.*\\\"(.*)\\\".*$", "\\1", x)))
   str <- grep(pattern, text, value = TRUE)
   lst_str <- lapply(seq_along(str), function(x) {
@@ -54,7 +54,6 @@ get_all_names <- function(file) {
   unlist(lapply(c("parameter", "monitor"), get_names, readLines(file)))
 }
 
-
 # get_info ---------------------------------------------------------
 #' Get information on the model
 #'
@@ -77,7 +76,10 @@ get_all_names <- function(file) {
 get_info <- function(exp, pattern, type){
   model <- model(exp)
   query <- model[["info"]][[pattern]]
+  if(!is.list(query))
+    query <- list(query)
   out <- unlist(lapply(query, function(x) x[[type]]))
+  names <- type
 
   if(pattern == "Parameters")
     names <- paste0("p_", unlist(lapply(query, function(x) x[["name"]])) )

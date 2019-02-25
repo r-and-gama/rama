@@ -25,6 +25,7 @@ model.experiment <- function(exp) attributes(exp)$model
 #' This function allows to change the model path of an experiment object
 #'
 #' @param value Path of new gaml model file
+#' @importFrom tools md5sum
 #'
 #' @rdname model
 #' @example inst/examples/model.R
@@ -41,9 +42,7 @@ model.experiment <- function(exp) attributes(exp)$model
 `model<-.experiment` <- function(exp, value){
   model_info <- list("model" = value,
                      "info" = read_gaml_experiment(name(exp), value),
-                     "snapshot" = fileSnapshot(output_dir(exp),
-                                               md5sum = TRUE,
-                                               full.names = TRUE))
+                     "md5sum" = md5sum(value))
   attr(exp, "model") <- model_info
   return(exp)
 }

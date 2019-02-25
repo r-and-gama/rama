@@ -275,6 +275,10 @@ the experiment and optionally number of cores, output folder for the results of
 this experiment, parameters file in xml format. 
 
 ```{r}
+model(exp1)$md5sum
+```
+
+```{r, eval=FALSE}
 output <- run_experiment(exp1)
 ```
 

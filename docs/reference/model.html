@@ -202,10 +202,236 @@ contains the model of an <code>experiment</code> object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>,
-                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_11".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/mac/Desktop/rama/inst/models/sir.gaml"</div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>) <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"CopyOfsir.gaml"</span>,
-                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/mac/Desktop/rama/inst/models/CopyOfsir.gaml"</div><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>,
-                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_12".</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/mac/Desktop/rama/inst/models/sir.gaml"</div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>) <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"CopyOfsir.gaml"</span>,
-                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; [1] "/Users/mac/Desktop/rama/inst/models/CopyOfsir.gaml"</div></pre>
+                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; $path
+#&gt; [1] "/Users/haihb/Documents/Work/rama/inst/models/sir.gaml"
+#&gt; 
+#&gt; $info
+#&gt; $info$Parameters
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "S0" "INT" "999"   "S" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "I0" "INT"   "1"   "I" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "R0" "INT"   "0"   "R" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt;  "beta" "FLOAT"   "1.5"  "beta" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt; "gamma" "FLOAT"  "0.15" "gamma" 
+#&gt; 
+#&gt; 
+#&gt; $info$Outputs
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "0"       "S" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "1"       "I" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "2"       "R" 
+#&gt; 
+#&gt; 
+#&gt; $info$.attrs
+#&gt;                                              experiment 
+#&gt;                                                   "sir" 
+#&gt;                                               finalStep 
+#&gt;                                                  "1000" 
+#&gt;                                                      id 
+#&gt;                                                     "0" 
+#&gt;                                                    seed 
+#&gt;                                                     "1" 
+#&gt;                                              sourcePath 
+#&gt; "/Users/haihb/Documents/Work/rama/inst/models/sir.gaml" 
+#&gt; 
+#&gt; 
+#&gt; $md5sum
+#&gt; /Users/haihb/Documents/Work/rama/inst/models/sir.gaml 
+#&gt;                    "5ec694cc3ac6553667b90e16ac1c9b08" 
+#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>) <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"CopyOfsir.gaml"</span>,
+                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
+<span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; $model
+#&gt; [1] "/Users/haihb/Documents/Work/rama/inst/models/CopyOfsir.gaml"
+#&gt; 
+#&gt; $info
+#&gt; $info$Parameters
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "S0" "INT" "999"   "S" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "I0" "INT"   "1"   "I" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "R0" "INT"   "0"   "R" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt;  "beta" "FLOAT"   "1.5"  "beta" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt; "gamma" "FLOAT"  "0.15" "gamma" 
+#&gt; 
+#&gt; 
+#&gt; $info$Outputs
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "0"       "S" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "1"       "I" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "2"       "R" 
+#&gt; 
+#&gt; 
+#&gt; $info$.attrs
+#&gt;                                                    experiment 
+#&gt;                                                         "sir" 
+#&gt;                                                     finalStep 
+#&gt;                                                        "1000" 
+#&gt;                                                            id 
+#&gt;                                                           "0" 
+#&gt;                                                          seed 
+#&gt;                                                           "1" 
+#&gt;                                                    sourcePath 
+#&gt; "/Users/haihb/Documents/Work/rama/inst/models/CopyOfsir.gaml" 
+#&gt; 
+#&gt; 
+#&gt; $md5sum
+#&gt; /Users/haihb/Documents/Work/rama/inst/models/CopyOfsir.gaml 
+#&gt;                          "5ec694cc3ac6553667b90e16ac1c9b08" 
+#&gt; </div><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>,
+                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; $path
+#&gt; [1] "/Users/haihb/Documents/Work/rama/inst/models/sir.gaml"
+#&gt; 
+#&gt; $info
+#&gt; $info$Parameters
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "S0" "INT" "999"   "S" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "I0" "INT"   "1"   "I" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "R0" "INT"   "0"   "R" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt;  "beta" "FLOAT"   "1.5"  "beta" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt; "gamma" "FLOAT"  "0.15" "gamma" 
+#&gt; 
+#&gt; 
+#&gt; $info$Outputs
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "0"       "S" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "1"       "I" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "2"       "R" 
+#&gt; 
+#&gt; 
+#&gt; $info$.attrs
+#&gt;                                              experiment 
+#&gt;                                                   "sir" 
+#&gt;                                               finalStep 
+#&gt;                                                  "1000" 
+#&gt;                                                      id 
+#&gt;                                                     "0" 
+#&gt;                                                    seed 
+#&gt;                                                     "1" 
+#&gt;                                              sourcePath 
+#&gt; "/Users/haihb/Documents/Work/rama/inst/models/sir.gaml" 
+#&gt; 
+#&gt; 
+#&gt; $md5sum
+#&gt; /Users/haihb/Documents/Work/rama/inst/models/sir.gaml 
+#&gt;                    "5ec694cc3ac6553667b90e16ac1c9b08" 
+#&gt; </div><div class='input'><span class='fu'>model</span>(<span class='no'>exp1</span>) <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"CopyOfsir.gaml"</span>,
+                        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
+<span class='fu'>model</span>(<span class='no'>exp1</span>)</div><div class='output co'>#&gt; $model
+#&gt; [1] "/Users/haihb/Documents/Work/rama/inst/models/CopyOfsir.gaml"
+#&gt; 
+#&gt; $info
+#&gt; $info$Parameters
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "S0" "INT" "999"   "S" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "I0" "INT"   "1"   "I" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;  name  type value   var 
+#&gt;  "R0" "INT"   "0"   "R" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt;  "beta" "FLOAT"   "1.5"  "beta" 
+#&gt; 
+#&gt; $info$Parameters$Parameter
+#&gt;    name    type   value     var 
+#&gt; "gamma" "FLOAT"  "0.15" "gamma" 
+#&gt; 
+#&gt; 
+#&gt; $info$Outputs
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "0"       "S" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "1"       "I" 
+#&gt; 
+#&gt; $info$Outputs$Output
+#&gt; framerate        id      name 
+#&gt;       "1"       "2"       "R" 
+#&gt; 
+#&gt; 
+#&gt; $info$.attrs
+#&gt;                                                    experiment 
+#&gt;                                                         "sir" 
+#&gt;                                                     finalStep 
+#&gt;                                                        "1000" 
+#&gt;                                                            id 
+#&gt;                                                           "0" 
+#&gt;                                                          seed 
+#&gt;                                                           "1" 
+#&gt;                                                    sourcePath 
+#&gt; "/Users/haihb/Documents/Work/rama/inst/models/CopyOfsir.gaml" 
+#&gt; 
+#&gt; 
+#&gt; $md5sum
+#&gt; /Users/haihb/Documents/Work/rama/inst/models/CopyOfsir.gaml 
+#&gt;                          "5ec694cc3ac6553667b90e16ac1c9b08" 
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

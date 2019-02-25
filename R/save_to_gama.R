@@ -39,9 +39,11 @@ generate_obsrate <- function(obsrate, names){
 #' Save an object of class \code{experiment} to an XML file GAMA-compliant.
 #'
 #' @param exp An object of class \code{experiment}.
-#' @param parameter_xml_file name of XML parameter file. This file is created
-#'                           in the working directory of `exp`. If not
-#'                           specified, name of `exp`` is used.
+#' @param filename name of XML parameter file. If not
+#'                 specified, name of `exp`` is used.
+#' @param path Path to save `filename`. If not specified, current working
+#'                directory is used.
+#'
 #'
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
 #' @importFrom purrr map2 pmap
@@ -50,17 +52,17 @@ generate_obsrate <- function(obsrate, names){
 #' @rdname save_to_gama
 #' @export
 
-save_to_gama <- function(exp, parameter_xml_file) UseMethod("save_to_gama")
+save_to_gama <- function(exp, filename = NULL, path = NULL) UseMethod("save_to_gama")
 
 #' @rdname save_to_gama
 #' @export
-save_to_gama.default <- function(exp, parameter_xml_file)
+save_to_gama.default <- function(exp, filename, path)
                         "Unknown class"
 
 #' @rdname save_to_gama
 #' @export
-save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
-  check_experiment(attr(exp, "experiment"), model(exp))
+save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
+  check_experiment(name(exp), model(exp))
   params <- parameters(exp)
   param_names <- attr(exp, "dic_r2g")[names(params)]
   params <- as.list(as.data.frame(t(params)))
@@ -72,7 +74,7 @@ save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
   simulations <- as.list(as.data.frame(rbind(id = row.names(exp),
                        seed = exp$seed,
                        finalStep = exp$tmax,
-                       sourcePath = model(exp)$model,
+                       sourcePath = model(exp)$path,
                        experiment = name(exp)),
                        stringsAsFactors = FALSE))
   names(simulations) <- row.names(exp)
@@ -99,9 +101,11 @@ save_to_gama.experiment <- function(exp, parameter_xml_file = "") {
     xmlFile$closeTag()
   })
 
-  if (parameter_xml_file == "")
-    parameter_xml_file <-  paste0(name(exp), ".xml")
-  parameter_xml_file <- paste0(output_dir(exp), "/", parameter_xml_file)
+  if (is.null(filename))
+    filename <-  paste0(name(exp), ".xml")
+  if(is.null(path))
+    path <- getwd()
+  parameter_xml_file <- paste0(path, "/", filename)
   saveXML(xmlFile$value(), file = parameter_xml_file)
   normalizePath(parameter_xml_file)
 }

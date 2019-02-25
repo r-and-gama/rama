@@ -62,16 +62,12 @@ check_param_type <- function(exp, model) {
 #'
 #' @param exp The name of the experiment to load.
 #' @param model The name of the GAML file from which to load the experiment.
-#' @param dir The name of the directory in which to save the outputs of the
-#' experiment's simulations. If empty character string (default), the name of
-#' the GAML file will be used to name the simulations' output directory.
-#'
 #' @example inst/examples/load_experiment.R
 #' @importFrom XML xmlToList xmlParse
 #' @importFrom tibble as_tibble
 #'
 #' @export
-load_experiment <- function(exp, model, dir = "") {
+load_experiment <- function(exp, model) {
 
   # Reading GAML file:
   message(cat("Loading experiment \"", exp,
@@ -95,5 +91,5 @@ load_experiment <- function(exp, model, dir = "") {
 
   # Returning experiment object:
   experiment(parameters$out, variables$out, out_attr$tmax, out_attr$seed,
-             exp, model, dir, c(parameters$dic_g2r, variables$dic_g2r))
+             exp, model, c(parameters$dic_g2r, variables$dic_g2r))
 }

@@ -1,9 +1,10 @@
 # constructor ------------------------------------------------------------------
-#' @import dplyr
+#' @importFrom tools md5sum
 #' @importFrom purrr map2
+#' @import dplyr
 
-new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
-                           dir = "", dic_g2r = NULL) {
+new_experiment <- function(parameters, obsrates, tmax, seed,
+                           experiment, model, dic_g2r = NULL) {
 
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
@@ -11,7 +12,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   stopifnot(is.numeric(tmax))
   stopifnot(is.character(experiment))
   stopifnot(is.character(model))
-  stopifnot(is.character(dir))
   stopifnot(is.character(dic_g2r) | is.null(dic_g2r))
 
   names_param <- names(parameters)
@@ -32,13 +32,10 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   }
 
   obsrates[] <- lapply(obsrates, as.integer)
-  wkdir <- make_wkdir(model, dir)
-  file.copy(model, wkdir)
-  model_info <- list("model" = list.files(wkdir, ".gaml", full.names = TRUE),
+
+  model_info <- list("path" = model,
                      "info" = read_gaml_experiment(experiment, model),
-                     "snapshot" = fileSnapshot(wkdir,
-                                               md5sum = TRUE,
-                                               full.names = TRUE))
+                     "md5sum" = md5sum(model))
   out <- structure(setNames(cbind(parameters,
                            obsrates,
                            tmax = as.integer(tmax),
@@ -46,13 +43,9 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model_info,
             experiment = experiment,
-            wkdir      = wkdir,
             dic_g2r    = dic_g2r,
             dic_r2g    = setNames(names(dic_g2r), dic_g2r))
-
-  print(attr(out, "model"))
-  print("wouhou1")
-  # cast parameter types
+ # cast parameter types
   types <- map_type(get_info(out, "Parameters", "type"))
   functions <- lapply(paste0("as.", types), function(x) match.fun(x))
   map2(names(types), functions, function(n, f){
@@ -60,31 +53,26 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
     invisible()
   })
   # cast observation rate types
-  print(attr(out, "model"))
-  print("wouhou2")
   old_attr <- purrr::keep(attributes(out),
                           names(attributes(out)) %in%
-                            c("dic_r2g", "dic_g2r", "wkdir",
+                            c("dic_r2g", "dic_g2r",
                               "experiment", "model", "class"))
   out <- as.data.frame(out)
   out <- out %>%  mutate_at(vars(starts_with("r_")), as.integer)
   attributes(out) <- append(purrr::discard(attributes(out),
                                             names(attributes(out)) == "class"),
                              old_attr)
-  print(attr(out, "model"))
   out
 }
 
 
 # validator --------------------------------------------------------------------
 validate_experiment <- function(x) {
-  print(attr(x, "model"))
   model <- model(x)
   dic_g2r <- attr(x, "dic_g2r")
   dic_r2g <- attr(x, "dic_r2g")
   colnames <- lapply(c(parameters, obs_rates), function(f) names(f(x)))
 
-  print(c(name(x), model))
   check_experiment(name(x), model)
   test_schar(names(dic_g2r))
 
@@ -104,11 +92,11 @@ validate_experiment <- function(x) {
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
                "' do not correspond to any parameter in the '",
-               basename(model$model), "' file."))
+               basename(model$path), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The parameter name '", substitute(diff),
                "' does not correspond to any parameter in the '",
-               basename(model$model), "' file."))
+               basename(model$path), "' file."))
   }
 
   diff <- setdiff(dic_r2g[colnames[[2]]], get_info(x, "Outputs", "name"))
@@ -119,7 +107,7 @@ validate_experiment <- function(x) {
   } else if (length(diff) > 0) {
     stop(paste0("The variable name '", substitute(diff),
                "' does not correspond to any variable in the '",
-               basename(model$model), "' file."))
+               basename(model$path), "' file."))
   }
   # check parameter types
   type_r <- sapply(parameters(x), class)
@@ -129,24 +117,20 @@ validate_experiment <- function(x) {
     stop(paste0("The data type(s) of '",
                 names(type_g)[diff],
                 "' do not correspond to parameter type(s) declared in the '",
-                basename(model$model), "' file."))
+                basename(model$path), "' file."))
   }
   # check obs_rates
 
   if (!all(sapply(obs_rates(x), class) == "integer")) {
     stop(paste0("The observation rates must be interger as declared in '",
-                basename(model$model), "' file."))
+                basename(model$path), "' file."))
   }
 
-  # valid snapshot
-  current_snapshot <- fileSnapshot(output_dir(x),
-                                   md5sum = TRUE,
-                                   full.names = TRUE)
-  changes <- changedFiles(model$snapshot, current_snapshot)$changes
-  changes <- as.data.frame(changes)
-  flag <- changes$md5sum[which(rownames(changes) == model$model)]
-  if(flag)
-    stop(paste0("Gaml file '", model$model, "' has been changed.
+  # validate snapshot
+  current_md5sum <-  md5sum(model(x)$path)
+
+  if(current_md5sum != model$md5sum)
+    stop(paste0("Gaml file '", model$path, "' has been changed.
                 Please use function 'model<-' to add this gaml file
                 to the experiment"))
 
@@ -163,11 +147,9 @@ validate_experiment <- function(x) {
 #' The class \code{experiment} inherits from the class \code{tibble}
 #' (\code{tbl_df}). It contains parameters values as well as periods of
 #' observation of the observed variables and it connects to a \code{GAML} file
-#' that specifies the full model as well as to a directory that contains the
-#' outputs of simuations.
+#' that specifies the full model.
 #'
-#' TO DO: Explains how \code{dir} is made is not specified. Explains what
-#' \code{dic} is.
+#' TO DO: Explains what \code{dic} is.
 #'
 #' @param parameters A data frame of numerical values giving the values of each
 #'                   parameter (in column), for each simulation (in row).
@@ -183,11 +165,6 @@ validate_experiment <- function(x) {
 #' @param experiment The name of an experiment of the \code{GAML} file
 #'                   \code{model}.
 #' @param model The path to a \code{GAML} file.
-#' @param dir The path to a directory where the simulations output are saved. If
-#'            not specified (i.e. empty character string, default), then the
-#'            simulations are saved in a subdirectory of the working directory,
-#'            the name of which is made from the name of \code{model}. See
-#'            \code{Details} for more information.
 #' @param dic A named vector of character strings. The values and the names of
 #'            this vector should be consistent with the names of
 #'            \code{parameters}, \code{obsrates} as well as the variables and
@@ -201,8 +178,7 @@ validate_experiment <- function(x) {
 #' @example inst/examples/experiment.R
 #'
 experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
-                       dir = "", dic = NULL) {
-  exp <- new_experiment(parameters, obsrates, tmax, seed,
-                        experiment, model, dir, dic)
-  validate_experiment(exp)
+                       dic = NULL) {
+  validate_experiment(new_experiment(parameters, obsrates, tmax, seed,
+                                     experiment, model, dic))
 }

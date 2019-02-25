@@ -4,16 +4,12 @@
 \alias{load_experiment}
 \title{Load an experiment from a GAML file}
 \usage{
-load_experiment(exp, model, dir = "")
+load_experiment(exp, model)
 }
 \arguments{
 \item{exp}{The name of the experiment to load.}
 
 \item{model}{The name of the GAML file from which to load the experiment.}
-
-\item{dir}{The name of the directory in which to save the outputs of the
-experiment's simulations. If empty character string (default), the name of
-the GAML file will be used to name the simulations' output directory.}
 }
 \description{
 Loads an experiment from a \code{.gaml} file and returns an object of class
