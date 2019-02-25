@@ -5,7 +5,7 @@
 \title{Run an experiment}
 \usage{
 run_experiment(exp, hpc = 1, save = FALSE, path = NULL,
-  force = FALSE, display = FALSE, append = TRUE)
+  display = FALSE, append = TRUE)
 }
 \arguments{
 \item{exp}{an XML file containing the experiment.}
@@ -17,8 +17,6 @@ run_experiment(exp, hpc = 1, save = FALSE, path = NULL,
 \item{path}{directory to save the outputs, default = NULL.
 If `save = TRUE` and `path` is not
 specified, current working directory is used to save the outputs.}
-
-\item{force}{overwrite the specified `path` or not, default = FALSE.}
 
 \item{display}{output images are saved or not, default = FALSE.}
 

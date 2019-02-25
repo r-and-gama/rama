@@ -129,14 +129,15 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
       repeat {
         i <- i + 1
         dir <- paste0(path, "_", i)
-        if (!file.exists(path)) break
+        if (!file.exists(dir)) break
       }
       warning(paste0("'", path, "' already exists. Outputs are saved in '",
                      dir, "'."))
     }
-    input <- paste0(dir, "input")
+    dir.create(dir)
+    input <- paste0(dir, "/input")
     dir.create(input)
-    output <- paste0(dir, "output")
+    output <- paste0(dir, "/output")
     dir.create(output)
     file.copy(parameter_xml_file, input)
     file.copy(model(exp)$path, input)
@@ -151,7 +152,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   }
 
   if(isTRUE(append))
-   # To do
+  # to do
 
  # return experiment:
   exp
