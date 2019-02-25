@@ -9,7 +9,8 @@
 #' @export
 is.experiment <- function(exp) {
 
-  if (any(is.na(exp)))
+  exp1 <- as.data.frame(exp)
+  if (any(is.na(exp1[ , !names(exp1) %in% "output"])))
     stop("An object `experiment` cannot contain NA value.")
   if (any(is.null(exp)))
     stop("An object `experiment` cannot contain NULL value.")
@@ -20,3 +21,4 @@ is.experiment <- function(exp) {
   class <- setdiff(class(exp), c("data.frame", "tbl_df", "tbl", "experiment"))
   length(c(attr, class)) == 0
 }
+
