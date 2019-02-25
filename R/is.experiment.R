@@ -9,9 +9,10 @@
 #' @export
 is.experiment <- function(exp) {
 
-  if (any(is.na(exp)))
+  exp1 <- as.data.frame(exp)
+  if (any(is.na(exp1[ , -which(names(exp1) %in% "output")])))
     stop("An object `experiment` cannot contain NA value.")
-  if (any(is.null(exp)))
+  if (any(is.null(exp1)))
     stop("An object `experiment` cannot contain NULL value.")
 
   attr <- setdiff(c("class", "model", "experiment", "wkdir", "dic_g2r",
