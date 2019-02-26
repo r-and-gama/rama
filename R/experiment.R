@@ -1,6 +1,6 @@
 # constructor ------------------------------------------------------------------
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
-                           dir = "", dic_g2r = NULL, output = NA) {
+                           dir = "", dic_g2r = NULL, tseries = NA, images = NA) {
 
 # Automatically adds "p_" and "r_" prefixes to the parameteres and observation
 # rates. It also does so to the dictionary if provided.
@@ -31,15 +31,16 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
     stopifnot(is.character(dic_g2r))
     stopifnot(is.character(names(dic_g2r)))
   }
-  if (!is.na(output)) {
+  if (!is.na(tseries)) {
     if (nrow(parameters) > 1) {
-      stopifnot(is.list(output) &
-                length(output) > 1 &
-                all(sapply(output, is.data.frame)))
+      stopifnot(is.list(tseries) &
+                length(tseries) > 1 &
+                all(sapply(tseries, is.data.frame)))
     } else {
-      stopifnot(is.data.frame(output))
+      stopifnot(is.data.frame(tseries))
     }
   }
+  if (!is.na(images)) stopifnot(is.character(images))
 
 # Generating new names:
   names_param <- names(parameters)
@@ -73,7 +74,9 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            obsrates,
                            tmax = as.integer(tmax),
                            seed = seed,
-                           output = output), c(newnames, "tmax", "seed", "output")),
+                           tseries = tseries,
+                           images = images),
+                     c(newnames, "tmax", "seed", "tseries", "images")),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model,
             experiment = experiment,
