@@ -36,13 +36,11 @@ reference:
     - map_experiment
   - title: Reading GAML files
     contents:
-    - get_parameters_names
     - load_experiment
     - save_to_gama
   - title: Manipulating experiment objects
     contents:
     - fullfact
-    - get_parameters_names
     - get_info
     - model
     - name
