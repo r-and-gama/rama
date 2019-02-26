@@ -51,4 +51,7 @@ exp1 <- repl(exp1, 2)
 exp1$r_R <- 2:3
 output <- run_experiment(exp1)
 str(output)
+
+# to save the experiment input and output (by default in the working directory)
+output <- run_experiment(exp1, save = TRUE)
 }
