@@ -40,10 +40,10 @@ parameters(exp)
 obs_rates(exp)
 
 # to set the experiment
-exp$p_Initial_number_of_preys_ <- 990
-exp$p_Initial_number_of_predators_ <- 100
-exp$p_Predator_probability_reproduce_ <- 0.1
-exp$tmax <- 100
+exp$p_Initial_number_of_preys_ <- 990L
+exp$p_Initial_number_of_predators_ <- 100L
+#exp$p_Predator_probability_reproduce_ <- 0.1
+exp$tmax <- 100L
 
 # to run the experiment (do not run)
 #out <- run_experiment(exp)
