@@ -1,20 +1,28 @@
 # constructor ------------------------------------------------------------------
+#' Contructor of experiment class
+#'
+#' Builds up an object of class experiment from scratch
+#'
+#' The philosophy of the constructor is to contains the minimal number of checks
+#' required for the structure of the object to be sound. All the other checks
+#' should be in the validator below. The constructor automatically adds "p_" and
+#' "r_" prefixes to the parameteres and observation rates. It also does so to
+#' the dictionary if provided. It also automatically converts periods of
+#' obsrates and tmax into integer if there are not.
+#'
+#' @param dic_g2r named character vector containing the new names of the
+#' parameters and variables and the names of this vector contains the old names.
+#' It is the opposite for \code{dic_r2g}.
+#'
+#' @noRd
+#' @examples
+#' exp0 <- rama:::new_experiment(
+#'   data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
+#'   data.frame(S = 1, I = 1, R = 1),
+#'   1000, 1, "sir", system.file("models", "sir.gaml", package = "rama"))
+#'
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            dic_g2r = NULL, tseries = NA, images = NA) {
-
-# Automatically adds "p_" and "r_" prefixes to the parameteres and observation
-# rates. It also does so to the dictionary if provided.
-
-# Automatically converts periods of obsrates and tmax into integer if there are
-# not.
-
-# dic_g2r: contains the new names of the parameters and variables and the names
-# of this vector contains the old names. It is the opposite for dic_r2g.
-
-# exp0 <- rama:::new_experiment(
-#   data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
-#   data.frame(S = 1, I = 1, R = 1),
-#   1000, 1, "sir", system.file("models", "sir.gaml", package = "rama"))
 
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
