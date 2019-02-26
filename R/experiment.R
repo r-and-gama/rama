@@ -1,6 +1,6 @@
 # constructor ------------------------------------------------------------------
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
-                           dir = "", dic_g2r = NULL, tseries = NA, images = NA) {
+                           dic_g2r = NULL, tseries = NA, images = NA) {
 
 # Automatically adds "p_" and "r_" prefixes to the parameteres and observation
 # rates. It also does so to the dictionary if provided.
@@ -25,8 +25,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
   stopifnot(length(experiment) == 1)
   stopifnot(is.character(model))
   stopifnot(length(model) == 1)
-  stopifnot(is.character(dir))
-  stopifnot(length(dir) == 1)
   if (!is.null(dic_g2r)) {
     stopifnot(is.character(dic_g2r))
     stopifnot(is.character(names(dic_g2r)))
@@ -80,7 +78,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model,
             experiment = experiment,
-            wkdir      = make_wkdir(model, dir),
             dic_g2r    = dic_g2r,
             dic_r2g    = setNames(names(dic_g2r), dic_g2r))
 }
