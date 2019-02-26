@@ -24,29 +24,40 @@
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            dic_g2r = NULL, tseries = NA, images = NA) {
 
+  #  nrp <- nrow(parameters)
+
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
-  stopifnot(nrow(parameters) == nrow(obsrates))
   stopifnot(is.numeric(tmax))
   stopifnot(is.null(dim(seed)))
   stopifnot(is.character(experiment))
   stopifnot(length(experiment) == 1)
   stopifnot(is.character(model))
   stopifnot(length(model) == 1)
+
   if (!is.null(dic_g2r)) {
     stopifnot(is.character(dic_g2r))
     stopifnot(is.character(names(dic_g2r)))
   }
-  if (!is.na(tseries)) {
-    if (nrow(parameters) > 1) {
-      stopifnot(is.list(tseries) &
-                length(tseries) > 1 &
-                all(sapply(tseries, is.data.frame)))
-    } else {
-      stopifnot(is.data.frame(tseries))
-    }
-  }
+  nobs <- ncol(obsrates)
+  stopifnot(length(dic_g2r) >= ncol(parameters) + nobs)
+
+  test <- !all(is.na(tseries))
+  if (test) stopifnot(is.list(tseries))
   if (!is.na(images)) stopifnot(is.character(images))
+
+  nb <- c(nrow(parameters), nrow(obsrates),
+          length(tmax), length(seed),
+          length(tseries), length(images))
+  stopifnot(all(nb > 0))
+  stopifnot(length(unique(nb[nb > 1])) < 2)
+
+  if (test) {
+    tseries <- tseries[!is.na(tseries)]
+    stopifnot(all(sapply(tseries, is.data.frame)))
+    stopifnot(all(sapply(tseries, ncol) == nobs))
+    stopifnot(all(sapply(tseries, nrow) >= sapply(mapply(seq, 1, tmax, apply(obsrates, 1, min), SIMPLIFY = FALSE), length)))
+  }
 
 # Generating new names:
   names_param <- names(parameters)
@@ -92,8 +103,45 @@ new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
 
 
 
+
+
 # validator --------------------------------------------------------------------
 validate_experiment <- function(x) {
+# TO DO: #######################################################################
+#   parameters: we should check that the types of the parameters are the same as
+#               in the .gaml file.
+#   seed: we should check that the type of the seed are the same as in the .gaml
+#         file.
+################################################################################
+
+# periods of observations should be strictly positive integers
+  or <- obs_rates(x)
+  if (any(!sapply(or, is.integer)))
+    stop("The periods of observations should be integers.")
+  if (any(or < 1))
+    stop("The periods of observation should be strictly positive integers.")
+
+# tmax should be a stricly positive integer
+  tm <- x$tmax
+  if (any(!sapply(tm, is.integer)))
+    stop("The final steps of simulations should be integers.")
+  if (any(tm < 1))
+    stop("The final steps of simulations should be strictly positive integers.")
+
+# the names of the time series in the data frames of the "tseries" slot should
+# be consistant with the names of the periods of observation.
+  ts <- x$tseries
+  if (!all(is.na(ts))) {
+    ts <- ts[!is.na(ts)]
+    if (any(!sapply(ts, is.data.frame)))
+      stop("The elements of the \"tseries\" slot should be either NA or data frames.")
+
+    the_names <- unique(lapply(ts, function(x) sort(names(x))))
+    if (length(the_names) > 1)
+      stop("The names of the variables in the data frames of the \"tseries\" slot should all be the same.")
+    unlist(the_names)
+  }
+
   model <- model(x)
   dic_g2r <- attr(x, "dic_g2r")
   dic_r2g <- attr(x, "dic_r2g")
@@ -102,8 +150,6 @@ validate_experiment <- function(x) {
   check_experiment(name(x), model)
   test_schar(names(dic_g2r))
 
-  if (any(obs_rates(x) < 0))
-    stop("The period of observation should be positive integers.")
 
   if (any(x$tmax < 0))
     stop("The end steps of simulations should be positive integers.")
