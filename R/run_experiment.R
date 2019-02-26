@@ -106,6 +106,7 @@ create_outdir <- function(dir) {
 #'                to set both \code{add_exp} and `save` as \code{FALSE}.
 #'
 #' @example inst/examples/run_experiment.R
+#' @importFrom dplyr mutate
 #' @export
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
                            display = FALSE, append = TRUE) {
@@ -171,8 +172,15 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     }
   }
 
-  if(isTRUE(append)) {
-
+  if (isTRUE(append)) {
+    old_attr <- purrr::keep(attributes(exp), names(attributes(exp)) %in%
+                              c("dic_r2g", "dic_g2r", "experiment", "model",
+                                "class"))
+    exp <- as.data.frame(exp)
+    exp <-  mutate(exp, output = out)
+    attributes(exp) <- append(purrr::discard(attributes(exp),
+                                             names(attributes(exp)) == "class"),
+                              old_attr)
   }
 
   # deleting the "workspace" folder:
