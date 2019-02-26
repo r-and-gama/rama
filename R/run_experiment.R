@@ -81,32 +81,41 @@ create_outdir <- function(dir) {
 ################################################################################
 #' Run an experiment
 #'
-#' From a `experiment` object, run an experiment by creating an XML file of the
-#' experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
+#' From an \code{experiment} object, run an experiment by creating an XML file
+#' of the experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 #' (\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
 #' simulation.
+#'
+#' When the argument \code{save} is equal to \code{TRUE}, a folder with the name
+#' of the experiment of the object \code{exp} is created. The folder contains
+#' two folder: \code{output} containing the result in XML and \code{input}
+#' containing the model file associated in GAML and the XML associated to the
+#' object `exp` inputted in the function. \cr\cr
+#' If the arguments \code{display} & \code{save} are equal to \code{TRUE}, a
+#' folder \code{images} is add into the folder \code{output}, and contained
+#' the display output from GAMA.
 #'
 #' @param exp an XML file containing the experiment.
 #' @param hpc number of threads used by GAMA to run the experiment.
 #' @param save save the outputs to disk or not, default = FALSE.
 #' @param path directory to save the outputs, default = NULL.
-#'             If `save = TRUE` and `path` is not
+#'             If \code{save = TRUE} and \code{path} is not
 #'             specified, current working directory is used to save the outputs.
 #' @param display output images are saved or not, default = FALSE.
 #' @param append append outputs to experiment, default = TRUE. It is not possible
-#'                to set both `add_exp` and `save` as `FALSE`.
+#'                to set both \code{add_exp} and `save` as \code{FALSE}.
 #'
 #' @example inst/examples/run_experiment.R
 #' @export
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
-                           display = FALSE, append = TRUE, force = FALSE) {
+                           display = FALSE, append = TRUE) {
 
   if (!is.experiment(exp)) {
     stop("The argument `exp` is not an `experiment` object.")
   }
 
   # after-run operations
-  if(isFALSE(save) && isFALSE(append))
+  if (isFALSE(save) && isFALSE(append))
     stop("Outputs needs to be saved either in disk or in experiment object.")
 
   # make output directory
@@ -130,28 +139,31 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   # Correct NA observations
   out <- realexp(out, exp)
 
-  if(isTRUE(save)) {
+  # Save input and output in path
+  if (isTRUE(save)) {
 
     if(is.null(path)) {
-      path <-  paste0(getwd(), "/", name(exp))
-      message(paste0("Outputs are saved to '", path, "' by default."))
+      path <- getwd()
+      message(cat("Outputs are saved to '", path, "' by default.", sep = ""))
     }
-    dir <- path
+    dir <- paste0(path, "/", name(exp))
 
-    if(dir.exists(path) & isFALSE(force)) {
-      stop(paste0("'", path,
-                  "' already exists. If you want to write in the same",
-                  " path, used the argument 'force = TRUE'"))
-    } else if (dir.exists(path) & isTRUE(force)) {
-      unlink(dir, TRUE)
+    if(file.exists(dir)) {
+      i <- 0
+      repeat {
+        i <- i + 1
+        dir <- paste0(paste0(path, "/", name(exp)), "_", i)
+        if (!file.exists(dir)) break
+      }
+      warning(paste0("'", paste0(path, "/", name(exp)),
+                     "' already exists. Outputs are saved in '", dir, "'."))
     }
-
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
     file.copy(model(exp)$path, paste0(dir, "/input"))
     file.copy(outfiles, paste0(dir, "/output"))
 
-    if(isTRUE(display)) {
+    if (isTRUE(display)) {
       images <- paste0(dir, "/output/images")
       dir.create(images)
       if(file.exists(paste0(output_dir, "/images")))
@@ -162,6 +174,9 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   if(isTRUE(append)) {
 
   }
+
+  # deleting the "workspace" folder:
+  unlink("workspace", T, T)
 
   # return experiment:
   exp

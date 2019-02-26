@@ -15,19 +15,29 @@ run_experiment(exp, hpc = 1, save = FALSE, path = NULL,
 \item{save}{save the outputs to disk or not, default = FALSE.}
 
 \item{path}{directory to save the outputs, default = NULL.
-If `save = TRUE` and `path` is not
+If \code{save = TRUE} and \code{path} is not
 specified, current working directory is used to save the outputs.}
 
 \item{display}{output images are saved or not, default = FALSE.}
 
 \item{append}{append outputs to experiment, default = TRUE. It is not possible
-to set both `add_exp` and `save` as `FALSE`.}
+to set both \code{add_exp} and `save` as \code{FALSE}.}
 }
 \description{
-From a `experiment` object, run an experiment by creating an XML file of the
-experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
+From an \code{experiment} object, run an experiment by creating an XML file
+of the experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 (\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
 simulation.
+}
+\details{
+When the argument \code{save} is equal to \code{TRUE}, a folder with the name
+of the experiment of the object \code{exp} is created. The folder contains
+two folder: \code{output} containing the result in XML and \code{input}
+containing the model file associated in GAML and the XML associated to the
+object `exp` inputted in the function. \cr\cr
+If the arguments \code{display} & \code{save} are equal to \code{TRUE}, a
+folder \code{images} is add into the folder \code{output}, and contained
+the display output from GAMA.
 }
 \examples{
 #load experiment
