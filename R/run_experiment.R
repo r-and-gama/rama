@@ -14,14 +14,14 @@
 realexp <- function(output, exp) {
   op <- obs_rates(exp)
   mapply(function(nbrow, obsper, df) {
-           xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
-           ys <- sapply(names(xs), grep, names(df))
-           df[, ys] <- mapply(replace, df[, ys], xs, NA)
-           return(df)
-         },
-         lapply(output, nrow),
-         lapply(as.data.frame(t(op)), setNames, names(op)),
-         output, SIMPLIFY = FALSE)
+    xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
+    ys <- sapply(names(xs), grep, names(df))
+    df[, ys] <- mapply(replace, df[, ys], xs, NA)
+    return(df)
+  },
+  lapply(output, nrow),
+  lapply(as.data.frame(t(op)), setNames, names(op)),
+  output, SIMPLIFY = FALSE)
 }
 
 # Retrieve_results  ------------------------------------------------------------
@@ -50,9 +50,9 @@ retrieve_results <- function(outfile, exp) {
   tmp2 <- lapply(seq_len(dim(tmp)[2]), function(x) {
     suppressWarnings(if (is.numeric(as.numeric(tmp[, x]))) {
       tmp[, x] <- as.numeric(tmp[, x])
-      } else {
-        tmp[, x]
-        })
+    } else {
+      tmp[, x]
+    })
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
@@ -62,6 +62,19 @@ retrieve_results <- function(outfile, exp) {
   tmp <- tmp[, c("Step", new_name)]
   attr(tmp, "path") <- outfile
   tmp
+}
+
+################################################################################
+#' Create output folder
+#'
+#' @param dir directory to create the folder
+#' @noRd
+create_outdir <- function(dir) {
+  dir.create(dir)
+  input <- paste0(dir, "/input")
+  dir.create(input)
+  output <- paste0(dir, "/output")
+  dir.create(output)
 }
 
 
@@ -86,22 +99,25 @@ retrieve_results <- function(outfile, exp) {
 #' @example inst/examples/run_experiment.R
 #' @export
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
-                          display = FALSE, append = TRUE) {
+                           display = FALSE, append = TRUE, force = FALSE) {
 
   if (!is.experiment(exp)) {
     stop("The argument `exp` is not an `experiment` object.")
   }
 
-  # make output directory
-    output_dir <- tempfile(tmpdir = tempdir())
-    dir.create(output_dir)
-  # generate xml file from exp
+  # after-run operations
+  if(isFALSE(save) && isFALSE(append))
+    stop("Outputs needs to be saved either in disk or in experiment object.")
 
-    parameter_xml_file <- save_to_gama(validate_experiment(exp),
-                                       filename = NULL,
-                                       path = output_dir)
+  # make output directory
+  output_dir <- tempfile(tmpdir = tempdir())
+  dir.create(output_dir)
+
+  # generate xml file from exp
+  parameter_xml_file <- save_to_gama(validate_experiment(exp),
+                                     filename = NULL, path = output_dir)
   # run all the experiments
-    outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
+  outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
 
   # get variables names
   vars <- names(exp)[grep("r_", names(exp))]
@@ -114,46 +130,39 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   # Correct NA observations
   out <- realexp(out, exp)
 
-  # after-run operations
-  if(isFALSE(save) && isFALSE(append))
-    stop(paste0("Outputs needs to be saved either in disk or in experiment object."))
+  if(isTRUE(save)) {
 
-  if(isTRUE(save)){
-    if(is.null(path)){
+    if(is.null(path)) {
       path <-  paste0(getwd(), "/", name(exp))
-      warning(paste0("Outputs are saved to '", path, "' by default."))
+      message(paste0("Outputs are saved to '", path, "' by default."))
     }
     dir <- path
-    if(file.exists(path)) {
-      i <- 0
-      repeat {
-        i <- i + 1
-        dir <- paste0(path, "_", i)
-        if (!file.exists(dir)) break
-      }
-      warning(paste0("'", path, "' already exists. Outputs are saved in '",
-                     dir, "'."))
+
+    if(dir.exists(path) & isFALSE(force)) {
+      stop(paste0("'", path,
+                  "' already exists. If you want to write in the same",
+                  " path, used the argument 'force = TRUE'"))
+    } else if (dir.exists(path) & isTRUE(force)) {
+      unlink(dir, TRUE)
     }
-    dir.create(dir)
-    input <- paste0(dir, "/input")
-    dir.create(input)
-    output <- paste0(dir, "/output")
-    dir.create(output)
-    file.copy(parameter_xml_file, input)
-    file.copy(model(exp)$path, input)
-    file.copy(outfiles, output)
+
+    create_outdir(dir)
+    file.copy(parameter_xml_file, paste0(dir, "/input"))
+    file.copy(model(exp)$path, paste0(dir, "/input"))
+    file.copy(outfiles, paste0(dir, "/output"))
+
+    if(isTRUE(display)) {
+      images <- paste0(dir, "/output/images")
+      dir.create(images)
+      if(file.exists(paste0(output_dir, "/images")))
+        file.copy(paste0(output_dir, "/images"), images, recursive = TRUE)
+    }
   }
 
-  if(isTRUE(display)){
-    images <- paste0(dir, "/images")
-    dir.create(images)
-    if(file.exists(paste0(output_dir, "/images")))
-      file.copy(paste0(output_dir, "/images"), images, recursive = TRUE)
+  if(isTRUE(append)) {
+
   }
 
-  if(isTRUE(append))
-  # to do
-
- # return experiment:
+  # return experiment:
   exp
 }
