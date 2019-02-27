@@ -26,8 +26,8 @@ to set both \code{add_exp} and `save` as \code{FALSE}.}
 \description{
 From an \code{experiment} object, run an experiment by creating an XML file
 of the experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
-(\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
-simulation.
+(\code{\link[rama]{call_gama}}) and appends the results to the object
+\code{experiment} inputted in the column \code{output} (one by simulation).
 }
 \details{
 When the argument \code{save} is equal to \code{TRUE}, a folder with the name
