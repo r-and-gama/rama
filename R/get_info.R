@@ -18,7 +18,7 @@
 #' @example inst/examples/get_info.R
 #' @rdname get_info
 #' @export
-get_info <- function(exp, pattern, type){
+get_info <- function(exp, pattern, type) {
   model <- model(exp)
   query <- model[["info"]][[pattern]]
   if (!is.list(query)) query <- list(query)
@@ -34,7 +34,7 @@ get_info <- function(exp, pattern, type){
 }
 
 # map gama and R data types
-map_type <- function(x){
+map_type <- function(x) {
   types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
   unlist(lapply(x, function(y) types[[y]]))
 }
