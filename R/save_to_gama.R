@@ -1,5 +1,5 @@
 # infer type of simulation values
-get_type <- function(val){
+get_type <- function(val) {
   case_when(
     is.character(val) ~ "STRING",
     is.integer(val) ~ "INT",
@@ -14,7 +14,7 @@ get_type <- function(val){
 
 # ------------------------------------------------------------------------------
 # generate xml tags for each parameter
-generate_param <- function(param, names){
+generate_param <- function(param, names) {
   purrr::map2(unlist(param), names, function(p, n){
     c(name = n,
       type = get_type(p),
@@ -24,7 +24,7 @@ generate_param <- function(param, names){
 
 # ------------------------------------------------------------------------------
 # generate xml tags for each observation rate
-generate_obsrate <- function(obsrate, names){
+generate_obsrate <- function(obsrate, names) {
   purrr::pmap(list(unlist(obsrate), names, seq_along(unlist(obsrate))),
               function(p, n, i){
                 c(id = i - 1,
@@ -83,7 +83,7 @@ save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
                   obsrate = obsrates)
 
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
-  pmap(exp_lst, function(simul, param, obsrate){
+  pmap(exp_lst, function(simul, param, obsrate) {
 
     names(simul) <- c("id", "seed", "finalStep", "sourcePath", "experiment")
     xmlFile$addTag("Simulation", attrs = simul, close = FALSE)
@@ -101,10 +101,8 @@ save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
     xmlFile$closeTag()
   })
 
-  if (is.null(filename))
-    filename <-  paste0(name(exp), ".xml")
-  if(is.null(path))
-    path <- getwd()
+  if (is.null(filename)) filename <-  paste0(name(exp), ".xml")
+  if (is.null(path)) path <- getwd()
   parameter_xml_file <- paste0(path, "/", filename)
   saveXML(xmlFile$value(), file = parameter_xml_file)
   normalizePath(parameter_xml_file)
