@@ -24,8 +24,6 @@
 new_experiment <- function(parameters, obsrates, tmax, seed, experiment, model,
                            dic_g2r = NULL, tseries = NA, images = NA) {
 
-  #  nrp <- nrow(parameters)
-
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
   stopifnot(is.numeric(tmax))
