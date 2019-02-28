@@ -144,8 +144,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #' Replaces a column of an experiment with new value(s).
 #'
 #' If the length of the vector used to replace the column is not the same as the
-#' original number of rows of the experiment, there is duplication of the
-#' shortest element.
+#' original number of rows of the experiment, then
 #'
 #' @param i A column index.
 #' @param value A vector used to replace the values of the indexed column.
@@ -156,20 +155,11 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #' @export
 `$<-.experiment` <- function(exp, i, value) {
   if (is.null(value)) NextMethod()
-  else {
-# Note: this code is very similar to the one of the fullfact function. Might be
-# worth trying to optimize this in the future.
-    to_expand <- as.data.frame(exp, stringsAsFactors = FALSE)
-    the_names <- names(to_expand)
-    to_expand <- c(
-      to_expand[setdiff(the_names, i)], setNames(list(value), i))[the_names]
-    new_exp <- do.call(expand.grid, lapply(to_expand, unique))
-    # sort rows "from left to right"
-    new_exp[do.call(order, new_exp), ]
-    # add class and other attributes
-    new_exp <- rbind(exp[1, ], new_exp)[-1, ]
-    # regenerate row names
-    row.names(new_exp) <- NULL
-    new_exp
+  if (length(value) == nrow(exp)) {
+    exp[, i] <- value
+    return(exp)
+  } else {
+    eval(parse(text = paste("fullfact(exp,", i,
+                            paste(" = c(", paste(value, collapse = ","), "))"))))
   }
 }
