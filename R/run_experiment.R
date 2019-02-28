@@ -111,13 +111,12 @@ create_outdir <- function(dir) {
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
                            display = FALSE, append = TRUE) {
 
-  if (!is.experiment(exp)) {
-    stop("The argument `exp` is not an `experiment` object.")
-  }
+  if (!is.experiment(exp))
+    stop("The argument \"exp\" is not an object of class \"experiment\".")
 
   # after-run operations
   if (isFALSE(save) && isFALSE(append))
-    stop("Outputs needs to be saved either in disk or in experiment object.")
+    stop("Outputs need to be saved either on disk or in experiment object.")
 
   # make output directory
   output_dir <- tempfile(tmpdir = tempdir())
@@ -145,19 +144,19 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
 
     if(is.null(path)) {
       path <- getwd()
-      message(cat("Outputs are saved to '", path, "' by default.", sep = ""))
+      message(cat("Outputs are saved to \"", path, "\" by default.", sep = ""))
     }
     dir <- paste0(path, "/", name(exp))
 
-    if(file.exists(dir)) {
+    if (file.exists(dir)) {
       i <- 0
       repeat {
         i <- i + 1
         dir <- paste0(paste0(path, "/", name(exp)), "_", i)
         if (!file.exists(dir)) break
       }
-      warning(paste0("'", paste0(path, "/", name(exp)),
-                     "' already exists. Outputs are saved in '", dir, "'."))
+      warning(paste0("\"", paste0(path, "/", name(exp)),
+                     "\" already exists. Outputs are saved in \"", dir, "\"."))
     }
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
@@ -167,7 +166,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     if (isTRUE(display)) {
       images <- paste0(dir, "/output/images")
       dir.create(images)
-      if(file.exists(paste0(output_dir, "/images")))
+      if (file.exists(paste0(output_dir, "/images")))
         file.copy(paste0(output_dir, "/images"), images, recursive = TRUE)
     }
   }
@@ -184,7 +183,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   }
 
   # deleting the "workspace" folder:
-  unlink("workspace", T, T)
+  unlink("workspace", TRUE, TRUE)
 
   # return experiment:
   exp
