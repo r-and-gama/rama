@@ -89,7 +89,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
  # cast parameter types
   types <- map_type(get_info(out, "Parameters", "type"))
   functions <- lapply(paste0("as.", types), function(x) match.fun(x))
-  map2(names(types), functions, function(n, f){
+  map2(names(types), functions, function(n, f) {
     out[, n] <<- f(out[, n][[1]])
     invisible()
   })
