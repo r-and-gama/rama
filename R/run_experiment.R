@@ -154,7 +154,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
       if (!file.exists(dir)) break
     }
     warning(paste0("\"", paste0(path, "/", name(exp)),
-                  "\" already exists. Outputs are saved in \"", dir, "\"."))
+                   "\" already exists. Outputs are saved in \"", dir, "\"."))
 
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
