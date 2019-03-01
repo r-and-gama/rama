@@ -147,16 +147,15 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     }
     dir <- paste0(path, "/", name(exp))
 
-    if (file.exists(dir)) {
-      i <- 0
-      repeat {
-        i <- i + 1
-        dir <- paste0(paste0(path, "/", name(exp)), "_", i)
-        if (!file.exists(dir)) break
-      }
-      warning(paste0("\"", paste0(path, "/", name(exp)),
-                     "\" already exists. Outputs are saved in \"", dir, "\"."))
+    i <- 0
+    while (file.exists(dir)) {
+      i <- i + 1
+      dir <- paste0(path, "/", name(exp), "_", i)
+      if (!file.exists(dir)) break
     }
+    warning(paste0("\"", paste0(path, "/", name(exp)),
+                  "\" already exists. Outputs are saved in \"", dir, "\"."))
+
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
     file.copy(model(exp)$path, paste0(dir, "/input"))
