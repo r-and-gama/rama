@@ -151,7 +151,6 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     while (file.exists(dir)) {
       i <- i + 1
       dir <- paste0(path, "/", name(exp), "_", i)
-      if (!file.exists(dir)) break
     }
     warning(paste0("\"", paste0(path, "/", name(exp)),
                    "\" already exists. Outputs are saved in \"", dir, "\"."))
