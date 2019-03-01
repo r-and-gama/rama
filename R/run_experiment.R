@@ -147,11 +147,12 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     }
     dir <- paste0(path, "/", name(exp))
 
-    if (file.exists(dir)) {
+    while (file.exists(dir)) {
       i <- 0
       repeat {
         i <- i + 1
-        dir <- paste0(paste0(path, "/", name(exp)), "_", i)
+        dir <- paste0(path, "/", name(exp), "_", i)
+        print(dir)
         if (!file.exists(dir)) break
       }
       warning(paste0("\"", paste0(path, "/", name(exp)),
