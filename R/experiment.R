@@ -152,15 +152,15 @@ validate_experiment <- function(x) {
   type_r <- sapply(parameters(x), class)
   type_g <- map_type(get_info(x, "Parameters", "type"))
   diff <- type_r == type_g
-  if (any(diff == FALSE)) {
+  if (!all(diff)) {
     stop(paste0("The data type(s) of '",
-                names(type_g)[diff],
+                paste(names(type_g)[diff], collapse = ", "),
                 "' do not correspond to parameter type(s) declared in the '",
                 basename(model$path), "' file."))
   }
   # check obs_rates
 
-  if (!all(sapply(obs_rates(x), class) == "integer")) {
+  if (!all(sapply(obs_rates(x), is.integer))) {
     stop(paste0("The observation rates must be interger as declared in '",
                 basename(model$path), "' file."))
   }
