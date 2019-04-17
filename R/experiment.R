@@ -151,7 +151,7 @@ validate_experiment <- function(x) {
   # check parameter types
   type_r <- sapply(parameters(x), class)
   type_g <- map_type(get_info(x, "Parameters", "type"))
-  diff <- type_r == type_g[names(type_g)]
+  diff <- type_r == type_g
   if (any(diff == FALSE)) {
     stop(paste0("The data type(s) of '",
                 names(type_g)[diff],
