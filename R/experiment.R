@@ -89,20 +89,18 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
  # cast parameter types
   types <- map_type(get_info(out, "Parameters", "type"))
   functions <- lapply(paste0("as.", types), function(x) match.fun(x))
-  map2(names(types), functions, function(n, f) {
+  mapply(function(n, f) {
     out[, n] <<- f(out[, n][[1]])
     invisible()
-  })
+  }, names(types), functions)
+
   # cast observation rate types
-  old_attr <- purrr::keep(attributes(out),
-                          names(attributes(out)) %in%
-                            c("dic_r2g", "dic_g2r",
-                              "experiment", "model", "class"))
-  out <- as.data.frame(out)
-  out <- out %>%  mutate_at(vars(starts_with("r_")), as.integer)
-  attributes(out) <- append(purrr::discard(attributes(out),
-                                            names(attributes(out)) == "class"),
-                             old_attr)
+  old_attr <- attributes(out)
+  out <- as.data.frame(out, stringsAsFactors = FALSE)
+  out_r <- out[, grepl("r_", names(out))]
+  out_r[] <- lapply(out_r, as.integer)
+  out[, grepl("r_", names(out))] <- out_r
+  attributes(out) <- old_attr
   out
 }
 
