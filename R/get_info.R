@@ -26,9 +26,11 @@ get_info <- function(exp, pattern, type) {
   names <- type
 
   if (pattern == "Parameters")
-    names <- attr(exp, "dic_g2r")[unlist(lapply(query, function(x) x[["name"]]))]
+    names <- attr(exp, "dic_g2r")[unlist(
+      lapply(query, function(x) x[["name"]]))]
   if (pattern == "Outputs")
-    names <- attr(exp, "dic_g2r")[unlist(lapply(query, function(x) x[["name"]]))]
+    names <- attr(exp, "dic_g2r")[unlist(
+      lapply(query, function(x) x[["name"]]))]
   names(out) <- names
   out
 }
