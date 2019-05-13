@@ -117,3 +117,10 @@ and follow instructions. Otherwise, you can use your own version GAMA engine
 setup_gama("path/to/gama")
 ```
 
+## Developers
+
+`rama` is developed under the umbrella of the IRD- and OUCRU-funded EID JEAI by:
+
+* IRD / CNRS / University of Montpellier [MIVEGEC](https://www.mivegec.ird.fr)
+* IRD / University Pierre & Marie Curie [UMMISCO](http://www.ummisco.fr)
+* Oxford University Clinical Research Unit [OUCRU](http://www.oucru.org)
