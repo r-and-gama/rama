@@ -124,7 +124,7 @@ gama_remote_distrib <- function() {
          "Darwin"  = paste0(options("rama.repo"),
                             options("rama.default.gama.osx")),
          "Windows" = paste0(options("rama.repo"),
-                            options("rama.default.gama.win")),
+                            options("rama.default.gama.win64")),
          # to complete C:\Program Files\
          "Linux"   =  paste0(options("rama.repo"),
                              options("rama.default.gama.linux")))
@@ -138,22 +138,26 @@ download_gama <- function() {
   distrib <- gama_remote_distrib()
   expDir  <- gama_local_distrib_path();
   path <- paste0(options("rama.temp_dir"), "/")
-  path_out <- paste0(path, "out")
   path_dist <- paste0(path, "out/", basename(expDir))
   path_test <- dirname(expDir)
   distrib_file <- paste0(path, "downloaded_gama.tgz")
+  print("coucou");
+  print(path);
+
+
   if (! dir.exists(path)) dir.create(path, recursive = TRUE)
 
-  if (nchar(options("rama.default.gama.osx.zip.appdir")) > 0) {
-    path_out <- paste0(path, options("rama.default.gama.osx.zip.appdir"))
-    path_test <- paste0(path_test, "/",
-                        options("rama.default.gama.osx.zip.appdir"))
-  }
-  download(distrib, distrib_file,  mode = "wb")
+  path_test <- switch(get_os(),
+          "Darwin" = paste0(path_test, "/", options("rama.default.gama.osx.zip.appdir")),
+          "Windows" = paste0(path_test, "/", options("rama.default.gama.osx.zip.appdir")),
+          "linux" = paste0(path_test, "/", options("rama.default.gama.osx.zip.appdir")))
+  print(path_test)
+
+    download(distrib, distrib_file,  mode = "wb")
   untar(distrib_file, exdir = path_test, compressed = "gzip" )
   gama_app <- switch(get_os(),
                      "Darwin" = options("rama.default.gama.osx.appdir"),
-                     "Window" = options("rama.default.gama.win.appdir"),
+                     "Windows" = options("rama.default.gama.win.appdir"),
                      "linux" = options("rama.default.gama.linux.appdir"))
   expDir
 }
