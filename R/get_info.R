@@ -13,11 +13,9 @@
 #' @return A vector of parameters or variables names, or a vector of parameters
 #' types.
 #'
-#' @export
-#'
 #' @example inst/examples/get_info.R
-#' @rdname get_info
-#' @export
+#' @noRd
+#'
 get_info <- function(exp, pattern, type) {
   model <- model(exp)
   query <- model[["info"]][[pattern]]
