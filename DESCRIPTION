@@ -30,7 +30,8 @@ Authors@R: c(person("Marc", "Choisy",
                     email = "jean-daniel.zucker@ird.fr", 
                     role = "aut",
                     comment = c(ORCID = "https://orcid.org/0000-0002-5597-7922")),
-             person("IRD", role = c("cph", "fnd")))
+             person("IRD", role = c("cph", "fnd")),
+             person("OUCRU", role = (c"cph", "fnd")))
 Maintainer: Marc Choisy <marc.choisy@ird.fr>
 Description: An R Interface to the GAMA Simulation Platform.
 License: MIT + file LICENSE

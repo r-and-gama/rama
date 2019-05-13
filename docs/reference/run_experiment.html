@@ -41,8 +41,8 @@
 
 <meta property="og:description" content="From an experiment object, run an experiment by creating an XML file
 of the experiment (save_to_gama) and by calling gama
-(call_gama) and returns a list of data frame, one by
-simulation." />
+(call_gama) and appends the results to the object
+experiment inputted in the column output (one by simulation)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -165,8 +165,8 @@ simulation." />
     
     <p>From an <code>experiment</code> object, run an experiment by creating an XML file
 of the experiment (<code><a href='save_to_gama.html'>save_to_gama</a></code>) and by calling gama
-(<code><a href='call_gama.html'>call_gama</a></code>) and returns a list of data frame, one by
-simulation.</p>
+(<code><a href='call_gama.html'>call_gama</a></code>) and appends the results to the object
+<code>experiment</code> inputted in the column <code>output</code> (one by simulation).</p>
     
     </div>
 
@@ -236,9 +236,21 @@ the display output from GAMA.</p>
 #&gt;  $ r_R    : int  2 3
 #&gt;  $ tmax   : int  1000 1000
 #&gt;  $ seed   : num  1 1
-#&gt;  $ output : logi  NA NA
+#&gt;  $ output :List of 2
+#&gt;   ..$ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   .. ..$ Step: int  0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   .. ..$ r_S : num  999 999 999 999 999 999 999 999 999 999 ...
+#&gt;   .. ..$ r_I : num  1 0 0 0 0 0 0 0 0 0 ...
+#&gt;   .. ..$ r_R : num  0 NA 1 NA 1 NA 1 NA 1 NA ...
+#&gt;   .. ..- attr(*, "path")= chr "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/RtmpJGaRK0/file72b4e86704a/simulation-outputs1.xml"
+#&gt;   ..$ :'data.frame':	1000 obs. of  4 variables:
+#&gt;   .. ..$ Step: int  0 1 2 3 4 5 6 7 8 9 ...
+#&gt;   .. ..$ r_S : num  999 999 999 999 999 999 999 999 999 999 ...
+#&gt;   .. ..$ r_I : num  1 0 0 0 0 0 0 0 0 0 ...
+#&gt;   .. ..$ r_R : num  0 NA NA 1 NA NA 1 NA NA 1 ...
+#&gt;   .. ..- attr(*, "path")= chr "/private/var/folders/0z/99v2vkd57yd4h_wwxbzqm2lm0000gn/T/RtmpJGaRK0/file72b4e86704a/simulation-outputs2.xml"
 #&gt;  - attr(*, "model")=List of 3
-#&gt;   ..$ path  : chr "/Users/mac/Desktop/rama/inst/models/sir.gaml"
+#&gt;   ..$ path  : chr "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml"
 #&gt;   ..$ info  :List of 3
 #&gt;   .. ..$ Parameters:List of 5
 #&gt;   .. .. ..$ Parameter: Named chr  "S0" "INT" "999" "S"
@@ -261,12 +273,15 @@ the display output from GAMA.</p>
 #&gt;   .. ..$ .attrs    : Named chr  "sir" "1000" "0" "1" ...
 #&gt;   .. .. ..- attr(*, "names")= chr  "experiment" "finalStep" "id" "seed" ...
 #&gt;   ..$ md5sum: Named chr "5ec694cc3ac6553667b90e16ac1c9b08"
-#&gt;   .. ..- attr(*, "names")= chr "/Users/mac/Desktop/rama/inst/models/sir.gaml"
+#&gt;   .. ..- attr(*, "names")= chr "/Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml"
 #&gt;  - attr(*, "experiment")= chr "sir"
 #&gt;  - attr(*, "dic_g2r")= Named chr  "p_S0" "p_I0" "p_R0" "p_beta" ...
 #&gt;   ..- attr(*, "names")= chr  "S0" "I0" "R0" "beta" ...
 #&gt;  - attr(*, "dic_r2g")= Named chr  "S0" "I0" "R0" "beta" ...
-#&gt;   ..- attr(*, "names")= chr  "p_S0" "p_I0" "p_R0" "p_beta" ...</div></pre>
+#&gt;   ..- attr(*, "names")= chr  "p_S0" "p_I0" "p_R0" "p_beta" ...</div><div class='input'>
+<span class='co'># to save the experiment input and output (by default in the working directory)</span>
+<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Running experiment plan... 
+#&gt; Outputs are saved to "/Users/choisy/Dropbox/aaa/r-and-gama/rama/docs/reference" by default.</div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

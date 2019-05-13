@@ -7,19 +7,21 @@
 get_info(exp, pattern, type)
 }
 \arguments{
-\item{exp}{Experiment object}
+\item{exp}{object of class \code{experiment}.}
 
-\item{pattern}{can be either 'Parameters' or 'Outputs' for parameters and
-observation rates, respectively.}
+\item{pattern}{can be either \code{Parameters} or \code{Outputs} for
+parameters and observation rates, respectively.}
 
-\item{type}{can be 'name' for parameter and observation rate names, '
-type' for parameter types.}
+\item{type}{can be either \code{name} or \code{type} for parameters and
+observation rates' names and parameter types respectively.}
 }
 \value{
-A vector of parameter or variable names,
+A vector of parameters or variables names, or a vector of parameters
+types.
 }
 \description{
-Get information on the model
+Get information on the model defined in the GAML file linked to an
+\code{experiment} object.
 }
 \examples{
 file <- system.file("models", "sir.gaml", package = "rama")
