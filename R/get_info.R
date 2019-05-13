@@ -19,9 +19,11 @@
 get_info <- function(exp, pattern, type) {
   model <- model(exp)
   query <- model[["info"]][[pattern]]
-  if (!is.list(query)) query <- list(query)
-  out <- unlist(lapply(query, function(x) x[[type]]))
-  names <- type
+  if (!is.list(query)) query <- list(query){
+    out <- unlist(lapply(query, function(x) x[[type]]))
+    names <- type
+  }
+
 
   if (pattern == "Parameters")
     names <- attr(exp, "dic_g2r")[unlist(
