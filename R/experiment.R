@@ -1,7 +1,5 @@
 # constructor ------------------------------------------------------------------
 #' @importFrom tools md5sum
-#' @importFrom purrr map2
-#' @import dplyr
 
 new_experiment <- function(parameters, obsrates, tmax, seed,
                            experiment, model, dic_g2r = NULL, output = NA) {
@@ -66,19 +64,32 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     message(cat("Periods of observation (\"obsrates\") are rounded and converted into integers."))
     obsrates[] <- lapply(obsrates, function(x) as.integer(round(x)))
   }
+  if(!is.numeric(tmax))
+    stop(cat("\"tmax\" must have a numeric value"))
   if (!is.integer(tmax)) {
     message(cat("Final time step (\"tmax\") is rounded and converted into integer."))
     tmax <- as.integer(tmax)
   }
 
-  obsrates[] <- lapply(obsrates, as.integer)
-
   model_info <- list("path" = model,
                      "info" = read_gaml_experiment(experiment, model),
                      "md5sum" = md5sum(model))
+
+# cast parameter types
+  types <- map_type(unlist(lapply(model_info$info$Parameters, function(x) x[["type"]])))
+  if(!all(unlist(lapply(parameters, class)) == types)){
+    message(cat("Parameters' types are cast according to model definition"))
+    functions <- lapply(paste0("as.", types), function(x) match.fun(x))
+    mapply(function(n, f){
+      parameters[, n] <<- f(parameters[, n])
+      invisible()
+    }, seq_along(types), functions)
+  }
+
+
   out <- structure(setNames(cbind(parameters,
                            obsrates,
-                           tmax = as.integer(tmax),
+                           tmax = tmax,
                            seed = seed,
                            output = output), c(newnames, "tmax", "seed", "output")),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
@@ -86,22 +97,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
             experiment = experiment,
             dic_g2r    = dic_g2r,
             dic_r2g    = setNames(names(dic_g2r), dic_g2r))
- # cast parameter types
-  types <- map_type(get_info(out, "Parameters", "type"))
-  functions <- lapply(paste0("as.", types), function(x) match.fun(x))
-  mapply(function(n, f) {
-    out[, n] <<- f(out[, n][[1]])
-    invisible()
-  }, names(types), functions)
-
-  # cast observation rate types
-  old_attr <- attributes(out)
-  out <- as.data.frame(out, stringsAsFactors = FALSE)
-  out_r <- out[, grepl("r_", names(out))]
-  out_r[] <- lapply(out_r, as.integer)
-  out[, grepl("r_", names(out))] <- out_r
-  attributes(out) <- old_attr
-  out
 }
 
 
@@ -127,7 +122,8 @@ validate_experiment <- function(x) {
   if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
     stop("The dictionaries are inconsistent.")
 
-  diff <- setdiff(dic_r2g[colnames[[1]]], get_info(x, "Parameters", "name"))
+  diff <- setdiff(dic_r2g[colnames[[1]]],
+                  unlist(lapply(model$info$Parameters, function(x) x[["name"]])))
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
                "' do not correspond to any parameter in the '",
@@ -138,7 +134,8 @@ validate_experiment <- function(x) {
                basename(model$path), "' file."))
   }
 
-  diff <- setdiff(dic_r2g[colnames[[2]]], get_info(x, "Outputs", "name"))
+  diff <- setdiff(dic_r2g[colnames[[2]]],
+                  unlist(lapply(model$info$Outputs, function(x) x[["name"]])))
   if (length(diff) > 1) {
     stop(paste0("The variables names '", substitute(diff),
                "' do not correspond to any variable in the '",
@@ -150,12 +147,11 @@ validate_experiment <- function(x) {
   }
   # check parameter types
   type_r <- sapply(parameters(x), class)
-  type_g <- map_type(get_info(x, "Parameters", "type"))
+  type_g <- map_type(unlist(lapply(model$info$Parameters,
+                                   function(x) x[["type"]])))
   diff <- type_r == type_g
   if (!all(diff)) {
-    stop(paste0("The data type(s) of '",
-                paste(names(type_g)[diff], collapse = ", "),
-                "' do not correspond to parameter type(s) declared in the '",
+    stop(paste0("Data type of parameters don't correspond to those declared in the '",
                 basename(model$path), "' file."))
   }
   # check obs_rates

@@ -1,6 +1,0 @@
-file <- system.file("models", "sir.gaml", package = "rama")
-exp <- load_experiment("sir", file)
-get_info(exp, "Parameters", "name")
-get_info(exp, "Parameters", "type")
-get_info(exp, "Outputs", "name")
-get_info(exp, ".attrs", "experiment")

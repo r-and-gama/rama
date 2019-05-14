@@ -1,3 +1,9 @@
+# map gama and R data types
+map_type <- function(x) {
+  types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
+  unlist(lapply(x, function(y) types[[y]]))
+}
+
 # read gaml experiment ---------------------------------------------------------
 read_gaml_experiment <- function(exp, model) {
   tmp <- tempfile(fileext = ".xml")
