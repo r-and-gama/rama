@@ -15,7 +15,6 @@
 #'
 #' @example inst/examples/get_info.R
 #' @noRd
-#' @importFrom dplyr case_when
 
 get_info <- function(exp, pattern, type) {
   model <- model(exp)
