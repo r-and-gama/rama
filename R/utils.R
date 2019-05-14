@@ -95,7 +95,7 @@ download_gama <- function() {
   path_dist <- paste0(path, "out/", basename(expDir))
   path_test <- dirname(expDir)
   distrib_file <- paste0(path, "downloaded_gama.tgz")
-  print(path)
+
   if (!dir.exists(path)) dir.create(path, recursive = TRUE)
 
   path_test <- switch(get_os(),
@@ -105,8 +105,6 @@ download_gama <- function() {
                              options("rama.default.gama.osx.zip.appdir")),
           "linux" = paste0(path_test, "/",
                            options("rama.default.gama.osx.zip.appdir")))
-  print(path_test)
-
   download(distrib, distrib_file,  mode = "wb")
   untar(distrib_file, exdir = path_test, compressed = "gzip" )
   gama_app <- switch(get_os(),
