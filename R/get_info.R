@@ -15,22 +15,21 @@
 #'
 #' @example inst/examples/get_info.R
 #' @noRd
-#'
+#' @importFrom dplyr case_when
+
 get_info <- function(exp, pattern, type) {
   model <- model(exp)
   query <- model[["info"]][[pattern]]
-  if (!is.list(query)) query <- list(query){
-    out <- unlist(lapply(query, function(x) x[[type]]))
-    names <- type
-  }
+  if (!is.list(query)) query <- list(query)
+  out <- unlist(lapply(query, function(x) x[[type]]))
 
-
-  if (pattern == "Parameters")
-    names <- attr(exp, "dic_g2r")[unlist(
-      lapply(query, function(x) x[["name"]]))]
-  if (pattern == "Outputs")
-    names <- attr(exp, "dic_g2r")[unlist(
-      lapply(query, function(x) x[["name"]]))]
+  names <- case_when(
+    pattern == "Parameters" ~ attr(exp, "dic_g2r")[unlist(
+                                      lapply(query, function(x) x[["name"]]))],
+    pattern == "Outputs" ~ attr(exp, "dic_g2r")[unlist(
+                                      lapply(query, function(x) x[["name"]]))],
+    TRUE ~ type
+    )
   names(out) <- names
   out
 }
