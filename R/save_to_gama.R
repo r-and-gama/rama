@@ -62,7 +62,7 @@ save_to_gama.default <- function(exp, filename, path)
 #' @rdname save_to_gama
 #' @export
 save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
-  check_experiment(name(exp), model(exp))
+  validate_experiment(name(exp), model(exp))
   params <- parameters(exp)
   param_names <- attr(exp, "dic_r2g")[names(params)]
   params <- as.list(as.data.frame(t(params)))
