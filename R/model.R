@@ -40,7 +40,7 @@ model.experiment <- function(exp) attributes(exp)$model
 #' @importFrom utils capture.output
 #' @export
 `model<-.experiment` <- function(exp, value){
-  model_info <- list("model" = value,
+  model_info <- list("path" = value,
                      "info" = read_gaml_experiment(name(exp), value),
                      "md5sum" = md5sum(value))
   attr(exp, "model") <- model_info
