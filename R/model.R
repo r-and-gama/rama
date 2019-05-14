@@ -44,5 +44,5 @@ model.experiment <- function(exp) attributes(exp)$model
                      "info" = read_gaml_experiment(name(exp), value),
                      "md5sum" = md5sum(value))
   attr(exp, "model") <- model_info
-  return(exp)
+  return(validate_experiment(exp))
 }
