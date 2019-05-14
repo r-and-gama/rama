@@ -15,22 +15,26 @@ get_type <- function(val) {
 # ------------------------------------------------------------------------------
 # generate xml tags for each parameter
 generate_param <- function(param, names) {
-  purrr::map2(unlist(param), names, function(p, n){
+  mapply(function(p, n){
     c(name = n,
       type = get_type(p),
       value = p)
-  })
+  },
+  unlist(param), names,
+  SIMPLIFY = FALSE)
 }
 
 # ------------------------------------------------------------------------------
 # generate xml tags for each observation rate
 generate_obsrate <- function(obsrate, names) {
-  purrr::pmap(list(unlist(obsrate), names, seq_along(unlist(obsrate))),
-              function(p, n, i){
+  mapply(function(p, n, i){
                 c(id = i - 1,
                   name = n,
                   framerate = p)
-              })
+              },
+         unlist(obsrate), names, seq_along(unlist(obsrate)),
+         SIMPLIFY = FALSE)
+
 }
 
 # save_to_gama -----------------------------------------------------------------
@@ -46,7 +50,6 @@ generate_obsrate <- function(obsrate, names) {
 #'
 #'
 #' @importFrom XML xmlToList xmlParse xmlOutputDOM saveXML
-#' @importFrom purrr map2 pmap
 #' @importFrom dplyr case_when
 #' @example inst/examples/save_to_gama.R
 #' @rdname save_to_gama
@@ -78,12 +81,30 @@ save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
                        experiment = name(exp)),
                        stringsAsFactors = FALSE))
   names(simulations) <- row.names(exp)
-  exp_lst <- list(simul = simulations,
-                  param = params,
-                  obsrate = obsrates)
+  # exp_lst <- list(simul = simulations,
+  #                 param = params,
+  #                 obsrate = obsrates)
 
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
-  pmap(exp_lst, function(simul, param, obsrate) {
+  # pmap(exp_lst, function(simul, param, obsrate) {
+  #
+  #   names(simul) <- c("id", "seed", "finalStep", "sourcePath", "experiment")
+  #   xmlFile$addTag("Simulation", attrs = simul, close = FALSE)
+  #
+  #   param_lst <- generate_param(param, param_names)
+  #   xmlFile$addTag("Parameters", close = FALSE)
+  #   lapply(param_lst, function(x) xmlFile$addTag("Parameter", attrs = x))
+  #   xmlFile$closeTag()
+  #
+  #   obsrate_lst <- generate_obsrate(obsrate, obsrates_names)
+  #   xmlFile$addTag("Outputs", close = FALSE)
+  #   lapply(obsrate_lst, function(x) xmlFile$addTag("Output", attrs = x))
+  #   xmlFile$closeTag()
+  #
+  #   xmlFile$closeTag()
+  # })
+
+  mapply(function(simul, param, obsrate) {
 
     names(simul) <- c("id", "seed", "finalStep", "sourcePath", "experiment")
     xmlFile$addTag("Simulation", attrs = simul, close = FALSE)
@@ -99,7 +120,7 @@ save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
     xmlFile$closeTag()
 
     xmlFile$closeTag()
-  })
+  }, simulations, params, obsrates)
 
   if (is.null(filename)) filename <-  paste0(name(exp), ".xml")
   if (is.null(path)) path <- getwd()
