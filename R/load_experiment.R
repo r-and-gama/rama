@@ -68,10 +68,6 @@ load_experiment <- function(exp, model) {
   check_experiment(exp, list("info" = out))
 
   # Retrieving information:
-<<<<<<< HEAD
-  variables <- make_df_dic(get_variables(out)[get_variables_names(model)])
-  parameters <- make_df_dic(get_parameters(out)[get_parameters_names(model)])
-=======
   make_df_dic <- function(x) {
     if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
     the_names <- names(x)
@@ -81,7 +77,6 @@ load_experiment <- function(exp, model) {
   }
   variables <- make_df_dic(get_variables(out))
   parameters <- make_df_dic(get_parameters(out))
->>>>>>> master
   out_attr <- get_attributes(out)
 
   # Returning experiment object:
