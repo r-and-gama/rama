@@ -64,7 +64,6 @@ check_param_type <- function(exp, model) {
 #' @param model The name of the GAML file from which to load the experiment.
 #' @example inst/examples/load_experiment.R
 #' @importFrom XML xmlToList xmlParse
-#' @importFrom tibble as_tibble
 #'
 #' @export
 load_experiment <- function(exp, model) {
