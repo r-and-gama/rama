@@ -37,15 +37,6 @@ get_attributes <- function(x) {
   out
 }
 
-
-
-# Check the consistency between gaml and experiment object `exp` created in rama
-check_param_type <- function(exp, model) {
-# pending
-}
-
-
-
 # load_experiment --------------------------------------------------------------
 #' Load an experiment from a GAML file
 #'
