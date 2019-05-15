@@ -4,8 +4,6 @@
 #'
 #' @param file Path to a \code{.gaml} file.
 #'
-#' @importFrom stringr str_match_all str_match regex str_detect
-#'
 #' @example inst/examples/list_experiments.R
 #' @export
 list_experiments <- function(file){
@@ -14,16 +12,22 @@ list_experiments <- function(file){
   }
 
   gaml <- paste(readLines(file, warn = FALSE), collapse = "\n")
-  exps <- str_match_all(gaml,
-                        regex("\\nexperiment (.*?)\\{", dotall = TRUE))[[1:2]]
+  exp_info <- regexpr("\\nexperiment (.*?)\\{", gaml)
+  exp_info <- substr(gaml, exp_info, exp_info + attr(exp_info, "match.length"))
+  exps <- gsub("\n|experiment|\\{", "", exp_info)
+
+ # exps <- str_match_all(gaml,
+  #                      regex("\\nexperiment (.*?)\\{", dotall = TRUE))[[1:2]]
 
   if (length(exps) < 1)
     stop(paste0("File \"", file, "\" does not contain any experiment."))
   exps <- trimws(gsub("\\n+$", "", exps))
   exp_info <- lapply(exps, function(x) {
-    if (str_detect(x, "type")) {
-      tmp <- cbind(str_match(x, ".*?(?=\\s+type?)"),
-                   trimws(str_match(x, "type\\:(.*)"))[, 2])
+    if (grepl("type", x)) {
+      tmp <- cbind(trimws(substr(x, 1, regexpr("type", x) - 1)),
+        #str_match(x, ".*?(?=\\s+type?)"),
+                   trimws(substr(x, regexpr("type", x) + 5, nchar(x))))
+      #str_match(x, "type\\:(.*)"))[, 2])
       # if the experiment type contains other information (ex:"gui keep:true")
       if (grepl(":", tmp[1, 2])) {
         # remove group of character with ":" (ex:" keep:true")

@@ -43,7 +43,6 @@ Depends:
 Imports:
     XML,
     plot3D,
-    stringr,
     downloader,
     tibble
 LazyData: true
