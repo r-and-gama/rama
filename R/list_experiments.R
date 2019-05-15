@@ -5,7 +5,6 @@
 #' @param file Path to a \code{.gaml} file.
 #'
 #' @importFrom stringr str_match_all str_match regex str_detect
-#' @importFrom purrr map
 #'
 #' @example inst/examples/list_experiments.R
 #' @export
@@ -21,7 +20,7 @@ list_experiments <- function(file){
   if (length(exps) < 1)
     stop(paste0("File \"", file, "\" does not contain any experiment."))
   exps <- trimws(gsub("\\n+$", "", exps))
-  exp_info <- purrr::map(exps, function(x) {
+  exp_info <- lapply(exps, function(x) {
     if (str_detect(x, "type")) {
       tmp <- cbind(str_match(x, ".*?(?=\\s+type?)"),
                    trimws(str_match(x, "type\\:(.*)"))[, 2])
