@@ -4,19 +4,19 @@
 new_experiment <- function(parameters, obsrates, tmax, seed,
                            experiment, model, dic_g2r = NULL, output = NA) {
 
-# Automatically adds "p_" and "r_" prefixes to the parameteres and observation
-# rates. It also does so to the dictionary if provided.
+  # Automatically adds "p_" and "r_" prefixes to the parameteres and observation
+  # rates. It also does so to the dictionary if provided.
 
-# Automatically converts periods of obsrates and tmax into integer if there are
-# not.
+  # Automatically converts periods of obsrates and tmax into integer if there are
+  # not.
 
-# dic_g2r: contains the new names of the parameters and variables and the names
-# of this vector contains the old names. It is the opposite for dic_r2g.
+  # dic_g2r: contains the new names of the parameters and variables and the names
+  # of this vector contains the old names. It is the opposite for dic_r2g.
 
-# exp0 <- rama:::new_experiment(
-#   data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
-#   data.frame(S = 1, I = 1, R = 1),
-#   1000, 1, "sir", system.file("models", "sir.gaml", package = "rama"))
+  # exp0 <- rama:::new_experiment(
+  #   data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
+  #   data.frame(S = 1, I = 1, R = 1),
+  #   1000, 1, "sir", system.file("models", "sir.gaml", package = "rama"))
 
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
@@ -34,20 +34,20 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   if (!is.na(output)) {
     if (nrow(parameters) > 1) {
       stopifnot(is.list(output) &
-                length(output) > 1 &
-                all(sapply(output, is.data.frame)))
+                  length(output) > 1 &
+                  all(sapply(output, is.data.frame)))
     } else {
       stopifnot(is.data.frame(output))
     }
   }
 
-# Generating new names:
+  # Generating new names:
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
   oldnames <- c(names_param, names_obsrates)
   newnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
 
-# Dealing with dictionaries:
+  # Dealing with dictionaries:
   if (is.null(dic_g2r)) {
     dic_g2r <- setNames(newnames, oldnames)
   } else {
@@ -58,7 +58,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                  setNames(paste0("r_", dic_g2r[sel2]), names(dic_g2r[sel2])))
   }
 
-# Dealing with obsrates and tmax, converting them into integers if needed:
+  # Dealing with obsrates and tmax, converting them into integers if needed:
   if (any(!sapply(obsrates, is.integer))) {
     message(cat(
       "Periods of observation (\"obsrates\") are rounded and converted into",
@@ -77,9 +77,11 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                      "info" = read_gaml_experiment(experiment, model),
                      "md5sum" = md5sum(model))
 
-# cast parameter types
-  types <- map_type(unlist(lapply(model_info$info$Parameters,
-                                  function(x) x[["type"]])))
+  # cast parameter types
+  types_param <- model_info$info$Parameters[
+    lapply(model_info$info$Parameters, "[[", "name") %in% c(names_param)]
+  types <- map_type(unlist(lapply(types_param, function(x) x[["type"]])))
+
   if (!all(unlist(lapply(parameters, class)) == types)){
     message(cat("Parameters' types are cast according to model definition"))
     functions <- lapply(paste0("as.", types), function(x) match.fun(x))
@@ -92,16 +94,16 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
 
 
   out <- structure(setNames(cbind(parameters,
-                           obsrates,
-                           tmax = tmax,
-                           seed = seed,
-                           output = output),
-                           c(newnames, "tmax", "seed", "output")),
-            class      = c("experiment", "tbl_df", "tbl", "data.frame"),
-            model      = model_info,
-            experiment = experiment,
-            dic_g2r    = dic_g2r,
-            dic_r2g    = setNames(names(dic_g2r), dic_g2r))
+                                  obsrates,
+                                  tmax = tmax,
+                                  seed = seed,
+                                  output = output),
+                            c(newnames, "tmax", "seed", "output")),
+                   class      = c("experiment", "tbl_df", "tbl", "data.frame"),
+                   model      = model_info,
+                   experiment = experiment,
+                   dic_g2r    = dic_g2r,
+                   dic_r2g    = setNames(names(dic_g2r), dic_g2r))
 }
 
 
@@ -132,37 +134,40 @@ validate_experiment <- function(x) {
                                 function(x) x[["name"]])))
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
-               "' do not correspond to any parameter in the '",
-               basename(model$path), "' file."))
+                "' do not correspond to any parameter in the '",
+                basename(model$path), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The parameter name '", substitute(diff),
-               "' does not correspond to any parameter in the '",
-               basename(model$path), "' file."))
+                "' does not correspond to any parameter in the '",
+                basename(model$path), "' file."))
   }
 
   diff <- setdiff(dic_r2g[colnames[[2]]],
                   unlist(lapply(model$info$Outputs, function(x) x[["name"]])))
   if (length(diff) > 1) {
     stop(paste0("The variables names '", substitute(diff),
-               "' do not correspond to any variable in the '",
-               basename(model), "' file."))
+                "' do not correspond to any variable in the '",
+                basename(model), "' file."))
   } else if (length(diff) > 0) {
     stop(paste0("The variable name '", substitute(diff),
-               "' does not correspond to any variable in the '",
-               basename(model$path), "' file."))
+                "' does not correspond to any variable in the '",
+                basename(model$path), "' file."))
   }
-  # check parameter types
+  # check parameter types (selection of the parametes in gaml file by name)
   type_r <- sapply(parameters(x), class)
-  type_g <- map_type(unlist(lapply(model$info$Parameters,
-                                   function(x) x[["type"]])))
-  diff <- type_r == type_g
+  names_type_g <- unlist(lapply(model$info$Parameters, "[[", "name"))
+  names_type_g <- dic_g2r[names_type_g]
+  type_g <- lapply(model$info$Parameters, function(x) x[["type"]])
+  type_g <- setNames(type_g, names_type_g)
+  type_g <- map_type(unlist(type_g))
+  diff <- type_r == type_g[names(type_r)]
   if (!all(diff)) {
     stop(paste0(
       "Data type of parameters don't correspond to those declared in the '",
       basename(model$path), "' file."))
   }
-  # check obs_rates
 
+  # check obs_rates
   if (!all(sapply(obs_rates(x), is.integer))) {
     stop(paste0("The observation rates must be interger as declared in '",
                 basename(model$path), "' file."))
