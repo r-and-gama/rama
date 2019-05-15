@@ -41,7 +41,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     }
   }
 
-
 # Generating new names:
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
@@ -61,13 +60,16 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
 
 # Dealing with obsrates and tmax, converting them into integers if needed:
   if (any(!sapply(obsrates, is.integer))) {
-    message(cat("Periods of observation (\"obsrates\") are rounded and converted into integers."))
+    message(cat(
+      "Periods of observation (\"obsrates\") are rounded and converted into",
+      " integers."))
     obsrates[] <- lapply(obsrates, function(x) as.integer(round(x)))
   }
-  if(!is.numeric(tmax))
+  if (!is.numeric(tmax))
     stop(cat("\"tmax\" must have a numeric value"))
   if (!is.integer(tmax)) {
-    message(cat("Final time step (\"tmax\") is rounded and converted into integer."))
+    message(cat(
+      "Final time step (\"tmax\") is rounded and converted into integer."))
     tmax <- as.integer(tmax)
   }
 
@@ -76,14 +78,16 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                      "md5sum" = md5sum(model))
 
 # cast parameter types
-  types <- map_type(unlist(lapply(model_info$info$Parameters, function(x) x[["type"]])))
-  if(!all(unlist(lapply(parameters, class)) == types)){
+  types <- map_type(unlist(lapply(model_info$info$Parameters,
+                                  function(x) x[["type"]])))
+  if (!all(unlist(lapply(parameters, class)) == types)){
     message(cat("Parameters' types are cast according to model definition"))
     functions <- lapply(paste0("as.", types), function(x) match.fun(x))
     mapply(function(n, f){
       parameters[, n] <<- f(parameters[, n])
       invisible()
-    }, seq_along(types), functions)
+    },
+    seq_along(types), functions)
   }
 
 
@@ -91,7 +95,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                            obsrates,
                            tmax = tmax,
                            seed = seed,
-                           output = output), c(newnames, "tmax", "seed", "output")),
+                           output = output),
+                           c(newnames, "tmax", "seed", "output")),
             class      = c("experiment", "tbl_df", "tbl", "data.frame"),
             model      = model_info,
             experiment = experiment,
@@ -123,7 +128,8 @@ validate_experiment <- function(x) {
     stop("The dictionaries are inconsistent.")
 
   diff <- setdiff(dic_r2g[colnames[[1]]],
-                  unlist(lapply(model$info$Parameters, function(x) x[["name"]])))
+                  unlist(lapply(model$info$Parameters,
+                                function(x) x[["name"]])))
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
                "' do not correspond to any parameter in the '",
@@ -151,8 +157,9 @@ validate_experiment <- function(x) {
                                    function(x) x[["type"]])))
   diff <- type_r == type_g
   if (!all(diff)) {
-    stop(paste0("Data type of parameters don't correspond to those declared in the '",
-                basename(model$path), "' file."))
+    stop(paste0(
+      "Data type of parameters don't correspond to those declared in the '",
+      basename(model$path), "' file."))
   }
   # check obs_rates
 
@@ -164,7 +171,7 @@ validate_experiment <- function(x) {
   # validate snapshot
   current_md5sum <-  md5sum(model(x)$path)
 
-  if(current_md5sum != model$md5sum)
+  if (current_md5sum != model$md5sum)
     stop(paste0("Gaml file '", model$path, "' has been changed.
                 Please use function 'model<-' to add this gaml file
                 to the experiment"))

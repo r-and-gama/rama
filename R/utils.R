@@ -92,7 +92,7 @@ download_gama <- function() {
   distrib <- gama_remote_distrib()
   expDir  <- gama_local_distrib_path()
   path <- paste0(options("rama.temp_dir"), "/")
-  path_dist <- paste0(path, "out/", basename(expDir))
+  #path_dist <- paste0(path, "out/", basename(expDir))
   path_test <- dirname(expDir)
   distrib_file <- paste0(path, "downloaded_gama.tgz")
 
@@ -176,4 +176,3 @@ setup_gama <- function(path = NA) {
        defpath(gama_path)
   }
 }
-

@@ -44,7 +44,6 @@ reference:
   - title: Manipulating experiment objects
     contents:
     - fullfact
-    - get_info
     - model
     - name
     - obs_rates

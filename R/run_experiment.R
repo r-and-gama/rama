@@ -141,7 +141,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   # Save input and output in path
   if (isTRUE(save)) {
 
-    if(is.null(path)) {
+    if (is.null(path)) {
       path <- getwd()
       message(cat("Outputs are saved to \"", path, "\" by default.", sep = ""))
     }
