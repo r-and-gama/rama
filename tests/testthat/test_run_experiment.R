@@ -14,7 +14,7 @@ testthat::test_that(
 
     # Check error
     testthat::expect_error(run_experiment(df),
-                           "The argument `exp` is not an `experiment` object.")
+                           "The argument \"exp\" is not an object of class \"experiment\".")
 
     # Check realexp
     exp0 <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),
@@ -23,6 +23,6 @@ testthat::test_that(
                           model =
                             system.file("models", "sir.gaml", package = "rama"))
     otp <- run_experiment(exp0)
-    testthat::expect_equal(length(na.omit(otp[[1]]$r_R)), 2)
+    testthat::expect_equal(otp$r_I, 2)
 
   })
