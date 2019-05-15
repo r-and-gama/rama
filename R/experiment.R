@@ -78,8 +78,10 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                      "md5sum" = md5sum(model))
 
 # cast parameter types
-  types <- map_type(unlist(lapply(model_info$info$Parameters,
-                                  function(x) x[["type"]])))
+  types_param <- model_info$info$Parameters[
+    lapply(model_info$info$Parameters, "[[", "name") %in% c(names_param)]
+  types <- map_type(unlist(lapply(types_param, function(x) x[["type"]])))
+
   if (!all(unlist(lapply(parameters, class)) == types)){
     message(cat("Parameters' types are cast according to model definition"))
     functions <- lapply(paste0("as.", types), function(x) match.fun(x))
@@ -151,18 +153,21 @@ validate_experiment <- function(x) {
                "' does not correspond to any variable in the '",
                basename(model$path), "' file."))
   }
-  # check parameter types
+  # check parameter types (selection of the parametes in gaml file by name)
   type_r <- sapply(parameters(x), class)
-  type_g <- map_type(unlist(lapply(model$info$Parameters,
-                                   function(x) x[["type"]])))
-  diff <- type_r == type_g
+  names_type_g <- unlist(lapply(model$info$Parameters, "[[", "name"))
+  names_type_g <- dic_g2r[names_type_g]
+  type_g <- lapply(model$info$Parameters, function(x) x[["type"]])
+  type_g <- setNames(type_g, names_type_g)
+  type_g <- map_type(unlist(type_g))
+  diff <- type_r == type_g[names(type_r)]
   if (!all(diff)) {
     stop(paste0(
       "Data type of parameters don't correspond to those declared in the '",
       basename(model$path), "' file."))
   }
-  # check obs_rates
 
+  # check obs_rates
   if (!all(sapply(obs_rates(x), is.integer))) {
     stop(paste0("The observation rates must be interger as declared in '",
                 basename(model$path), "' file."))
