@@ -28,13 +28,11 @@ map_experiment <- function(df, exp) {
     the_attributes <- attributes(exp)
     the_attributes$row.names <- row.names(df)
     attributes(df) <- the_attributes
-    return(df)
     return(validate_experiment(df))
   }
 
   if (all(names(df) %in% names(exp)) & nrow(df) == nrow(exp)) {
       exp[, names(df)] <- df
-      return(exp)
       return(validate_experiment(exp))
   }
 
