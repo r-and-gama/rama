@@ -201,12 +201,11 @@ If both specified, <code>times</code> will be taken.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>,
-                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_18".</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'>repl</span>(<span class='no'>exp</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 <span class='no'>exp1</span>$<span class='no'>seed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>)
 <span class='fu'>repl</span>(<span class='no'>exp1</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='st'>"4"</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; Experiment with 12 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
-#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_18 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -241,7 +240,7 @@ If both specified, <code>times</code> will be taken.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>, <a href='http://www.oucru.org'><img src="reference/figures/oucru.png" height="35" /></a>.</p>
 </div>
 
 <div class="pkgdown">

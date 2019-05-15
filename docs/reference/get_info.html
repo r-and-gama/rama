@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SIR epidemiological model — sir1 • rama</title>
+<title>Get information on the model — get_info • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,10 +37,9 @@
 
 
 
-<meta property="og:title" content="SIR epidemiological model — sir1" />
+<meta property="og:title" content="Get information on the model — get_info" />
 
-<meta property="og:description" content="An experiment of the SIR model with 1 simulation, 5 parameters and
-3 monitored variables." />
+<meta property="og:description" content="Get information on the model" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -154,39 +153,67 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>SIR epidemiological model</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>sir1.Rd</code></div>
+    <h1>Get information on the model</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/get_info.R'><code>R/get_info.R</code></a></small>
+    <div class="hidden name"><code>get_info.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>An <code>experiment</code> of the SIR model with 1 simulation, 5 parameters and
-3 monitored variables.</p>
+    <p>Get information on the model</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>sir1</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>get_info</span>(<span class='no'>exp</span>, <span class='no'>pattern</span>, <span class='no'>type</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>exp</th>
+      <td><p>Experiment object</p></td>
+    </tr>
+    <tr>
+      <th>pattern</th>
+      <td><p>can be either 'Parameters' or 'Outputs' for parameters and
+observation rates, respectively.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>can be 'name' for parameter and observation rate names, '
+type' for parameter types.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>experiment</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 1 rows and 10 columns.</p>
+    <p>A vector of parameter or variable names,</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
+<span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='no'>file</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>get_info</span>(<span class='no'>exp</span>, <span class='st'>"Parameters"</span>, <span class='st'>"name"</span>)</div><div class='output co'>#&gt;    p_S0    p_I0    p_R0  p_beta p_gamma 
+#&gt;    "S0"    "I0"    "R0"  "beta" "gamma" </div><div class='input'><span class='fu'>get_info</span>(<span class='no'>exp</span>, <span class='st'>"Parameters"</span>, <span class='st'>"type"</span>)</div><div class='output co'>#&gt;    p_S0    p_I0    p_R0  p_beta p_gamma 
+#&gt;   "INT"   "INT"   "INT" "FLOAT" "FLOAT" </div><div class='input'><span class='fu'>get_info</span>(<span class='no'>exp</span>, <span class='st'>"Outputs"</span>, <span class='st'>"name"</span>)</div><div class='output co'>#&gt; r_S r_I r_R 
+#&gt; "S" "I" "R" </div><div class='input'><span class='fu'>get_info</span>(<span class='no'>exp</span>, <span class='st'>".attrs"</span>, <span class='st'>"experiment"</span>)</div><div class='output co'>#&gt; experiment 
+#&gt;      "sir" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-          </ul>
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>, <a href='http://www.oucru.org'><img src="reference/figures/oucru.png" height="35" /></a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>.</p>
 </div>
 
 <div class="pkgdown">

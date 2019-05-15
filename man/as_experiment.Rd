@@ -5,7 +5,7 @@
 \title{Converting a data frame into an experiment}
 \usage{
 as_experiment(df, parameters = NULL, obsrates = NULL, tmax = "tmax",
-  seed = "seed", experiment, model, dir = "", dic = NULL)
+  seed = "seed", experiment, model, dic = NULL)
 }
 \arguments{
 \item{df}{A data frame containing values of paramters, periods of observation,
@@ -34,12 +34,6 @@ seeds of the simulations. If not specified, the column named
 
 \item{model}{The path to a \code{GAML} file.}
 
-\item{dir}{The path to a directory where the simulations output are saved. If
-not specified (i.e. empty character string, default), then the
-simulations are saved in a subdirectory of the working directory,
-the name of which is made from the name of \code{model}. See
-\code{Details} for more information.}
-
 \item{dic}{A named vector of character strings. The values and the names of
 this vector should be consistent with the names of
 \code{parameters}, \code{obsrates} as well as the variables and
@@ -59,7 +53,7 @@ simulation and seeds of an object of class experiment.
 if (exists("sir1", inherits = FALSE)) rm(sir1)
 df <- as.data.frame(repl(sir1, 5))
 exp_name <- name(sir1)
-gaml_file <- model(sir1)
+gaml_file <- attr(sir1, "model")$path
 as_experiment(df, experiment = exp_name, model = gaml_file)
 # Alternative uses:
 as_experiment(df, 1:5, 6:8, 9, 10, exp_name, gaml_file)

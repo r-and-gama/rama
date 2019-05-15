@@ -9,14 +9,14 @@ body_function <- function(fct, args1) {
     body_f <- paste0(
       '\told_attr <- purrr::keep(attributes(', args1[1],
       '), names(attributes(', args1[1], ')) %in% ',
-      'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class")) \n ',
+      'c("dic_r2g", "dic_g2r", "experiment", "model", "class")) \n ',
       '\t', args1[1], ' <- as.data.frame(', args1[1], ') \n')
     if (lgth > 1) {
       f <- function(x) {
         paste0(
           '\told_attr <- c(old_attr, purrr::keep(attributes(', x,
           '), names(attributes(', x, ')) %in% ',
-          'c("dic_r2g", "dic_g2r", "wkdir", "experiment", "model", "class"))) \n ',
+          'c("dic_r2g", "dic_g2r", "experiment", "model", "class"))) \n ',
           '\told_attr <- purrr::keep(old_attr, duplicated(old_attr) == FALSE)\n',
           '\t', x, ' <- as.data.frame(', x, ') \n')
       }

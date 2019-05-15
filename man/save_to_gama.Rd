@@ -6,24 +6,26 @@
 \alias{save_to_gama.experiment}
 \title{Save an experiment plan to a GAMA XML file}
 \usage{
-save_to_gama(exp, parameter_xml_file)
+save_to_gama(exp, filename = NULL, path = NULL)
 
-\method{save_to_gama}{default}(exp, parameter_xml_file)
+\method{save_to_gama}{default}(exp, filename, path)
 
-\method{save_to_gama}{experiment}(exp, parameter_xml_file = "")
+\method{save_to_gama}{experiment}(exp, filename = NULL, path = NULL)
 }
 \arguments{
 \item{exp}{An object of class \code{experiment}.}
 
-\item{parameter_xml_file}{name of XML parameter file. This file is created
-in the working directory of `exp`. If not
+\item{filename}{name of XML parameter file. If not
 specified, name of `exp`` is used.}
+
+\item{path}{Path to save `filename`. If not specified, current working
+directory is used.}
 }
 \description{
 Save an object of class \code{experiment} to an XML file GAMA-compliant.
 }
 \examples{
 gaml_file <- system.file("models", "sir.gaml", package = "rama")
-exp1 <- load_experiment("sir", gaml_file, "sir")
+exp1 <- load_experiment("sir", gaml_file)
 save_to_gama(exp1)
 }

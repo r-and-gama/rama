@@ -8,7 +8,7 @@
 \usage{
 \method{$}{experiment}(exp, i) <- value
 
-experiment(parameters, obsrates, tmax, seed, experiment, model, dir = "",
+experiment(parameters, obsrates, tmax, seed, experiment, model,
   dic = NULL)
 
 is.experiment(exp)
@@ -40,12 +40,6 @@ seeds of the simulations.}
 
 \item{model}{The path to a \code{GAML} file.}
 
-\item{dir}{The path to a directory where the simulations output are saved. If
-not specified (i.e. empty character string, default), then the
-simulations are saved in a subdirectory of the working directory,
-the name of which is made from the name of \code{model}. See
-\code{Details} for more information.}
-
 \item{dic}{A named vector of character strings. The values and the names of
 this vector should be consistent with the names of
 \code{parameters}, \code{obsrates} as well as the variables and
@@ -73,11 +67,9 @@ shortest element.
 The class \code{experiment} inherits from the class \code{tibble}
 (\code{tbl_df}). It contains parameters values as well as periods of
 observation of the observed variables and it connects to a \code{GAML} file
-that specifies the full model as well as to a directory that contains the
-outputs of simuations.
+that specifies the full model.
 
-TO DO: Explains how \code{dir} is made is not specified. Explains what
-\code{dic} is.
+TO DO: Explains what \code{dic} is.
 }
 \examples{
 ## experiment ##
@@ -107,8 +99,7 @@ is.experiment(exp)
 ## `$<-` ##
 # Here is an experiment with 1 simulation:
 sir1 <- load_experiment("sir",
-                        system.file("models", "sir.gaml", package = "rama"),
-                        "sir")
+                        system.file("models", "sir.gaml", package = "rama"))
 sir1
 
 # Let's replace the value of the "p_S0" column by a vector of 3 values:

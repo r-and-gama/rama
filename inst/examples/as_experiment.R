@@ -2,7 +2,7 @@
 if (exists("sir1", inherits = FALSE)) rm(sir1)
 df <- as.data.frame(repl(sir1, 5))
 exp_name <- name(sir1)
-gaml_file <- model(sir1)
+gaml_file <- attr(sir1, "model")$path
 as_experiment(df, experiment = exp_name, model = gaml_file)
 # Alternative uses:
 as_experiment(df, 1:5, 6:8, 9, 10, exp_name, gaml_file)

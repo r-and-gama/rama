@@ -1,3 +1,10 @@
+# map gama and R data types
+map_type <- function(x) {
+  types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
+  unlist(lapply(x, function(y) types[[y]]))
+}
+
+# read gaml experiment ---------------------------------------------------------
 read_gaml_experiment <- function(exp, model) {
   tmp <- tempfile(fileext = ".xml")
   system(paste0("java -jar ", getOption("rama.startjar"),
@@ -13,7 +20,6 @@ read_gaml_experiment <- function(exp, model) {
   stop(paste0("Gama fails to read your experiment"))
 }
 
-
 # test special characters ------------------------------------------------------
 test_schar <- function(x) {
   if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
@@ -23,27 +29,18 @@ test_schar <- function(x) {
   }
 }
 
-
-
 # Check if a requested experiment is valid -------------------------------------
 # For a requested experiment to be valid, we need
 # * the name to exist in the file;
 # * the experiment to be of type "GUI".
 check_experiment <- function(exp, model) {
-  exp_info <- list_experiments(model)
-  # check if the requested experiment is present in the file:
-  if (!exp %in% exp_info$experiment)
+  model_info <- model$info
+    # check if the requested experiment is present in the file:
+  if (!exp %in% model_info$.attrs["experiment"])
     stop(paste0("There is no experiment named \"", exp, "\" in ",
-                basename(model)))
-  # check if the requested experiment has a valid (i.e. "GUI") type:
-  type <- exp_info$type[exp_info$experiment == exp]
-  if (type != "gui")
-    stop(paste0("Experiments of type \"", type,
-                "\" are not supported by rama."))
+                basename(model_info$.attrs["sourcePath"])))
   invisible(0)
 }
-
-
 
 # make_dictionary --------------------------------------------------------------
 #' @importFrom stats setNames
@@ -52,47 +49,6 @@ make_dictionary <- function(x) {
   dic <- gsub("_+", "_", dic)
   setNames(dic, x)
 }
-
-
-
-# Make working directory -------------------------------------------------------
-# Uses full path "dir" if specified. If only name specified (i.e. without any
-# "/"), use current directory. If not specified, use default name.
-make_wkdir <- function(model, dir = "") {
-
-  flag <- FALSE
-  if (dir == "") {
-    # get model name from gaml file
-    dir <- gsub(".gaml", "", basename(model))
-    flag <- TRUE
-  }
-
-  if (dir.exists(dir)) {
-    i <- 0
-    repeat {
-      i <- i + 1
-      wk_dir <- paste0(dir, "_", i)
-      if (!file.exists(wk_dir)) break
-    }
-    if (!flag) {
-      message(cat("Directory \"", dir, "\" already exists. Directory \"", wk_dir,
-                  "\" was created instead.", sep = ""))
-    }
-  } else {
-    wk_dir <-  dir
-  }
-
-  if (flag) message(cat("The directory \"", dir,
-                        "\" is created in the current working directory \"",
-                        getwd(), "\".", sep = ""))
-
-  dir.create(wk_dir, recursive = TRUE)
-  message(cat("Simulations results will be saved in \"", wk_dir, "\".",
-              sep = ""))
-  normalizePath(wk_dir)
-}
-
-
 
 # Defines the GAMA repository --------------------------------------------------
 gama_repo <- function(repo = NULL) {
@@ -125,10 +81,8 @@ gama_remote_distrib <- function() {
                             options("rama.default.gama.osx")),
          "Windows" = paste0(options("rama.repo"),
                             options("rama.default.gama.win64")),
-         # to complete C:\Program Files\
          "Linux"   =  paste0(options("rama.repo"),
                              options("rama.default.gama.linux")))
-  # to complete
 }
 
 # Downloads gama ---------------------------------------------------------------
@@ -136,24 +90,22 @@ gama_remote_distrib <- function() {
 #' @importFrom downloader download
 download_gama <- function() {
   distrib <- gama_remote_distrib()
-  expDir  <- gama_local_distrib_path();
+  expDir  <- gama_local_distrib_path()
   path <- paste0(options("rama.temp_dir"), "/")
-  path_dist <- paste0(path, "out/", basename(expDir))
+  #path_dist <- paste0(path, "out/", basename(expDir))
   path_test <- dirname(expDir)
   distrib_file <- paste0(path, "downloaded_gama.tgz")
-  print("coucou");
-  print(path);
 
-
-  if (! dir.exists(path)) dir.create(path, recursive = TRUE)
+  if (!dir.exists(path)) dir.create(path, recursive = TRUE)
 
   path_test <- switch(get_os(),
-          "Darwin" = paste0(path_test, "/", options("rama.default.gama.osx.zip.appdir")),
-          "Windows" = paste0(path_test, "/", options("rama.default.gama.osx.zip.appdir")),
-          "linux" = paste0(path_test, "/", options("rama.default.gama.osx.zip.appdir")))
-  print(path_test)
-
-    download(distrib, distrib_file,  mode = "wb")
+          "Darwin" = paste0(path_test, "/",
+                            options("rama.default.gama.osx.zip.appdir")),
+          "Windows" = paste0(path_test, "/",
+                             options("rama.default.gama.osx.zip.appdir")),
+          "linux" = paste0(path_test, "/",
+                           options("rama.default.gama.osx.zip.appdir")))
+  download(distrib, distrib_file,  mode = "wb")
   untar(distrib_file, exdir = path_test, compressed = "gzip" )
   gama_app <- switch(get_os(),
                      "Darwin" = options("rama.default.gama.osx.appdir"),
@@ -178,8 +130,6 @@ setup_gama_ui <- function() {
   }
   answer
 }
-
-
 
 # download GAMA when necessary -------------------------------------------------
 #' Download GAMA and configure
