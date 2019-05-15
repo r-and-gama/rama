@@ -255,9 +255,9 @@ that specifies the full model.</p>
 <span class='no'>exp0</span> <span class='kw'>&lt;-</span> <span class='fu'>experiment</span>(
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S0</span> <span class='kw'>=</span> <span class='fl'>999</span>, <span class='kw'>I0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>.15</span>),
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are rounded and converted into integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is rounded and converted into integer.</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+  <span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are rounded and converted into  integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is rounded and converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -275,7 +275,7 @@ that specifies the full model.</p>
                      <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"b"</span>,
                      <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
                      <span class='kw'>model</span> <span class='kw'>=</span>
-                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are rounded and converted into integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is rounded and converted into integer.</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are rounded and converted into  integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is rounded and converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 
 
 <span class='co'>## `$&lt;-` ##</span>
@@ -283,7 +283,7 @@ that specifies the full model.</p>
 <span class='no'>sir1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>,
                         <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>sir1</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -295,7 +295,7 @@ that specifies the full model.</p>
 <span class='co'># We can check that it automatically expands the number of simulations:</span>
 <span class='no'>sir2</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -311,7 +311,7 @@ that specifies the full model.</p>
 <span class='co'># the replacement leads to an experiment with exactly identical simulations):</span>
 <span class='no'>sir3</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -320,7 +320,7 @@ that specifies the full model.</p>
 <span class='no'>sir3</span>$<span class='no'>r_R</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
 <span class='no'>sir3</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 2 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I 
 #&gt; Experiment overview:
@@ -330,7 +330,7 @@ that specifies the full model.</p>
 <span class='no'>sir4</span> <span class='kw'>&lt;-</span> <span class='no'>sir1</span>
 <span class='no'>sir4</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -338,7 +338,7 @@ that specifies the full model.</p>
 #&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='no'>sir4</span>$<span class='no'>p_S0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>100</span>)
 <span class='no'>sir4</span></div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -348,7 +348,7 @@ that specifies the full model.</p>
 #&gt; 3  100    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='no'>sir4</span>$<span class='no'>p_beta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.7</span>)
 <span class='no'>sir4</span></div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -361,7 +361,7 @@ that specifies the full model.</p>
 #&gt; 6  100    1    0    1.7    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># which is equivalent to</span>
 <span class='fu'><a href='fullfact.html'>fullfact</a></span>(<span class='no'>sir1</span>, <span class='kw'>p_S0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>100</span>), <span class='kw'>p_beta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.3</span>, <span class='fl'>1.7</span>))</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/choisy/Dropbox/aaa/r-and-gama/rama/inst/models/sir.gaml 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -390,7 +390,7 @@ that specifies the full model.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>, <a href='http://www.oucru.org'><img src="reference/figures/oucru.png" height="35" /></a>.</p>
 </div>
 
 <div class="pkgdown">
