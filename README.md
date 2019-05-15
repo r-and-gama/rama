@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `rama` <img src="man/figures/logo.png" align="right" width=200/>
+# `rama` <img src="logo.png" align="right" width=200/>
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
@@ -19,10 +19,7 @@ status](https://ci.appveyor.com/api/projects/status/github/r-and-gama/rama?branc
   - **run** the simulations defined in an experiment plan.
 
 An **experiment** is a group of simulations. A **simulation** is an
-execution of a given **model**
-with
-
-<!-- [<img src="man/figures/get_started.png" align="right" width=173/>](articles/rama.html) -->
+execution of a given **model** with
 
   - a given set of **parameters values**,
   - a given set of **observed variables**,
@@ -119,3 +116,15 @@ engine
 ``` r
 setup_gama("path/to/gama")
 ```
+
+## Developers
+
+`rama` is developed under the umbrella of the IRD- and OUCRU-funded EID
+JEAI by:
+
+  - IRD / CNRS / University of Montpellier
+    [MIVEGEC](https://www.mivegec.ird.fr)
+  - IRD / University Pierre & Marie Curie
+    [UMMISCO](http://www.ummisco.fr)
+  - Oxford University Clinical Research Unit
+    [OUCRU](http://www.oucru.org)
