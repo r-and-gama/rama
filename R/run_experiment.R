@@ -14,14 +14,14 @@
 realexp <- function(output, exp) {
   op <- obs_rates(exp)
   mapply(function(nbrow, obsper, df) {
-           xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
-           ys <- sapply(names(xs), grep, names(df))
-           df[, ys] <- mapply(replace, df[, ys], xs, NA)
-           return(df)
-         },
-         lapply(output, nrow),
-         lapply(as.data.frame(t(op)), setNames, names(op)),
-         output, SIMPLIFY = FALSE)
+    xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
+    ys <- sapply(names(xs), grep, names(df))
+    df[, ys] <- mapply(replace, df[, ys], xs, NA)
+    return(df)
+  },
+  lapply(output, nrow),
+  lapply(as.data.frame(t(op)), setNames, names(op)),
+  output, SIMPLIFY = FALSE)
 }
 
 # Retrieve_results  ------------------------------------------------------------
@@ -50,9 +50,9 @@ retrieve_results <- function(outfile, exp) {
   tmp2 <- lapply(seq_len(dim(tmp)[2]), function(x) {
     suppressWarnings(if (is.numeric(as.numeric(tmp[, x]))) {
       tmp[, x] <- as.numeric(tmp[, x])
-      } else {
-        tmp[, x]
-        })
+    } else {
+      tmp[, x]
+    })
   })
   tmp <- as.data.frame(setNames(tmp2, lst_name))
 
@@ -64,40 +64,68 @@ retrieve_results <- function(outfile, exp) {
   tmp
 }
 
+################################################################################
+#' Create output folder
+#'
+#' @param dir directory to create the folder
+#' @noRd
+create_outdir <- function(dir) {
+  dir.create(dir)
+  input <- paste0(dir, "/input")
+  dir.create(input)
+  output <- paste0(dir, "/output")
+  dir.create(output)
+}
+
 
 ################################################################################
 #' Run an experiment
 #'
-#' From a `experiment` object, run an experiment by creating an XML file of the
-#' experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
-#' (\code{\link[rama]{call_gama}}) and returns a list of data frame, one by
-#' simulation and also the simulation output of Gama in XML file stored in
-#' `output_dir` (created by \code{\link[rama]{create_output_dir}})
+#' From an \code{experiment} object, run an experiment by creating an XML file
+#' of the experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
+#' (\code{\link[rama]{call_gama}}) and appends the results to the object
+#' \code{experiment} inputted in the column \code{output} (one by simulation).
 #'
-#' @param exp an XML file containing the experiment
-#' @param hpc numeric
-#' @param output_dir path to saved the output of gama
-#' @param parameter_xml_file name of XML parameter file. This file is created
-#'                           in the working directory of `exp`. If not
-#'                           specified, name of `exp` is used.
+#' When the argument \code{save} is equal to \code{TRUE}, a folder with the name
+#' of the experiment of the object \code{exp} is created. The folder contains
+#' two folder: \code{output} containing the result in XML and \code{input}
+#' containing the model file associated in GAML and the XML associated to the
+#' object `exp` inputted in the function. \cr\cr
+#' If the arguments \code{display} & \code{save} are equal to \code{TRUE}, a
+#' folder \code{images} is add into the folder \code{output}, and contained
+#' the display output from GAMA.
+#'
+#' @param exp an XML file containing the experiment.
+#' @param hpc number of threads used by GAMA to run the experiment.
+#' @param save save the outputs to disk or not, default = FALSE.
+#' @param path directory to save the outputs, default = NULL.
+#'             If \code{save = TRUE} and \code{path} is not
+#'             specified, current working directory is used to save the outputs.
+#' @param display output images are saved or not, default = FALSE.
+#' @param append append outputs to experiment, default = TRUE. It is not possible
+#'                to set both \code{add_exp} and `save` as \code{FALSE}.
 #'
 #' @example inst/examples/run_experiment.R
 #' @export
-run_experiment <- function(exp, hpc = 1, output_dir = "",
-                           parameter_xml_file = "") {
+run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
+                           display = FALSE, append = TRUE) {
 
-  if (!is.experiment(exp)) {
-    stop("The argument `exp` is not an `experiment` object.")
-  }
+  if (!is.experiment(exp))
+    stop("The argument \"exp\" is not an object of class \"experiment\".")
+
+  # after-run operations
+  if (isFALSE(save) && isFALSE(append))
+    stop("Outputs need to be saved either on disk or in experiment object.")
 
   # make output directory
-    output_dir <- create_output_dir(exp, output_dir)
+  output_dir <- tempfile(tmpdir = tempdir())
+  dir.create(output_dir)
 
   # generate xml file from exp
-    parameter_xml_file <- save_to_gama(exp, parameter_xml_file)
-
+  parameter_xml_file <- save_to_gama(validate_experiment(exp),
+                                     filename = NULL, path = output_dir)
   # run all the experiments
-    outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
+  outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
 
   # get variables names
   vars <- names(exp)[grep("r_", names(exp))]
@@ -108,11 +136,47 @@ run_experiment <- function(exp, hpc = 1, output_dir = "",
   out <- lapply(outfiles, retrieve_results, exp)
 
   # Correct NA observations
-
   out <- realexp(out, exp)
 
+  # Save input and output in path
+  if (isTRUE(save)) {
+
+    if (is.null(path)) {
+      path <- getwd()
+      message(cat("Outputs are saved to \"", path, "\" by default.", sep = ""))
+    }
+    dir <- paste0(path, "/", name(exp))
+
+    i <- 0
+    while (file.exists(dir)) {
+      i <- i + 1
+      dir <- paste0(path, "/", name(exp), "_", i)
+    }
+    warning(paste0("\"", paste0(path, "/", name(exp)),
+                   "\" already exists. Outputs are saved in \"", dir, "\"."))
+
+    create_outdir(dir)
+    file.copy(parameter_xml_file, paste0(dir, "/input"))
+    file.copy(model(exp)$path, paste0(dir, "/input"))
+    file.copy(outfiles, paste0(dir, "/output"))
+
+    if (isTRUE(display)) {
+      images <- paste0(dir, "/output/images")
+      dir.create(images)
+      if (file.exists(paste0(output_dir, "/images")))
+        file.copy(paste0(output_dir, "/images"), images, recursive = TRUE)
+    }
+  }
+
+  if (isTRUE(append)) {
+    old_attr <- attributes(exp)
+    exp <- transform(exp, output = out)
+    attributes(exp) <- old_attr
+  }
+
   # deleting the "workspace" folder:
-  unlink("workspace", T, T)
-  # return output:
-  out
+  unlink("workspace", TRUE, TRUE)
+
+  # return experiment:
+  exp
 }

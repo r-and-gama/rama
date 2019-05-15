@@ -62,24 +62,19 @@ check_param_type <- function(exp, model) {
 #'
 #' @param exp The name of the experiment to load.
 #' @param model The name of the GAML file from which to load the experiment.
-#' @param dir The name of the directory in which to save the outputs of the
-#' experiment's simulations. If empty character string (default), the name of
-#' the GAML file will be used to name the simulations' output directory.
-#'
 #' @example inst/examples/load_experiment.R
 #' @importFrom XML xmlToList xmlParse
-#' @importFrom tibble as_tibble
 #'
 #' @export
-load_experiment <- function(exp, model, dir = "") {
-
-  # Check if experiment and type requested are valid:
-  check_experiment(exp, model)
+load_experiment <- function(exp, model) {
 
   # Reading GAML file:
   message(cat("Loading experiment \"", exp,
                  "\" from file \"", basename(model), "\"...", sep = ""))
   out <- read_gaml_experiment(exp, model)
+
+  # Check if experiment and type requested are valid:
+  check_experiment(exp, list("info" = out))
 
   # Retrieving information:
   make_df_dic <- function(x) {
@@ -89,11 +84,11 @@ load_experiment <- function(exp, model, dir = "") {
     names(x) <- dic_g2r
     list(out = x, dic_g2r = dic_g2r)
   }
-  variables <- make_df_dic(get_variables(out)[get_variables_names(model)])
-  parameters <- make_df_dic(get_parameters(out)[get_parameters_names(model)])
+  variables <- make_df_dic(get_variables(out))
+  parameters <- make_df_dic(get_parameters(out))
   out_attr <- get_attributes(out)
 
   # Returning experiment object:
   experiment(parameters$out, variables$out, out_attr$tmax, out_attr$seed,
-             exp, model, dir, c(parameters$dic_g2r, variables$dic_g2r))
+             exp, model, c(parameters$dic_g2r, variables$dic_g2r))
 }

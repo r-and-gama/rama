@@ -28,8 +28,7 @@ user-defined vectors of values, see examples.
 }
 \examples{
 sir1 <- load_experiment("sir",
-                        system.file("models", "sir.gaml", package = "rama"),
-                        "sir")
+                        system.file("models", "sir.gaml", package = "rama"))
 # 1. First type of use: tranforming an experiment into one with a full
 # factorial design:
 sir2 <- sir1

@@ -169,7 +169,7 @@ simulation and seeds of an object of class experiment.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='st'>"tmax"</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"seed"</span>, <span class='no'>experiment</span>, <span class='no'>model</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>dic</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"seed"</span>, <span class='no'>experiment</span>, <span class='no'>model</span>, <span class='kw'>dic</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,14 +215,6 @@ seeds of the simulations. If not specified, the column named
       <td><p>The path to a <code>GAML</code> file.</p></td>
     </tr>
     <tr>
-      <th>dir</th>
-      <td><p>The path to a directory where the simulations output are saved. If
-not specified (i.e. empty character string, default), then the
-simulations are saved in a subdirectory of the working directory,
-the name of which is made from the name of <code>model</code>. See
-<code>Details</code> for more information.</p></td>
-    </tr>
-    <tr>
       <th>dic</th>
       <td><p>A named vector of character strings. The values and the names of
 this vector should be consistent with the names of
@@ -242,11 +234,10 @@ Details for more information.</p></td>
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/exists'>exists</a></span>(<span class='st'>"sir1"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='no'>sir1</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>sir1</span>, <span class='fl'>5</span>))
 <span class='no'>exp_name</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='name.html'>name</a></span>(<span class='no'>sir1</span>)
-<span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model.html'>model</a></span>(<span class='no'>sir1</span>)
-<span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='no'>exp_name</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
+<span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attr'>attr</a></span>(<span class='no'>sir1</span>, <span class='st'>"model"</span>)$<span class='no'>path</span>
+<span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='no'>exp_name</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
-#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -256,10 +247,9 @@ Details for more information.</p></td>
 #&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1
 #&gt; 4  999    1    0    1.5    0.15   1   1   1 1000    1
 #&gt; 5  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># Alternative uses:</span>
-<span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='fl'>6</span>:<span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='no'>exp_name</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_1".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
+<span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='fl'>6</span>:<span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='no'>exp_name</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
-#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_1 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -269,10 +259,9 @@ Details for more information.</p></td>
 #&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1
 #&gt; 4  999    1    0    1.5    0.15   1   1   1 1000    1
 #&gt; 5  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"p_S0"</span>, <span class='st'>"p_I0"</span>, <span class='st'>"p_R0"</span>, <span class='st'>"p_beta"</span>, <span class='st'>"p_gamma"</span>),
-              <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"r_S"</span>, <span class='st'>"r_I"</span>, <span class='st'>"r_R"</span>), <span class='st'>"tmax"</span>, <span class='st'>"seed"</span>, <span class='no'>exp_name</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_2".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
+              <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"r_S"</span>, <span class='st'>"r_I"</span>, <span class='st'>"r_R"</span>), <span class='st'>"tmax"</span>, <span class='st'>"seed"</span>, <span class='no'>exp_name</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
-#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_2 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -283,10 +272,9 @@ Details for more information.</p></td>
 #&gt; 4  999    1    0    1.5    0.15   1   1   1 1000    1
 #&gt; 5  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># Or a mixture of character and numeric indexes:</span>
 <span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"r_S"</span>, <span class='st'>"r_I"</span>, <span class='st'>"r_R"</span>), <span class='st'>"tmax"</span>, <span class='st'>"seed"</span>, <span class='no'>exp_name</span>,
-              <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_3".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
+              <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
-#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_3 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -297,10 +285,9 @@ Details for more information.</p></td>
 #&gt; 4  999    1    0    1.5    0.15   1   1   1 1000    1
 #&gt; 5  999    1    0    1.5    0.15   1   1   1 1000    1</div><div class='input'><span class='co'># And even using default parameters specification:</span>
 <span class='fu'>as_experiment</span>(<span class='no'>df</span>, <span class='kw'>obsrates</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"r_S"</span>, <span class='st'>"r_I"</span>, <span class='st'>"r_R"</span>),
-              <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='no'>exp_name</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Using default directory name "sir" in current directory "/Users/mac/Desktop/rama/docs/reference".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Simulations results will be saved in "sir_4".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
+              <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='no'>exp_name</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Experiment with 5 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
-#&gt; output directory: /Users/mac/Desktop/rama/docs/reference/sir_4 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
@@ -326,7 +313,7 @@ Details for more information.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>.</p>
+  <p>Developed by <a href='http://marcchoisy.free.fr'>Marc Choisy</a>, <a href='https://www.researchgate.net/profile/Lucie_Contamin'>Lucie Contamin</a>, <a href='https://www.semanticscholar.org/author/Bich-Hai-Ho/31585952'>Bich Hai Ho</a>, <a href='https://scholar.google.fr/citations?user=DJFy6n0AAAAJ&hl=en'>Nicolas Marilleau</a>, <a href='http://www-poleia.lip6.fr/~zucker'>Jean-Daniel Zucker</a>, <a href='http://www.ird.fr'><img src="reference/figures/ird.png" height="20" /></a>, <a href='http://www.oucru.org'><img src="reference/figures/oucru.png" height="35" /></a>.</p>
 </div>
 
 <div class="pkgdown">

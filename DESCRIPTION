@@ -43,11 +43,7 @@ Depends:
 Imports:
     XML,
     plot3D,
-    stringr,
-    downloader,
-    purrr,
-    dplyr (>= 0.8.0),
-    tibble
+    downloader
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: 
