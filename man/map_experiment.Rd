@@ -40,6 +40,6 @@ map_experiment(df, exp)
 # are equal:
 exp <- repl(sir1, 3)
 df <- as.data.frame(exp)[, c(1, 3, 6)]
-df[] <- 2
+df[] <- 2L
 map_experiment(df, exp)
 }
