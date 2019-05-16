@@ -20,7 +20,6 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
 
   stopifnot(is.data.frame(parameters))
   stopifnot(is.data.frame(obsrates))
-  stopifnot(nrow(parameters) == nrow(obsrates))
   stopifnot(is.numeric(tmax))
   stopifnot(is.null(dim(seed)))
   stopifnot(is.character(experiment))
@@ -92,13 +91,23 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     seq_along(types), functions)
   }
 
+  if (ncol(parameters) == 0) {
+    out <- setNames(cbind(obsrates,
+                          tmax = tmax,
+                          seed = seed,
+                          output = output),
+                    c(grep("p_", newnames, value = TRUE, invert = TRUE),
+                      "tmax", "seed", "output"))
+  } else {
+    out <- setNames(cbind(parameters,
+                          obsrates,
+                          tmax = tmax,
+                          seed = seed,
+                          output = output),
+                          c(newnames, "tmax", "seed", "output"))
 
-  out <- structure(setNames(cbind(parameters,
-                                  obsrates,
-                                  tmax = tmax,
-                                  seed = seed,
-                                  output = output),
-                            c(newnames, "tmax", "seed", "output")),
+  }
+  out <- structure(out,
                    class      = c("experiment", "tbl_df", "tbl", "data.frame"),
                    model      = model_info,
                    experiment = experiment,
