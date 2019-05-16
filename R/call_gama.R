@@ -63,6 +63,6 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
   clean_output(output_dir)
 
   return(normalizePath(dir(path = output_dir,
-             pattern = "[simulation-outputs[:digit:]+]\\.xml",
+             pattern = "simulation-outputs[[:digit:]]+\\.xml",
              full.names = TRUE)))
 }
