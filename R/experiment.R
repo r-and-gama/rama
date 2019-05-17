@@ -151,6 +151,8 @@ validate_experiment <- function(x) {
   check_experiment(name(x), model)
   test_schar(names(dic_g2r))
 
+  # check types forced by experiment
+
   if (!all(obs_rates(x) < 0,
         is.integer(obsrates(x))))
     stop("The period of observation should be positive integers.")
@@ -161,6 +163,8 @@ validate_experiment <- function(x) {
 
   if(!is.integer(seed))
     stop("Seed values should be integers")
+
+  # check variable name consistency between experiment and gaml
 
   if (length(setdiff(unlist(colnames), dic_g2r)) > 0)
     stop("Some variables or parameters names are not in the dictionary.")
@@ -192,7 +196,9 @@ validate_experiment <- function(x) {
                 "' does not correspond to any variable in the '",
                 basename(model$path), "' file."))
   }
-  # check parameter types (selection of the parametes in gaml file by name)
+  # check parameter type consistency between experiment and gaml
+  # (selection of the parametes in gaml file by name)
+
   type_r <- sapply(parameters(x), class)
   names_type_g <- unlist(lapply(model$info$Parameters, "[[", "name"))
   names_type_g <- dic_g2r[names_type_g]
@@ -207,6 +213,7 @@ validate_experiment <- function(x) {
   }
 
   # validate snapshot
+
   current_md5sum <-  md5sum(model(x)$path)
 
   if (current_md5sum != model$md5sum)
@@ -214,7 +221,7 @@ validate_experiment <- function(x) {
                 Please use function 'model<-' to add this gaml file
                 to the experiment"))
 
-  x
+  return(x)
 }
 
 
