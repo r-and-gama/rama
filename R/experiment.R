@@ -18,27 +18,46 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   #   data.frame(S = 1, I = 1, R = 1),
   #   1000, 1, "sir", system.file("models", "sir.gaml", package = "rama"))
 
-  stopifnot(is.data.frame(parameters))
-  stopifnot(is.data.frame(obsrates))
-  stopifnot(is.numeric(tmax))
-  stopifnot(is.null(dim(seed)))
-  stopifnot(is.character(experiment))
-  stopifnot(length(experiment) == 1)
-  stopifnot(is.character(model))
-  stopifnot(length(model) == 1)
+  # tmax is set to 1000 by default by headless, seed is set to XXX by headless
+  # parameters, obsrates, experiment can be NULL. Only model (gaml file) can't
+  # be NULL.
+
+  if(!is.null(tmax)){
+    stopifnot(is.numeric(tmax))
+  }
+  if(!is.null(seed)){
+    stopifnot(is.numeric(seed))
+  }
+  if(!is.null(parameters)){
+    stopifnot(all(is.data.frame(parameters),
+#                  unlist(lapply(parameters, is.numeric))
+#                 allowed check types of parameters
+              ))
+  }
+  if(!is.null(obsrates)){
+    stopifnot(all(is.data.frame(obsrates),
+                  unlist(lapply(obsrates, is.numeric))))
+  }
+  if(!is.null(experiment)){
+    stopifnot(all(is.character(experiment),
+                  length(experiment) == 1))
+  }
   if (!is.null(dic_g2r)) {
-    stopifnot(is.character(dic_g2r))
-    stopifnot(is.character(names(dic_g2r)))
+    stopifnot(all(is.character(dic_g2r),
+                  is.character(names(dic_g2r))))
   }
   if (!is.na(output)) {
     if (nrow(parameters) > 1) {
-      stopifnot(is.list(output) &
-                  length(output) > 1 &
-                  all(sapply(output, is.data.frame)))
+      stopifnot(all(is.list(output),
+                  length(output) > 1,
+                  sapply(output, is.data.frame)))
     } else {
       stopifnot(is.data.frame(output))
     }
   }
+
+  stopifnot(all(is.character(model),
+                length(model) == 1))
 
   # Generating new names:
   names_param <- names(parameters)
@@ -57,19 +76,25 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                  setNames(paste0("r_", dic_g2r[sel2]), names(dic_g2r[sel2])))
   }
 
-  # Dealing with obsrates and tmax, converting them into integers if needed:
-  if (any(!sapply(obsrates, is.integer))) {
+  # Dealing with obsrates, seed and tmax, converting them into integers if needed:
+  if (!all(sapply(obsrates, is.integer))) {
     message(cat(
       "Periods of observation (\"obsrates\") are rounded and converted into",
       " integers."))
     obsrates[] <- lapply(obsrates, function(x) as.integer(round(x)))
   }
-  if (!is.numeric(tmax))
-    stop(cat("\"tmax\" must have a numeric value"))
-  if (!is.integer(tmax)) {
+
+  if (!all(is.integer(tmax))) {
     message(cat(
       "Final time step (\"tmax\") is rounded and converted into integer."))
     tmax <- as.integer(tmax)
+  }
+
+  # seed can't be double in gama?, to be confirmed
+  if (!all(is.integer(seed))) {
+    message(cat(
+      "Seed is rounded and converted into integer."))
+    seed <- as.integer(seed)
   }
 
   model_info <- list("path" = model,
@@ -126,10 +151,12 @@ validate_experiment <- function(x) {
   check_experiment(name(x), model)
   test_schar(names(dic_g2r))
 
-  if (any(obs_rates(x) < 0))
+  if (!all(obs_rates(x) < 0,
+        is.integer(obsrates(x))))
     stop("The period of observation should be positive integers.")
 
-  if (any(x$tmax < 0))
+  if (!all(x$tmax < 0,
+          is.integer(x$tmax)))
     stop("The end steps of simulations should be positive integers.")
 
   if (length(setdiff(unlist(colnames), dic_g2r)) > 0)
