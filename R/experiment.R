@@ -29,7 +29,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     stopifnot(is.numeric(seed))
   }
   if(!is.null(parameters)){
-    stopifnot(all(is.data.frame(parameters),
+    stopifnot(all(is.data.frame(parameters)
 #                  unlist(lapply(parameters, is.numeric))
 #                 allowed check types of parameters
               ))
@@ -153,15 +153,15 @@ validate_experiment <- function(x) {
 
   # check types forced by experiment
 
-  if (!all(obs_rates(x) < 0,
-        is.integer(obsrates(x))))
+  if (!all(obs_rates(x) > 0,
+        sapply(obs_rates(x), is.integer)))
     stop("The period of observation should be positive integers.")
 
-  if (!all(x$tmax < 0,
+  if (!all(x$tmax > 0,
           is.integer(x$tmax)))
     stop("The end steps of simulations should be positive integers.")
 
-  if(!is.integer(seed))
+  if(!is.integer(x$seed))
     stop("Seed values should be integers")
 
   # check variable name consistency between experiment and gaml
@@ -173,8 +173,8 @@ validate_experiment <- function(x) {
     stop("The dictionaries are inconsistent.")
 
   diff <- setdiff(dic_r2g[colnames[[1]]],
-                  unlist(lapply(model$info$Parameters,
-                                function(x) x[["name"]])))
+                  sapply(model$info$Parameters,
+                                function(x) x[["name"]]))
   if (length(diff) > 1) {
     stop(paste0("The parameters names '", substitute(diff),
                 "' do not correspond to any parameter in the '",
