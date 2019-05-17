@@ -176,3 +176,4 @@ setup_gama <- function(path = NA) {
        defpath(gama_path)
   }
 }
+
