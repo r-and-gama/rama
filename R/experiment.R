@@ -159,6 +159,9 @@ validate_experiment <- function(x) {
           is.integer(x$tmax)))
     stop("The end steps of simulations should be positive integers.")
 
+  if(!is.integer(seed))
+    stop("Seed values should be integers")
+
   if (length(setdiff(unlist(colnames), dic_g2r)) > 0)
     stop("Some variables or parameters names are not in the dictionary.")
 
@@ -201,12 +204,6 @@ validate_experiment <- function(x) {
     stop(paste0(
       "Data type of parameters don't correspond to those declared in the '",
       basename(model$path), "' file."))
-  }
-
-  # check obs_rates
-  if (!all(sapply(obs_rates(x), is.integer))) {
-    stop(paste0("The observation rates must be interger as declared in '",
-                basename(model$path), "' file."))
   }
 
   # validate snapshot
