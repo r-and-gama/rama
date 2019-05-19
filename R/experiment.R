@@ -153,15 +153,18 @@ validate_experiment <- function(x) {
 
   # check types forced by experiment
 
-  if (!all(obs_rates(x) > 0,
+  if (!all(!is.null(obs_rates(x)),
+        obs_rates(x) > 0,
         sapply(obs_rates(x), is.integer)))
     stop("The period of observation should be positive integers.")
 
-  if (!all(x$tmax > 0,
-          is.integer(x$tmax)))
+  if (!all(!is.null(x$tmax),
+           x$tmax > 0,
+           is.integer(x$tmax)))
     stop("The end steps of simulations should be positive integers.")
 
-  if(!is.integer(x$seed))
+  if(!any(is.null(x$seed),
+         is.integer(x$seed)))
     stop("Seed values should be integers")
 
   # check variable name consistency between experiment and gaml
