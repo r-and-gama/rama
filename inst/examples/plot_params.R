@@ -7,7 +7,7 @@ df <-   data.frame(S0 = c(900, 800, 500), # this is a data frame of 3 lines
                   I = c(2, 4, 6),
                   R = c(10, 20, 30),
                   nbiter = 1000,
-                  seed = "123456789")
+                  seed = 123456789)
 exp0 <- as_experiment(df, parameters = c("S0", "I0", "R0", "beta", "gamma"),
                       obsrates  = c("S", "I", "R"),
                       tmax = "nbiter", seed = "seed", experiment = "sir",
