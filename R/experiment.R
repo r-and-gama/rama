@@ -22,21 +22,11 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   # parameters, obsrates, experiment can be NULL. Only model (gaml file) can't
   # be NULL.
 
-  if(!is.null(tmax)){
-    stopifnot(is.numeric(tmax))
-  }
-  if(!is.null(seed)){
-    stopifnot(is.numeric(seed))
-  }
   if(!is.null(parameters)){
-    stopifnot(all(is.data.frame(parameters)
-#                  unlist(lapply(parameters, is.numeric))
-#                 allowed check types of parameters
-              ))
+    stopifnot(all(is.data.frame(parameters)))
   }
   if(!is.null(obsrates)){
-    stopifnot(all(is.data.frame(obsrates),
-                  unlist(lapply(obsrates, is.numeric))))
+    stopifnot(all(is.data.frame(obsrates)))
   }
   if(!is.null(experiment)){
     stopifnot(all(is.character(experiment),
@@ -70,6 +60,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   # Dealing with dictionaries:
   if (is.null(dic_g2r)) {
     dic_g2r <- setNames(newnames, oldnames)
+    dic_r2g <- setNames(names(dic_g2r), dic_g2r)
+
   } else {
     stopifnot(all(dic_g2r %in% oldnames))
     sel1 <- which(dic_g2r %in% names_param)
@@ -84,7 +76,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     message(cat(
       "Periods of observation (\"obsrates\") are rounded and converted into",
       " integers."))
-    obsrates[] <- lapply(obsrates, function(x) as.integer(round(x)))
+    obsrates[] <- lapply(obsrates, function(x) as.integer(x))
   }
 
   if (!all(is.integer(tmax))) {

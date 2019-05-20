@@ -3,7 +3,7 @@ get_parameters <- function(x) {
   parameters <- x[["Parameters"]]
   if (is.null(parameters)) return(NULL)
   x2 <- do.call(rbind, parameters)
-  x3 <- do.call(data.frame, as.list(x2[, "value"]))
+  x3 <- data.frame(as.list(x2[, "value"]), stringsAsFactors = FALSE)
   x3 <- setNames(x3, x2[, "name"])
   x3
 }
@@ -15,7 +15,7 @@ get_variables <- function(x) {
   outputs <- x[["Outputs"]]
   if (is.null(outputs)) return(NULL)
   x2 <- do.call(rbind, outputs)
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
+  x3 <- data.frame(as.list(x2[, "framerate"]), stringsAsFactors = FALSE)
   x3 <- setNames(x3, x2[, "name"])
   x3
 }
@@ -29,8 +29,6 @@ get_attributes <- function(x) {
     data.frame(..., stringsAsFactors = FALSE),
     as.list(x$.attrs[c("finalStep", "seed", "sourcePath", "experiment")])),
     c("tmax", "seed", "gaml", "experiment"))
-  out$tmax <- as.integer(out$tmax)
-  out$seed <- as.numeric(out$seed)
   out
 }
 

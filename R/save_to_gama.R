@@ -52,13 +52,15 @@ save_to_gama.default <- function(exp, filename, path)
 save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
 
   exp <- validate_experiment(exp)
-  params <- as.character(parameters(exp), stringAsFactors = FALSE)
+  params <- lapply(seq_len(nrow(parameters(exp))),
+                   function(x) as.character(parameters(exp[x, ]),
+                                            stringsAsFactors = FALSE))
   param_names <- attr(exp, "dic_r2g")[names(parameters(exp))]
-  params <- list(params)
 
-  obsrates <- as.character(obs_rates(exp), stringAsFactors = FALSE)
+  obsrates <- lapply(seq_len(nrow(obs_rates(exp))),
+                     function(x) as.character(obs_rates(exp[x, ]),
+                                              stringsAsFactors = FALSE))
   obsrates_names <- attr(exp, "dic_r2g")[names(obs_rates(exp))]
-  obsrates <- list(obsrates)
 
   simulations <- as.list(as.data.frame(rbind(id = row.names(exp),
                        seed = exp$seed,
