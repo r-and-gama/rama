@@ -1,6 +1,9 @@
 # map gama and R data types
 map_type <- function(x) {
-  types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
+  types <- c("INT" = "integer",
+             "FLOAT" = "numeric",
+             "STRING" = "character",
+             "BOOLEAN" = "logical")
   unlist(lapply(x, function(y) types[[y]]))
 }
 
