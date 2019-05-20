@@ -63,7 +63,9 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
   oldnames <- c(names_param, names_obsrates)
-  newnames <- c(paste0("p_", names_param), paste0("r_", names_obsrates))
+  param_newname <- paste0("p_", names_param)
+  obsrates_newname <- paste0("r_", names_obsrates)
+  newnames <- c(param_newname, obsrates_newname)
 
   # Dealing with dictionaries:
   if (is.null(dic_g2r)) {
@@ -74,6 +76,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     sel2 <- which(dic_g2r %in% names_obsrates)
     dic_g2r <- c(setNames(paste0("p_", dic_g2r[sel1]), names(dic_g2r[sel1])),
                  setNames(paste0("r_", dic_g2r[sel2]), names(dic_g2r[sel2])))
+    dic_r2g <- setNames(names(dic_g2r), dic_g2r)
   }
 
   # Dealing with obsrates, seed and tmax, converting them into integers if needed:
@@ -103,7 +106,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
 
   # cast parameter types
   types_param <- model_info$info$Parameters[
-    lapply(model_info$info$Parameters, "[[", "name") %in% c(names_param)]
+    lapply(model_info$info$Parameters, "[[", "name") %in% c(dic_r2g[param_newname])]
   types <- map_type(unlist(lapply(types_param, function(x) x[["type"]])))
 
   if (!all(unlist(lapply(parameters, class)) == types)){
@@ -137,7 +140,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                    model      = model_info,
                    experiment = experiment,
                    dic_g2r    = dic_g2r,
-                   dic_r2g    = setNames(names(dic_g2r), dic_g2r))
+                   dic_r2g    = dic_r2g)
 }
 
 
