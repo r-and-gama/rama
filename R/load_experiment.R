@@ -3,10 +3,8 @@ get_parameters <- function(x) {
   parameters <- x[["Parameters"]]
   if (is.null(parameters)) return(NULL)
   x2 <- do.call(rbind, parameters)
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
+  x3 <- do.call(data.frame, as.list(x2[, "value"]))
   x3 <- setNames(x3, x2[, "name"])
-  sel <- grep("INT", x2[, "type"])
-  if (length(sel) > 0) x3[, sel] <- lapply(x3[, sel], as.integer)
   x3
 }
 
@@ -19,7 +17,6 @@ get_variables <- function(x) {
   x2 <- do.call(rbind, outputs)
   x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
   x3 <- setNames(x3, x2[, "name"])
-  x3[] <- lapply(x3, as.integer) # frame rates are necessarily integers.
   x3
 }
 
