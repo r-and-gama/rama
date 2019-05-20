@@ -58,7 +58,7 @@ get_attributes <- function(x) {
 #'
 #' @export
 load_experiment <- function(exp, model) {
-
+  test_schar(exp)
   # Reading GAML file:
   message(cat("Loading experiment \"", exp,
                  "\" from file \"", basename(model), "\"...", sep = ""))
