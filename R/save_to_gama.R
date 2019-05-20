@@ -1,25 +1,11 @@
-# infer type of simulation values
-get_type <- function(val) {
-  ifelse(is.character(val), "STRING",
-         ifelse(is.integer(val), "INT",
-                ifelse(is.double(val), "FLOAT",
-                       ifelse(is.factor(val), "STRING",
-                              ifelse(is.na(val), "STRING",
-                                     ifelse(is.null(val), "STRING",
-                                            "STRING"))))))
-}
-
-
-
-# ------------------------------------------------------------------------------
 # generate xml tags for each parameter
-generate_param <- function(param, names) {
-  mapply(function(p, n){
+generate_param <- function(param, names, types) {
+  mapply(function(p, n, t){
     c(name = n,
-      type = get_type(p),
+      type = t,
       value = p)
   },
-  unlist(param), names,
+  unlist(param), names, types,
   SIMPLIFY = FALSE)
 }
 
@@ -66,13 +52,13 @@ save_to_gama.default <- function(exp, filename, path)
 save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
 
   exp <- validate_experiment(exp)
-  params <- parameters(exp)
-  param_names <- attr(exp, "dic_r2g")[names(params)]
-  params <- as.list(as.data.frame(t(params)))
+  params <- as.character(parameters(exp), stringAsFactors = FALSE)
+  param_names <- attr(exp, "dic_r2g")[names(parameters(exp))]
+  params <- list(params)
 
-  obsrates <- obs_rates(exp)
-  obsrates_names <- attr(exp, "dic_r2g")[names(obsrates)]
-  obsrates <- as.list(as.data.frame(t(obsrates)))
+  obsrates <- as.character(obs_rates(exp), stringAsFactors = FALSE)
+  obsrates_names <- attr(exp, "dic_r2g")[names(obs_rates(exp))]
+  obsrates <- list(obsrates)
 
   simulations <- as.list(as.data.frame(rbind(id = row.names(exp),
                        seed = exp$seed,
@@ -82,14 +68,16 @@ save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
                        stringsAsFactors = FALSE))
   names(simulations) <- row.names(exp)
 
+  types <- list(unlist(lapply(model(exp)$info$Parameters, "[[" , "type")))
+
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
 
-  mapply(function(simul, param, obsrate) {
+  mapply(function(simul, param, obsrate, type) {
 
     names(simul) <- c("id", "seed", "finalStep", "sourcePath", "experiment")
     xmlFile$addTag("Simulation", attrs = simul, close = FALSE)
 
-    param_lst <- generate_param(param, param_names)
+    param_lst <- generate_param(param, param_names, type)
     xmlFile$addTag("Parameters", close = FALSE)
     lapply(param_lst, function(x) xmlFile$addTag("Parameter", attrs = x))
     xmlFile$closeTag()
@@ -101,7 +89,7 @@ save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
 
     xmlFile$closeTag()
   },
-  simulations, params, obsrates)
+  simulations, params, obsrates, types)
 
   if (is.null(filename)) filename <-  paste0(name(exp), ".xml")
   if (is.null(path)) path <- getwd()
