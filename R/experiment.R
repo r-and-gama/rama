@@ -124,7 +124,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                           tmax = tmax,
                           seed = seed,
                           output = output),
-                    c(grep("r_", newnames, value = TRUE, invert = TRUE),
+                    c(grep("r_", newnames, value = TRUE),
                       "tmax", "seed", "output"))
   }
   if (all(ncol(parameters) != 0, ncol(obsrates) == 0)) {
@@ -132,7 +132,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                           tmax = tmax,
                           seed = seed,
                           output = output),
-                    c(grep("p_", newnames, value = TRUE, invert = TRUE),
+                    c(grep("p_", newnames, value = TRUE),
                       "tmax", "seed", "output"))
   }
   if (all(ncol(parameters) == 0, ncol(obsrates) == 0)) {
@@ -180,52 +180,57 @@ validate_experiment <- function(x) {
   if (!any(is.null(x$seed), is.integer(x$seed)))
     stop("Seed values should be integers")
 
-  # check variable name consistency between experiment and gaml
+  # check parameter consistency between experiment and gaml
 
   if (length(setdiff(unlist(colnames), dic_g2r)) > 0)
     stop("Some variables or parameters names are not in the dictionary.")
 
   if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
     stop("The dictionaries are inconsistent.")
+  if(!is.null(model$info$Parameters)) {
+    diff <- setdiff(dic_r2g[colnames[[1]]],
+                    sapply(model$info$Parameters,
+                           function(x) x[["name"]]))
+    if (length(diff) > 1) {
+      stop(paste0("The parameters names '", substitute(diff),
+                  "' do not correspond to any parameter in the '",
+                  basename(model$path), "' file."))
+    } else if (length(diff) > 0) {
+      stop(paste0("The parameter name '", substitute(diff),
+                  "' does not correspond to any parameter in the '",
+                  basename(model$path), "' file."))
+    }
 
-  diff <- setdiff(dic_r2g[colnames[[1]]],
-                  sapply(model$info$Parameters,
-                                function(x) x[["name"]]))
-  if (length(diff) > 1) {
-    stop(paste0("The parameters names '", substitute(diff),
-                "' do not correspond to any parameter in the '",
-                basename(model$path), "' file."))
-  } else if (length(diff) > 0) {
-    stop(paste0("The parameter name '", substitute(diff),
-                "' does not correspond to any parameter in the '",
-                basename(model$path), "' file."))
+    # check parameter type consistency between experiment and gaml
+    # (selection of the parametes in gaml file by name)
+
+    type_r <- sapply(parameters(x), class)
+    names_type_g <- unlist(lapply(model$info$Parameters, "[[", "name"))
+    names_type_g <- dic_g2r[names_type_g]
+    type_g <- lapply(model$info$Parameters, function(x) x[["type"]])
+    type_g <- setNames(type_g, names_type_g)
+    type_g <- map_type(unlist(type_g))
+    diff <- type_r == type_g[names(type_r)]
+    if (!all(diff)) {
+      stop(paste0(
+        "Data type of parameters don't correspond to those declared in the '",
+        basename(model$path), "' file."))
+    }
   }
 
-  diff <- setdiff(dic_r2g[colnames[[2]]],
-                  unlist(lapply(model$info$Outputs, function(x) x[["name"]])))
-  if (length(diff) > 1) {
-    stop(paste0("The variables names '", substitute(diff),
-                "' do not correspond to any variable in the '",
-                basename(model), "' file."))
-  } else if (length(diff) > 0) {
-    stop(paste0("The variable name '", substitute(diff),
-                "' does not correspond to any variable in the '",
-                basename(model$path), "' file."))
-  }
-  # check parameter type consistency between experiment and gaml
-  # (selection of the parametes in gaml file by name)
-
-  type_r <- sapply(parameters(x), class)
-  names_type_g <- unlist(lapply(model$info$Parameters, "[[", "name"))
-  names_type_g <- dic_g2r[names_type_g]
-  type_g <- lapply(model$info$Parameters, function(x) x[["type"]])
-  type_g <- setNames(type_g, names_type_g)
-  type_g <- map_type(unlist(type_g))
-  diff <- type_r == type_g[names(type_r)]
-  if (!all(diff)) {
-    stop(paste0(
-      "Data type of parameters don't correspond to those declared in the '",
-      basename(model$path), "' file."))
+  # check parameter consistency between experiment and gaml
+  if(!is.null(model$info$Outputs)){
+    diff <- setdiff(dic_r2g[colnames[[2]]],
+                    unlist(lapply(model$info$Outputs, function(x) x[["name"]])))
+    if (length(diff) > 1) {
+      stop(paste0("The variables names '", substitute(diff),
+                  "' do not correspond to any variable in the '",
+                  basename(model), "' file."))
+    } else if (length(diff) > 0) {
+      stop(paste0("The variable name '", substitute(diff),
+                  "' does not correspond to any variable in the '",
+                  basename(model$path), "' file."))
+    }
   }
 
   # validate snapshot
