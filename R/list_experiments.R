@@ -21,6 +21,7 @@ list_experiments <- function(file){
     exp <- substr(gaml, exp_info[x],
                   exp_info[x] + attr(exp_info, "match.length")[x])
     exp <- trimws(gsub("\\nexperiment|\\{|\\n+$", "", exp))
+    exp <- gsub("\"", "", exp)
     if (grepl("type:", exp)) {
       experiment <- trimws(substr(exp, 1, regexpr("type:", exp) - 1))
       type <- trimws(substr(exp, regexpr("type:", exp) + 5, nchar(exp)))
