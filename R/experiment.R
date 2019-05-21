@@ -74,21 +74,20 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   # Dealing with obsrates, seed and tmax, converting them into integers if needed:
   if (!all(sapply(obsrates, is.integer))) {
     message(cat(
-      "Periods of observation (\"obsrates\") are rounded and converted into",
-      " integers."))
+      "Periods of observation (\"obsrates\") are converted into integers."))
     obsrates[] <- lapply(obsrates, function(x) as.integer(x))
   }
 
   if (!all(is.integer(tmax))) {
     message(cat(
-      "Final time step (\"tmax\") is rounded and converted into integer."))
+      "Final time step (\"tmax\") is converted into integer."))
     tmax <- as.integer(tmax)
   }
 
   # seed can't be double in gama?, to be confirmed
   if (!all(is.integer(seed))) {
     message(cat(
-      "Seed is rounded and converted into integer."))
+      "Seed is converted into integer."))
     seed <- as.integer(seed)
   }
 

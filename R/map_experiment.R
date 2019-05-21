@@ -28,15 +28,14 @@ map_experiment <- function(df, exp) {
   obsrates <- names(df)[grepl("r_", names(df))]
   if (!all(sapply(df[, obsrates], is.numeric))) {
     message(cat(
-      "Periods of observation (\"obsrates\") are rounded and converted into",
-      " integers."))
-    df[, obsrates] <- lapply(df[, obsrates], function(x) as.integer(round(x)))
+      "Periods of observation (\"obsrates\") are converted into integers"))
+    df[, obsrates] <- lapply(df[, obsrates], function(x) as.integer(x))
   }
 
   if (all(!is.null(df$tmax),
           is.numeric(df$tmax))) {
     message(cat(
-      "Final time step (\"tmax\") is rounded and converted into integer."))
+      "Final time step (\"tmax\") is converted into integer."))
     df$tmax <- as.integer(df$tmax)
   }
 
@@ -44,7 +43,7 @@ map_experiment <- function(df, exp) {
   if (all(!is.null(df$seed),
            is.numeric(df$seed))) {
     message(cat(
-      "Seed is rounded and converted into integer."))
+      "Seed is converted into integer."))
     df$seed <- as.integer(df$seed)
   }
 
