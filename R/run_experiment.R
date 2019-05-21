@@ -152,9 +152,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
       i <- i + 1
       dir <- paste0(path, "/", name(exp), "_", i)
     }
-    warning(paste0("\"", paste0(path, "/", name(exp)),
-                   "\" already exists. Outputs are saved in \"", dir, "\"."))
-
+    warning(paste0("Outputs are saved in \"", dir, "\"."))
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
     file.copy(model(exp)$path, paste0(dir, "/input"))
