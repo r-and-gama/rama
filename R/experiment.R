@@ -46,8 +46,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     }
   }
 
-  stopifnot(all(is.character(model),
-                length(model) == 1))
+  stopifnot(all(is.character(model), length(model) == 1) ||
+              all(is.list(model), length(model) == 3))
 
   # Generating new names:
   names_param <- names(parameters)
@@ -92,7 +92,13 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     seed <- as.integer(seed)
   }
 
-  model_info <- list("path" = model,
+  # if model is a list as a result of read_gaml_experiment already
+  if(is.list(model))
+    model_info <- list("path" = model$.attrs["sourcePath"],
+                            "info" = model,
+                            "md5sum" = md5sum(model$.attrs["sourcePath"]))
+  else
+    model_info <- list("path" = model,
                      "info" = read_gaml_experiment(experiment, model),
                      "md5sum" = md5sum(model))
 

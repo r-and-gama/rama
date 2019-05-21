@@ -76,5 +76,5 @@ load_experiment <- function(exp, model) {
 
   # Returning experiment object:
   experiment(parameters$out, variables$out, out_attr$tmax, out_attr$seed,
-             exp, model, c(parameters$dic_g2r, variables$dic_g2r))
+             exp, out, c(parameters$dic_g2r, variables$dic_g2r))
 }
