@@ -149,10 +149,8 @@ validate_experiment <- function(x) {
   colnames <- lapply(c(parameters, obs_rates), function(f) names(f(x)))
 
   check_experiment(name(x), model)
-  # test_schar(names(dic_g2r)) check if it works in different gama versions
 
   # check types forced by experiment
-
   if (!all(!is.null(obs_rates(x)),
         obs_rates(x) > 0,
         sapply(obs_rates(x), is.integer)))
