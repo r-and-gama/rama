@@ -18,12 +18,12 @@ list_experiments <- function(file){
     exp <- substr(gaml, exp_info[x],
                   exp_info[x] + attr(exp_info, "match.length")[x])
     exp <- trimws(gsub("\n|experiment|\\{|\\n+$", "", exp))
-    if(grepl("type:", exp)) {
+    if (grepl("type:", exp)) {
       experiment <- trimws(substr(exp, 1, regexpr("type:", exp) - 1))
       type <- trimws(substr(exp, regexpr("type:", exp) + 5, nchar(exp)))
-      tmp <- cbind(experiment, type)
+      cbind(experiment, type)
     } else {
-      tmp <- cbind("experiment" = exp, "type" = "gui")
+      cbind("experiment" = exp, "type" = "gui")
     }
   })
   exp_info <- as.data.frame(do.call(rbind, exps), stringsAsFactors = FALSE)

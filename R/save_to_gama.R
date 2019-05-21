@@ -70,7 +70,7 @@ save_to_gama.experiment <- function(exp, filename = NULL, path = NULL) {
                        stringsAsFactors = FALSE))
   names(simulations) <- row.names(exp)
 
-  types <- list(unlist(lapply(model(exp)$info$Parameters, "[[" , "type")))
+  types <- list(unlist(lapply(model(exp)$info$Parameters, "[[", "type")))
 
   xmlFile <- xmlOutputDOM(tag = "Experiment_plan")
 

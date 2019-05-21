@@ -22,13 +22,13 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   # parameters, obsrates, experiment can be NULL. Only model (gaml file) can't
   # be NULL.
 
-  if(!is.null(parameters)){
+  if (!is.null(parameters)) {
     stopifnot(all(is.data.frame(parameters)))
   }
-  if(!is.null(obsrates)){
+  if (!is.null(obsrates)) {
     stopifnot(all(is.data.frame(obsrates)))
   }
-  if(!is.null(experiment)){
+  if (!is.null(experiment)) {
     stopifnot(all(is.character(experiment),
                   length(experiment) == 1))
   }
@@ -71,7 +71,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     dic_r2g <- setNames(names(dic_g2r), dic_g2r)
   }
 
-  # Dealing with obsrates, seed and tmax, converting them into integers if needed:
+  # Dealing with obsrates, seed and tmax, converting them into integers if
+  # needed:
   if (!all(sapply(obsrates, is.integer))) {
     message(cat(
       "Periods of observation (\"obsrates\") are converted into integers."))
@@ -92,7 +93,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   }
 
   # if model is a list as a result of read_gaml_experiment already
-  if(is.list(model))
+  if (is.list(model))
     model_info <- list("path" = model$.attrs["sourcePath"],
                             "info" = model,
                             "md5sum" = md5sum(model$.attrs["sourcePath"]))
@@ -103,7 +104,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
 
   # cast parameter types
   types_param <- model_info$info$Parameters[
-    lapply(model_info$info$Parameters, "[[", "name") %in% c(dic_r2g[param_newname])]
+    lapply(model_info$info$Parameters, "[[", "name") %in%
+      c(dic_r2g[param_newname])]
   types <- map_type(unlist(lapply(types_param, function(x) x[["type"]])))
 
   if (!all(unlist(lapply(parameters, class)) == types)){
@@ -151,9 +153,8 @@ validate_experiment <- function(x) {
   check_experiment(name(x), model)
 
   # check types forced by experiment
-  if (!all(!is.null(obs_rates(x)),
-        obs_rates(x) > 0,
-        sapply(obs_rates(x), is.integer)))
+  if (!all(!is.null(obs_rates(x)), obs_rates(x) > 0,
+           sapply(obs_rates(x), is.integer)))
     stop("The period of observation should be positive integers.")
 
   if (!all(!is.null(x$tmax),
@@ -161,8 +162,7 @@ validate_experiment <- function(x) {
            is.integer(x$tmax)))
     stop("The end steps of simulations should be positive integers.")
 
-  if(!any(is.null(x$seed),
-         is.integer(x$seed)))
+  if (!any(is.null(x$seed), is.integer(x$seed)))
     stop("Seed values should be integers")
 
   # check variable name consistency between experiment and gaml
