@@ -73,7 +73,7 @@ constructor:
 ```{r}
 df <- data.frame("S0" = 999, "I0" = 1, "R0" = 0, "beta" = 1.5,
                  "gamma" = 0.15, "S" = 1, "I" = 1, "R" = 1,
-                 "a" = 1000, "b" = 1)
+                 "a" = 2, "b" = 1)
 ```
 
 
@@ -96,7 +96,7 @@ complete:
 ```{r}
 df <- data.frame("S0" = c(999, 990), "I0" = c(1, 2), "R0" = 0, "beta" = 1.5,
                  "gamma" = 5, "S" = 1, "I" = 1, "R" = 1,
-                 "a" = 1000, "b" = 1)
+                 "a" = 2, "b" = 1)
 exp3 <- as_experiment(df = df, parameters = c(1:5),
            obsrates = c(6:8), tmax = "a", seed = "b",
            experiment = "sir", model = gaml_file)
@@ -120,7 +120,7 @@ df <- expand.grid(S0 = c(900, 950, 999),
                S = 1,
                I = 1,
                R = 1,
-               tmax = 1000,
+               tmax = 2,
                seed = 1)
 
 exp4 <- as_experiment(df, parameters = c(1:5),
@@ -146,7 +146,7 @@ df <- data.frame(
   gamma = .15,
   S = 1,
   I = 1,
-  tmax = 2500,
+  tmax = 2,
   seed = sample(5)
 )
 ```
@@ -249,7 +249,7 @@ Same for `tmax`:
 
 ```{r}
 exp5$tmax
-exp5$tmax <- 3543
+exp5$tmax <- 3
 exp5
 ```
 
