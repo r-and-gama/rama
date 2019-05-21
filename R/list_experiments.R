@@ -28,7 +28,7 @@ list_experiments <- function(file){
         type <- trimws(substr(type, 1, regexpr("\\s+", type)))
       cbind(experiment, type)
     } else {
-      cbind("experiment" = exp, "type" = "gui_default")
+      cbind("experiment" = exp, "type" = "gui")
     }
   })
   exp_info <- as.data.frame(do.call(rbind, exps), stringsAsFactors = FALSE)
