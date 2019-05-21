@@ -92,33 +92,35 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     seed <- as.integer(seed)
   }
 
-  # if model is a list as a result of read_gaml_experiment already
+  # check if model is a list as a result of read_gaml_experiment already
   if (is.list(model))
     model_info <- list("path" = model$.attrs["sourcePath"],
-                            "info" = model,
-                            "md5sum" = md5sum(model$.attrs["sourcePath"]))
+                       "info" = model,
+                       "md5sum" = md5sum(model$.attrs["sourcePath"]))
   else
     model_info <- list("path" = model,
-                     "info" = read_gaml_experiment(experiment, model),
-                     "md5sum" = md5sum(model))
+                       "info" = read_gaml_experiment(experiment, model),
+                       "md5sum" = md5sum(model))
 
   # cast parameter types
-  types_param <- model_info$info$Parameters[
-    lapply(model_info$info$Parameters, "[[", "name") %in%
-      c(dic_r2g[param_newname])]
-  types <- map_type(unlist(lapply(types_param, function(x) x[["type"]])))
+  if(!is.null(model_info$info$Parameters)){
+    types_param <- model_info$info$Parameters[
+      lapply(model_info$info$Parameters, "[[", "name") %in%
+        c(dic_r2g[param_newname])]
+    types <- map_type(unlist(lapply(types_param, function(x) x[["type"]])))
 
-  if (!all(unlist(lapply(parameters, class)) == types)){
-    message(cat("Parameters' types are cast according to model definition"))
-    functions <- lapply(paste0("as.", types), function(x) match.fun(x))
-    mapply(function(n, f){
-      parameters[, n] <<- f(parameters[, n])
-      invisible()
-    },
-    seq_along(types), functions)
+    if (!all(unlist(lapply(parameters, class)) == types)){
+      message(cat("Parameters' types are cast according to model definition"))
+      functions <- lapply(paste0("as.", types), function(x) match.fun(x))
+      mapply(function(n, f){
+        parameters[, n] <<- f(parameters[, n])
+        invisible()
+      },
+      seq_along(types), functions)
+    }
   }
 
-
+  # construct output
   if (all(ncol(parameters) == 0, ncol(obsrates) != 0)) {
     out <- setNames(cbind(obsrates,
                           tmax = tmax,
@@ -218,7 +220,7 @@ validate_experiment <- function(x) {
     }
   }
 
-  # check parameter consistency between experiment and gaml
+  # check obsrates consistency between experiment and gaml
   if(!is.null(model$info$Outputs)){
     diff <- setdiff(dic_r2g[colnames[[2]]],
                     unlist(lapply(model$info$Outputs, function(x) x[["name"]])))
