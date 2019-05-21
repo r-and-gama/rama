@@ -54,7 +54,7 @@ map_experiment <- function(df, exp) {
     return(validate_experiment(df))
   }
 
-  if (any(names(df) %in% names(exp), nrow(df) == nrow(exp))) {
+  if (all(names(df) %in% names(exp), nrow(df) == nrow(exp))) {
       exp[, names(df)] <- df
       return(validate_experiment(exp))
   }
