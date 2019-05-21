@@ -118,14 +118,29 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     seq_along(types), functions)
   }
 
-  if (ncol(parameters) == 0) {
+
+  if (all(ncol(parameters) == 0, ncol(obsrates) != 0)) {
     out <- setNames(cbind(obsrates,
+                          tmax = tmax,
+                          seed = seed,
+                          output = output),
+                    c(grep("r_", newnames, value = TRUE, invert = TRUE),
+                      "tmax", "seed", "output"))
+  }
+  if (all(ncol(parameters) != 0, ncol(obsrates) == 0)) {
+    out <- setNames(cbind(parameters,
                           tmax = tmax,
                           seed = seed,
                           output = output),
                     c(grep("p_", newnames, value = TRUE, invert = TRUE),
                       "tmax", "seed", "output"))
-  } else {
+  }
+  if (all(ncol(parameters) == 0, ncol(obsrates) == 0)) {
+    out <- as.data.frame(cbind(tmax = tmax,
+                          seed = seed,
+                          output = output))
+  }
+  if (all(ncol(parameters) != 0, ncol(obsrates) != 0)) {
     out <- setNames(cbind(parameters,
                           obsrates,
                           tmax = tmax,
