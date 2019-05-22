@@ -46,7 +46,7 @@ exp$p_Initial_number_of_predators_ <- 100L
 exp$tmax <- 100L
 
 # to run the experiment (do not run)
-#out <- run_experiment(exp)
+#out <- run_experiment(exp, hpc = 2)
 
 # to visualize the output
 with(out[[1]], plot(Step, `Number of preys`, type = "l", lwd = 2, col = "red"))
