@@ -60,7 +60,7 @@ retrieve_results <- function(outfile, exp) {
   names(tmp) <- new_name
   tmp$Step <- c(0:(dim(tmp)[1] - 1))
   tmp <- tmp[, c("Step", new_name)]
-  attr(tmp, "path") <- outfile
+  attr(tmp, "path") <- paste0(dirname(outfile), "/output/", basename(outfile))
   tmp
 }
 
@@ -91,9 +91,10 @@ create_outdir <- function(dir) {
 #' two folder: \code{output} containing the result in XML and \code{input}
 #' containing the model file associated in GAML and the XML associated to the
 #' object `exp` inputted in the function. \cr\cr
-#' If the arguments \code{display} & \code{save} are equal to \code{TRUE}, a
-#' folder \code{images} is add into the folder \code{output}, and contained
-#' the display output from GAMA.
+#' If the argument \code{display} is equal to \code{TRUE}, the argument
+#' \code{save} is automaticaly set to \code{TRUE}, a folder \code{snapshot} is
+#' add into the folder \code{output}, and contained the display output from
+#' GAMA.
 #'
 #' @param exp an XML file containing the experiment.
 #' @param hpc number of threads used by GAMA to run the experiment.
@@ -102,8 +103,7 @@ create_outdir <- function(dir) {
 #'             If \code{save = TRUE} and \code{path} is not
 #'             specified, current working directory is used to save the outputs.
 #' @param display output images are saved or not, default = FALSE.
-#' @param append append outputs to experiment, default = TRUE. It is not possible
-#'                to set both \code{add_exp} and `save` as \code{FALSE}.
+#' @param append append outputs to experiment, default = TRUE.
 #'
 #' @example inst/examples/run_experiment.R
 #' @export
@@ -115,13 +115,32 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   if (!is.experiment(exp))
     stop("The argument \"exp\" is not an object of class \"experiment\".")
 
-  # after-run operations
-  if (isFALSE(save) && isFALSE(append))
-    stop("Outputs need to be saved either on disk or in experiment object.")
+  if (isTRUE(display)) {
+    save <- TRUE
+    message(cat("if \"display\" equal TRUE, \"save\" is automatically set to ",
+                "TRUE."))
+  }
 
   # make output directory
-  output_dir <- tempfile(tmpdir = tempdir())
-  dir.create(output_dir)
+  if (isTRUE(save)) {
+
+    if (is.null(path)) {
+      path <- getwd()
+      message(cat("Outputs are saved to \"", path, "\" by default.", sep = ""))
+    }
+    output_dir <- paste0(path, "/", name(exp))
+
+    i <- 0
+    while (file.exists(output_dir)) {
+      i <- i + 1
+      output_dir <- paste0(path, "/", name(exp), "_", i)
+    }
+    warning(paste0("Outputs are saved in \"", output_dir, "\"."))
+    create_outdir(output_dir)
+  } else {
+    output_dir <- tempfile(tmpdir = tempdir())
+    dir.create(output_dir)
+  }
 
   # generate xml file from exp
   parameter_xml_file <- save_to_gama(validate_experiment(exp),
@@ -135,33 +154,26 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   # Correct NA observations
   out <- realexp(out, exp)
 
-  # Save input and output in path
-  if (isTRUE(save)) {
+  # Move files in folders
+  dir.create(paste0(output_dir, "/input"), showWarnings = FALSE)
+  file.copy(parameter_xml_file, paste0(output_dir, "/input"))
+  file.remove(parameter_xml_file)
+  file.copy(model(exp)$path, paste0(output_dir, "/input"))
+  dir.create(paste0(output_dir, "/output"), showWarnings = FALSE)
+  file.copy(outfiles, paste0(output_dir, "/output"))
+  file.remove(outfiles)
 
-    if (is.null(path)) {
-      path <- getwd()
-      message(cat("Outputs are saved to \"", path, "\" by default.", sep = ""))
-    }
-    dir <- paste0(path, "/", name(exp))
-
-    i <- 0
-    while (file.exists(dir)) {
-      i <- i + 1
-      dir <- paste0(path, "/", name(exp), "_", i)
-    }
-    warning(paste0("Outputs are saved in \"", dir, "\"."))
-    create_outdir(dir)
-    file.copy(parameter_xml_file, paste0(dir, "/input"))
-    file.copy(model(exp)$path, paste0(dir, "/input"))
-    file.copy(outfiles, paste0(dir, "/output"))
-
-    if (isTRUE(display)) {
-      if (file.exists(paste0(output_dir, "/snapshot")))
-        file.copy(paste0(output_dir, "/snapshot"), paste0(dir, "/output"),
-                  recursive = TRUE)
-    }
+  if (isTRUE(display)) {
+    if (file.exists(paste0(output_dir, "/snapshot"))) {
+      file.copy(paste0(output_dir, "/snapshot"),
+                paste0(output_dir, "/output"), recursive = TRUE)
+      unlink(paste0(output_dir, "/snapshot"), recursive = TRUE)
+     }
+  } else {
+    unlink(paste0(output_dir, "/snapshot"), recursive = TRUE)
   }
 
+  # append result on experiment object
   if (isTRUE(append)) {
     old_attr <- attributes(exp)
     exp <- transform(exp, output = out)
