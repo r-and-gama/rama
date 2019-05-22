@@ -16,7 +16,7 @@ realexp <- function(output, exp) {
   mapply(function(nbrow, obsper, df) {
     xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
     ys <- sapply(paste0("^", names(xs), "$"), grep, names(df))
-    df[, ys] <- mapply(replace, df[, ys], xs, NA)
+    df[, ys] <- mapply(replace, df[, ys, drop = FALSE], xs, NA)
     return(df)
   },
   lapply(output, nrow),
@@ -48,7 +48,7 @@ retrieve_results <- function(outfile, exp) {
 
   # Tidy the output
   tmp2 <- lapply(seq_len(dim(tmp)[2]), function(x) {
-    suppressWarnings(if (is.numeric(as.numeric(tmp[, x]))) {
+    suppressWarnings(if (!is.na(as.numeric(tmp[, x]))) {
       tmp[, x] <- as.numeric(tmp[, x])
     } else {
       tmp[, x]
@@ -156,10 +156,9 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     file.copy(outfiles, paste0(dir, "/output"))
 
     if (isTRUE(display)) {
-      images <- paste0(dir, "/output/images")
-      dir.create(images)
-      if (file.exists(paste0(output_dir, "/images")))
-        file.copy(paste0(output_dir, "/images"), images, recursive = TRUE)
+      if (file.exists(paste0(output_dir, "/snapshot")))
+        file.copy(paste0(output_dir, "/snapshot"), paste0(dir, "/output"),
+                  recursive = TRUE)
     }
   }
 
