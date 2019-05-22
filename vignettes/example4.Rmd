@@ -65,7 +65,7 @@ exp$r_map <- 30 * 24 ## save the corresponding bit map every 30 days
 exp[,"p_simulation_id"] <-  seq(n_sim) # method to avoid duplication of rows
 
 ## Run the experiments
-out <- run_experiment(exp)
+out <- run_experiment(exp, hpc = 2)
 
 ```
 

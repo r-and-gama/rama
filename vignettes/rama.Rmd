@@ -279,7 +279,7 @@ model(exp1)$md5sum
 ```
 
 ```{r, eval=FALSE}
-output <- run_experiment(exp1)
+output <- run_experiment(exp1, hpc = 2)
 ```
 
 

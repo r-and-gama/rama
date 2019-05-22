@@ -44,7 +44,7 @@ the display output from GAMA.
 gaml_file <- system.file("models", "sir.gaml", package = "rama")
 exp1 <- load_experiment("sir", gaml_file)
 # run experiment
-out <- run_experiment(exp1)
+out <- run_experiment(exp1, hpc = 2)
 
 # for a more complexe example
 exp1 <- repl(exp1, 2)
@@ -54,5 +54,5 @@ output <- run_experiment(exp1)
 str(output)
 
 # to save the experiment input and output (by default in the working directory)
-output <- run_experiment(exp1, save = TRUE)
+output <- run_experiment(exp1, hpc = 2, save = TRUE)
 }

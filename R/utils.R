@@ -3,7 +3,8 @@ map_type <- function(x) {
   types <- c("INT" = "integer",
              "FLOAT" = "numeric",
              "STRING" = "character",
-             "BOOLEAN" = "logical")
+             "BOOLEAN" = "logical",
+             "UNDEFINED" = "character")
   unlist(lapply(x, function(y) types[[y]]))
 }
 
