@@ -127,11 +127,6 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   # run all the experiments
   outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
 
-  # get variables names
-  vars <- names(exp)[grep("r_", names(exp))]
-  vars <- substring(vars, 3)
-  vars <- as.vector(attr(exp, "dic_g2r")[vars])
-
   # retrieve all the variables of all the experiments:
   out <- lapply(outfiles, retrieve_results, exp)
 
