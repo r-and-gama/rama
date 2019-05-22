@@ -20,8 +20,7 @@ specified, current working directory is used to save the outputs.}
 
 \item{display}{output images are saved or not, default = FALSE.}
 
-\item{append}{append outputs to experiment, default = TRUE. It is not possible
-to set both \code{add_exp} and `save` as \code{FALSE}.}
+\item{append}{append outputs to experiment, default = TRUE.}
 }
 \description{
 From an \code{experiment} object, run an experiment by creating an XML file
@@ -35,9 +34,10 @@ of the experiment of the object \code{exp} is created. The folder contains
 two folder: \code{output} containing the result in XML and \code{input}
 containing the model file associated in GAML and the XML associated to the
 object `exp` inputted in the function. \cr\cr
-If the arguments \code{display} & \code{save} are equal to \code{TRUE}, a
-folder \code{images} is add into the folder \code{output}, and contained
-the display output from GAMA.
+If the argument \code{display} is equal to \code{TRUE}, the argument
+\code{save} is automaticaly set to \code{TRUE}, a folder \code{snapshot} is
+add into the folder \code{output}, and contained the display output from
+GAMA.
 }
 \examples{
 #load experiment
