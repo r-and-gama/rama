@@ -11,13 +11,29 @@ map_type <- function(x) {
 # read gaml experiment ---------------------------------------------------------
 read_gaml_experiment <- function(exp, model) {
   tmp <- tempfile(fileext = ".xml")
-  system(paste0("java -jar ", getOption("rama.startjar"),
-                " -Xms", getOption("rama.Xms"),
-                " -Xmx", getOption("rama.Xmx"),
-                " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
-                " -application msi.gama.headless.id4 -xml '",
-                exp, "' '", model, "' ", tmp, " > /dev/null"),
-         ignore.stdout = TRUE, ignore.stderr = TRUE)
+  err <- tempfile(fileext = ".stderr")
+
+  exp <- paste0("\'", exp, "\'", collapse = "")
+  model <- paste0("\'", model, "\'", collapse = "")
+  system2(command = 'java',
+          args = c('-jar',
+                   getOption("rama.startjar"),
+                   '-Xms',
+                   getOption("rama.Xms"),
+                   '-Xmx',
+                   getOption("rama.Xmx"),
+                   '-Djava.awt.headless=true org.eclipse.core.launcher.Main',
+                   '-application msi.gama.headless.id4 -xml',
+                   exp,
+                   model,
+                   tmp,
+                   '> /dev/null'),
+          stderr = err)
+
+  err <- readLines(err)
+  if(length(err) > 0)
+    message(paste0("Errors from gama headless: \n", err))
+
   unlink("workspace", TRUE, TRUE)
 
   if (file.exists(tmp)) return(XML::xmlToList(XML::xmlParse(tmp))$Simulation)
