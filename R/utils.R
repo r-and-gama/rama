@@ -1,6 +1,10 @@
 # map gama and R data types
 map_type <- function(x) {
-  types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
+  types <- c("INT" = "integer",
+             "FLOAT" = "numeric",
+             "STRING" = "character",
+             "BOOLEAN" = "logical",
+             "UNDEFINED" = "character")
   unlist(lapply(x, function(y) types[[y]]))
 }
 
@@ -11,8 +15,8 @@ read_gaml_experiment <- function(exp, model) {
                 " -Xms", getOption("rama.Xms"),
                 " -Xmx", getOption("rama.Xmx"),
                 " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
-                " -application msi.gama.headless.id4 -xml ",
-                exp, " '", model, "' ", tmp, " > /dev/null"),
+                " -application msi.gama.headless.id4 -xml '",
+                exp, "' '", model, "' ", tmp, " > /dev/null"),
          ignore.stdout = TRUE, ignore.stderr = TRUE)
   unlink("workspace", TRUE, TRUE)
 
@@ -22,7 +26,7 @@ read_gaml_experiment <- function(exp, model) {
 
 # test special characters ------------------------------------------------------
 test_schar <- function(x) {
-  if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
+  if (any(grepl("[\\']", x))) {
     stop(paste0("The rama package does not support the specials characters `<`",
                 ", `>`, `&` and `'` in parameters,",
                 " outputs and experiments names."))
@@ -39,6 +43,7 @@ check_experiment <- function(exp, model) {
   if (!exp %in% model_info$.attrs["experiment"])
     stop(paste0("There is no experiment named \"", exp, "\" in ",
                 basename(model_info$.attrs["sourcePath"])))
+  test_schar(exp)
   invisible(0)
 }
 

@@ -3,10 +3,8 @@ get_parameters <- function(x) {
   parameters <- x[["Parameters"]]
   if (is.null(parameters)) return(NULL)
   x2 <- do.call(rbind, parameters)
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "value"])))
+  x3 <- data.frame(as.list(x2[, "value"]), stringsAsFactors = FALSE)
   x3 <- setNames(x3, x2[, "name"])
-  sel <- grep("INT", x2[, "type"])
-  if (length(sel) > 0) x3[, sel] <- lapply(x3[, sel], as.integer)
   x3
 }
 
@@ -17,9 +15,8 @@ get_variables <- function(x) {
   outputs <- x[["Outputs"]]
   if (is.null(outputs)) return(NULL)
   x2 <- do.call(rbind, outputs)
-  x3 <- do.call(data.frame, as.list(as.numeric(x2[, "framerate"])))
+  x3 <- data.frame(as.list(x2[, "framerate"]), stringsAsFactors = FALSE)
   x3 <- setNames(x3, x2[, "name"])
-  x3[] <- lapply(x3, as.integer) # frame rates are necessarily integers.
   x3
 }
 
@@ -32,8 +29,6 @@ get_attributes <- function(x) {
     data.frame(..., stringsAsFactors = FALSE),
     as.list(x$.attrs[c("finalStep", "seed", "sourcePath", "experiment")])),
     c("tmax", "seed", "gaml", "experiment"))
-  out$tmax <- as.integer(out$tmax)
-  out$seed <- as.numeric(out$seed)
   out
 }
 
@@ -58,7 +53,7 @@ get_attributes <- function(x) {
 #'
 #' @export
 load_experiment <- function(exp, model) {
-
+  test_schar(exp)
   # Reading GAML file:
   message(cat("Loading experiment \"", exp,
                  "\" from file \"", basename(model), "\"...", sep = ""))
@@ -81,5 +76,5 @@ load_experiment <- function(exp, model) {
 
   # Returning experiment object:
   experiment(parameters$out, variables$out, out_attr$tmax, out_attr$seed,
-             exp, model, c(parameters$dic_g2r, variables$dic_g2r))
+             exp, out, c(parameters$dic_g2r, variables$dic_g2r))
 }

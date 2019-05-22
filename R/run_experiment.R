@@ -15,7 +15,7 @@ realexp <- function(output, exp) {
   op <- obs_rates(exp)
   mapply(function(nbrow, obsper, df) {
     xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
-    ys <- sapply(names(xs), grep, names(df))
+    ys <- sapply(paste0("^", names(xs), "$"), grep, names(df))
     df[, ys] <- mapply(replace, df[, ys], xs, NA)
     return(df)
   },
@@ -110,6 +110,8 @@ create_outdir <- function(dir) {
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
                            display = FALSE, append = TRUE) {
 
+  if(all(ncol(parameters(exp)) == 0, ncol(obs_rates(exp)) == 0))
+    return(exp)
   if (!is.experiment(exp))
     stop("The argument \"exp\" is not an object of class \"experiment\".")
 
@@ -126,11 +128,6 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
                                      filename = NULL, path = output_dir)
   # run all the experiments
   outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
-
-  # get variables names
-  vars <- names(exp)[grep("r_", names(exp))]
-  vars <- substring(vars, 3)
-  vars <- as.vector(attr(exp, "dic_g2r")[vars])
 
   # retrieve all the variables of all the experiments:
   out <- lapply(outfiles, retrieve_results, exp)
@@ -152,9 +149,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
       i <- i + 1
       dir <- paste0(path, "/", name(exp), "_", i)
     }
-    warning(paste0("\"", paste0(path, "/", name(exp)),
-                   "\" already exists. Outputs are saved in \"", dir, "\"."))
-
+    warning(paste0("Outputs are saved in \"", dir, "\"."))
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
     file.copy(model(exp)$path, paste0(dir, "/input"))
