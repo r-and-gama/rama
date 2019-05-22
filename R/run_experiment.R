@@ -15,7 +15,7 @@ realexp <- function(output, exp) {
   op <- obs_rates(exp)
   mapply(function(nbrow, obsper, df) {
     xs <- lapply(obsper, function(by) setdiff(1:nbrow, seq(1, nbrow, by)))
-    ys <- sapply(names(xs), grep, names(df))
+    ys <- sapply(paste0("^", names(xs), "$"), grep, names(df))
     df[, ys] <- mapply(replace, df[, ys], xs, NA)
     return(df)
   },
