@@ -50,7 +50,7 @@ out <- run_experiment(exp1, hpc = 2)
 exp1 <- repl(exp1, 2)
 exp1$r_R <- 2L:3L
 exp1$tmax <- 2L
-output <- run_experiment(exp1)
+output <- run_experiment(exp1, hpc = 2)
 str(output)
 
 # to save the experiment input and output (by default in the working directory)
