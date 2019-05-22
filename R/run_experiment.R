@@ -38,7 +38,7 @@ realexp <- function(output, exp) {
 #'
 #' @importFrom XML xmlToDataFrame
 #' @noRd
-retrieve_results <- function(outfile, exp) {
+retrieve_results <- function(outfile, exp, display) {
   # Extract a data frame
   tmp <- XML::xmlToDataFrame(XML::xmlParse(outfile), stringsAsFactors = F)
   # Extract names of the variable
@@ -48,9 +48,13 @@ retrieve_results <- function(outfile, exp) {
 
   # Tidy the output
   tmp2 <- lapply(seq_len(dim(tmp)[2]), function(x) {
-    suppressWarnings(if (!is.na(as.numeric(tmp[, x]))) {
+    suppressWarnings(if (all(!is.na(as.numeric(tmp[, x])))) {
       tmp[, x] <- as.numeric(tmp[, x])
     } else {
+      if (all(file.exists(paste0(dirname(outfile), "/snapshot/", tmp[,x])),
+              isTRUE(display))) {
+        tmp[, x] <- paste0(dirname(outfile), "/output/snapshot/", tmp[,x])
+      }
       tmp[, x]
     })
   })
@@ -149,7 +153,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   outfiles <- call_gama(parameter_xml_file, hpc, output_dir)
 
   # retrieve all the variables of all the experiments:
-  out <- lapply(outfiles, retrieve_results, exp)
+  out <- lapply(outfiles, retrieve_results, exp, display)
 
   # Correct NA observations
   out <- realexp(out, exp)
