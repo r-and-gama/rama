@@ -26,6 +26,7 @@ read_gaml_experiment <- function(exp, model) {
                    '-application msi.gama.headless.id4 -xml',
                    exp,
                    model,
+                   '-hpc 2',
                    tmp,
                    '> /dev/null'),
           stderr = err)
