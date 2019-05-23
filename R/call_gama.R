@@ -48,13 +48,29 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
   if (isWindows() == FALSE) {
     output_display <- ">/dev/null"
   }
-  gama_command <- system(
-    paste0("java -jar \"", getOption("rama.startjar"), "\" -Xms",
-           getOption("rama.Xms"), " -Xmx", getOption("rama.Xmx"),
-           " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
-           "-application msi.gama.headless.id4 -hpc ", hpc, " \"",
-           parameter_xml_file, "\" \"", output_dir, "\"", output_display),
-    ignore.stdout = F, ignore.stderr = T)
+
+  err <- tempfile(fileext = ".stderr")
+  gama_command <- system2(
+    command = 'java',
+    args = c('-jar',
+             getOption("rama.startjar"),
+             '-Xms',
+             getOption("rama.Xms"),
+             '-Xmx',
+             getOption("rama.Xmx"),
+             '-Djava.awt.headless=true org.eclipse.core.launcher.Main',
+             '-application msi.gama.headless.id4',
+             '-hpc',
+             hpc,
+             parameter_xml_file,
+             output_dir,
+             output_display),
+    stderr = err)
+  err <- readLines(err)
+  if(length(err) > 0){
+    message("Errors from gama headless:")
+    message(paste0(err, sep = "\n"))
+  }
 
   if (gama_command > 0)
       stop(paste0("Gama fails to run your experiment."))

@@ -31,8 +31,10 @@ read_gaml_experiment <- function(exp, model) {
           stderr = err)
 
   err <- readLines(err)
-  if(length(err) > 0)
-    message(paste0("Errors from gama headless: \n", err))
+  if(length(err) > 0){
+    message("Errors from gama headless:")
+    message(paste0(err, sep = "\n"))
+  }
 
   unlink("workspace", TRUE, TRUE)
 

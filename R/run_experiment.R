@@ -140,7 +140,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
 
     if (is.null(path)) {
       path <- getwd()
-      message(cat("Outputs are saved to \"", path, "\" by default.", sep = ""))
+      message(paste0("Outputs are saved to \"", path, "\" by default.", sep = ""))
     }
     dir <- paste0(path, "/", name(exp))
 
@@ -149,7 +149,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
       i <- i + 1
       dir <- paste0(path, "/", name(exp), "_", i)
     }
-    warning(paste0("Outputs are saved in \"", dir, "\"."))
+    message(paste0("Outputs are saved to \"", dir, "\"."))
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
     file.copy(model(exp)$path, paste0(dir, "/input"))
