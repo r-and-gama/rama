@@ -11,6 +11,7 @@ map_type <- function(x) {
 # read gaml experiment ---------------------------------------------------------
 read_gaml_experiment <- function(exp, model) {
   tmp <- tempfile(fileext = ".xml")
+  logFile <- paste0(getwd(), "/read_gaml.log")
 
   exp <- paste0("\'", exp, "\'", collapse = "")
   model <- paste0("\'", model, "\'", collapse = "")
@@ -34,14 +35,24 @@ read_gaml_experiment <- function(exp, model) {
                    shQuote(stdoutFile),
                    '2>',
                    shQuote(stderrFile)))
+
+  if(file.exists(getOption("rama.log")))
+    file.copy(from = getOption("rama.log"),
+              to = logFile)
   run$stdout = readLines(stdoutFile)
   run$stderr = readLines(stderrFile)
-  unlink(c(stdoutFile, stderrFile))
 
   if(length(run$stdout) > 0)
-    message(run$stdout)
+    message(paste0("An error has occurred in gama.\nSee the log file", logFile))
 
-  if (file.exists(tmp)) return(XML::xmlToList(XML::xmlParse(tmp))$Simulation)
+  unlink(getOption("rama.workspace"), TRUE, TRUE)
+  unlink(c(stdoutFile, stderrFile))
+
+  if (file.exists(tmp)){
+    xml <- XML::xmlToList(XML::xmlParse(tmp))$Simulation
+    unlink(tmp)
+    return(xml)
+  }
   stop(paste0("Gama fails to read your experiment"))
 }
 

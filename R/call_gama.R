@@ -41,6 +41,7 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
 
   if (!dir.exists(output_dir))
     dir.create(output_dir, recursive = TRUE)
+  logFile <- paste0(output_dir, "/run_gama.log")
 
   cat("Running experiment plan... \n")
 
@@ -69,10 +70,14 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
 
   run$stdout = readLines(stdoutFile)
   run$stderr = readLines(stderrFile)
+  if(file.exists(getOption("rama.log")))
+    file.copy(from = getOption("rama.log"), to = logFile)
+
   unlink(c(stdoutFile, stderrFile))
+  unlink(getOption("rama.workspace"), TRUE, TRUE)
 
   if(length(run$stdout) > 0)
-    message(run$stdout)
+    message(paste0("An error has occurred in gama.\nSee the log file", logFile))
 
   if (run$exitStatus > 0)
       stop(paste0("Gama fails to run your experiment."))
