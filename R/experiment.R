@@ -181,8 +181,8 @@ validate_experiment <- function(x) {
            is.integer(x$tmax)))
     stop("The end steps of simulations should be positive integers.")
 
-  if (!any(is.null(x$seed), is.integer(x$seed)))
-    stop("Seed values should be integers")
+  if (!any(is.null(x$seed), is.numeric(x$seed)))
+    stop("Seed values should be numeric")
 
   # check parameter consistency between experiment and gaml
 
