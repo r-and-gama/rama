@@ -11,11 +11,13 @@ map_type <- function(x) {
 # read gaml experiment ---------------------------------------------------------
 read_gaml_experiment <- function(exp, model) {
   tmp <- tempfile(fileext = ".xml")
-  err <- tempfile(fileext = ".stderr")
 
   exp <- paste0("\'", exp, "\'", collapse = "")
   model <- paste0("\'", model, "\'", collapse = "")
-  system2(command = 'java',
+  stderrFile <- tempfile(fileext = ".stderr")
+  stdoutFile <- tempfile(fileext = ".stdout")
+  run <- list()
+  run$exitStatus <- system2(command = 'java',
           args = c('-jar',
                    getOption("rama.startjar"),
                    '-Xms',
@@ -23,21 +25,21 @@ read_gaml_experiment <- function(exp, model) {
                    '-Xmx',
                    getOption("rama.Xmx"),
                    '-Djava.awt.headless=true org.eclipse.core.launcher.Main',
-                   '-application msi.gama.headless.id4 -xml',
+                   '-application msi.gama.headless.id4 -v -hpc 2',
+                   '-xml',
                    exp,
                    model,
-                   '-hpc 2',
                    tmp,
-                   '> /dev/null'),
-          stderr = err)
+                   '>',
+                   shQuote(stdoutFile),
+                   '2>',
+                   shQuote(stderrFile)))
+  run$stdout = readLines(stdoutFile)
+  run$stderr = readLines(stderrFile)
+  unlink(c(stdoutFile, stderrFile))
 
-  err <- readLines(err)
-  if(length(err) > 0){
-    message("Errors from gama headless:")
-    message(paste0(err, sep = "\n"))
-  }
-
-  unlink("workspace", TRUE, TRUE)
+  if(length(run$stdout) > 0)
+    message(run$stdout)
 
   if (file.exists(tmp)) return(XML::xmlToList(XML::xmlParse(tmp))$Simulation)
   stop(paste0("Gama fails to read your experiment"))

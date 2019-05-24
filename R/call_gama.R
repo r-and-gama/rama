@@ -44,35 +44,37 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
 
   cat("Running experiment plan... \n")
 
-  output_display <- ""
-  if (isWindows() == FALSE) {
-    output_display <- ">/dev/null"
-  }
+  stderrFile <- tempfile(fileext = ".stderr")
+  stdoutFile <- tempfile(fileext = ".stdout")
+  run <- list()
+  run$exitStatus <- system2(
+                        command = 'java',
+                        args = c('-jar',
+                                 getOption("rama.startjar"),
+                                 '-Xms',
+                                 getOption("rama.Xms"),
+                                 '-Xmx',
+                                 getOption("rama.Xmx"),
+                                 '-Djava.awt.headless=true org.eclipse.core.launcher.Main',
+                                 '-application msi.gama.headless.id4',
+                                 '-hpc',
+                                 hpc,
+                                 '-v',
+                                 parameter_xml_file,
+                                 output_dir,
+                                 '>',
+                                 shQuote(stdoutFile),
+                                 '2>',
+                                 shQuote(stderrFile)))
 
-  err <- tempfile(fileext = ".stderr")
-  gama_command <- system2(
-    command = 'java',
-    args = c('-jar',
-             getOption("rama.startjar"),
-             '-Xms',
-             getOption("rama.Xms"),
-             '-Xmx',
-             getOption("rama.Xmx"),
-             '-Djava.awt.headless=true org.eclipse.core.launcher.Main',
-             '-application msi.gama.headless.id4',
-             '-hpc',
-             hpc,
-             parameter_xml_file,
-             output_dir,
-             output_display),
-    stderr = err)
-  err <- readLines(err)
-  if(length(err) > 0){
-    message("Errors from gama headless:")
-    message(paste0(err, sep = "\n"))
-  }
+  run$stdout = readLines(stdoutFile)
+  run$stderr = readLines(stderrFile)
+  unlink(c(stdoutFile, stderrFile))
 
-  if (gama_command > 0)
+  if(length(run$stdout) > 0)
+    message(run$stdout)
+
+  if (run$exitStatus > 0)
       stop(paste0("Gama fails to run your experiment."))
 
   # remove empty output
