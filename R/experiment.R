@@ -49,6 +49,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   stopifnot(all(is.character(model), length(model) == 1) ||
               all(is.list(model), length(model) == 3))
 
+  stopifnot(!is.na(as.numeric(tmax)))
+  stopifnot(!is.na(as.numeric(seed)))
   # Generating new names:
   names_param <- names(parameters)
   names_obsrates <- names(obsrates)
@@ -85,11 +87,11 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     tmax <- as.integer(tmax)
   }
 
-  # seed can't be double in gama?, to be confirmed
-  if (!all(is.integer(seed))) {
+  # seed has to be numeric
+  if (!is.numeric(seed)) {
     message(cat(
-      "Seed is converted into integer."))
-    seed <- as.integer(seed)
+      "Seed is converted into numeric."))
+    seed <- as.numeric(seed)
   }
 
   # check if model is a list as a result of read_gaml_experiment already
