@@ -98,9 +98,12 @@ create_outdir <- function(dir) {
 #' If the argument \code{display} is equal to \code{TRUE}, the argument
 #' \code{save} is automaticaly set to \code{TRUE}, a folder \code{snapshot} is
 #' add into the folder \code{output}, and contained the display output from
-#' GAMA.
+#' GAMA.\cr\cr
+#' If the object \code{exp} contains no \code{obs_rates}, the object \code{exp}
+#' is returned without calling gama. In this case, the column \code{output}
+#' is returned with \code{NA}.
 #'
-#' @param exp an XML file containing the experiment.
+#' @param exp an object of class experiment.
 #' @param hpc number of threads used by GAMA to run the experiment.
 #' @param save save the outputs to disk or not, default = FALSE.
 #' @param path directory to save the outputs, default = NULL.
@@ -114,7 +117,7 @@ create_outdir <- function(dir) {
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
                            display = FALSE, append = TRUE) {
 
-  if(all(ncol(parameters(exp)) == 0, ncol(obs_rates(exp)) == 0))
+  if (ncol(obs_rates(exp)) == 0)
     return(exp)
   if (!is.experiment(exp))
     stop("The argument \"exp\" is not an object of class \"experiment\".")

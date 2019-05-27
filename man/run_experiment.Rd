@@ -8,7 +8,7 @@ run_experiment(exp, hpc = 1, save = FALSE, path = NULL,
   display = FALSE, append = TRUE)
 }
 \arguments{
-\item{exp}{an XML file containing the experiment.}
+\item{exp}{an object of class experiment.}
 
 \item{hpc}{number of threads used by GAMA to run the experiment.}
 
@@ -37,7 +37,10 @@ object `exp` inputted in the function. \cr\cr
 If the argument \code{display} is equal to \code{TRUE}, the argument
 \code{save} is automaticaly set to \code{TRUE}, a folder \code{snapshot} is
 add into the folder \code{output}, and contained the display output from
-GAMA.
+GAMA.\cr\cr
+If the object \code{exp} contains no \code{obs_rates}, the object \code{exp}
+is returned without calling gama. In this case, the column \code{output}
+is returned with \code{NA}.
 }
 \examples{
 #load experiment
