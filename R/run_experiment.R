@@ -169,8 +169,6 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     attributes(exp) <- old_attr
   }
 
-  # deleting the "workspace" folder:
-  unlink("workspace", TRUE, TRUE)
 
   # return experiment:
   exp
