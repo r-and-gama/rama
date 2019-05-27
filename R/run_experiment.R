@@ -110,7 +110,7 @@ create_outdir <- function(dir) {
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
                            display = FALSE, append = TRUE) {
 
-  if(all(ncol(parameters(exp)) == 0, ncol(obs_rates(exp)) == 0))
+  if (ncol(obs_rates(exp)) == 0)
     return(exp)
   if (!is.experiment(exp))
     stop("The argument \"exp\" is not an object of class \"experiment\".")
