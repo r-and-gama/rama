@@ -143,6 +143,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
     out <- as.data.frame(cbind(tmax = tmax,
                           seed = seed,
                           output = output))
+    out$tmax <- as.integer(out$tmax)
   }
   if (all(ncol(parameters) != 0, ncol(obsrates) != 0)) {
     out <- setNames(cbind(parameters,
