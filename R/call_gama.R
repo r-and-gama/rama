@@ -44,7 +44,7 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
   logFile <- paste0(output_dir, "/run_gama.log")
 
   cat("Running experiment plan... \n")
-
+  parameter_xml_file <- paste0("\'", parameter_xml_file, "\'", collapse = "")
   stderrFile <- tempfile(fileext = ".stderr")
   stdoutFile <- tempfile(fileext = ".stdout")
   run <- list()
