@@ -142,7 +142,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
       i <- i + 1
       output_dir <- paste0(path, "/", name(exp), "_", i)
     }
-    warning(paste0("Outputs are saved in \"", output_dir, "\"."))
+   message(cat("Outputs are saved in \"", output_dir, "\"."))
     create_outdir(output_dir)
   } else {
     output_dir <- tempfile(tmpdir = tempdir())
