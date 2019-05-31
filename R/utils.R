@@ -1,28 +1,64 @@
 # map gama and R data types
 map_type <- function(x) {
-  types <- c("INT" = "integer", "FLOAT" = "numeric", "STRING" = "character")
+  types <- c("INT" = "integer",
+             "FLOAT" = "numeric",
+             "STRING" = "character",
+             "BOOLEAN" = "logical",
+             "UNDEFINED" = "character")
   unlist(lapply(x, function(y) types[[y]]))
 }
 
 # read gaml experiment ---------------------------------------------------------
 read_gaml_experiment <- function(exp, model) {
   tmp <- tempfile(fileext = ".xml")
-  system(paste0("java -jar ", getOption("rama.startjar"),
-                " -Xms", getOption("rama.Xms"),
-                " -Xmx", getOption("rama.Xmx"),
-                " -Djava.awt.headless=true org.eclipse.core.launcher.Main",
-                " -application msi.gama.headless.id4 -xml ",
-                exp, " '", model, "' ", tmp, " > /dev/null"),
-         ignore.stdout = TRUE, ignore.stderr = TRUE)
-  unlink("workspace", TRUE, TRUE)
+  logFile <- paste0(getwd(), "/read_gaml.log")
 
-  if (file.exists(tmp)) return(XML::xmlToList(XML::xmlParse(tmp))$Simulation)
+  exp <- paste0("\'", exp, "\'", collapse = "")
+  model <- paste0("\'", model, "\'", collapse = "")
+  stderrFile <- tempfile(fileext = ".stderr")
+  stdoutFile <- tempfile(fileext = ".stdout")
+  run <- list()
+  run$exitStatus <- system2(command = 'java',
+          args = c('-jar',
+                   getOption("rama.startjar"),
+                   '-Xms',
+                   getOption("rama.Xms"),
+                   '-Xmx',
+                   getOption("rama.Xmx"),
+                   '-Djava.awt.headless=true org.eclipse.core.launcher.Main',
+                   '-application msi.gama.headless.id4 -v -hpc 2',
+                   '-xml',
+                   exp,
+                   model,
+                   tmp,
+                   '>',
+                   shQuote(stdoutFile),
+                   '2>',
+                   shQuote(stderrFile)))
+
+  if(file.exists(getOption("rama.log")))
+    file.copy(from = getOption("rama.log"),
+              to = logFile)
+  run$stdout = readLines(stdoutFile)
+  run$stderr = readLines(stderrFile)
+
+  if(length(run$stdout) > 0)
+    message(paste0("An error has occurred in gama.\nSee the log file", logFile))
+
+  unlink(getOption("rama.workspace"), TRUE, TRUE)
+  unlink(c(stdoutFile, stderrFile))
+
+  if (file.exists(tmp)){
+    xml <- XML::xmlToList(XML::xmlParse(tmp))$Simulation
+    unlink(tmp)
+    return(xml)
+  }
   stop(paste0("Gama fails to read your experiment"))
 }
 
 # test special characters ------------------------------------------------------
 test_schar <- function(x) {
-  if (any(grepl("[\\&|\\<|\\>|\\']", x))) {
+  if (any(grepl("[\\']", x))) {
     stop(paste0("The rama package does not support the specials characters `<`",
                 ", `>`, `&` and `'` in parameters,",
                 " outputs and experiments names."))
@@ -39,6 +75,7 @@ check_experiment <- function(exp, model) {
   if (!exp %in% model_info$.attrs["experiment"])
     stop(paste0("There is no experiment named \"", exp, "\" in ",
                 basename(model_info$.attrs["sourcePath"])))
+  test_schar(exp)
   invisible(0)
 }
 

@@ -63,7 +63,6 @@
    <Parameter name="R0" type="FLOAT" value="1"/>
    <Parameter name="beta" type="FLOAT" value="1"/>
    <Parameter name="gamma" type="FLOAT" value="1"/>
->>>>>>> master:inst/models/sir.xml
   </Parameters>
   <Outputs>
    <Output id="0" name="S" framerate="1"/>

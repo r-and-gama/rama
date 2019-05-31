@@ -56,5 +56,5 @@ exp$r_nb_predators <- 1
 exp$r_nb_preys <- 1
 
 # to run the experiment (do not run)
-#out <- run_experiment(exp)
+#out <- run_experiment(exp, hpc = 2)
 ```

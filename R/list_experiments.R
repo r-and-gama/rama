@@ -12,36 +12,27 @@ list_experiments <- function(file){
   }
 
   gaml <- paste(readLines(file, warn = FALSE), collapse = "\n")
-  exp_info <- regexpr("\\nexperiment (.*?)\\{", gaml)
-  exp_info <- substr(gaml, exp_info, exp_info + attr(exp_info, "match.length"))
-  exps <- gsub("\n|experiment|\\{", "", exp_info)
-
- # exps <- str_match_all(gaml,
-  #                      regex("\\nexperiment (.*?)\\{", dotall = TRUE))[[1:2]]
-
-  if (length(exps) < 1)
-    stop(paste0("File \"", file, "\" does not contain any experiment."))
-  exps <- trimws(gsub("\\n+$", "", exps))
-  exp_info <- lapply(exps, function(x) {
-    if (grepl("type", x)) {
-      tmp <- cbind(trimws(substr(x, 1, regexpr("type", x) - 1)),
-        #str_match(x, ".*?(?=\\s+type?)"),
-                   trimws(substr(x, regexpr("type", x) + 5, nchar(x))))
-      #str_match(x, "type\\:(.*)"))[, 2])
-      # if the experiment type contains other information (ex:"gui keep:true")
-      if (grepl(":", tmp[1, 2])) {
-        # remove group of character with ":" (ex:" keep:true")
-        tmp[1, 2] <- gsub(" (.*)\\:(.*)", "", tmp[1, 2])
-        tmp
-      }
+  exp_info <- gregexpr("\\nexperiment (.*?)\\{", gaml)
+  exp_info <- exp_info[[1]]
+  if(any(exp_info == -1)){
+    return(NULL)
+  }
+  exps <- lapply(seq_along(exp_info), function(x) {
+    exp <- substr(gaml, exp_info[x],
+                  exp_info[x] + attr(exp_info, "match.length")[x])
+    exp <- trimws(gsub("\\nexperiment|\\{|\\n+$", "", exp))
+    exp <- gsub("\"", "", exp)
+    if (grepl("type:", exp)) {
+      experiment <- trimws(substr(exp, 1, regexpr("type:", exp) - 1))
+      type <- trimws(substr(exp, regexpr("type:", exp) + 5, nchar(exp)))
+      if(grepl("\\s+", type))
+        type <- trimws(substr(type, 1, regexpr("\\s+", type)))
+      cbind(experiment, type)
     } else {
-      tmp <- cbind(x, "gui")
+      cbind("experiment" = exp, "type" = "gui")
     }
-    tmp
   })
-
-  exp_info <- as.data.frame(do.call(rbind, exp_info), stringsAsFactors = FALSE)
-  names(exp_info) <- c("experiment", "type")
+  exp_info <- as.data.frame(do.call(rbind, exps), stringsAsFactors = FALSE)
   # test if there is special character in experiment name
   test_schar(exp_info$experiment)
   exp_info
