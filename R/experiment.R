@@ -39,8 +39,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   if (!is.na(output)) {
     if (nrow(parameters) > 1) {
       stopifnot(all(is.list(output),
-                  length(output) > 1,
-                  sapply(output, is.data.frame)))
+                    length(output) > 1,
+                    sapply(output, is.data.frame)))
     } else {
       stopifnot(is.data.frame(output))
     }
@@ -141,8 +141,8 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   }
   if (all(ncol(parameters) == 0, ncol(obsrates) == 0)) {
     out <- data.frame(tmax = tmax,
-                          seed = seed,
-                          output = output)
+                      seed = seed,
+                      output = output)
   }
   if (all(ncol(parameters) != 0, ncol(obsrates) != 0)) {
     out <- setNames(cbind(parameters,
@@ -150,7 +150,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                           tmax = tmax,
                           seed = seed,
                           output = output),
-                          c(newnames, "tmax", "seed", "output"))
+                    c(newnames, "tmax", "seed", "output"))
 
   }
   out <- structure(out,
@@ -222,50 +222,6 @@ validate_experiment <- function(x) {
     }
   }
 
-<<<<<<< HEAD
-  diff <- setdiff(dic_r2g[colnames[[1]]],
-                  unlist(lapply(model$info$Parameters,
-                                function(x) x[["name"]])))
-  if (length(diff) > 1) {
-    stop(paste0("The parameters names '", substitute(diff),
-               "' do not correspond to any parameter in the '",
-               basename(model$path), "' file."))
-  } else if (length(diff) > 0) {
-    stop(paste0("The parameter name '", substitute(diff),
-               "' does not correspond to any parameter in the '",
-               basename(model$path), "' file."))
-  }
-
-  diff <- setdiff(dic_r2g[colnames[[2]]],
-                  unlist(lapply(model$info$Outputs, function(x) x[["name"]])))
-  if (length(diff) > 1) {
-    stop(paste0("The variables names '", substitute(diff),
-               "' do not correspond to any variable in the '",
-               basename(model), "' file."))
-  } else if (length(diff) > 0) {
-    stop(paste0("The variable name '", substitute(diff),
-               "' does not correspond to any variable in the '",
-               basename(model$path), "' file."))
-  }
-  # check parameter types (selection of the parametes in gaml file by name)
-  type_r <- sapply(parameters(x), class)
-  names_type_g <- unlist(lapply(model$info$Parameters, "[[", "name"))
-  names_type_g <- dic_g2r[names_type_g]
-  type_g <- lapply(model$info$Parameters, function(x) x[["type"]])
-  type_g <- setNames(type_g, names_type_g)
-  type_g <- map_type(unlist(type_g))
-  diff <- type_r == type_g[names(type_r)]
-  if (!all(diff)) {
-    stop(paste0(
-      "Data type of parameters don't correspond to those declared in the '",
-      basename(model$path), "' file."))
-  }
-
-  # check obs_rates
-  if (!all(sapply(obs_rates(x), is.integer))) {
-    stop(paste0("The observation rates must be interger as declared in '",
-                basename(model$path), "' file."))
-=======
   # check obsrates consistency between experiment and gaml
   if(!is.null(model$info$Outputs)){
     diff <- setdiff(dic_r2g[colnames[[2]]],
@@ -279,7 +235,6 @@ validate_experiment <- function(x) {
                   "' does not correspond to any variable in the '",
                   basename(model$path), "' file."))
     }
->>>>>>> master
   }
 
   # validate snapshot
