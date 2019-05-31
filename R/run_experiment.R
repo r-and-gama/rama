@@ -110,7 +110,7 @@ create_outdir <- function(dir) {
 run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
                            display = FALSE, append = TRUE) {
 
-  if(all(ncol(parameters(exp)) == 0, ncol(obs_rates(exp)) == 0))
+  if (ncol(obs_rates(exp)) == 0)
     return(exp)
   if (!is.experiment(exp))
     stop("The argument \"exp\" is not an object of class \"experiment\".")
@@ -140,7 +140,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
 
     if (is.null(path)) {
       path <- getwd()
-      message(cat("Outputs are saved to \"", path, "\" by default.", sep = ""))
+      message(paste0("Outputs are saved to \"", path, "\" by default.", sep = ""))
     }
     dir <- paste0(path, "/", name(exp))
 
@@ -149,7 +149,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
       i <- i + 1
       dir <- paste0(path, "/", name(exp), "_", i)
     }
-    warning(paste0("Outputs are saved in \"", dir, "\"."))
+    message(paste0("Outputs are saved to \"", dir, "\"."))
     create_outdir(dir)
     file.copy(parameter_xml_file, paste0(dir, "/input"))
     file.copy(model(exp)$path, paste0(dir, "/input"))
@@ -169,8 +169,6 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
     attributes(exp) <- old_attr
   }
 
-  # deleting the "workspace" folder:
-  unlink("workspace", TRUE, TRUE)
 
   # return experiment:
   exp

@@ -19,7 +19,8 @@ set_environment_variables <- function() {
           rama.repo                          = "http://51.255.46.42/releases",
           rama.gama.path                     = "UNKNOWN",
           rama.startjar                      = "UNKNOWN",
-          rama.plugins                       = "UNKNOWN")
+          rama.plugins                       = "UNKNOWN",
+          rama.log                           = paste0(getwd(), "/workspace/.metadata/.log"))
 }
 
 # ------------------------------------------------------------------------------
