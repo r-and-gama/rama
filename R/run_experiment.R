@@ -122,7 +122,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   if (!is.experiment(exp))
     stop("The argument \"exp\" is not an object of class \"experiment\".")
 
-  if (isTRUE(display)) {
+  if (isTRUE(display) & !isTRUE(save)) {
     save <- TRUE
     message(cat("if \"display\" equal TRUE, \"save\" is automatically set to ",
                 "TRUE."))
