@@ -41,22 +41,45 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
 
   if (!dir.exists(output_dir))
     dir.create(output_dir, recursive = TRUE)
+  logFile <- paste0(output_dir, "/run_gama.log")
 
   cat("Running experiment plan... \n")
+  parameter_xml_file <- paste0("\'", parameter_xml_file, "\'", collapse = "")
+  stderrFile <- tempfile(fileext = ".stderr")
+  stdoutFile <- tempfile(fileext = ".stdout")
+  run <- list()
+  run$exitStatus <- system2(
+                        command = 'java',
+                        args = c('-jar',
+                                 getOption("rama.startjar"),
+                                 '-Xms',
+                                 getOption("rama.Xms"),
+                                 '-Xmx',
+                                 getOption("rama.Xmx"),
+                                 '-Djava.awt.headless=true org.eclipse.core.launcher.Main',
+                                 '-application msi.gama.headless.id4',
+                                 '-hpc',
+                                 hpc,
+                                 '-v',
+                                 parameter_xml_file,
+                                 output_dir,
+                                 '>',
+                                 shQuote(stdoutFile),
+                                 '2>',
+                                 shQuote(stderrFile)))
 
-  output_display <- ""
-  if (isWindows() == FALSE) {
-    output_display <- ">/dev/null"
-  }
-  gama_command <- system(
-    paste0("java -jar \"", getOption("rama.startjar"), "\" -Xms",
-           getOption("rama.Xms"), " -Xmx", getOption("rama.Xmx"),
-           " -Djava.awt.headless=true org.eclipse.core.launcher.Main ",
-           "-application msi.gama.headless.id4 -hpc ", hpc, " \"",
-           parameter_xml_file, "\" \"", output_dir, "\"", output_display),
-    ignore.stdout = F, ignore.stderr = T)
+  run$stdout = readLines(stdoutFile)
+  run$stderr = readLines(stderrFile)
+  if(file.exists(getOption("rama.log")))
+    file.copy(from = getOption("rama.log"), to = logFile)
 
-  if (gama_command > 0)
+  unlink(c(stdoutFile, stderrFile))
+  unlink(getOption("rama.workspace"), TRUE, TRUE)
+
+  if(length(run$stdout) > 0)
+    message(paste0("An error has occurred in gama.\nSee the log file", logFile))
+
+  if (run$exitStatus > 0)
       stop(paste0("Gama fails to run your experiment."))
 
   # remove empty output
