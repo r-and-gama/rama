@@ -59,14 +59,17 @@ names_of_left_and_right <- function(x, th) {
 #'
 #' @noRd
 insert_middle <- function(x, n, digits = 4) {
-  x <- round(x, digits)
   a <- names_of_left_and_right(names(x), n)
   if (sum(sapply(a, length)) < length(x)) {
     left <- x[, a[[1]], drop = FALSE]
     right <- x[, a[[2]], drop = FALSE]
     middle <- setNames(data.frame(".", ".", ".",
                                   stringsAsFactors = FALSE), rep(".", 3))
-    return(cbind(left, middle, right))
+    res <- cbind(left, middle, right)
+    res_long <- nchar(names(res)) > 15
+    names(res)[res_long] <- paste0(substr(names(res)[res_long], 1, 15),
+                                   "\u2026")
+    return(res)
   }
   x
 }
