@@ -221,13 +221,7 @@ user-defined vectors of values, see examples.</p>
 #&gt; 1    1    2    0    1.5    0.15   1   1   1 1000    1     NA
 #&gt; 2    2    1    0    1.5    0.15   1   1   1 1000    1     NA
 #&gt; 3    3    1    0    1.5    0.15   1   1   1 1000    1     NA</div><div class='input'><span class='co'># this is:</span>
-<span class='fu'>fullfact</span>(<span class='no'>sir2</span>)</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
-#&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
-#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
-#&gt; observed variables:  r_S, r_I, r_R 
-#&gt; Experiment overview:
-#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed output
+<span class='fu'>fullfact</span>(<span class='no'>sir2</span>)</div><div class='output co'>#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed output
 #&gt; 1    1    2    0    1.5    0.15   1   1   1 1000    1     NA
 #&gt; 2    2    2    0    1.5    0.15   1   1   1 1000    1     NA
 #&gt; 3    3    2    0    1.5    0.15   1   1   1 1000    1     NA
@@ -236,13 +230,7 @@ user-defined vectors of values, see examples.</p>
 #&gt; 6    3    1    0    1.5    0.15   1   1   1 1000    1     NA</div><div class='input'>
 <span class='co'># 2. Second type of use: by providing vectors of values to overwrite elements</span>
 <span class='co'># of the "experiment" object and then expand it into full factorial design:</span>
-<span class='fu'>fullfact</span>(<span class='no'>sir2</span>, <span class='kw'>p_S0</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>p_I0</span> <span class='kw'>=</span> <span class='fl'>4</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; Experiment with 6 simulations of 5 parameters and 3 observed variables
-#&gt; experiment name:  sir 
-#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
-#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
-#&gt; observed variables:  r_S, r_I, r_R 
-#&gt; Experiment overview:
-#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed output
+<span class='fu'>fullfact</span>(<span class='no'>sir2</span>, <span class='kw'>p_S0</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>p_I0</span> <span class='kw'>=</span> <span class='fl'>4</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed output
 #&gt; 1    1    4    0    1.5    0.15   1   1   1 1000    1     NA
 #&gt; 2    2    4    0    1.5    0.15   1   1   1 1000    1     NA
 #&gt; 3    3    4    0    1.5    0.15   1   1   1 1000    1     NA

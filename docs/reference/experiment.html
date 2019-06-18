@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Constructor of experiments — experiment • rama</title>
+<title>Extract or Replace Parts of an Experiment Object — [.experiment • rama</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,10 @@
 
 
 
-<meta property="og:title" content="Constructor of experiments — experiment" />
+<meta property="og:title" content="Extract or Replace Parts of an Experiment Object — [.experiment" />
 
-<meta property="og:description" content="Allows to build an object of class experiment from individual parts." />
+<meta property="og:description" content="Extracts or replaces parts of an experiment object with new value(s).
+Allows to build an object of class experiment from individual parts." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -153,25 +154,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Constructor of experiments</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/experiment.R'><code>R/experiment.R</code></a>, <a href='https://github.com/r-and-gama/rama/blob/master/R/is.experiment.R'><code>R/is.experiment.R</code></a></small>
+    <h1>Extract or Replace Parts of an Experiment Object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-and-gama/rama/blob/master/R/base.R'><code>R/base.R</code></a>, <a href='https://github.com/r-and-gama/rama/blob/master/R/experiment.R'><code>R/experiment.R</code></a>, <a href='https://github.com/r-and-gama/rama/blob/master/R/is.experiment.R'><code>R/is.experiment.R</code></a></small>
     <div class="hidden name"><code>experiment.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Allows to build an object of class <code>experiment</code> from individual parts.</p>
+    <p>Extracts or replaces parts of an <code>experiment</code> object with new value(s).</p>
+<p>Allows to build an object of class <code>experiment</code> from individual parts.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>experiment</span>(<span class='no'>parameters</span>, <span class='no'>obsrates</span>, <span class='no'>tmax</span>, <span class='no'>seed</span>, <span class='no'>experiment</span>, <span class='no'>model</span>,
-  <span class='kw'>dic</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"># S3 method for experiment
+[(exp, i, j, ..., drop = TRUE)
 
-<span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</pre>
+experiment(parameters, obsrates, tmax, seed, experiment, model,
+  dic = NULL)
+
+is.experiment(exp)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>exp</th>
+      <td><p>object to be tested</p></td>
+    </tr>
+    <tr>
+      <th>i, j, ...</th>
+      <td><p>indices specifying elements to extract or replace. Indices are
+numeric or character vectors or empty (missing) or NULL.</p></td>
+    </tr>
+    <tr>
+      <th>drop</th>
+      <td><p>boolean, TRUE the result is coerced to the lowest possible
+dimension.</p></td>
+    </tr>
     <tr>
       <th>parameters</th>
       <td><p>A data frame of numerical values giving the values of each
@@ -212,15 +231,12 @@ this vector should be consistent with the names of
 parameters defined in the <code>model</code> <code>GAML</code> file. See
 Details for more information.</p></td>
     </tr>
-    <tr>
-      <th>exp</th>
-      <td><p>object to be tested</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>experiment</code>.</p>
+    <p>An object of class <code>experiment</code></p>
+<p>An object of class <code>experiment</code>.</p>
 <p>The function returns `TRUE` or `FALSE` depending on whether its
 argument is of chatacter type or not</p>
     
