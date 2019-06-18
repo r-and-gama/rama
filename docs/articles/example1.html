@@ -148,9 +148,9 @@
 <a class="sourceLine" id="cb2-12" data-line-number="12">exp<span class="op">$</span>p_environment_size &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="dv">10000</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14">exp<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">5000</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span>500L</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># To test we set a shorter duration...</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span>3L</a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">exp<span class="op">$</span>r_mean_pop &lt;-<span class="st"> </span><span class="dv">1</span></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20">exp<span class="op">$</span>r_micro_b &lt;-<span class="st"> </span><span class="dv">1</span></a>
@@ -158,7 +158,7 @@
 <a class="sourceLine" id="cb2-22" data-line-number="22">exp<span class="op">$</span>r_nb_preys &lt;-<span class="st"> </span><span class="dv">1</span></a>
 <a class="sourceLine" id="cb2-23" data-line-number="23"></a>
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co"># to run the experiment (do not run)</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#out &lt;- run_experiment(exp)</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#out &lt;- run_experiment(exp, hpc = 2)</span></a></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
