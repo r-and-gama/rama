@@ -78,13 +78,15 @@ insert_middle <- function(x, n, digits = 4) {
 #' @param x A data frame with a column "output"
 #' @noRd
 print_output <- function(x) {
-  col_ <- x[which(is.na(x$output) == FALSE), "output"]
+  col_ <- x$output
   if (length(col_) > 0) {
-    n_col <-  lapply(col_,
-                     function(x) paste0("<", class(x), "[",
-                                        paste(dim(col_[[1]]), collapse = ","),
-                                        "]>"))
-    x[which(is.na(x$output) == FALSE), "output"] <- list(n_col)
+    n_col <-  sapply(seq_along(col_), function(j) {
+                       ifelse(is.na(col_[j]), NA,
+                              paste0("<", class(col_[[j]]), "[",
+                                     paste(dim(col_[[j]]), collapse = ","), "]>"
+                                     ))
+                       })
+    x[, "output"] <- n_col
     x
   }
   x
@@ -134,8 +136,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 
     y <- cbind(param2,
                obser2,
-               x[, c("tmax", "seed", "output")])
-    y <- print_output(y)
+               x[, c("tmax", "seed")],
+               "output" = print_output(x)[, "output"])
 
     if (nrow(y) > 2 * n + interspace) {
 
@@ -155,3 +157,26 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
   }
   invisible(x)
 }
+
+# [.experiment -----------------------------------------------------------------
+#' Extract or Replace Parts of an Experiment Object
+#'
+#' Extracts or replaces parts of an \code{experiment} object with new value(s).
+#'
+#' @param exp experiment object from which to extract element(s) or in which to
+#'  replace element(s).
+#' @param i,j,... indices specifying elements to extract or replace. Indices are
+#'  numeric or character vectors or empty (missing) or NULL.
+#' @param drop boolean, TRUE the result is coerced to the lowest possible
+#' dimension.
+#'
+#' @return  An object of class \code{experiment}
+#'
+#' @rdname experiment
+#' @export
+`[.experiment` <- function(exp, i, j, ..., drop = TRUE)
+  {
+  exp <- as.data.frame(unclass(exp))
+  exp[i, j, ..., drop = drop]
+}
+
