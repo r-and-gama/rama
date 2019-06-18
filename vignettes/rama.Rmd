@@ -249,7 +249,7 @@ Same for `tmax`:
 
 ```{r}
 exp5$tmax
-exp5$tmax <- 3
+exp5$tmax <- 3L
 exp5
 ```
 
@@ -278,10 +278,14 @@ this experiment, parameters file in xml format.
 model(exp1)$md5sum
 ```
 
-```{r, eval=FALSE}
+```{r}
 output <- run_experiment(exp1, hpc = 2)
 ```
 
+Which gives:
+```{r}
+output
+```
 
 ```{r cleaning, include = FALSE}
 unlink("sir*", TRUE)
