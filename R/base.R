@@ -74,6 +74,23 @@ insert_middle <- function(x, n, digits = 4) {
   x
 }
 
+# print_output -----------------------------------------------------------------
+#' @param x A data frame with a column "output"
+#' @noRd
+print_output <- function(x) {
+  col_ <- x[which(is.na(x$output) == FALSE), "output"]
+  #w_col <- x[, "output"][col_test]
+  if (length(col_) > 0) {
+    n_col <-  lapply(col_,
+                     function(x) paste0("<", class(x), "[",
+                                        paste(dim(col_[[1]]), collapse = ","),
+                                        "]>"))
+    x[which(is.na(x$output) == FALSE), "output"] <- list(n_col)
+    x
+  }
+  x
+}
+
 # print.experiment method ------------------------------------------------------
 #' @importFrom utils head tail
 #' @export
@@ -118,7 +135,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 
     y <- cbind(param2,
                obser2,
-               x[, c("tmax", "seed")])
+               x[, c("tmax", "seed", "output")])
+    y <- print_output(y)
 
     if (nrow(y) > 2 * n + interspace) {
 
