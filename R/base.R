@@ -136,7 +136,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 
     y <- cbind(param2,
                obser2,
-               x[, c("tmax", "seed")],
+               x[, c("tmax", "seed"), drop = FALSE],
                "output" = print_output(x)[, "output"])
 
     if (nrow(y) > 2 * n + interspace) {
@@ -163,8 +163,6 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #'
 #' Extracts or replaces parts of an \code{experiment} object with new value(s).
 #'
-#' @param exp experiment object from which to extract element(s) or in which to
-#'  replace element(s).
 #' @param i,j,... indices specifying elements to extract or replace. Indices are
 #'  numeric or character vectors or empty (missing) or NULL.
 #' @param drop boolean, TRUE the result is coerced to the lowest possible
@@ -176,7 +174,7 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 #' @export
 `[.experiment` <- function(exp, i, j, ..., drop = TRUE)
   {
-  exp <- as.data.frame(unclass(exp))
+  exp <- as.data.frame(exp)
   exp[i, j, ..., drop = drop]
 }
 

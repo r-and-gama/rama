@@ -14,8 +14,7 @@ experiment(parameters, obsrates, tmax, seed, experiment, model,
 is.experiment(exp)
 }
 \arguments{
-\item{exp}{experiment object from which to extract element(s) or in which to
-replace element(s).}
+\item{exp}{object to be tested}
 
 \item{i, j, ...}{indices specifying elements to extract or replace. Indices are
 numeric or character vectors or empty (missing) or NULL.}
@@ -48,8 +47,6 @@ this vector should be consistent with the names of
 \code{parameters}, \code{obsrates} as well as the variables and
 parameters defined in the \code{model} \code{GAML} file. See
 Details for more information.}
-
-\item{exp}{object to be tested}
 }
 \value{
 An object of class \code{experiment}
