@@ -79,7 +79,6 @@ insert_middle <- function(x, n, digits = 4) {
 #' @noRd
 print_output <- function(x) {
   col_ <- x[which(is.na(x$output) == FALSE), "output"]
-  #w_col <- x[, "output"][col_test]
   if (length(col_) > 0) {
     n_col <-  lapply(col_,
                      function(x) paste0("<", class(x), "[",
