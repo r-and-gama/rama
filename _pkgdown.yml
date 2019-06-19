@@ -44,6 +44,7 @@ reference:
   - title: Manipulating experiment objects
     contents:
     - fullfact
+    - make_movie
     - model
     - name
     - obs_rates
@@ -79,14 +80,10 @@ navbar:
       href: articles/rama4.html
   - text: Examples
     menu:
-    - text: NicolasPred model
+    - text: SIR model
       href: articles/example1.html
     - text: Predator-prey model
       href: articles/example2.html
-    - text: SIR model
-      href: articles/example3.html
-    - text: Snub-nose monkeys
-      href: articles/example4.html
   - text: Reference
     href: reference/index.html
   right:
