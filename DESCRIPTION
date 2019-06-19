@@ -50,5 +50,6 @@ RoxygenNote: 6.1.1
 Suggests: 
     knitr,
     rmarkdown,
+    magick,
     testthat
 VignetteBuilder: knitr

@@ -3,7 +3,8 @@
 
 # `rama` <img src="logo.png" align="right" width=200/>
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rama)](https://cran.r-project.org/package=rama)
 [![Travis build
 status](https://travis-ci.org/r-and-gama/rama.svg?branch=master)](https://travis-ci.org/r-and-gama/rama)
@@ -110,8 +111,9 @@ not installed on the system it will download and install it for you:
 setup_gama()
 ```
 
-and follow instructions. Otherwise, you can use your own version GAMA
-engine
+and follow instructions. Otherwise, you can input your local path to
+install the application Gama Platform, in this case the function will
+not be interactive:
 
 ``` r
 setup_gama("path/to/gama")

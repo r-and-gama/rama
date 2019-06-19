@@ -29,6 +29,8 @@ of the experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 \code{experiment} inputted in the column \code{output} (one by simulation).
 }
 \details{
+We advice the user to validate their model in Gama Platform before using
+rama.\cr\cr
 When the argument \code{save} is equal to \code{TRUE}, a folder with the name
 of the experiment of the object \code{exp} is created. The folder contains
 two folder: \code{output} containing the result in XML and \code{input}

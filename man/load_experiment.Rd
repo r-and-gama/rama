@@ -22,7 +22,9 @@ shapefile can be used to specify a model, in which case they are in the same
 directory as the \code{.gaml} file. The internal collection of GAMA models is
 in the \code{examples} directory of the \code{rama} package file hierarchy.
 These models can be accessed with the \code{\link[base]{system.file}}
-function as explained in the example.
+function as explained in the example. \cr
+Before using the package \code{rama}, we advice the user to validate their
+model in Gama Platform.
 }
 \examples{
 # Listing the models available in the "examples" directory of the "rama" library:
