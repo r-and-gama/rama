@@ -24,4 +24,4 @@ with(out$output[[1]],
 path_movie <- make_movie(out, "r_main_display")
 
 # to print the result, it is necessary to have the package `magick`
-# magick::image_read(path_movie)
+ magick::image_read(path_movie)
