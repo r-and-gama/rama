@@ -81,16 +81,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/example1.html">NicolasPred model</a>
+      <a href="articles/example1.html">SIR model</a>
     </li>
     <li>
       <a href="articles/example2.html">Predator-prey model</a>
-    </li>
-    <li>
-      <a href="articles/example3.html">SIR model</a>
-    </li>
-    <li>
-      <a href="articles/example4.html">Snub-nose monkeys</a>
     </li>
   </ul>
 </li>
@@ -181,7 +175,7 @@
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="cf">if</span> (<span class="op">!</span><span class="st"> "rama"</span> <span class="op">%in%</span><span class="st"> </span>installed_packages) devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"r-and-gama/rama"</span>)</a></code></pre></div>
 <p>After loading, <code>rama</code> needs to be configured, a step that basically consists in linking <code>rama</code> to a GAMA engine on the system. If GAMA is not installed on the system it will download and install it for you:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="reference/setup_gama.html">setup_gama</a></span>()</a></code></pre></div>
-<p>and follow instructions. Otherwise, you can use your own version GAMA engine</p>
+<p>and follow instructions. Otherwise, you can input your local path to install the application Gama Platform, in this case the function will not be interactive:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/setup_gama.html">setup_gama</a></span>(<span class="st">"path/to/gama"</span>)</a></code></pre></div>
 </div>
 <div id="developers" class="section level2">
@@ -242,7 +236,7 @@
       <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://cran.r-project.org/package=rama"><img src="http://www.r-pkg.org/badges/version/rama" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://travis-ci.org/r-and-gama/rama"><img src="https://travis-ci.org/r-and-gama/rama.svg?branch=master" alt="Travis build status"></a></li>
 <li><a href="https://ci.appveyor.com/project/r-and-gama/rama"><img src="https://ci.appveyor.com/api/projects/status/github/r-and-gama/rama?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>

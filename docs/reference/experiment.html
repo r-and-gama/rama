@@ -117,16 +117,10 @@ Allows to build an object of class experiment from individual parts." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example1.html">NicolasPred model</a>
+      <a href="../articles/example1.html">SIR model</a>
     </li>
     <li>
       <a href="../articles/example2.html">Predator-prey model</a>
-    </li>
-    <li>
-      <a href="../articles/example3.html">SIR model</a>
-    </li>
-    <li>
-      <a href="../articles/example4.html">Snub-nose monkeys</a>
     </li>
   </ul>
 </li>
@@ -255,7 +249,7 @@ that specifies the full model.</p>
 <span class='no'>exp0</span> <span class='kw'>&lt;-</span> <span class='fu'>experiment</span>(
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S0</span> <span class='kw'>=</span> <span class='fl'>999</span>, <span class='kw'>I0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>.15</span>),
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are rounded and converted into  integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is rounded and converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+  <span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='st'>"sir"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are converted into integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>exp0</span>)</div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
@@ -275,13 +269,13 @@ that specifies the full model.</p>
                      <span class='kw'>seed</span> <span class='kw'>=</span> <span class='st'>"b"</span>,
                      <span class='kw'>experiment</span> <span class='kw'>=</span> <span class='st'>"sir"</span>,
                      <span class='kw'>model</span> <span class='kw'>=</span>
-                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are rounded and converted into  integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is rounded and converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+                       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Periods of observation ("obsrates") are converted into integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>is.experiment</span>(<span class='no'>exp</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 
 
 <span class='co'>## `$&lt;-` ##</span>
 <span class='co'># Here is an experiment with 1 simulation:</span>
 <span class='no'>sir1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>,
-                        <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>sir1</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
+                        <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>))</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Periods of observation ("obsrates") are converted into integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Seed is converted into numeric.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='no'>sir1</span></div><div class='output co'>#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 

@@ -117,16 +117,10 @@ experiment." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example1.html">NicolasPred model</a>
+      <a href="../articles/example1.html">SIR model</a>
     </li>
     <li>
       <a href="../articles/example2.html">Predator-prey model</a>
-    </li>
-    <li>
-      <a href="../articles/example3.html">SIR model</a>
-    </li>
-    <li>
-      <a href="../articles/example4.html">Snub-nose monkeys</a>
     </li>
   </ul>
 </li>
@@ -201,7 +195,7 @@ the following conditions is met:</p><ul>
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/exists'>exists</a></span>(<span class='st'>"sir1"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='no'>sir1</span>)
 <span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='no'>sir1</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>sir1</span>, <span class='fl'>3</span>))
-<span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp</span>)</div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
+<span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp</span>)</div><div class='output co'>#&gt; Final time step ("tmax") is converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Seed is converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
 #&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
@@ -215,7 +209,6 @@ the following conditions is met:</p><ul>
 <span class='co'># are equal:</span>
 <span class='no'>exp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>sir1</span>, <span class='fl'>3</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>exp</span>)[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>6</span>)]
-<span class='no'>df</span>[] <span class='kw'>&lt;-</span> <span class='fl'>2</span>
 <span class='fu'>map_experiment</span>(<span class='no'>df</span>, <span class='no'>exp</span>)</div><div class='output co'>#&gt; Experiment with 3 simulations of 5 parameters and 3 observed variables
 #&gt; experiment name:  sir 
 #&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml 
@@ -223,9 +216,9 @@ the following conditions is met:</p><ul>
 #&gt; observed variables:  r_S, r_I, r_R 
 #&gt; Experiment overview:
 #&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed
-#&gt; 1    2    1    2    1.5    0.15   2   1   1 1000    1
-#&gt; 2    2    1    2    1.5    0.15   2   1   1 1000    1
-#&gt; 3    2    1    2    1.5    0.15   2   1   1 1000    1</div></pre>
+#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 2  999    1    0    1.5    0.15   1   1   1 1000    1
+#&gt; 3  999    1    0    1.5    0.15   1   1   1 1000    1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

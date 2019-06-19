@@ -81,16 +81,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example1.html">NicolasPred model</a>
+      <a href="../articles/example1.html">SIR model</a>
     </li>
     <li>
       <a href="../articles/example2.html">Predator-prey model</a>
-    </li>
-    <li>
-      <a href="../articles/example3.html">SIR model</a>
-    </li>
-    <li>
-      <a href="../articles/example4.html">Snub-nose monkeys</a>
     </li>
   </ul>
 </li>
@@ -131,32 +125,83 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#install.packages("devtools")</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#devtools::install_github("r-and-gama/rama")</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rama)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># if necessary to configure GAMA path</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># defpath("/Applications/Gama.app")</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># load the experiment</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"prey_predator"</span>,</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models"</span>, <span class="st">"NicolasPred.gaml"</span>,</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">                                   <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"># to explore the parameters and the observed variables</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(exp)</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="kw"><a href="../reference/obs_rates.html">obs_rates</a></span>(exp)</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co"># to set the experiment</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">exp<span class="op">$</span>p_Initial_number_of_preys_ &lt;-<span class="st"> </span>990L</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">exp<span class="op">$</span>p_Initial_number_of_predators_ &lt;-<span class="st"> </span>100L</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#exp$p_Predator_probability_reproduce_ &lt;- 0.1</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span>100L</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co"># to run the experiment (do not run)</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#out &lt;- run_experiment(exp)</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co"># to visualize the output</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(out[[<span class="dv">1</span>]], <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Step, <span class="st">`</span><span class="dt">Number of preys</span><span class="st">`</span>, <span class="dt">type =</span> <span class="st">"l"</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">"red"</span>))</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="co">#makemovie(out[[1]])</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; Welcome to rama v0.0.1!</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; GAMA platform needs to be installed on your machine.</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; See http://www.gama-platform.org for more instructions about GAMA.</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt; -- note that GAMA platform was found at /Applications/Gama.app</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; Gama configuration succeed!</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># if necessary to configure GAMA path</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># defpath("/Applications/Gama.app")</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Load an experiment</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/load_experiment.html">load_experiment</a></span>(<span class="st">"prey_predator"</span>,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models/predator_prey/models"</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                                   <span class="st">"predator_prey.gaml"</span>, <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; Loading experiment "prey_predator" from file "predator_prey.gaml"...</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; Periods of observation ("obsrates") are converted into integers.</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; Final time step ("tmax") is converted into integer.</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; Seed is converted into numeric.</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; Parameters' types are cast according to model definition</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">exp</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; Experiment with 1 simulation of 14 parameters and 5 observed variables</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; experiment name:  prey_predator </span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/predator_prey/models/predator_prey.gaml </span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; model parameters:    p_Initial_number_of_preys_, p_Prey_max_energy_, p_Prey_max_transfert_, p_Prey_energy_consumption_, p_Initial_number_of_predators_, p_Predator_max_energy_, p_Predator_energy_transfert_, p_Predator_energy_consumption_, p_Prey_probability_reproduce_, p_Prey_nb_max_offsprings_, p_Prey_energy_reproduce_, p_Predator_probability_reproduce_, p_Predator_nb_max_offsprings_, p_Predator_energy_reproduce_ </span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; observed variables:  r_Number_of_preys, r_Number_of_predators, r_main_display, r_info_display, r_Population_information </span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;   p_Initial_number_of_preys_ . . . p_Predator_energy_reproduce_</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; 1                        200 . . .                          0.5</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt;   r_Number_of_preys . . . r_Population_information tmax seed</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt; 1                 1 . . .                        1 1000    1</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co"># to explore the parameters and the observed variables</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(exp)</a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt;   p_Initial_number_of_preys_ p_Prey_max_energy_ p_Prey_max_transfert_</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="co">#&gt; 1                        200                  1                   0.1</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31"><span class="co">#&gt;   p_Prey_energy_consumption_ p_Initial_number_of_predators_</span></a>
+<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="co">#&gt; 1                       0.05                             20</span></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="co">#&gt;   p_Predator_max_energy_ p_Predator_energy_transfert_</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="co">#&gt; 1                      1                          0.5</span></a>
+<a class="sourceLine" id="cb2-35" data-line-number="35"><span class="co">#&gt;   p_Predator_energy_consumption_ p_Prey_probability_reproduce_</span></a>
+<a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co">#&gt; 1                           0.02                          0.01</span></a>
+<a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co">#&gt;   p_Prey_nb_max_offsprings_ p_Prey_energy_reproduce_</span></a>
+<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="co">#&gt; 1                         5                      0.5</span></a>
+<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="co">#&gt;   p_Predator_probability_reproduce_ p_Predator_nb_max_offsprings_</span></a>
+<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="co">#&gt; 1                              0.01                             3</span></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41"><span class="co">#&gt;   p_Predator_energy_reproduce_</span></a>
+<a class="sourceLine" id="cb2-42" data-line-number="42"><span class="co">#&gt; 1                          0.5</span></a>
+<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="kw"><a href="../reference/obs_rates.html">obs_rates</a></span>(exp)</a>
+<a class="sourceLine" id="cb2-44" data-line-number="44"><span class="co">#&gt;   r_Number_of_preys r_Number_of_predators r_main_display r_info_display</span></a>
+<a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co">#&gt; 1                 1                     1              1              1</span></a>
+<a class="sourceLine" id="cb2-46" data-line-number="46"><span class="co">#&gt;   r_Population_information</span></a>
+<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="co">#&gt; 1                        1</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># to set the experiment</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">exp<span class="op">$</span>p_Initial_number_of_preys_ &lt;-<span class="st"> </span>990L</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">exp<span class="op">$</span>p_Initial_number_of_predators_ &lt;-<span class="st"> </span>100L</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">exp<span class="op">$</span>p_Predator_probability_reproduce_ &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">exp<span class="op">$</span>tmax &lt;-<span class="st"> </span>20L</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># to run the experiment</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_experiment.html">run_experiment</a></span>(exp, <span class="dt">hpc =</span> <span class="dv">2</span>, <span class="dt">display =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; if "display" equal TRUE, "save" is automatically set to  TRUE.</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; Outputs are saved to "/Users/mac/Desktop/rama/vignettes" by default.</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Outputs are saved in " /Users/mac/Desktop/rama/vignettes/prey_predator ".</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; Running experiment plan...</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># to visualize the output</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(out<span class="op">$</span>output[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">     <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Step, <span class="st">`</span><span class="dt">r_Number_of_preys</span><span class="st">`</span>, <span class="dt">type =</span> <span class="st">"l"</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">"red"</span>))</a></code></pre></div>
+<p><img src="example2_files/figure-html/visualize_experiment-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># to make a movie</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">path_movie &lt;-<span class="st"> </span><span class="kw"><a href="../reference/make_movie.html">make_movie</a></span>(out, <span class="st">"r_main_display"</span>)</a></code></pre></div>
+<p><img src="prey_predator/output/movie/animation_main_display1.gif"></p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
