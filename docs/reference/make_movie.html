@@ -255,7 +255,7 @@ animation, see <code><a href='https://www.rdocumentation.org/packages/animation/
 <span class='no'>exp</span>$<span class='no'>tmax</span> <span class='kw'>&lt;-</span> <span class='fl'>100L</span>
 
 <span class='co'># to run the experiment</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='run_experiment.html'>run_experiment</a></span>(<span class='no'>exp</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>display</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; if "display" equal TRUE, "save" is automatically set to  TRUE.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Outputs are saved to "/Users/mac/Desktop/rama/docs/reference" by default.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Outputs are saved in " /Users/mac/Desktop/rama/docs/reference/prey_predator_2 ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='run_experiment.html'>run_experiment</a></span>(<span class='no'>exp</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>display</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; if "display" equal TRUE, "save" is automatically set to  TRUE.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Outputs are saved to "/Users/mac/Desktop/rama/docs/reference" by default.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Outputs are saved in " /Users/mac/Desktop/rama/docs/reference/prey_predator_3 ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'>
 <span class='co'># to visualize the output</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>out</span>$<span class='no'>output</span><span class='kw'>[[</span><span class='fl'>1</span>]],
     <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>Step</span>, <span class='no'>`r_Number_of_preys`</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>))</div><div class='img'><img src='make_movie-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -263,20 +263,7 @@ animation, see <code><a href='https://www.rdocumentation.org/packages/animation/
 <span class='no'>path_movie</span> <span class='kw'>&lt;-</span> <span class='fu'>make_movie</span>(<span class='no'>out</span>, <span class='st'>"r_main_display"</span>)
 
 <span class='co'># to print the result, it is necessary to have the package `magick`</span>
-<span class='kw pkg'>magick</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/magick/topics/editing'>image_read</a></span>(<span class='no'>path_movie</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 7</span><span>
-#&gt;    format width height colorspace matte filesize density
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'> 1</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 2</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 3</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 4</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 5</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 6</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 7</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 8</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'> 9</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'>10</span><span> GIF      500    500 sRGB       FALSE  3</span><span style='text-decoration: underline;'>579</span><span>398 72x72  
-#&gt; </span><span style='color: #555555;'># … with 90 more rows</span><span></div></span></pre>
+<span class='co'># magick::image_read(path_movie)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
