@@ -46,9 +46,9 @@ exp$p_danger_distance <-  c(100 * c(1:10, seq(15, 60, 5)),
 exp$p_environment_size <- c(1000 * seq(5, 20, 5), 10000 * 3:5)
 
 exp$seed <- 1:30
-exp$tmax <- 5000
+exp$tmax <- 500L
 # To test we set a shorter duration...
-exp$tmax <- 3
+exp$tmax <- 3L
 
 exp$r_mean_pop <- 1
 exp$r_micro_b <- 1

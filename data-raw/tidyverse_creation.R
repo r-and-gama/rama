@@ -138,7 +138,8 @@ fct <- ls(getNamespaceInfo("dplyr", "exports")) %>%
 dplyr_fct <- c(
   lapply(fct, function(x) tidy_fct(x)),
   add_register_method(fct),
-  paste0("register_s3_method <- ",
+  paste0("# from: https://github.com/tidyverse/hms/blob/master/R/zzz.R \n",
+  "# Thu Apr 19 10:53:24 CEST 2018 (adapted) \n", "register_s3_method <- ",
          capture.output(eval(sym("register_s3_method"))) %>%
            paste(collapse = "\n"), "\n\n",
          ".onLoad <- ",

@@ -58,7 +58,7 @@ retrieve_results <- function(outfile, exp, display) {
       tmp[, x]
     })
   })
-  tmp <- as.data.frame(setNames(tmp2, lst_name))
+  tmp <- as.data.frame(setNames(tmp2, lst_name), stringsAsFactors = FALSE)
 
   new_name <- as.vector(attr(exp, "dic_g2r")[lst_name])
   names(tmp) <- new_name
@@ -122,7 +122,7 @@ run_experiment <- function(exp, hpc = 1, save = FALSE, path = NULL,
   if (!is.experiment(exp))
     stop("The argument \"exp\" is not an object of class \"experiment\".")
 
-  if (isTRUE(display)) {
+  if (isTRUE(display) & !isTRUE(save)) {
     save <- TRUE
     message(cat("if \"display\" equal TRUE, \"save\" is automatically set to ",
                 "TRUE."))
