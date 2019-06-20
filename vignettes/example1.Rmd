@@ -56,7 +56,7 @@ exp$p_gamma <- 0.1
 ```
 
 ```{r run_experiment}
-# Execute all the exeperiments in the plan
+# Execute all the experiments in the plan
 out <- run_experiment(exp, hpc = 2)
 out
 ```
