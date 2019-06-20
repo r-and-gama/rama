@@ -59,14 +59,35 @@ names_of_left_and_right <- function(x, th) {
 #'
 #' @noRd
 insert_middle <- function(x, n, digits = 4) {
-  x <- round(x, digits)
   a <- names_of_left_and_right(names(x), n)
   if (sum(sapply(a, length)) < length(x)) {
     left <- x[, a[[1]], drop = FALSE]
     right <- x[, a[[2]], drop = FALSE]
     middle <- setNames(data.frame(".", ".", ".",
                                   stringsAsFactors = FALSE), rep(".", 3))
-    return(cbind(left, middle, right))
+    res <- cbind(left, middle, right)
+    res_long <- nchar(names(res)) > 15
+    names(res)[res_long] <- paste0(substr(names(res)[res_long], 1, 15),
+                                   "\u2026")
+    return(res)
+  }
+  x
+}
+
+# print_output -----------------------------------------------------------------
+#' @param x A data frame with a column "output"
+#' @noRd
+print_output <- function(x) {
+  col_ <- x$output
+  if (length(col_) > 0) {
+    n_col <-  sapply(seq_along(col_), function(j) {
+                       ifelse(is.na(col_[j]), NA,
+                              paste0("<", class(col_[[j]]), "[",
+                                     paste(dim(col_[[j]]), collapse = ","), "]>"
+                                     ))
+                       })
+    x[, "output"] <- n_col
+    x
   }
   x
 }
@@ -115,7 +136,8 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
 
     y <- cbind(param2,
                obser2,
-               x[, c("tmax", "seed")])
+               x[, c("tmax", "seed"), drop = FALSE],
+               "output" = print_output(x)[, "output"])
 
     if (nrow(y) > 2 * n + interspace) {
 
@@ -136,39 +158,23 @@ print.experiment <- function(x, interspace = 3, n = 6, digits = 4,
   invisible(x)
 }
 
-# $<-.experiment ---------------------------------------------------------------
-
-#' Replace a column of an experiment
+# [.experiment -----------------------------------------------------------------
+#' Extract or Replace Parts of an Experiment Object
 #'
-#' Replaces a column of an experiment with new value(s).
+#' Extracts or replaces parts of an \code{experiment} object with new value(s).
 #'
-#' If the length of the vector used to replace the column is not the same as the
-#' original number of rows of the experiment, there is duplication of the
-#' shortest element.
+#' @param i,j,... indices specifying elements to extract or replace. Indices are
+#'  numeric or character vectors or empty (missing) or NULL.
+#' @param drop boolean, TRUE the result is coerced to the lowest possible
+#' dimension.
 #'
-#' @param i A column index.
-#' @param value A vector used to replace the values of the indexed column.
-#'
-#' @return An object of class \code{experiment}.
+#' @return  An object of class \code{experiment}
 #'
 #' @rdname experiment
 #' @export
-`$<-.experiment` <- function(exp, i, value) {
-  if (is.null(value)) NextMethod()
-  else {
-# Note: this code is very similar to the one of the fullfact function. Might be
-# worth trying to optimize this in the future.
-    to_expand <- as.data.frame(exp, stringsAsFactors = FALSE)
-    the_names <- names(to_expand)
-    to_expand <- c(
-      to_expand[setdiff(the_names, i)], setNames(list(value), i))[the_names]
-    new_exp <- do.call(expand.grid, lapply(to_expand, unique))
-    # sort rows "from left to right"
-    new_exp[do.call(order, new_exp), ]
-    # add class and other attributes
-    new_exp <- rbind(exp[1, ], new_exp)[-1, ]
-    # regenerate row names
-    row.names(new_exp) <- NULL
-    new_exp
-  }
+`[.experiment` <- function(exp, i, j, ..., drop = TRUE)
+  {
+  exp <- as.data.frame(exp)
+  exp[i, j, ..., drop = drop]
 }
+

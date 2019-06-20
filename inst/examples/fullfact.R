@@ -1,8 +1,8 @@
 sir1 <- load_experiment("sir",
                         system.file("models", "sir.gaml", package = "rama"))
 # 1. First type of use: tranforming an experiment into one with a full
-# factorial design:
-sir2 <- sir1
+# factorial design: (use the function `repl`, if you want more details `?repl`)
+sir2 <- repl(sir1, 3)
 sir2$p_S0 <- 1:3
 sir2
 sir2[1, 2] <- 2
