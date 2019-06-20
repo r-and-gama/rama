@@ -111,9 +111,9 @@ not installed on the system it will download and install it for you:
 setup_gama()
 ```
 
-and follow instructions. Otherwise, you can input your local path to
-install the application Gama Platform, in this case the function will
-not be interactive:
+and follow instructions. Otherwise, you can input your local path to the
+application Gama Platform, in this case the function will not be
+interactive and will configure GAMA path for `rama`:
 
 ``` r
 setup_gama("path/to/gama")
