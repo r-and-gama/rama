@@ -51,9 +51,9 @@ retrieve_results <- function(outfile, exp, display) {
     suppressWarnings(if (all(!is.na(as.numeric(tmp[, x])))) {
       tmp[, x] <- as.numeric(tmp[, x])
     } else {
-      if (all(file.exists(paste0(dirname(outfile), "/snapshot/", tmp[,x])),
+      if (all(file.exists(paste0(dirname(outfile), "/snapshot/", tmp[, x])),
               isTRUE(display))) {
-        tmp[, x] <- paste0(dirname(outfile), "/output/snapshot/", tmp[,x])
+        tmp[, x] <- paste0(dirname(outfile), "/output/snapshot/", tmp[, x])
       }
       tmp[, x]
     })

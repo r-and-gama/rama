@@ -69,15 +69,15 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
                                  '2>',
                                  shQuote(stderrFile)))
 
-  run$stdout = readLines(stdoutFile)
-  run$stderr = readLines(stderrFile)
-  if(file.exists(getOption("rama.log")))
+  run$stdout <-  readLines(stdoutFile)
+  run$stderr <-  readLines(stderrFile)
+  if (file.exists(getOption("rama.log")))
     file.copy(from = getOption("rama.log"), to = logFile)
 
   unlink(c(stdoutFile, stderrFile))
   unlink(getOption("rama.workspace"), TRUE, TRUE)
 
-  if(length(run$stdout) > 0)
+  if (length(run$stdout) > 0)
     message(paste0("An error has occurred in gama.\nSee the log file", logFile))
 
   if (run$exitStatus > 0)
