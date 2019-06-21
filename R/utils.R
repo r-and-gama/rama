@@ -42,7 +42,7 @@ read_gaml_experiment <- function(exp, model) {
   run$stdout <-  readLines(stdoutFile)
   run$stderr <-  readLines(stderrFile)
 
-  if (length(run$stdout) > 0)
+  if (length(run$stdout) > 0 & run$exitStatus > 0)
     message(paste0("An error has occurred in gama.\nSee the log file", logFile))
 
   unlink(getOption("rama.workspace"), TRUE, TRUE)
