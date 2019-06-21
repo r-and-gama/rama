@@ -138,25 +138,23 @@
 <a class="sourceLine" id="cb2-3" data-line-number="3">                          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"models"</span>, <span class="st">"sir.gaml"</span>, <span class="dt">package =</span> <span class="st">"rama"</span>))</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; Loading experiment "sir" from file "sir.gaml"...</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; An error has occurred in gama.</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; See the log file/Users/mac/Desktop/rama/vignettes/read_gaml.log</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; Periods of observation ("obsrates") are converted into integers.</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; Periods of observation ("obsrates") are converted into integers.</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; Final time step ("tmax") is converted into integer.</span></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; Final time step ("tmax") is converted into integer.</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; Seed is converted into numeric.</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; Seed is converted into numeric.</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; Parameters' types are cast according to model definition</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; Parameters' types are cast according to model definition</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">exp</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; experiment name:  sir </span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; Experiment overview:</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed output</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1     NA</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-14" data-line-number="14">exp</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; Experiment with 1 simulation of 5 parameters and 3 observed variables</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; experiment name:  sir </span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed output</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 1  999    1    0    1.5    0.15   1   1   1 1000    1     NA</span></a></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Define a first type of experiments on SIR having the same initial value</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># called expA with S0=950, I0=50 and R0=0</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">exp<span class="op">$</span>p_S0 &lt;-<span class="st"> </span>950L</a>
@@ -173,18 +171,16 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Execute all the experiments in the plan</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_experiment.html">run_experiment</a></span>(exp, <span class="dt">hpc =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; Running experiment plan...</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; An error has occurred in gama.</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; See the log file/var/folders/fp/845v7zc96rjdgs2l_86qgy5r0000gn/T//RtmpZV6moL/file11360481d2832/run_gama.log</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">out</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Experiment with 2 simulations of 5 parameters and 3 observed variables</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; experiment name:  sir </span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; Experiment overview:</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed              output</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; 1  950   50    0    0.3     0.1   1   1   1  100    1 &lt;data.frame[100,4]&gt;</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 2  950   50    0    0.5     0.1   1   1   1  100    1 &lt;data.frame[100,4]&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-4" data-line-number="4">out</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; Experiment with 2 simulations of 5 parameters and 3 observed variables</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; experiment name:  sir </span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; input gaml file:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rama/models/sir.gaml </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; observed variables:  r_S, r_I, r_R </span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Experiment overview:</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed              output</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; 1  950   50    0    0.3     0.1   1   1   1  100    1 &lt;data.frame[100,4]&gt;</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; 2  950   50    0    0.5     0.1   1   1   1  100    1 &lt;data.frame[100,4]&gt;</span></a></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Visualize the number of infected for the two experiments</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(out<span class="op">$</span>output[[<span class="dv">1</span>]], <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Step, r_I, <span class="dt">type =</span> <span class="st">"l"</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">"red"</span>))</a></code></pre></div>
 <p><img src="example1_files/figure-html/visualize_experiment-1.png" width="700"></p>

@@ -219,74 +219,23 @@ is returned with <code>NA</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#load experiment</span>
 <span class='no'>gaml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"models"</span>, <span class='st'>"sir.gaml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rama"</span>)
-<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>An error has occurred in gama.</span>
-#&gt; <span class='message'>See the log file/Users/mac/Desktop/rama/docs/reference/read_gaml.log</span></div><div class='output co'>#&gt; Periods of observation ("obsrates") are converted into integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Seed is converted into numeric.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='co'># run experiment</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='output co'>#&gt; <span class='message'>An error has occurred in gama.</span>
-#&gt; <span class='message'>See the log file/var/folders/fp/845v7zc96rjdgs2l_86qgy5r0000gn/T//RtmpU4zhxd/file1122d4d7e8c2f/run_gama.log</span></div><div class='input'>
+<span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='load_experiment.html'>load_experiment</a></span>(<span class='st'>"sir"</span>, <span class='no'>gaml_file</span>)</div><div class='output co'>#&gt; Loading experiment "sir" from file "sir.gaml"...</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Periods of observation ("obsrates") are converted into integers.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Final time step ("tmax") is converted into integer.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Seed is converted into numeric.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Parameters' types are cast according to model definition</div><div class='output co'>#&gt; </div><div class='input'><span class='co'># run experiment</span>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'>
 <span class='co'># for a more complexe example</span>
 <span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>exp1</span>, <span class='fl'>2</span>)
 <span class='no'>exp1</span>$<span class='no'>r_R</span> <span class='kw'>&lt;-</span> <span class='fl'>2L</span>:<span class='fl'>3L</span>
 <span class='no'>exp1</span>$<span class='no'>tmax</span> <span class='kw'>&lt;-</span> <span class='fl'>2L</span>
-<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='output co'>#&gt; <span class='message'>An error has occurred in gama.</span>
-#&gt; <span class='message'>See the log file/var/folders/fp/845v7zc96rjdgs2l_86qgy5r0000gn/T//RtmpU4zhxd/file1122d469b848c/run_gama.log</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>output</span>)</div><div class='output co'>#&gt; Classes ‘experiment’, ‘tbl_df’, ‘tbl’ and 'data.frame':	2 obs. of  11 variables:
-#&gt;  $ p_S0   : int  999 999
-#&gt;  $ p_I0   : int  1 1
-#&gt;  $ p_R0   : int  0 0
-#&gt;  $ p_beta : num  1.5 1.5
-#&gt;  $ p_gamma: num  0.15 0.15
-#&gt;  $ r_S    : int  1 1
-#&gt;  $ r_I    : int  1 1
-#&gt;  $ r_R    : int  2 3
-#&gt;  $ tmax   : int  2 2
-#&gt;  $ seed   : num  1 1
-#&gt;  $ output :List of 2
-#&gt;   ..$ :'data.frame':	2 obs. of  4 variables:
-#&gt;   .. ..$ Step: int  0 1
-#&gt;   .. ..$ r_S : chr  "999" "999"
-#&gt;   .. ..$ r_I : chr  "1" "0"
-#&gt;   .. ..$ r_R : chr  "0" NA
-#&gt;   .. ..- attr(*, "path")= chr "/private/var/folders/fp/845v7zc96rjdgs2l_86qgy5r0000gn/T/RtmpU4zhxd/file1122d469b848c/output/simulation-outputs1.xml"
-#&gt;   ..$ :'data.frame':	2 obs. of  4 variables:
-#&gt;   .. ..$ Step: int  0 1
-#&gt;   .. ..$ r_S : chr  "999" "999"
-#&gt;   .. ..$ r_I : chr  "1" "0"
-#&gt;   .. ..$ r_R : chr  "0" NA
-#&gt;   .. ..- attr(*, "path")= chr "/private/var/folders/fp/845v7zc96rjdgs2l_86qgy5r0000gn/T/RtmpU4zhxd/file1122d469b848c/output/simulation-outputs2.xml"
-#&gt;  - attr(*, "model")=List of 3
-#&gt;   ..$ path  : Named chr "/Users/mac/Desktop/rama/inst/models/sir.gaml"
-#&gt;   .. ..- attr(*, "names")= chr "sourcePath"
-#&gt;   ..$ info  :List of 3
-#&gt;   .. ..$ Parameters:List of 5
-#&gt;   .. .. ..$ Parameter: Named chr  "S0" "INT" "999" "S"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "I0" "INT" "1" "I"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "R0" "INT" "0" "R"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "beta" "FLOAT" "1.5" "beta"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "gamma" "FLOAT" "0.15" "gamma"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. ..$ Outputs   :List of 3
-#&gt;   .. .. ..$ Output: Named chr  "1" "0" "S"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "framerate" "id" "name"
-#&gt;   .. .. ..$ Output: Named chr  "1" "1" "I"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "framerate" "id" "name"
-#&gt;   .. .. ..$ Output: Named chr  "1" "2" "R"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "framerate" "id" "name"
-#&gt;   .. ..$ .attrs    : Named chr  "sir" "1000" "0" "1.0" ...
-#&gt;   .. .. ..- attr(*, "names")= chr  "experiment" "finalStep" "id" "seed" ...
-#&gt;   ..$ md5sum: Named chr "5ec694cc3ac6553667b90e16ac1c9b08"
-#&gt;   .. ..- attr(*, "names")= Named chr "/Users/mac/Desktop/rama/inst/models/sir.gaml"
-#&gt;   .. .. ..- attr(*, "names")= chr "sourcePath"
-#&gt;  - attr(*, "experiment")= chr "sir"
-#&gt;  - attr(*, "dic_g2r")= Named chr  "p_S0" "p_I0" "p_R0" "p_beta" ...
-#&gt;   ..- attr(*, "names")= chr  "S0" "I0" "R0" "beta" ...
-#&gt;  - attr(*, "dic_r2g")= Named chr  "S0" "I0" "R0" "beta" ...
-#&gt;   ..- attr(*, "names")= chr  "p_S0" "p_I0" "p_R0" "p_beta" ...</div><div class='input'>
+<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'><span class='no'>output</span></div><div class='output co'>#&gt; Experiment with 2 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed            output
+#&gt; 1  999    1    0    1.5    0.15   1   1   2    2    1 &lt;data.frame[2,4]&gt;
+#&gt; 2  999    1    0    1.5    0.15   1   1   3    2    1 &lt;data.frame[2,4]&gt;</div><div class='input'>
 <span class='co'># to save the experiment input and output (by default in the working directory)</span>
-<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Outputs are saved to "/Users/mac/Desktop/rama/docs/reference" by default.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Outputs are saved in " /Users/mac/Desktop/rama/docs/reference/sir ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Running experiment plan... </div><div class='output co'>#&gt; <span class='message'>An error has occurred in gama.</span>
-#&gt; <span class='message'>See the log file/Users/mac/Desktop/rama/docs/reference/sir/run_gama.log</span></div></pre>
+<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Outputs are saved to "/Users/mac/Desktop/rama/docs/reference" by default.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Outputs are saved in " /Users/mac/Desktop/rama/docs/reference/sir ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Running experiment plan... </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
