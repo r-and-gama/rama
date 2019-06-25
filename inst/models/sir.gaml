@@ -35,7 +35,7 @@ species individual  {
 	bool is_susceptible;
 	bool is_infected;
   bool is_recovered;
-  list<individual> neighbours update: self neighbours_at neighborhood;
+  list<individual> neighbours update: self neighbors_at neighborhood;
 // each individual has 3 reflex:
   reflex move {
     location <- any_location_in(world.shape);
