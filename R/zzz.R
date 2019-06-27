@@ -129,8 +129,8 @@ is_gama_installed <- function(path = unlist(options("rama.gama.path"))) {
   packageStartupMessage(
     "See http://www.gama-platform.org for more instructions about GAMA.\n")
   pehaps_path <- gama_local_distrib_path()
-  version <- gama_version(pehaps_path)
     if (is_gama_installed(pehaps_path)) {
+      version <- gama_version(pehaps_path)
       packageStartupMessage(
         paste0("-- note that GAMA platform was found at ", pehaps_path, "\n"))
       if (version < 1.8) {
