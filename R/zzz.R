@@ -14,7 +14,7 @@ set_environment_variables <- function() {
           rama.default.gama.osx.zip.appdir   = "",
           rama.default.gama.linux            =
             "/gama_1_8_final_linux64.tgz",
-          rama.default.gama.linux.appdir     = "/usr/local/gama",
+          rama.default.gama.linux.appdir     = "/usr/share/gama",
           rama.default.gama.linux.zip.appdir = "gama",
           rama.repo                          = "http://51.255.46.42/releases",
           rama.gama.path                     = "UNKNOWN",
