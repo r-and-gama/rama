@@ -7,11 +7,11 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
   # Automatically adds "p_" and "r_" prefixes to the parameteres and observation
   # rates. It also does so to the dictionary if provided.
 
-  # Automatically converts periods of obsrates and tmax into integer if there are
-  # not.
+  # Automatically converts periods of obsrates and tmax into integer if there
+  # are not.
 
-  # dic_g2r: contains the new names of the parameters and variables and the names
-  # of this vector contains the old names. It is the opposite for dic_r2g.
+  # dic_g2r: contains the new names of the parameters and variables and the
+  # names of this vector contains the old names. It is the opposite for dic_r2g.
 
   # exp0 <- rama:::new_experiment(
   #   data.frame(S0 = 999, I0 = 1, R0 = 0, beta = 1.5, gamma = .15),
@@ -105,7 +105,7 @@ new_experiment <- function(parameters, obsrates, tmax, seed,
                        "md5sum" = md5sum(model))
 
   # cast parameter types
-  if(!is.null(model_info$info$Parameters)){
+  if (!is.null(model_info$info$Parameters)){
     types_param <- model_info$info$Parameters[
       lapply(model_info$info$Parameters, "[[", "name") %in%
         c(dic_r2g[param_newname])]
@@ -191,7 +191,7 @@ validate_experiment <- function(x) {
 
   if (setequal(dic_g2r, names(dic_r2g)) + setequal(names(dic_g2r), dic_r2g) < 2)
     stop("The dictionaries are inconsistent.")
-  if(!is.null(model$info$Parameters)) {
+  if (!is.null(model$info$Parameters)) {
     diff <- setdiff(dic_r2g[colnames[[1]]],
                     sapply(model$info$Parameters,
                            function(x) x[["name"]]))
@@ -223,7 +223,7 @@ validate_experiment <- function(x) {
   }
 
   # check obsrates consistency between experiment and gaml
-  if(!is.null(model$info$Outputs)){
+  if (!is.null(model$info$Outputs)){
     diff <- setdiff(dic_r2g[colnames[[2]]],
                     unlist(lapply(model$info$Outputs, function(x) x[["name"]])))
     if (length(diff) > 1) {
