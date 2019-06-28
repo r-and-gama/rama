@@ -25,4 +25,16 @@ testthat::test_that(
     otp <- run_experiment(exp0)
     testthat::expect_equal(otp$r_I, 2)
 
+    # check display
+    exp1 <- load_experiment("prey_predator",
+                            system.file("models/predator_prey/models",
+                                        "predator_prey.gaml", package = "rama"))
+
+    exp1$tmax <- 2L
+    test1 <- run_experiment(exp1, hpc = 2, display = TRUE)
+    testthat::expect_equal(test1$tmax, 2)
+
+    test2 <- run_experiment(exp1, hpc = 2, save = TRUE)
+    testthat::expect_equal(dim(test1$output[[1]]), c(2, 6))
+
   })

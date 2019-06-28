@@ -72,7 +72,7 @@ call_gama <- function(parameter_xml_file, hpc, output_dir = "") {
   run$stdout <-  readLines(stdoutFile)
   run$stderr <-  readLines(stderrFile)
   if (file.exists(getOption("rama.log")))
-    file.copy(from = getOption("rama.log"), to = logFile)
+    file.copy(from = getOption("rama.log"), to = logFile) #nocov
 
   unlink(c(stdoutFile, stderrFile))
   unlink(getOption("rama.workspace"), TRUE, TRUE)

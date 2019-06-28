@@ -64,7 +64,7 @@ load_experiment <- function(exp, model) {
 
   # Retrieving information:
   make_df_dic <- function(x) {
-    if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL))
+    if (is.null(x)) return(list(out = data.frame(NULL), dic = NULL)) #nocov
     the_names <- names(x)
     dic_g2r <- make_dictionary(the_names)
     names(x) <- dic_g2r
