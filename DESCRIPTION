@@ -41,6 +41,7 @@ Encoding: UTF-8
 Depends:
     R (>= 2.10)
 Imports:
+    animation,
     XML,
     plot3D,
     downloader
@@ -48,6 +49,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
+    magick,
     rmarkdown,
     testthat
 VignetteBuilder: knitr

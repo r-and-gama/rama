@@ -119,16 +119,10 @@ experiment inputted in the column output (one by simulation)." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example1.html">NicolasPred model</a>
+      <a href="../articles/example1.html">SIR model</a>
     </li>
     <li>
       <a href="../articles/example2.html">Predator-prey model</a>
-    </li>
-    <li>
-      <a href="../articles/example3.html">SIR model</a>
-    </li>
-    <li>
-      <a href="../articles/example4.html">Snub-nose monkeys</a>
     </li>
   </ul>
 </li>
@@ -206,7 +200,9 @@ specified, current working directory is used to save the outputs.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>When the argument <code>save</code> is equal to <code>TRUE</code>, a folder with the name
+    <p>We advice the user to validate their model in Gama Platform before using
+rama.<br /><br />
+When the argument <code>save</code> is equal to <code>TRUE</code>, a folder with the name
 of the experiment of the object <code>exp</code> is created. The folder contains
 two folder: <code>output</code> containing the result in XML and <code>input</code>
 containing the model file associated in GAML and the XML associated to the
@@ -229,62 +225,15 @@ is returned with <code>NA</code>.</p>
 <span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='repl.html'>repl</a></span>(<span class='no'>exp1</span>, <span class='fl'>2</span>)
 <span class='no'>exp1</span>$<span class='no'>r_R</span> <span class='kw'>&lt;-</span> <span class='fl'>2L</span>:<span class='fl'>3L</span>
 <span class='no'>exp1</span>$<span class='no'>tmax</span> <span class='kw'>&lt;-</span> <span class='fl'>2L</span>
-<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>output</span>)</div><div class='output co'>#&gt; Classes ‘experiment’, ‘tbl_df’, ‘tbl’ and 'data.frame':	2 obs. of  11 variables:
-#&gt;  $ p_S0   : int  999 999
-#&gt;  $ p_I0   : int  1 1
-#&gt;  $ p_R0   : int  0 0
-#&gt;  $ p_beta : num  1.5 1.5
-#&gt;  $ p_gamma: num  0.15 0.15
-#&gt;  $ r_S    : int  1 1
-#&gt;  $ r_I    : int  1 1
-#&gt;  $ r_R    : int  2 3
-#&gt;  $ tmax   : int  2 2
-#&gt;  $ seed   : num  1 1
-#&gt;  $ output :List of 2
-#&gt;   ..$ :'data.frame':	2 obs. of  4 variables:
-#&gt;   .. ..$ Step: int  0 1
-#&gt;   .. ..$ r_S : chr  "999" "999"
-#&gt;   .. ..$ r_I : chr  "1" "0"
-#&gt;   .. ..$ r_R : chr  "0" NA
-#&gt;   .. ..- attr(*, "path")= chr "/private/var/folders/fp/845v7zc96rjdgs2l_86qgy5r0000gn/T/Rtmp5toFpR/filef1566d3fb9e4/output/simulation-outputs1.xml"
-#&gt;   ..$ :'data.frame':	2 obs. of  4 variables:
-#&gt;   .. ..$ Step: int  0 1
-#&gt;   .. ..$ r_S : chr  "999" "999"
-#&gt;   .. ..$ r_I : chr  "1" "0"
-#&gt;   .. ..$ r_R : chr  "0" NA
-#&gt;   .. ..- attr(*, "path")= chr "/private/var/folders/fp/845v7zc96rjdgs2l_86qgy5r0000gn/T/Rtmp5toFpR/filef1566d3fb9e4/output/simulation-outputs2.xml"
-#&gt;  - attr(*, "model")=List of 3
-#&gt;   ..$ path  : Named chr "/Users/mac/Desktop/rama/inst/models/sir.gaml"
-#&gt;   .. ..- attr(*, "names")= chr "sourcePath"
-#&gt;   ..$ info  :List of 3
-#&gt;   .. ..$ Parameters:List of 5
-#&gt;   .. .. ..$ Parameter: Named chr  "S0" "INT" "999" "S"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "I0" "INT" "1" "I"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "R0" "INT" "0" "R"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "beta" "FLOAT" "1.5" "beta"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. .. ..$ Parameter: Named chr  "gamma" "FLOAT" "0.15" "gamma"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "name" "type" "value" "var"
-#&gt;   .. ..$ Outputs   :List of 3
-#&gt;   .. .. ..$ Output: Named chr  "1" "0" "S"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "framerate" "id" "name"
-#&gt;   .. .. ..$ Output: Named chr  "1" "1" "I"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "framerate" "id" "name"
-#&gt;   .. .. ..$ Output: Named chr  "1" "2" "R"
-#&gt;   .. .. .. ..- attr(*, "names")= chr  "framerate" "id" "name"
-#&gt;   .. ..$ .attrs    : Named chr  "sir" "1000" "0" "1.0" ...
-#&gt;   .. .. ..- attr(*, "names")= chr  "experiment" "finalStep" "id" "seed" ...
-#&gt;   ..$ md5sum: Named chr "a1316e76832682f5ce9e89ee8e65e2a8"
-#&gt;   .. ..- attr(*, "names")= Named chr "/Users/mac/Desktop/rama/inst/models/sir.gaml"
-#&gt;   .. .. ..- attr(*, "names")= chr "sourcePath"
-#&gt;  - attr(*, "experiment")= chr "sir"
-#&gt;  - attr(*, "dic_g2r")= Named chr  "p_S0" "p_I0" "p_R0" "p_beta" ...
-#&gt;   ..- attr(*, "names")= chr  "S0" "I0" "R0" "beta" ...
-#&gt;  - attr(*, "dic_r2g")= Named chr  "S0" "I0" "R0" "beta" ...
-#&gt;   ..- attr(*, "names")= chr  "p_S0" "p_I0" "p_R0" "p_beta" ...</div><div class='input'>
+<span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Running experiment plan... </div><div class='input'><span class='no'>output</span></div><div class='output co'>#&gt; Experiment with 2 simulations of 5 parameters and 3 observed variables
+#&gt; experiment name:  sir 
+#&gt; input gaml file:  /Users/mac/Desktop/rama/inst/models/sir.gaml 
+#&gt; model parameters:    p_S0, p_I0, p_R0, p_beta, p_gamma 
+#&gt; observed variables:  r_S, r_I, r_R 
+#&gt; Experiment overview:
+#&gt;   p_S0 p_I0 p_R0 p_beta p_gamma r_S r_I r_R tmax seed            output
+#&gt; 1  999    1    0    1.5    0.15   1   1   2    2    1 &lt;data.frame[2,4]&gt;
+#&gt; 2  999    1    0    1.5    0.15   1   1   3    2    1 &lt;data.frame[2,4]&gt;</div><div class='input'>
 <span class='co'># to save the experiment input and output (by default in the working directory)</span>
 <span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'>run_experiment</span>(<span class='no'>exp1</span>, <span class='kw'>hpc</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Outputs are saved to "/Users/mac/Desktop/rama/docs/reference" by default.</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Outputs are saved in " /Users/mac/Desktop/rama/docs/reference/sir_1 ".</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Running experiment plan... </div></pre>
   </div>

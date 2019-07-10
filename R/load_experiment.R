@@ -44,7 +44,9 @@ get_attributes <- function(x) {
 #' directory as the \code{.gaml} file. The internal collection of GAMA models is
 #' in the \code{examples} directory of the \code{rama} package file hierarchy.
 #' These models can be accessed with the \code{\link[base]{system.file}}
-#' function as explained in the example.
+#' function as explained in the example. \cr
+#' Before using the package \code{rama}, we advice the user to validate their
+#' model in Gama Platform.
 #'
 #' @param exp The name of the experiment to load.
 #' @param model The name of the GAML file from which to load the experiment.

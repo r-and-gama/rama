@@ -90,6 +90,8 @@ create_outdir <- function(dir) {
 #' (\code{\link[rama]{call_gama}}) and appends the results to the object
 #' \code{experiment} inputted in the column \code{output} (one by simulation).
 #'
+#' We advice the user to validate their model in Gama Platform before using
+#' rama.\cr\cr
 #' When the argument \code{save} is equal to \code{TRUE}, a folder with the name
 #' of the experiment of the object \code{exp} is created. The folder contains
 #' two folder: \code{output} containing the result in XML and \code{input}

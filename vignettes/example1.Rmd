@@ -1,5 +1,5 @@
 ---
-title: "Example: NicolasPred model"
+title: "Example: SIR model"
 output: rmarkdown::html_vignette
 knit: (function(inputFile, encoding, output_dir) { 
       rmarkdown::render(inputFile,
@@ -16,12 +16,11 @@ editor_options:
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 ```
 
-```{r}
+```{r library}
 # install and load the package
 #install.packages("devtools")
 #devtools::install_github("r-and-gama/rama")
@@ -31,30 +30,40 @@ library(rama)
 # defpath("/Applications/Gama.app")
 ```
 
-```{r}
-# to load the experiment
-exp <- load_experiment("prey_predator",
-                       system.file("models", "NicolasPred.gaml",
-                                   package = "rama"))
-
+```{r load_experiment}
+# Load the experiment "sir" from the definition of the model sir.gaml
+exp <- load_experiment("sir",
+                          system.file("models", "sir.gaml", package = "rama"))
 exp
 
-# to set the experiment
-exp$p_danger_distance <-  c(100 * c(1:10, seq(15, 60, 5)),
-                            1000 * c(7:10, seq(12, 16, 2), seq(20, 30, 5)),
-                            10000 * 4:5)
-exp$p_environment_size <- c(1000 * seq(5, 20, 5), 10000 * 3:5)
-
-exp$seed <- 1:30
-exp$tmax <- 500L
-# To test we set a shorter duration...
-exp$tmax <- 3L
-
-exp$r_mean_pop <- 1
-exp$r_micro_b <- 1
-exp$r_nb_predators <- 1
-exp$r_nb_preys <- 1
-
-# to run the experiment (do not run)
-#out <- run_experiment(exp, hpc = 2)
 ```
+
+```{r set_experiment}
+# Define a first type of experiments on SIR having the same initial value
+# called expA with S0=950, I0=50 and R0=0
+exp$p_S0 <- 950L
+exp$p_I0 <- 50L
+exp$p_R0 <- 0L
+# ... and with 100 steps and a frame rate of 1 for the images of the
+# susceptibles
+exp$tmax <- 100L
+exp$r_S <- 1L
+# Define a two experiments on this model
+exp <- repl(exp, 2)
+exp$p_beta <- c(0.3, 0.5)
+exp$p_gamma <- 0.1
+
+```
+
+```{r run_experiment}
+# Execute all the experiments in the plan
+out <- run_experiment(exp, hpc = 2)
+out
+```
+
+```{r visualize_experiment}
+# Visualize the number of infected for the two experiments
+with(out$output[[1]], plot(Step, r_I, type = "l", lwd = 2, col = "red"))
+with(out$output[[2]], plot(Step, r_I, type = "l", lwd = 2, col = "blue"))
+```
+

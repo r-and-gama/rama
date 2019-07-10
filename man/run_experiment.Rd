@@ -29,6 +29,8 @@ of the experiment (\code{\link[rama]{save_to_gama}}) and by calling gama
 \code{experiment} inputted in the column \code{output} (one by simulation).
 }
 \details{
+We advice the user to validate their model in Gama Platform before using
+rama.\cr\cr
 When the argument \code{save} is equal to \code{TRUE}, a folder with the name
 of the experiment of the object \code{exp} is created. The folder contains
 two folder: \code{output} containing the result in XML and \code{input}
@@ -54,7 +56,7 @@ exp1 <- repl(exp1, 2)
 exp1$r_R <- 2L:3L
 exp1$tmax <- 2L
 output <- run_experiment(exp1, hpc = 2)
-str(output)
+output
 
 # to save the experiment input and output (by default in the working directory)
 output <- run_experiment(exp1, hpc = 2, save = TRUE)
