@@ -14,7 +14,7 @@ set_environment_variables <- function() {
           rama.default.gama.osx.zip.appdir   = "",
           rama.default.gama.linux            =
             "/gama_1_8_final_linux64.tgz",
-          rama.default.gama.linux.appdir     = "/usr/local/gama",
+          rama.default.gama.linux.appdir     = "/usr/share/gama",
           rama.default.gama.linux.zip.appdir = "gama",
           rama.repo                          = "http://51.255.46.42/releases",
           rama.gama.path                     = "UNKNOWN",
@@ -56,6 +56,16 @@ init_gama_jar <- function(path) {
   ifelse(file.exists(res), res, NA)
 }
 
+# Test version -----------------------------------------------------------------
+#' Extract Gama version
+#' @noRd
+gama_version <- function(path) {
+  v_info <- readLines(
+    paste0(path, "/Contents/Eclipse/Configuration/config.ini"))
+  v_info <- v_info[10]
+  v_info <- gsub("[[:alpha:]]|=", "", v_info)
+  v_info <- as.numeric(v_info)
+}
 
 # Configure gama ---------------------------------------------------------------
 #' Configure GAMA path and Java heap size
@@ -70,15 +80,23 @@ init_gama_jar <- function(path) {
 #' @export
 defpath <- function(path, Xmx = "2048m", Xms = "512m") {
   defaultjar <- init_gama_jar(path)
+  version <- gama_version(path)
   if (is.na(defaultjar)) {
     stop("Gama configuration failed!")
   }
   else {
-    options(rama.startjar = defaultjar,
-            rama.Xmx = Xmx,
-            rama.Xms = Xms,
-            rama.gama.path = path)
-    message("Gama configuration succeed!")
+      options(rama.startjar = defaultjar,
+              rama.Xmx = Xmx,
+              rama.Xms = Xms,
+              rama.gama.path = path)
+      message("Gama configuration succeed!")
+      if (version < 1.8) {
+        stop(
+          "Gama version should be 1.8 or superior. Please use `setup_gama()` ",
+          "to download or setup a new version of GAMA or see ",
+          "https://gama-platform.github.io/ to download GAMA")
+      }
+
   }
 }
 
@@ -111,15 +129,23 @@ is_gama_installed <- function(path = unlist(options("rama.gama.path"))) {
   packageStartupMessage(
     "See http://www.gama-platform.org for more instructions about GAMA.\n")
   pehaps_path <- gama_local_distrib_path()
-  if (is_gama_installed(pehaps_path)) {
-    packageStartupMessage(
-      paste0("-- note that GAMA platform was found at ", pehaps_path, "\n"))
-    defpath(pehaps_path)
-  } else {
-    packageStartupMessage(
-      "WARNING: GAMA platform not found! Proceed to the setup")
-    packageStartupMessage(
-      "-------: Use the command `setup_gama()` to setup or download GAMA")
+    if (is_gama_installed(pehaps_path)) {
+      version <- gama_version(pehaps_path)
+      packageStartupMessage(
+        paste0("-- note that GAMA platform was found at ", pehaps_path, "\n"))
+      if (version < 1.8) {
+        packageStartupMessage(
+          "Gama version should be 1.8 or superior. Please use `setup_gama()` ",
+          "to download or setup a new version of GAMA or see ",
+          "https://gama-platform.github.io/ to download GAMA")
+      } else {
+        defpath(pehaps_path)
+      }
+    } else {
+      packageStartupMessage(
+        "WARNING: GAMA platform not found! Proceed to the setup")
+      packageStartupMessage(
+        "-------: Use the command `setup_gama()` to setup or download GAMA")
   }
 }
 
